@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.common.model;
+package com.ssafy.hellotoday.db.entity;
 
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Getter
 @Entity
-public class Member {
+public class Member extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId;
