@@ -8,8 +8,8 @@ public enum HttpStatusEnum {
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR"),
     FORBIDDEN(403, "FORBIDDEN");
 
-    int statusCode;
-    String code;
+    final int statusCode;
+    final String code;
 
     HttpStatusEnum(int statusCode, String code) {
         this.statusCode = statusCode;

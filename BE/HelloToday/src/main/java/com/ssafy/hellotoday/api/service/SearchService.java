@@ -1,7 +1,7 @@
 package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.response.search.SearchResponseDto;
-import com.ssafy.hellotoday.common.exception.SearchValidator;
+import com.ssafy.hellotoday.common.exception.validator.SearchValidator;
 import com.ssafy.hellotoday.common.util.constant.SearchKeyEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
@@ -18,8 +18,9 @@ public class SearchService {
     private final SearchValidator searchValidator;
 
     public List<SearchResponseDto> search(String key, String word) {
-        List<Member> results = null;
+        List<Member> results;
         searchValidator.validKey(key);
+        searchValidator.validateWord(word);
 
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
             results = memberRepository.findByNicknameContaining(word);
