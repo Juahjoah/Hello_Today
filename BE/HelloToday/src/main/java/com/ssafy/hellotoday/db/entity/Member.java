@@ -21,7 +21,7 @@ public class Member extends BaseEntity {
 
     private String role;
 
-    private String st_msg;
+    private String stMsg;
 
     private LocalDateTime withdrawalDate;
 
