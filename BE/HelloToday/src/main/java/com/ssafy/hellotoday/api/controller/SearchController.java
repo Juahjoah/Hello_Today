@@ -24,7 +24,6 @@ public class SearchController {
     @Operation(summary = "검색", description = "닉네임, 아이디, 루틴 태그로 사용자를 검색하는 API")
     @GetMapping
     public List<SearchResponseDto> search(@RequestParam String key, @RequestParam String word) {
-        log.info("dfdf" + word + "dfdddddddddddddddddddddddddddddddd");
         return searchService.search(key, word);
     }
 }
