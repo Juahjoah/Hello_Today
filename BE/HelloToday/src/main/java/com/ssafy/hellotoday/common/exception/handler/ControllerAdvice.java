@@ -1,6 +1,6 @@
 package com.ssafy.hellotoday.common.exception.handler;
 
-import com.ssafy.hellotoday.api.response.ExceptionResponseDto;
+import com.ssafy.hellotoday.api.dto.ExceptionResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.exception.message.BaseErrorEnum;
 import org.springframework.http.HttpStatus;

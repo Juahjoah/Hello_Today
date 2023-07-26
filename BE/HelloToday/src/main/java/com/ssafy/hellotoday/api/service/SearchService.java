@@ -1,6 +1,6 @@
 package com.ssafy.hellotoday.api.service;
 
-import com.ssafy.hellotoday.api.response.search.SearchResponseDto;
+import com.ssafy.hellotoday.api.dto.search.response.SearchResponseDto;
 import com.ssafy.hellotoday.common.exception.validator.SearchValidator;
 import com.ssafy.hellotoday.common.util.constant.SearchKeyEnum;
 import com.ssafy.hellotoday.db.entity.Member;
