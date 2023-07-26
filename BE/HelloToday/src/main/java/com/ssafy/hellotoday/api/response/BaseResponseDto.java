@@ -1,16 +1,17 @@
 package com.ssafy.hellotoday.api.response;
 
-import com.ssafy.hellotoday.common.util.constant.HttpStatusEnum;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class BaseResponseDto {
-    private HttpStatusEnum status;
+    private boolean success;
     private String message;
     private Object data;
 
     @Builder
-    public BaseResponseDto(HttpStatusEnum status, String message, Object data) {
-        this.status = status;
+    public BaseResponseDto(boolean success, String message, Object data) {
+        this.success = success;
         this.message = message;
         this.data = data;
     }
