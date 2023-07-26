@@ -1,6 +1,6 @@
 package com.ssafy.hellotoday.api.controller;
 
-import com.ssafy.hellotoday.api.response.search.SearchResponseDto;
+import com.ssafy.hellotoday.api.dto.search.response.SearchResponseDto;
 import com.ssafy.hellotoday.api.service.SearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
