@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.response.search;
+package com.ssafy.hellotoday.api.dto.search.response;
 
 import lombok.Builder;
 import lombok.Getter;
