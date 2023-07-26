@@ -4,7 +4,6 @@ import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 

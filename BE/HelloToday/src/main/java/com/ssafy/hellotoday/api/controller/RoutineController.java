@@ -1,9 +1,9 @@
 package com.ssafy.hellotoday.api.controller;
 
+import com.ssafy.hellotoday.api.request.routine.RoutineRequestDto;
 import com.ssafy.hellotoday.api.response.routine.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.api.response.routine.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.api.service.RoutineService;
-import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -35,4 +35,9 @@ public class RoutineController {
         return new ResponseEntity<>(routineService.getRecommendMent(categoryId), HttpStatus.OK);
     }
 
+    @PostMapping("/private")
+    public ResponseEntity<String> makeRoutine(@RequestBody RoutineRequestDto routineRequestDto) {
+        routineService.makeRoutine(routineRequestDto);
+        return new ResponseEntity<>("루틴 생성 완료", HttpStatus.OK);
+    }
 }

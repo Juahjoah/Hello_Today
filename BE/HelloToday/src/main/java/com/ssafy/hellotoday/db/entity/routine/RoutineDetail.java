@@ -15,7 +15,9 @@ public class RoutineDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routine_big_cat_id")
     private RoutineBigCat routineBigCat;
-    private Integer routineTagId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "routine_tag_id")
+    private RoutineTag routineTag;
     private String content;
     private String imgPath;
 }

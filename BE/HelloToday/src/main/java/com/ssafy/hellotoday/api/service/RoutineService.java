@@ -1,10 +1,13 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.ssafy.hellotoday.api.request.routine.RoutineRequestDto;
 import com.ssafy.hellotoday.api.response.routine.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
+import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
+import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
 import com.ssafy.hellotoday.api.response.routine.RoutineDetailResponseDto;
+import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -20,11 +23,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class RoutineService {
 
-    private final RoutineRepository routineRepository;
+    private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
+    private final RoutineRepository routineRepository;
 
     public List<RoutineDetailResponseDto> detailRoutine(Integer categoryId) {
-        return routineRepository.findByRoutineBigCat_RoutineBigCatId(categoryId).stream()
+        return routineDetailRepository.findByRoutineBigCat_RoutineBigCatId(categoryId).stream()
                 .map(routineDetail -> new RoutineDetailResponseDto(routineDetail))
                 .collect(Collectors.toList());
     }
@@ -41,5 +45,10 @@ public class RoutineService {
         }
 
         return new RoutineRecMentResponseDto(recommendMent);
+    }
+
+    public void makeRoutine(RoutineRequestDto routineRequestDto) {
+//        Routine routine = routineRequestDto
+//        routineRepository.save(routine);
     }
 }
