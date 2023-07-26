@@ -16,7 +16,7 @@ import java.util.Optional;
 @Component
 public class FollowValidator {
 
-    public void checkFollowStatus(FollowRepository followRepository, Member follower, Member following) {
+    public void checkFollowNotExist(FollowRepository followRepository, Member follower, Member following) {
         Optional<Follow> follow = followRepository.findByFollowerAndFollowing(follower, following);
         if (follow.isPresent()) {
             throw CustomException.builder()
@@ -25,5 +25,18 @@ public class FollowValidator {
                     .message(FollowErrorEnum.EXIST_FOLLOW_STATUS.getMessage())
                     .build();
         }
+    }
+
+    public Follow checkFollowExist(FollowRepository followRepository, Member follower, Member following) {
+        Optional<Follow> follow = followRepository.findByFollowerAndFollowing(follower, following);
+        if (follow.isEmpty()) {
+            throw CustomException.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .code(FollowErrorEnum.NOT_EXIST_FOLLOW_STATUS.getCode())
+                    .message(FollowErrorEnum.NOT_EXIST_FOLLOW_STATUS.getMessage())
+                    .build();
+        }
+
+        return follow.get();
     }
 }
