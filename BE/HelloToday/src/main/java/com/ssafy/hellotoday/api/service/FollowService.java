@@ -78,12 +78,12 @@ public class FollowService {
      */
     @Transactional
     public BaseResponseDto enrollFollow(int followerId, FollowSaveRequestDto followSaveRequestDto) {
-        memberValidator.checkMembers(followerId, followSaveRequestDto.getFollowingId());
+        memberValidator.checkDifferentMembers(followerId, followSaveRequestDto.getFollowingId());
 
         Member follower = getMember(followerId);
         Member followee = getMember(followSaveRequestDto.getFollowingId());
 
-        followValidator.checkFollowStatus(followRepository, follower, followee);
+        followValidator.checkFollowNotExist(followRepository, follower, followee);
 
         int followId = saveFollow(follower, followee);
 
@@ -94,6 +94,33 @@ public class FollowService {
                         .followId(followId)
                         .followerId(followerId)
                         .followingId(followSaveRequestDto.getFollowingId())
+                        .build())
+                .build();
+    }
+
+    /**
+     * 팔로우를 취소하는 메서드
+     * @param followerId 팔로우 취소를 요청하는 사용자의 memberId
+     * @param followeeId 팔로우 취소 대상의 memberId
+     * @return 팔로우 정상 취소 시 취소된 followId, followerId, followingId를 리턴, 에러 시 에러코드와 메세지 리턴
+     */
+    @Transactional
+    public BaseResponseDto deleteFollow(int followerId, int followeeId) {
+        memberValidator.checkDifferentMembers(followerId, followeeId);
+
+        Member follower = getMember(followerId);
+        Member followee = getMember(followeeId);
+
+        Follow follow = followValidator.checkFollowExist(followRepository, follower, followee);
+        followRepository.delete(follow);
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(FollowResponseEnum.SUCCESS_DELETE_FOLLOW.getName())
+                .data(FollowResponseDto.builder()
+                        .followId(follow.getFollowId())
+                        .followerId(followerId)
+                        .followingId(followeeId)
                         .build())
                 .build();
     }
