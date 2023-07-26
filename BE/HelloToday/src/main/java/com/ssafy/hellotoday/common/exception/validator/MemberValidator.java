@@ -25,7 +25,12 @@ public class MemberValidator {
         }
     }
 
-    public void checkMembers(int followerId, int followingId) {
+    /**
+     * 두 사용자가 동일한 사용자인지 검사하여 동일하다면 에러를 발생시키는 메서드
+     * @param followerId 팔로우하는 사용자의 memberId
+     * @param followingId 팔로우되는 사용자의 memberId
+     */
+    public void checkDifferentMembers(int followerId, int followingId) {
         if (followerId == followingId) {
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
