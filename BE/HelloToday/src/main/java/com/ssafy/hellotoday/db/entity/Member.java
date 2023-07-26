@@ -1,6 +1,7 @@
 package com.ssafy.hellotoday.db.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +32,8 @@ public class Member extends BaseEntity {
     private String profileOriginalName;
 
     private String profilePath;
+
+    public Member(Integer memberId) {
+        super();
+    }
 }
