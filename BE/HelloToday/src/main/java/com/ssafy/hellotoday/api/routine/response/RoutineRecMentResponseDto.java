@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.response.routine;
+package com.ssafy.hellotoday.api.routine.response;
 
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
 import com.ssafy.hellotoday.db.entity.routine.RoutineBigCat;

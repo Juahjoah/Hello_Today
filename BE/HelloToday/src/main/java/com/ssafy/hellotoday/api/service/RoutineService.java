@@ -1,12 +1,12 @@
 package com.ssafy.hellotoday.api.service;
 
-import com.ssafy.hellotoday.api.request.routine.RoutineRequestDto;
-import com.ssafy.hellotoday.api.response.routine.RoutineRecMentResponseDto;
+import com.ssafy.hellotoday.api.routine.RoutineDetailDto;
+import com.ssafy.hellotoday.api.routine.request.RoutineRequestDto;
+import com.ssafy.hellotoday.api.routine.response.RoutineDetailResponseDto;
+import com.ssafy.hellotoday.api.routine.response.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
-import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
-import com.ssafy.hellotoday.api.response.routine.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +27,18 @@ public class RoutineService {
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
 
-    public List<RoutineDetailResponseDto> detailRoutine(Integer categoryId) {
+    public List<RoutineDetailResponseDto> detailRoutine() {
+        List<RoutineDetailResponseDto> list = new ArrayList<>();
+        list.add(new RoutineDetailResponseDto(1, detailRoutine(1)));
+        list.add(new RoutineDetailResponseDto(2, detailRoutine(2)));
+        list.add(new RoutineDetailResponseDto(3, detailRoutine(3)));
+
+        return list;
+    }
+
+    public List<RoutineDetailDto> detailRoutine(Integer categoryId) {
         return routineDetailRepository.findByRoutineBigCat_RoutineBigCatId(categoryId).stream()
-                .map(routineDetail -> new RoutineDetailResponseDto(routineDetail))
+                .map(RoutineDetailDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -58,6 +67,7 @@ public class RoutineService {
     }
 
     public void makeRoutine(RoutineRequestDto routineRequestDto) {
+//        routineRepository.save(routineRequestDto.toEntity());
 //        Routine routine = routineRequestDto
 //        routineRepository.save(routine);
     }
