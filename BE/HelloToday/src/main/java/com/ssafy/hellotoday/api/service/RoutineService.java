@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,6 +27,16 @@ public class RoutineService {
         return routineRepository.findByRoutineBigCat_RoutineBigCatId(categoryId).stream()
                 .map(routineDetail -> new RoutineDetailResponseDto(routineDetail))
                 .collect(Collectors.toList());
+    }
+
+    public List<RoutineRecMentResponseDto> getRecommendMents() {
+
+        List<RoutineRecMentResponseDto> list = new LinkedList<>();
+        list.add(getRecommendMent(1));
+        list.add(getRecommendMent(2));
+        list.add(getRecommendMent(3));
+
+        return list;
     }
 
     public RoutineRecMentResponseDto getRecommendMent(Integer categoryId) {
