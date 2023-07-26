@@ -30,6 +30,11 @@ public class FollowService {
     private final FollowValidator followValidator;
     private final MemberValidator memberValidator;
 
+    /**
+     * 요청자를 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
+     * @param memberId 팔로워 목록 조회를 요청하는 사용자의 memberId
+     * @return 요청자를 팔로우하고 있는 사용자 정보 목록
+     */
     public List<MemberResponseDto> getFollowers(int memberId) {
         Member member = getMember(memberId);
 
@@ -41,6 +46,26 @@ public class FollowService {
                         .nickname(follow.getFollower().getNickname())
                         .stMsg(follow.getFollower().getStMsg())
                         .profilePath(follow.getFollower().getProfilePath())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 요청자가 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
+     * @param memberId 팔로잉 목록 조회를 요청하는 사용자의 memberId
+     * @return 요청자가 팔로우하고 있는 사용자 정보 목록
+     */
+    public List<MemberResponseDto> getFollowings(int memberId) {
+        Member member = getMember(memberId);
+
+        List<Follow> followings = followRepository.findAllByFollower(member.getMemberId());
+        return followings.stream()
+                .map(follow -> MemberResponseDto.builder()
+                        .memberId(follow.getFollowing().getMemberId())
+                        .email(follow.getFollowing().getEmail())
+                        .nickname(follow.getFollowing().getNickname())
+                        .stMsg(follow.getFollowing().getStMsg())
+                        .profilePath(follow.getFollowing().getProfilePath())
                         .build())
                 .collect(Collectors.toList());
     }
