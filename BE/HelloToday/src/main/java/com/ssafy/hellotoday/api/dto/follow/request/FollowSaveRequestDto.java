@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.request.follow;
+package com.ssafy.hellotoday.api.dto.follow.request;
 
 import lombok.Getter;
 
