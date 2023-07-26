@@ -1,9 +1,9 @@
 package com.ssafy.hellotoday.api.service;
 
-import com.ssafy.hellotoday.api.routine.RoutineDetailDto;
-import com.ssafy.hellotoday.api.routine.request.RoutineRequestDto;
-import com.ssafy.hellotoday.api.routine.response.RoutineDetailResponseDto;
-import com.ssafy.hellotoday.api.routine.response.RoutineRecMentResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
+import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;

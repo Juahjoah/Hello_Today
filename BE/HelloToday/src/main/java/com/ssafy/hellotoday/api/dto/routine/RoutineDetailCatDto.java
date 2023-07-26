@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.routine;
+package com.ssafy.hellotoday.api.dto.routine;
 
 public class RoutineDetailCatDto {
     private Integer routindDetaailCatId;

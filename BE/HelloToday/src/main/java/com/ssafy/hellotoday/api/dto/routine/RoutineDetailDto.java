@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.routine;
+package com.ssafy.hellotoday.api.dto.routine;
 
 import com.ssafy.hellotoday.db.entity.routine.RoutineDetail;
 import lombok.Getter;

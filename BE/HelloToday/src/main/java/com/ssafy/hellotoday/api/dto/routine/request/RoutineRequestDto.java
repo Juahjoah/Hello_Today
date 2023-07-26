@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.routine.request;
+package com.ssafy.hellotoday.api.dto.routine.request;
 
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.routine.Routine;

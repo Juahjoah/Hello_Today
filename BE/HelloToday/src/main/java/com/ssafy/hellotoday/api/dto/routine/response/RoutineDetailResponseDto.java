@@ -1,7 +1,6 @@
-package com.ssafy.hellotoday.api.routine.response;
+package com.ssafy.hellotoday.api.dto.routine.response;
 
-import com.ssafy.hellotoday.api.routine.RoutineDetailDto;
-import com.ssafy.hellotoday.db.entity.routine.RoutineDetail;
+import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
