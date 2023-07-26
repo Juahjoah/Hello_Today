@@ -29,10 +29,6 @@ public class RoutineController {
         return new ResponseEntity<>(routineService.detailRoutine(categoryId), HttpStatus.OK);
     }
 
-    /**
-     * 루틴 대분류 별 추천 멘트 출력
-     * 1: 기본, 2: 정적, 3: 동적
-     */
     @Operation(summary = "대분류 루틴 별 추천 멘트 조회", description = "대분류 카테고리 별 루틴 추천 멘트 조회 API<br>{categoryId} 1: 기본, 2: 정적, 3: 동적")
     @GetMapping("/ment/{categoryId}")
     public ResponseEntity<RoutineRecMentResponseDto> getRecommendMent(@PathVariable Integer categoryId) {
