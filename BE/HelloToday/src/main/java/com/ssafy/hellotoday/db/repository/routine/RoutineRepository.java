@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.repository;
+package com.ssafy.hellotoday.db.repository.routine;
 
 import com.ssafy.hellotoday.db.entity.routine.RoutineDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
