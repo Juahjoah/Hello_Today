@@ -27,6 +27,7 @@ public class Routine {
 
     @Builder
     public Routine(Integer routineId, Member member, LocalDateTime startDate, LocalDateTime endDate, byte activeFlag, List<RoutineDetailCat> routineDetailCats) {
+        this.routineId = routineId;
         this.member = member;
         this.startDate = startDate;
         this.endDate = endDate;

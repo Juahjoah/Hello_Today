@@ -37,6 +37,10 @@ public class RoutineController {
 
     @PostMapping("/private")
     public ResponseEntity<String> makeRoutine(@RequestBody RoutineRequestDto routineRequestDto) {
+
+        for (int i = 0; i < routineRequestDto.getRoutineDetailDtoList().size(); i++) {
+            System.out.println(routineRequestDto.getRoutineDetailDtoList().get(i));
+        }
         routineService.makeRoutine(routineRequestDto);
         return new ResponseEntity<>("루틴 생성 완료", HttpStatus.OK);
     }
