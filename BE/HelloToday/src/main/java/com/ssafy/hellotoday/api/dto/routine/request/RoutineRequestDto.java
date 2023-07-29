@@ -1,6 +1,5 @@
 package com.ssafy.hellotoday.api.dto.routine.request;
 
-import com.ssafy.hellotoday.api.dto.routine.RoutineDetailCatDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

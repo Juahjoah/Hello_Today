@@ -1,10 +1,13 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.api.response.routine.RoutinePrivateCheckResponseDto;
+import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
@@ -70,7 +73,7 @@ public class RoutineService {
         return new RoutineRecMentResponseDto(recommendMent);
     }
 
-    public void makeRoutine(RoutineRequestDto routineRequestDto) {
+    public BaseResponseDto makeRoutine(RoutineRequestDto routineRequestDto) {
         Routine routine = Routine.createRoutine(
                 routineRequestDto.getMemberId()
                 , LocalDateTime.now()
@@ -83,15 +86,25 @@ public class RoutineService {
         for (RoutineDetailDto routineDetailDto : routineDetailDtoList) {
             RoutineDetailCat routineDetailCat = RoutineDetailCat.createRoutineDetailCat(routineDetailDto, routine);
 
-            log.info("routineDetailCat>> {}", routineDetailCat);
             routine.addRoutineDetailCat(routineDetailCat);
         }
 
-        try{
-            routineRepository.save(routine);
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
+        routineRepository.save(routine);
+
+        List<RoutineDetailCat> routineDetailCatList = RoutineResponseDto.builder().routineDetailCatList(routine.getRoutineDetailCats()).build().getRoutineDetailCatList();
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(RoutineEnum.SUCCESS_MAKE_ROTUINE.getName())
+                .data(RoutineResponseDto.builder()
+                        .routineId(routine.getRoutineId())
+                        .memberId(routine.getMember().getMemberId())
+//                        .routineDetailCatList(routineDetailCatList)
+                        .startDate(routine.getStartDate())
+                        .endDate(routine.getEndDate())
+                        .activeFlag(routine.getActiveFlag())
+                        .build())
+                .build();
     }
 
     public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Integer memberId) {

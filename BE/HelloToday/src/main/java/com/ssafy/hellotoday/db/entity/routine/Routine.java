@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.db.entity.routine;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.hellotoday.db.entity.Member;
 import lombok.*;
 
@@ -22,8 +23,8 @@ public class Routine {
     private LocalDateTime endDate;
     private byte activeFlag;
 
-    @OneToMany(mappedBy = "routine"
-             , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<RoutineDetailCat> routineDetailCats = new ArrayList<>();
 
     @Builder

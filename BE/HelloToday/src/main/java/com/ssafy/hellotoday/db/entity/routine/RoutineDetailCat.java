@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.db.entity.routine;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class RoutineDetailCat {
     private Integer routineDetailCatId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routine_id")
+    @JsonBackReference
     private Routine routine;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routine_detail_id")
