@@ -4,7 +4,10 @@ import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
+import com.ssafy.hellotoday.api.response.routine.RoutinePrivateCheckResponseDto;
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
+import com.ssafy.hellotoday.db.entity.routine.Routine;
+import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,8 +71,30 @@ public class RoutineService {
     }
 
     public void makeRoutine(RoutineRequestDto routineRequestDto) {
-//        routineRepository.save(routineRequestDto.toEntity());
-//        Routine routine = routineRequestDto
-//        routineRepository.save(routine);
+        Routine routine = Routine.createRoutine(
+                routineRequestDto.getMemberId()
+                , LocalDateTime.now()
+                , LocalDateTime.now().plusDays(7)
+                , (byte) 1
+        );
+
+        List<RoutineDetailDto> routineDetailDtoList = routineRequestDto.getRoutineDetailDtoList();
+
+        for (RoutineDetailDto routineDetailDto : routineDetailDtoList) {
+            RoutineDetailCat routineDetailCat = RoutineDetailCat.createRoutineDetailCat(routineDetailDto, routine);
+
+            log.info("routineDetailCat>> {}", routineDetailCat);
+            routine.addRoutineDetailCat(routineDetailCat);
+        }
+
+        try{
+            routineRepository.save(routine);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+    }
+
+    public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Integer memberId) {
+        return null;
     }
 }

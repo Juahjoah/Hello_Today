@@ -1,9 +1,15 @@
 package com.ssafy.hellotoday.api.controller;
 
+import com.ssafy.hellotoday.api.dto.routine.RoutineDetailCatDto;
+import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
+import com.ssafy.hellotoday.api.response.routine.RoutinePrivateCheckResponseDto;
 import com.ssafy.hellotoday.api.service.RoutineService;
+import com.ssafy.hellotoday.db.entity.routine.Routine;
+import com.ssafy.hellotoday.db.entity.routine.RoutineDetail;
+import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -35,9 +42,15 @@ public class RoutineController {
         return new ResponseEntity<>(routineService.getRecommendMents(), HttpStatus.OK);
     }
 
+    @Operation(summary = "개인 루틴 생성", description = "세분류 루틴 선택 이후 루틴 생성")
     @PostMapping("/private")
     public ResponseEntity<String> makeRoutine(@RequestBody RoutineRequestDto routineRequestDto) {
         routineService.makeRoutine(routineRequestDto);
         return new ResponseEntity<>("루틴 생성 완료", HttpStatus.OK);
+    }
+
+    @GetMapping("private/private/{memberId}")
+    public ResponseEntity<RoutinePrivateCheckResponseDto> getPrivateRoutineCheck(@PathVariable Integer memberId) {
+        return new ResponseEntity<>(routineService.getPrivateRoutineCheck(memberId), HttpStatus.OK);
     }
 }

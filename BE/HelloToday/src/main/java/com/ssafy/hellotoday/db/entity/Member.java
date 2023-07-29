@@ -35,5 +35,6 @@ public class Member extends BaseEntity {
 
     public Member(Integer memberId) {
         super();
+        this.memberId = memberId;
     }
 }
