@@ -86,7 +86,6 @@ public class RoutineService {
 
         for (RoutineDetailDto routineDetailDto : routineDetailDtoList) {
             RoutineDetailCat routineDetailCat = RoutineDetailCat.createRoutineDetailCat(routineDetailDto, routine);
-            System.out.println("!!!");
             for (int i = 1; i < 8; i++) {
                 routineDetailCat.addRoutineCheck(
                         RoutineCheck.builder()
@@ -98,7 +97,6 @@ public class RoutineService {
                                 .build());
             }
 
-            System.out.println("???");
             routine.addRoutineDetailCat(routineDetailCat);
         }
 
