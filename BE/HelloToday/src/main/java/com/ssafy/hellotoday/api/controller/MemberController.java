@@ -33,7 +33,7 @@ public class MemberController {
 
 
     // 회원가입 또는 로그인
-    @Operation(summary = "카카오로 로그인", description = "카카오로 로그인 하는 API")
+    @Operation(summary = "카카오로 로그인 및 회원가입", description = "카카오로 로그인 및 회원가입 하는 API")
     @PostMapping("/api/members/kakao/login")
     public ResponseEntity<String> loginKakao(@RequestBody Map<String, String> codeRequest) {
         Member member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.get("code"), redirectKakaoUrl);
@@ -46,7 +46,7 @@ public class MemberController {
                 .header("Authorization-Refresh",refreshToken)
                 .body("로그인 되었습니다.");
     }
-    @Operation(summary = "네이버로 로그인", description = "네이버로 로그인 하는 API")
+    @Operation(summary = "네이버로 로그인 및 회원가입", description = "네이버로 로그인 하는 API")
     @PostMapping("/api/members/naver/login")
     public ResponseEntity<String> loginNaver(@RequestBody Map<String, String> codeRequest) {
         System.out.println("codeRequest = " + codeRequest.get("code"));
@@ -72,7 +72,7 @@ public class MemberController {
 
         return  ResponseEntity.ok()
                 .header("Authorization", tokenDto.getAccessToken())
-                .header("Authorization-Refresh",tokenDto.getAccessToken())
+                .header("Authorization-Refresh",tokenDto.getRefreshToken())
                 .body("refresh과 accesstoken 재발급 성공하였습니다.");
     }
 
