@@ -1,17 +1,14 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
-import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
-import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
-import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
-import com.ssafy.hellotoday.api.response.routine.RoutinePrivateCheckResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.*;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
-import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
-import com.ssafy.hellotoday.db.entity.routine.Routine;
-import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
-import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
+import com.ssafy.hellotoday.db.entity.routine.*;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
@@ -25,6 +22,11 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.ssafy.hellotoday.db.entity.routine.QRoutine.routine;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineCheck.routineCheck;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetail.routineDetail;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDetailCat;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -34,6 +36,7 @@ public class RoutineService {
     private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
+    private final JPAQueryFactory queryFactory;
 
     public List<RoutineDetailResponseDto> detailRoutine() {
         List<RoutineDetailResponseDto> list = new ArrayList<>();
@@ -88,13 +91,7 @@ public class RoutineService {
             RoutineDetailCat routineDetailCat = RoutineDetailCat.createRoutineDetailCat(routineDetailDto, routine);
             for (int i = 1; i < 8; i++) {
                 routineDetailCat.addRoutineCheck(
-                        RoutineCheck.builder()
-                                .checkDaySeq(i)
-                                .content(null)
-                                .imgPath(null)
-                                .imgOriginalName(null)
-                                .routineDetailCat(routineDetailCat)
-                                .build());
+                        RoutineCheck.createRoutineCheck(i, null, null, null, routineDetailCat, null));
             }
 
             routine.addRoutineDetailCat(routineDetailCat);
@@ -118,7 +115,49 @@ public class RoutineService {
                 .build();
     }
 
+    /**
+     * 사용자가 진행중인 루틴이 있는지에 대한 activeFlag와 진행중인 루틴이 있으면 routineDetailCat에 대한 인증 내역들 반환
+     *
+     * @param memberId
+     * @return
+     */
     public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Integer memberId) {
-        return null;
+        RoutinePrivateCheckResponseDto routinePrivateCheckResponseDto = null;
+        List<RoutineCheckResponseDto> resultlist = new ArrayList<>();
+        Routine currentRoutine = null;
+
+        try {
+            currentRoutine = queryFactory.selectFrom(routine)
+                    .where(routine.member.memberId.eq(memberId)
+                            .and(routine.activeFlag.eq((byte) 1))).fetchFirst();
+
+            List<Integer> routiuneDetailCatIds = queryFactory.selectDistinct(routineDetailCat.routineDetailCatId)
+                    .from(routineCheck)
+                    .where(routineDetailCat.routine.routineId.eq(currentRoutine.getRoutineId())).fetch();
+
+            for (Integer routineDetailCatId : routiuneDetailCatIds) {
+
+                List<RoutineCheckDto> fetch = queryFactory
+                        .select(Projections.constructor(RoutineCheckDto.class, routineCheck))
+                        .from(routineCheck)
+                        .where(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCatId)).fetch();
+
+                RoutineDetailDto routineDetailDto = queryFactory.select(Projections.constructor(RoutineDetailDto.class, routineDetail))
+                        .from(routineDetail)
+                        .where(routineDetail.routineDetailId.eq(
+                                queryFactory.select(routineDetailCat.routineDetail.routineDetailId)
+                                        .from(routineDetailCat)
+                                        .where(routineDetailCat.routineDetailCatId.eq(routineDetailCatId)).fetchFirst()
+                        )).fetchFirst();
+
+                resultlist.add(new RoutineCheckResponseDto(routineDetailDto, fetch));
+            }
+
+            routinePrivateCheckResponseDto = new RoutinePrivateCheckResponseDto((byte) 1, resultlist);
+        } catch (Exception e) {
+            routinePrivateCheckResponseDto = new RoutinePrivateCheckResponseDto((byte) 0, null);
+        }
+
+        return routinePrivateCheckResponseDto;
     }
 }

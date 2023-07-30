@@ -49,4 +49,15 @@ public class Routine {
     public void addRoutineDetailCat(RoutineDetailCat routineDetailCat) {
         this.routineDetailCats.add(routineDetailCat);
     }
+
+    @Override
+    public String toString() {
+        return "Routine{" +
+                "routineId=" + routineId +
+                ", memberId=" + member.getMemberId() +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", activeFlag=" + activeFlag +
+                '}';
+    }
 }
