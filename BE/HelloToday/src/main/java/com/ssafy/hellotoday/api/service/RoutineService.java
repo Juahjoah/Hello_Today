@@ -10,6 +10,7 @@ import com.ssafy.hellotoday.api.response.routine.RoutinePrivateCheckResponseDto;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
+import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
@@ -85,7 +86,19 @@ public class RoutineService {
 
         for (RoutineDetailDto routineDetailDto : routineDetailDtoList) {
             RoutineDetailCat routineDetailCat = RoutineDetailCat.createRoutineDetailCat(routineDetailDto, routine);
+            System.out.println("!!!");
+            for (int i = 1; i < 8; i++) {
+                routineDetailCat.addRoutineCheck(
+                        RoutineCheck.builder()
+                                .checkDaySeq(i)
+                                .content(null)
+                                .imgPath(null)
+                                .imgOriginalName(null)
+                                .routineDetailCat(routineDetailCat)
+                                .build());
+            }
 
+            System.out.println("???");
             routine.addRoutineDetailCat(routineDetailCat);
         }
 
