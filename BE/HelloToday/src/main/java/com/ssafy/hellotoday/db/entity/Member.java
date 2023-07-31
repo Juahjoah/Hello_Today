@@ -39,6 +39,7 @@ public class Member extends BaseEntity {
 
     public Member(Integer memberId) {
         super();
+        this.memberId = memberId;
     }
     @Builder
     public Member(String email, String nickname, Role role, String profilePath, String socialId, Social socialType) {

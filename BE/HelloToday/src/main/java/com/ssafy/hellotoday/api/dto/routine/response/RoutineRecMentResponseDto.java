@@ -1,7 +1,6 @@
 package com.ssafy.hellotoday.api.dto.routine.response;
 
 import com.ssafy.hellotoday.db.entity.routine.RecommendMent;
-import com.ssafy.hellotoday.db.entity.routine.RoutineBigCat;
 import lombok.Getter;
 
 @Getter
