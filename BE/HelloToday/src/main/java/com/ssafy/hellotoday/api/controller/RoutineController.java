@@ -21,7 +21,7 @@ import java.util.List;
 @Tag(name = "Routine", description = "루틴 관련 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/routine")
+@RequestMapping("/api/routine")
 public class RoutineController {
 
     private final RoutineService routineService;
