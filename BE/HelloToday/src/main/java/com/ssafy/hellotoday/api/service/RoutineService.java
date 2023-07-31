@@ -167,12 +167,6 @@ public class RoutineService {
     public void checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto) {
         RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckDto().getRoutineCheckId());
 
-        routineCheck.update(routineCheckRequestDto.getRoutineCheckDto().getContent()
-                          , routineCheckRequestDto.getRoutineCheckDto().getImgPath()
-                          , routineCheckRequestDto.getRoutineCheckDto().getImgOriName()
-                          , routineCheckRequestDto.getRoutineCheckDto().getCheckDate());
-
-        System.out.println(routineCheck.toString());
-
+        routineCheck.update(routineCheck);
     }
 }
