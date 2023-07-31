@@ -4,6 +4,7 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.MypageService;
 import com.ssafy.hellotoday.db.entity.Member;
@@ -70,5 +71,12 @@ public class MypageController {
     @DeleteMapping("/cheermsg/{cheerMessageId}")
     public void deleteCheerMessage(@PathVariable Integer cheerMessageId) {
         mypageService.deleteCheerMessage(cheerMessageId);
+    }
+
+    @Operation(summary = "디데이 작성", description = "마이페이지 안에 있는 D-day 작성 API")
+    @PostMapping("/dday")
+    public BaseResponseDto writeDday(@RequestBody DdayRequestDto ddayRequestDto) {
+        System.out.println(ddayRequestDto.toString());
+        return BaseResponseDto.builder().build();
     }
 }
