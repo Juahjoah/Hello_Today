@@ -48,7 +48,8 @@
   font-family: "TheJamsil5Bold";
   margin: 0 auto;
   width: 100%;
-  height: 1080px;
+  /* height: 1080px; */
+  height: 100vh;
 }
 
 .Homecontainer {
@@ -72,19 +73,19 @@
 } */
 
 .HomeText {
-  text-align: left;
   color: #353535;
-  font-size: 4rem;
+  font-size: 6rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  text-align: left;
   padding: 59px 0px 0px 84px;
 }
 
 .logo {
   position: absolute;
-  top: 3%;
-  right: 14%;
+  right: 20px;
+  top: 22px;
   width: 407px;
   height: 361px;
   flex-shrink: 0;
@@ -97,13 +98,16 @@
 /* 작심삼일 텍스트 */
 .threedays {
   color: #a581cf;
-  font-size: 64px;
+  font-size: 6rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
 .calendersml {
+  position: absolute;
+  left: 73px;
+  top: 436.01px;
   display: flex;
   width: 7.79244rem;
   height: 6.43369rem;
@@ -115,7 +119,9 @@
 }
 
 .spr {
-  display: flex;
+  position: absolute;
+  left: 395px;
+  top: 537px;
   width: 12.1875rem;
   height: 12.75rem;
   flex-direction: column;
@@ -126,6 +132,9 @@
 }
 
 .music {
+  position: absolute;
+  left: 677px;
+  top: 392.76px;
   width: 4.46063rem;
   height: 5.23644rem;
   transform: rotate(-20.295deg);
@@ -134,7 +143,9 @@
 }
 
 .jumpchar {
-  display: flex;
+  position: absolute;
+  left: 698px;
+  top: 458px;
   width: 22.89944rem;
   height: 25.2655rem;
   flex-direction: column;
@@ -146,6 +157,9 @@
 
 /*그림자*/
 .HomeOneEllipse {
+  position: absolute;
+  left: 768px;
+  top: 802px;
   width: 100px;
   height: 50px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -154,7 +168,9 @@
 }
 
 .calenderlag {
-  display: flex;
+  position: absolute;
+  left: 1138.75px;
+  top: 31px;
   width: 250.975px;
   height: 207.213px;
   opacity: 0.5;
@@ -165,8 +181,15 @@
   animation: jumpAnimation 2s infinite;
 }
 
+.hide {
+  background-color: pink;
+  width: auto;
+  height: 720px;
+}
 .memopad {
-  display: flex;
+  position: absolute;
+  right: 100px;
+  top: 300px;
   width: 34.75rem;
   height: 43rem;
   flex-direction: column;
@@ -180,53 +203,74 @@
 }
 
 .Homecirclebold {
-  width: 361.563px;
-  height: 361.563px;
+  position: absolute;
+  right: 300px;
+  top: 830px;
+  width: 34.68744rem;
+  height: 36.15456rem;
   transform: rotate(-41.112deg);
   flex-shrink: 0;
+  z-index: 0;
 }
 
 .HomeBtn {
   display: flex;
-  padding: 30px 0px 0px 253px;
+  /* padding: 30px 0px 0px 0px; */
+  margin-right: 50rem;
+  width: 50rem;
+  justify-content: space-around;
+  z-index: 5;
 }
 .HomeBtnlog {
   display: flex;
   width: 22.5rem;
   height: 5.625rem;
-  padding: 1rem 2rem;
-  flex-direction: column;
-  align-items: flex-start;
+  /* padding: 1rem 2rem; */
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   border-radius: 0.25rem;
   border: 2px solid #fff;
   background: #ffd24c;
   box-shadow: -4px 4px 0px 0px #ffd24c;
+  /*글자*/
   color: #fff;
   font-family: "TheJamsil5Bold";
-  font-size: 40px;
+  font-size: 2rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 32px; /* 133.333% */
-  margin-right: 20px;
+  line-height: 2rem; /* 100% */
 }
 
 .HomeBtnMove {
   display: flex;
   width: 22.5rem;
   height: 5.625rem;
-  padding: 1rem 2rem;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  /* padding: 1rem 2rem; */
+  /* flex-direction: column; */
+  /* align-items: flex-start; */
+  /* flex-shrink: 0; */
   border-radius: 0.5rem;
   border: 2px solid #fff;
   background: #ffe69a;
   box-shadow: -4px 4px 0px 0px #ffe69a;
+  z-index: 1;
+  /*글자*/
   color: #fff;
   font-family: "TheJamsil5Bold";
-  font-size: 40px;
+  font-size: 2rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 32px; /* 133.333% */
+  line-height: 2rem; /* 100% */
+}
+
+.HomebtnloginLink {
+  text-decoration: none;
+}
+
+.HomebtnMoveLink {
+  text-decoration: none;
 }
