@@ -23,7 +23,7 @@ public class MemberDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getSocialId();
+        return member.getNickname();
     }
 
     @Override
