@@ -1,12 +1,11 @@
 package com.ssafy.hellotoday.api.controller;
 
-import com.ssafy.hellotoday.api.dto.member.response.TokenDto;
+import com.ssafy.hellotoday.api.dto.member.TokenDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +36,7 @@ public class MemberController {
     @PostMapping("/api/members/kakao/login")
     public ResponseEntity<String> loginKakao(@RequestBody Map<String, String> codeRequest) {
         Member member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.get("code"), redirectKakaoUrl);
-        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getEmail());
+        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getEmail(), member.getSocialType());
         String refreshToken = jwtTokenProvider.createRefreshToken(member.getMemberId());
         jwtTokenProvider.storeRefreshToken(member.getMemberId(), refreshToken);
 
@@ -52,7 +51,7 @@ public class MemberController {
         System.out.println("codeRequest = " + codeRequest.get("code"));
         Member member = memberService.findNaverMemberByAuthorizedCode(codeRequest.get("code"), naverState);
 
-        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getEmail());
+        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getEmail(),member.getSocialType());
         String refreshToken = jwtTokenProvider.createRefreshToken(member.getMemberId());
         jwtTokenProvider.storeRefreshToken(member.getMemberId(), refreshToken);
 

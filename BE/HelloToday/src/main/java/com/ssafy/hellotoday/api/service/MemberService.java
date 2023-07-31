@@ -1,10 +1,13 @@
 package com.ssafy.hellotoday.api.service;
 
-import com.ssafy.hellotoday.api.dto.member.response.TokenDto;
+import com.ssafy.hellotoday.api.dto.member.TokenDto;
+import com.ssafy.hellotoday.api.dto.member.response.MemberMypageResponse;
+import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.Role;
 import com.ssafy.hellotoday.db.entity.Social;
+
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import com.ssafy.hellotoday.oauth2.kakao.KakaoMemberDto;
@@ -17,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,15 +95,6 @@ public class MemberService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public Member findMemberByJwtToken(String token) {
-        String id = String.valueOf(Jwts.parser().setSigningKey(secretKey.getBytes())
-                .parseClaimsJws(token).getBody().get("id"));
-        System.out.println("id = " + id);
-        return memberRepository.findById(Integer.parseInt(id))
-                .orElseThrow(() -> new IllegalArgumentException("이메일 \"" + 1 + "\"에 해당하는 사용자가 존재하지 않습니다."));
-    }
-
     @Transactional
     public TokenDto reissue(String refreshToken) {
 
@@ -126,7 +119,7 @@ public class MemberService {
         if (!refreshToken.equals(redisRefreshToken)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, -1, "refresh Token 불일치");
         }
-        String newAccessToken = jwtTokenProvider.createAccessToken(findMember.getMemberId(), findMember.getEmail());
+        String newAccessToken = jwtTokenProvider.createAccessToken(findMember.getMemberId(), findMember.getEmail(), findMember.getSocialType());
         String newRefreshToken = jwtTokenProvider.createRefreshToken(findMember.getMemberId());
 
         jwtTokenProvider.storeRefreshToken(findMember.getMemberId(),newRefreshToken);
@@ -134,5 +127,32 @@ public class MemberService {
         tokenDto.setAccessToken(newAccessToken);
         tokenDto.setRefreshToken(newRefreshToken);
         return tokenDto;
+    }
+
+    @Transactional(readOnly = true)
+    public Member findMemberByJwtToken(String token) {
+        String email = Jwts.parser().setSigningKey(secretKey.getBytes())
+                .parseClaimsJws(token).getBody().getSubject();
+        String socialType = String.valueOf(Jwts.parser().setSigningKey(secretKey.getBytes())
+                .parseClaimsJws(token).getBody().get("socialType"));
+        System.out.println("socialType = " + socialType);
+        Social social = Social.NAVER;
+        if (socialType.equals("KAKAO")) {
+            social = Social.KAKAO;
+        }
+        return memberRepository.findByEmailAndSocialType(email,social)
+                .orElseThrow(() -> new IllegalArgumentException("이메일 \"" + email + "\"과 소셜\""+ socialType+"\" 에해당하는 사용자가 존재하지 않습니다."));
+    }
+
+
+    public MemberResponseDto getMemberInfo(Member findMember) {
+
+        return MemberResponseDto.builder()
+                .memberId(findMember.getMemberId())
+                .stMsg(findMember.getStMsg())
+                .email(findMember.getEmail())
+                .profilePath(findMember.getProfilePath())
+                .build();
+
     }
 }

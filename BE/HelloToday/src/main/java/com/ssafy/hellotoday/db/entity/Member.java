@@ -41,7 +41,7 @@ public class Member extends BaseEntity {
         super();
     }
     @Builder
-    public Member(String email, String nickname, Role role, String profilePath, String socialId,Social socialType) {
+    public Member(String email, String nickname, Role role, String profilePath, String socialId, Social socialType) {
         this.email = email;
         this.nickname = nickname;
         this.role = role;
@@ -50,5 +50,12 @@ public class Member extends BaseEntity {
         this.socialType = socialType;
     }
 
+    //회원정보 수정
+    public void updateMemberInfo(String nickname, String stMsg, String profileOriginalName, String profilePath) {
+        this.nickname = nickname;
+        this.stMsg = stMsg;
+        this.profileOriginalName = profileOriginalName;
+        this.profilePath = profilePath;
 
+    }
 }
