@@ -1,14 +1,17 @@
 package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
-import com.ssafy.hellotoday.api.dto.member.response.MemberMypageResponse;
+import com.ssafy.hellotoday.api.dto.member.response.MypageModifyResponse;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
+import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponse;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.Role;
+import com.ssafy.hellotoday.db.entity.ShowInfo;
 import com.ssafy.hellotoday.db.entity.Social;
 
 import com.ssafy.hellotoday.db.repository.MemberRepository;
+import com.ssafy.hellotoday.db.repository.ShowInfoRepository;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import com.ssafy.hellotoday.oauth2.kakao.KakaoMemberDto;
 import com.ssafy.hellotoday.oauth2.kakao.KakaoOAuth2;
@@ -23,6 +26,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -35,6 +40,7 @@ public class MemberService {
     private final KakaoOAuth2 kakaoOAuth2;
     private final NaverOAuth2 naverOAuth2;
     private final MemberRepository memberRepository;
+    private final ShowInfoRepository showInfoRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     private final RedisTemplate<String, String> redisTemplate;
@@ -62,8 +68,12 @@ public class MemberService {
                     .socialId(socialId)
                     .socialType(Social.KAKAO)
                     .build();
-
-            return memberRepository.save(member);
+            Member saveMember = memberRepository.save(member);
+            ShowInfo showInfo = ShowInfo.builder()
+                    .member(saveMember)
+                    .build();
+            showInfoRepository.save(showInfo);
+            return saveMember;
         }
     }
 
@@ -79,19 +89,27 @@ public class MemberService {
         if(optionalMember.isPresent()) return optionalMember.get();
             // 가입된 유저가 아니라면 회원가입 진행
         else {
-            String name = naverMemberDto.getName();
+
             String profilePath = naverMemberDto.getProfilePath();
+
+
 
             Member member = Member.builder()
                     .role(Role.USER)
                     .email(email)
-                    .nickname(name)
+                    .nickname("1")
                     .profilePath(profilePath)
                     .socialId(socialId)
                     .socialType(Social.NAVER)
                     .build();
+            Member saveMember = memberRepository.save(member);
 
-            return memberRepository.save(member);
+            ShowInfo showInfo = ShowInfo.builder()
+                    .member(saveMember)
+                    .build();
+            showInfoRepository.save(showInfo);
+
+            return saveMember;
         }
     }
 
@@ -131,20 +149,15 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Member findMemberByJwtToken(String token) {
-        String email = Jwts.parser().setSigningKey(secretKey.getBytes())
-                .parseClaimsJws(token).getBody().getSubject();
-        String socialType = String.valueOf(Jwts.parser().setSigningKey(secretKey.getBytes())
-                .parseClaimsJws(token).getBody().get("socialType"));
-        System.out.println("socialType = " + socialType);
-        Social social = Social.NAVER;
-        if (socialType.equals("KAKAO")) {
-            social = Social.KAKAO;
-        }
-        return memberRepository.findByEmailAndSocialType(email,social)
-                .orElseThrow(() -> new IllegalArgumentException("이메일 \"" + email + "\"과 소셜\""+ socialType+"\" 에해당하는 사용자가 존재하지 않습니다."));
+
+        String id = String.valueOf(Jwts.parser().setSigningKey(secretKey.getBytes())
+                .parseClaimsJws(token).getBody().get("id"));
+
+        return memberRepository.findById(Integer.parseInt(id))
+                .orElseThrow(() -> new IllegalArgumentException("소셜아이디 \""+ id+" \" 에해당하는 사용자가 존재하지 않습니다."));
     }
 
-
+    @Transactional(readOnly = true)
     public MemberResponseDto getMemberInfo(Member findMember) {
 
         return MemberResponseDto.builder()
@@ -152,6 +165,29 @@ public class MemberService {
                 .stMsg(findMember.getStMsg())
                 .email(findMember.getEmail())
                 .profilePath(findMember.getProfilePath())
+                .build();
+
+    }
+    @Transactional(readOnly = true)
+    public MypageModifyResponse getWidgetInfo(Member findMember) {
+
+        ShowInfo showInfo = showInfoRepository.findByIdWithMember(findMember.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 유저의 공개정보가 없습니다"));
+
+        ShowInfoFlagsResponse showInfoFlag = ShowInfoFlagsResponse.builder()
+                .cheerMessageFlag(showInfo.getCheerMessageFlag())
+                .ddayFlag(showInfo.getDdayFlag())
+                .galleryFlag(showInfo.getGalleryFlag())
+                .oneDiaryFlag(showInfo.getOneDiaryFlag())
+                .goalFlag(showInfo.getGoalFlag())
+                .routineHistoryFlag(showInfo.getRoutineHistoryFlag())
+                .wishListFlag(showInfo.getWishListFlag())
+                .build();
+
+
+        return MypageModifyResponse.builder()
+                .member(findMember)
+                .showInfo(showInfoFlag)
                 .build();
 
     }
