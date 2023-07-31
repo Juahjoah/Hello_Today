@@ -78,7 +78,8 @@ public class JwtTokenProvider {
     }
 
     public String getUserPk(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        String id = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return id ;
     }
 
     public String getUserId(String token) {
@@ -100,8 +101,6 @@ public class JwtTokenProvider {
 
     public void storeRefreshToken(int id, String refreshToken) {
         Member member = memberRepository.findById(id).orElse(null);
-        System.out.println("member = " + member);
-        System.out.println("refreshTokendb저장 = " + refreshToken);
         if (member != null) {
             redisTemplate.opsForValue().set(
                     Integer.toString(id),
