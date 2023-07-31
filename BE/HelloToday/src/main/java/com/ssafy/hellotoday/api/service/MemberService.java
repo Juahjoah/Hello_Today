@@ -26,6 +26,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -87,14 +89,15 @@ public class MemberService {
         if(optionalMember.isPresent()) return optionalMember.get();
             // 가입된 유저가 아니라면 회원가입 진행
         else {
-            String name = naverMemberDto.getName();
+
             String profilePath = naverMemberDto.getProfilePath();
+
 
 
             Member member = Member.builder()
                     .role(Role.USER)
                     .email(email)
-                    .nickname(name)
+                    .nickname("1")
                     .profilePath(profilePath)
                     .socialId(socialId)
                     .socialType(Social.NAVER)

@@ -38,7 +38,7 @@ public class MemberController {
     @PostMapping("/api/members/kakao/login")
     public ResponseEntity<String> loginKakao(@RequestBody Map<String, String> codeRequest) {
         Member member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.get("code"), redirectKakaoUrl);
-        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getEmail(), member.getSocialType());
+        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getSocialId(), member.getSocialType());
         String refreshToken = jwtTokenProvider.createRefreshToken(member.getMemberId());
         jwtTokenProvider.storeRefreshToken(member.getMemberId(), refreshToken);
 
@@ -83,12 +83,16 @@ public class MemberController {
 
         Member findMember = memberService.findMemberByJwtToken(accessToken);
 
-        System.out.println(findMember.toString());
 
 
         return new ResponseEntity<>("TokenTest성공", HttpStatus.OK);
     }
 
 
+    @GetMapping("/yyy")
+    public void test(HttpServletRequest servletRequest) {
+        String accessToken = servletRequest.getHeader("Authorization");
+
+    }
 
 }
