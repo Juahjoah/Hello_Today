@@ -4,9 +4,11 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.MypageService;
+import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,8 +58,7 @@ public class MypageController {
     @PostMapping("/cheermsg")
     public BaseResponseDto writeCheerMessage(@RequestBody CheerMessageRequestDto cheerMsgRequestDto) {
         System.out.println(cheerMsgRequestDto.toString());
-        mypageService.writeCheerMessage(cheerMsgRequestDto);
-        return BaseResponseDto.builder().build();
+        return mypageService.writeCheerMessage(cheerMsgRequestDto);
     }
 
     @Operation(summary = "응원 메시지 수정", description = "마이페이지 안에 있는 메시지 수정 API")
@@ -77,6 +78,13 @@ public class MypageController {
     @PostMapping("/dday")
     public BaseResponseDto writeDday(@RequestBody DdayRequestDto ddayRequestDto) {
         System.out.println(ddayRequestDto.toString());
+        mypageService.writeDday(ddayRequestDto);
         return BaseResponseDto.builder().build();
     }
+
+//    @Operation(summary = "디데이 수정", description = "마이페이지 안에 있는 D-day 수정 API")
+//    @PutMapping("/dday")
+//    public BaseResponseDto modifyDday(@RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
+//
+//    }
 }
