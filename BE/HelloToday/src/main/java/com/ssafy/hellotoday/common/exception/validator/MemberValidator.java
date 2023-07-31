@@ -15,12 +15,12 @@ import java.util.Optional;
 @Component
 public class MemberValidator {
 
-    public void checkMember(Optional<Member> member) {
+    public void checkMember(Optional<Member> member, int memberId) {
         if (member.isEmpty()) {
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .code(MemberErrorEnum.INVALID_MEMBER.getCode())
-                    .message(MemberErrorEnum.INVALID_MEMBER.getMessage())
+                    .message(MemberErrorEnum.INVALID_MEMBER.getMessage() + memberId)
                     .build();
         }
     }

@@ -20,7 +20,7 @@ import java.util.List;
 @Tag(name = "Follow", description = "팔로우 관련 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/follow")
+@RequestMapping("/api/follow")
 public class FollowController {
     private final FollowService followService;
 

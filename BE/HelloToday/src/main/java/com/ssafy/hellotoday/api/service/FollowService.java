@@ -139,7 +139,7 @@ public class FollowService {
 
     private Member getMember(int memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
-        memberValidator.checkMember(member);
+        memberValidator.checkMember(member, memberId);
         return member.get();
     }
 }
