@@ -1,5 +1,5 @@
 import classes from "./HomeThree.module.css";
-import SelectRoutineList from "../common/SelectRoutineList";
+import SelectRoutineList from "../ServicePage/SelectRoutineList";
 import { useEffect, useState } from "react";
 
 function HomeThree() {
