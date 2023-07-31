@@ -1,0 +1,83 @@
+/* HomeOne*/
+.HomeMain {
+  padding: 6em 0 4em 0;
+  height: 1080px;
+}
+
+.Homecontainer {
+  margin: 0 auto;
+}
+
+/* 컴포넌트 텍스트 */
+.HomeOneText {
+  color: #343434;
+  text-align: center;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.HomeOneText :nth-child(2) {
+  color: #a581cf;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 100px;
+}
+
+.Homecircleregular {
+  width: 262.999px;
+  height: 274.123px;
+  flex-shrink: 0;
+  position: absolute;
+  top: -400px;
+  left: 200px;
+}
+
+.Homecirclesemibold {
+  width: 386.475px;
+  height: 381.146px;
+  flex-shrink: 0;
+  position: absolute;
+  top: -200px;
+  right: 100px;
+}
+
+/* 말풍선 이미지*/
+.Homespeechbubble {
+  width: 382px;
+  height: 214px;
+  flex-shrink: 0;
+}
+
+/* 이모지 이미지*/
+.Homeconfusedface,
+.Homefacewithsteamfromnose,
+.Homegrinningfacewithsweat {
+  width: 185.333px;
+  height: 164.64px;
+  flex-shrink: 0;
+}
+
+.HomeOneImg {
+  display: flex;
+  padding: 200px 0px 100px 80px;
+  position: relative;
+  justify-content: center;
+}
+
+.HomeOneImgItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* img를 세로로 가운데 정렬 */
+  padding-right: 30px;
+  /* 다른 스타일들 추가 */
+}
+
+.Homesbubbletext {
+  position: relative;
+  bottom: 180px;
+  font-size: 30px;
+}
