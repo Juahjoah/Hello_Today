@@ -5,22 +5,22 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class MemberMypageResponse {
+public class MypageModifyResponse {
 
     private final Integer MemberId;
     private final String nickname;
     private final String stMsg;
     private final String profileOriginalName;
     private final String profilePath;
-    private final Integer showInfoId;
+    private final ShowInfoFlagsResponse showInfo;
 
     @Builder
-    public MemberMypageResponse(Member member, Integer showInfoId) {
+    public MypageModifyResponse(Member member, ShowInfoFlagsResponse showInfo) {
         MemberId = member.getMemberId();
         nickname = member.getNickname();
         stMsg = member.getStMsg();
         profileOriginalName = member.getProfileOriginalName();
         profilePath = member.getProfilePath();
-        this.showInfoId = showInfoId;
+        this.showInfo = showInfo;
     }
 }
