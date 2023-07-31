@@ -36,9 +36,13 @@
 }
 
 .HomeTwoinnerText {
-  font-size: 98px;
-  color: black;
-  -webkit-text-stroke: 0.5px wheat;
+  color: #fff;
+  text-align: center;
+  font-size: 4rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  -webkit-text-stroke: 0.15rem #f5deb3;
 }
 
 .HomeTwoCircle {
@@ -104,7 +108,8 @@
 
 .HomeTwoCircleinnerText {
   font-size: 35px;
-  white-space: pre-line;
-  width: 350px;
+  word-break: keep-all;
+  /* white-space: pre-line; */
+  width: 315px;
   margin: 3rem auto;
 }
