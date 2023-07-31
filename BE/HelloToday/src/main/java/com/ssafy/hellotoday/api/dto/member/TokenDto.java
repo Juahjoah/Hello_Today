@@ -1,4 +1,4 @@
-package com.ssafy.hellotoday.api.dto.member.response;
+package com.ssafy.hellotoday.api.dto.member;
 
 import lombok.Builder;
 import lombok.Data;

@@ -2,6 +2,7 @@ package com.ssafy.hellotoday.jwt;
 
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.Member;
+import com.ssafy.hellotoday.db.entity.Social;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -45,10 +46,10 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(Integer id, String userPk) {
+    public String createAccessToken(Integer id, String userPk, Social socialType) {
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣음
         claims.put("id", id);
-
+        claims.put("socialType",socialType);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
