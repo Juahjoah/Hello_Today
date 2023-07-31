@@ -1,14 +1,11 @@
 package com.ssafy.hellotoday.api.dto.routine;
 
-import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
 public class RoutineCheckDto {
     private Integer routineCheckId;
     private Integer routineDetailCatId;
