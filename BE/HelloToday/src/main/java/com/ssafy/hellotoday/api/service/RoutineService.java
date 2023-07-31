@@ -5,10 +5,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
+import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.*;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
 import com.ssafy.hellotoday.db.entity.routine.*;
+import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
@@ -37,6 +39,7 @@ public class RoutineService {
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
+    private final RoutineCheckRepository routineCheckRepository;
 
     public List<RoutineDetailResponseDto> detailRoutine() {
         List<RoutineDetailResponseDto> list = new ArrayList<>();
@@ -159,5 +162,17 @@ public class RoutineService {
         }
 
         return routinePrivateCheckResponseDto;
+    }
+
+    public void checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto) {
+        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckDto().getRoutineCheckId());
+
+        routineCheck.update(routineCheckRequestDto.getRoutineCheckDto().getContent()
+                          , routineCheckRequestDto.getRoutineCheckDto().getImgPath()
+                          , routineCheckRequestDto.getRoutineCheckDto().getImgOriName()
+                          , routineCheckRequestDto.getRoutineCheckDto().getCheckDate());
+
+        System.out.println(routineCheck.toString());
+
     }
 }

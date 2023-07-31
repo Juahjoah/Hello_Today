@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,4 @@ import java.util.List;
 public class RoutineRequestDto {
     private Integer memberId;
     private List<RoutineDetailDto> routineDetailDtoList = new ArrayList<>();
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private byte activeFlag;
 }

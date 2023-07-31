@@ -1,6 +1,7 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutinePrivateCheckResponseDto;
@@ -43,8 +44,14 @@ public class RoutineController {
         return routineService.makeRoutine(routineRequestDto);
     }
 
-    @GetMapping("private/private/{memberId}")
+    @GetMapping("private/{memberId}")
     public ResponseEntity<RoutinePrivateCheckResponseDto> getPrivateRoutineCheck(@PathVariable Integer memberId) {
         return new ResponseEntity<>(routineService.getPrivateRoutineCheck(memberId), HttpStatus.OK);
+    }
+
+    @PutMapping("private/check")
+    public void checkPrivateRoutine(@RequestBody RoutineCheckRequestDto routineCheckRequestDto) {
+        System.out.println("hello");
+        routineService.checkPrivateRoutine(routineCheckRequestDto);
     }
 }
