@@ -5,6 +5,7 @@ import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+@Tag(name = "Member", description = "멤버 관련 API")
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
