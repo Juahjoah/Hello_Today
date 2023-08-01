@@ -30,6 +30,7 @@ public class DdayResponseDto {
 
     public DdayResponseDto(Dday dday) {
         this.memberId = dday.getMember().getMemberId();
+        this.finalDate = dday.getFinalDate();
         this.createdDate = dday.getCreatedDate();
         this.modifiedDate = dday.getModifiedDate();
         this.content = dday.getContent();
