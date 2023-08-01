@@ -4,7 +4,9 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
@@ -27,9 +29,8 @@ public class MypageService {
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
 
-    public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto) {
+    public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
         Member member = getMember(cheerMessageRequestDto.getMemberId());
-        Member writer = getMember(cheerMessageRequestDto.getWriterId());
 
         CheerMessage cheerMessage = CheerMessage.builder()
                 .member(member)
@@ -41,29 +42,44 @@ public class MypageService {
 
         return BaseResponseDto.builder()
                 .success(true)
-                .message(MypageEnum.SUCCESS_WRTITE_CHEER_MESSAGE.getName())
-                .data(cheerMessage)
+                .message(MypageEnum.SUCCESS_WRITE_CHEER_MESSAGE.getName())
+                .data(CheerMessageResponseDto.builder()
+                        .writerId(writer.getMemberId())
+                        .memberId(member.getMemberId())
+                        .createdDate(cheerMessage.getCreatedDate())
+                        .modifiedDate(cheerMessage.getModifiedDate())
+                        .content(cheerMessage.getContent())
+                        .build())
                 .build();
     }
 
-    private Member getMember(Integer memberId) {
-        Optional<Member> member = memberRepository.findById(memberId);
-        return member.get();
-    }
-
-    public void modifyCheerMessage(CheerMessageModifyRequestDto cheerMessageModifyRequestDto) {
-        Member writer = getMember(cheerMessageModifyRequestDto.getWriterId());
-
+    public BaseResponseDto modifyCheerMessage(CheerMessageModifyRequestDto cheerMessageModifyRequestDto, Member writer) {
         CheerMessage cheerMessage = cheerMessageRepository.findById(cheerMessageModifyRequestDto.getCheerMessageId()).get();
         cheerMessage.update(cheerMessageModifyRequestDto, writer);
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(MypageEnum.SUCCESS_MODIFY_CHEER_MESSAGE.getName())
+                .data(CheerMessageResponseDto.builder()
+                        .writerId(writer.getMemberId())
+                        .memberId(cheerMessage.getMember().getMemberId())
+                        .createdDate(cheerMessage.getMember().getCreatedDate())
+                        .modifiedDate(cheerMessage.getModifiedDate())
+                        .content(cheerMessage.getContent())
+                        .build())
+                .build();
     }
 
-    public void deleteCheerMessage(Integer cheerMessageId) {
+    public BaseResponseDto deleteCheerMessage(Integer cheerMessageId) {
         cheerMessageRepository.deleteById(cheerMessageId);
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(MypageEnum.SUCCESS_DELETE_CHEER_MESSAGE.getName())
+                .build();
     }
 
-    public BaseResponseDto writeDday(DdayRequestDto ddayRequestDto) {
-        Member member = getMember(ddayRequestDto.getMemberId());
+    public BaseResponseDto writeDday(DdayRequestDto ddayRequestDto, Member member) {
 
         Dday dday = Dday.builder()
                 .member(member)
@@ -76,22 +92,35 @@ public class MypageService {
 
         return BaseResponseDto.builder()
                 .success(true)
-                .message(null)
-                .data(null)
+                .message(MypageEnum.SUCCESS_WRITE_DDAY_MESSAGE.getName())
+                .data(DdayResponseDto.builder()
+                        .memberId(dday.getMember().getMemberId())
+                        .finalDate(dday.getFinalDate())
+                        .content(dday.getContent())
+                        .createdDate(dday.getCreatedDate())
+                        .modifiedDate(dday.getModifiedDate())
+                        .type(String.valueOf(dday.getType()))
+                        .build())
                 .build();
     }
 
-    public BaseResponseDto modifyDday(DdayModifyRequestDto ddayModifyRequestDto) {
-//        Member writer = getMember(ddayModifyRequestDto.getMemberId());
+    public BaseResponseDto modifyDday(DdayModifyRequestDto ddayModifyRequestDto, Member member) {
 
         Dday dday = ddayRepository.findById(ddayModifyRequestDto.getDdayId()).get();
 
-        dday.update(ddayModifyRequestDto);
+        dday.update(ddayModifyRequestDto, member);
 
         return BaseResponseDto.builder()
                 .success(true)
-                .message(null)
-                .data(null)
+                .message(MypageEnum.SUCCESS_MODIFY_DDAY_MESSAGE.getName())
+                .data(DdayResponseDto.builder()
+                        .memberId(dday.getMember().getMemberId())
+                        .finalDate(dday.getFinalDate())
+                        .content(dday.getContent())
+                        .createdDate(dday.getCreatedDate())
+                        .modifiedDate(dday.getModifiedDate())
+                        .type(String.valueOf(dday.getType()))
+                        .build())
                 .build();
     }
 
@@ -99,8 +128,12 @@ public class MypageService {
         ddayRepository.deleteById(ddayId);
         return BaseResponseDto.builder()
                 .success(true)
-                .message(null)
-                .data(null)
+                .message(MypageEnum.SUCCESS_DELETE_DDAY_MESSAGE.getName())
                 .build();
+    }
+
+    private Member getMember(Integer memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        return member.get();
     }
 }

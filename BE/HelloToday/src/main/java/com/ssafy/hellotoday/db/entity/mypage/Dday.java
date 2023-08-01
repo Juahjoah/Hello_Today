@@ -33,8 +33,9 @@ public class Dday extends BaseEntity {
         this.type = type;
     }
 
-    public void update(DdayModifyRequestDto ddayModifyRequestDto) {
+    public void update(DdayModifyRequestDto ddayModifyRequestDto, Member member) {
         this.finalDate = ddayModifyRequestDto.getFinalDate();
         this.content = ddayModifyRequestDto.getContent();
+        this.member = member;
     }
 }

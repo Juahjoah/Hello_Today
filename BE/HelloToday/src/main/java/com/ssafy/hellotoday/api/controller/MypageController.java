@@ -18,16 +18,14 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/members")
+@RequestMapping("/api/members")
 public class MypageController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
     private final MypageService mypageService;
 
-
     //마이페이지 사용자 상세 정보 조회
-
     @GetMapping
     public MemberResponseDto DefaultMemberInfo(HttpServletRequest httpServletRequest) {
 
@@ -53,41 +51,56 @@ public class MypageController {
 //
 //    }
 
-    @Operation(summary = "응원 메시지 작성", description = "마이페이지 안에 있는 메시지 작성 API")
+    @Operation(summary = "응원 메시지 작성", description = "마이페이지 안에 있는 응원 메시지 작성 API")
     @PostMapping("/cheermsg")
-    public BaseResponseDto writeCheerMessage(@RequestBody CheerMessageRequestDto cheerMsgRequestDto) {
-        System.out.println(cheerMsgRequestDto.toString());
-        return mypageService.writeCheerMessage(cheerMsgRequestDto);
+    public BaseResponseDto writeCheerMessage(HttpServletRequest httpServletRequest, @RequestBody CheerMessageRequestDto cheerMsgRequestDto) {
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+
+        return mypageService.writeCheerMessage(cheerMsgRequestDto, member);
     }
 
-    @Operation(summary = "응원 메시지 수정", description = "마이페이지 안에 있는 메시지 수정 API")
+    @Operation(summary = "응원 메시지 수정", description = "마이페이지 안에 있는 응원 메시지 수정 API")
     @PutMapping("/cheermsg")
-    public BaseResponseDto modifyCheerMessage(@RequestBody CheerMessageModifyRequestDto cheerMessageRequestDto) {
-        mypageService.modifyCheerMessage(cheerMessageRequestDto);
-        return BaseResponseDto.builder().build();
+    public BaseResponseDto modifyCheerMessage(HttpServletRequest httpServletRequest, @RequestBody CheerMessageModifyRequestDto cheerMessageRequestDto) {
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+
+        return mypageService.modifyCheerMessage(cheerMessageRequestDto, member);
     }
 
-    @Operation(summary = "응원 메시지 삭제", description = "마이페이지 안에 있는 메시지 삭제 API")
+    @Operation(summary = "응원 메시지 삭제", description = "마이페이지 안에 있는 응원 메시지 삭제 API")
     @DeleteMapping("/cheermsg/{cheerMessageId}")
-    public void deleteCheerMessage(@PathVariable Integer cheerMessageId) {
-        mypageService.deleteCheerMessage(cheerMessageId);
+    public BaseResponseDto deleteCheerMessage(@PathVariable Integer cheerMessageId) {
+        return mypageService.deleteCheerMessage(cheerMessageId);
     }
 
     @Operation(summary = "디데이 작성", description = "마이페이지 안에 있는 D-day 작성 API")
     @PostMapping("/dday")
-    public BaseResponseDto writeDday(@RequestBody DdayRequestDto ddayRequestDto) {
-        return mypageService.writeDday(ddayRequestDto);
+    public BaseResponseDto writeDday(HttpServletRequest httpServletRequest, @RequestBody DdayRequestDto ddayRequestDto) {
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+
+        return mypageService.writeDday(ddayRequestDto, member);
     }
 
     @Operation(summary = "디데이 수정", description = "마이페이지 안에 있는 D-day 수정 API")
     @PutMapping("/dday")
-    public BaseResponseDto modifyDday(@RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
-        return mypageService.modifyDday(ddayModifyRequestDto);
+    public BaseResponseDto modifyDday(HttpServletRequest httpServletRequest, @RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+
+        return mypageService.modifyDday(ddayModifyRequestDto, member);
     }
 
     @Operation(summary = "디데이 삭제", description = "마이페이지 안에 있는 D-day 삭제 API")
-    @DeleteMapping("/{ddayId}")
+    @DeleteMapping("dday/{ddayId}")
     public BaseResponseDto deleteDday(@PathVariable Integer ddayId) {
+        System.out.println(ddayId);
         return mypageService.deleteDday(ddayId);
     }
 }

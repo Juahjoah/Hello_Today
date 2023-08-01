@@ -172,19 +172,16 @@ public class RoutineService {
     public void checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto) {
         RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckDto().getRoutineCheckId());
 
-        System.out.println(">>" + uploadDir);
-
-//        MultipartFile file = routineCheckRequestDto.getRoutineCheckDto().getFile();
-//        String fullPath = uploadDir + file.getOriginalFilename();
+//        try {
+//            MultipartFile file = routineCheckRequestDto.getRoutineCheckDto().getFile();
+//            String fullPath = uploadDir + routineCheckRequestDto.getRoutineCheckDto().getImgOriName();
 //
-//        System.out.println(">>" + fullPath);
-//
-//        try{
 //            file.transferTo(new File(fullPath));
-//
+//            System.out.println(">>" + uploadDir);
 //        } catch (Exception e) {
-//
+//            System.out.println(e.getMessage());
 //        }
-//        routineCheck.update(routineCheck, fullPath);
+
+        routineCheck.update(routineCheckRequestDto);
     }
 }

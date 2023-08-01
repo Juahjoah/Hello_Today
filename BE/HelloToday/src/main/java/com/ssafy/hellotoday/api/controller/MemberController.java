@@ -53,7 +53,7 @@ public class MemberController {
         System.out.println("codeRequest = " + codeRequest.get("code"));
         Member member = memberService.findNaverMemberByAuthorizedCode(codeRequest.get("code"), naverState);
 
-        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getEmail(),member.getSocialType());
+        String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getSocialId(),member.getSocialType());
         String refreshToken = jwtTokenProvider.createRefreshToken(member.getMemberId());
         jwtTokenProvider.storeRefreshToken(member.getMemberId(), refreshToken);
 
