@@ -1,6 +1,5 @@
 package com.ssafy.hellotoday.db.entity.routine;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -22,4 +21,8 @@ public class RoutineDetail {
     private RoutineTag routineTag;
     private String content;
     private String imgPath;
+
+    public RoutineDetail(Integer routineDetailId) {
+        this.routineDetailId = routineDetailId;
+    }
 }
