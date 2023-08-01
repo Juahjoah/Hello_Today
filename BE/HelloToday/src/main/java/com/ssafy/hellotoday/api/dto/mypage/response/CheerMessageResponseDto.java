@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.api.dto.mypage.response;
 
+import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,5 +21,13 @@ public class CheerMessageResponseDto {
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.content = content;
+    }
+
+    public CheerMessageResponseDto(CheerMessage cheerMessage) {
+        this.writerId = cheerMessage.getWriter().getMemberId();
+        this.memberId = cheerMessage.getMember().getMemberId();
+        this.createdDate = cheerMessage.getCreatedDate();
+        this.modifiedDate = cheerMessage.getModifiedDate();
+        this.content = cheerMessage.getContent();
     }
 }

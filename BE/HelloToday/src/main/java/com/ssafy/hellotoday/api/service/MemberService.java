@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
 import com.ssafy.hellotoday.api.dto.member.response.MypageModifyResponse;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
@@ -191,4 +192,6 @@ public class MemberService {
                 .build();
 
     }
+
+
 }

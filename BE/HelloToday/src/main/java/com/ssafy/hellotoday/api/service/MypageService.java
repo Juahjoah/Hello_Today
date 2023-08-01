@@ -16,10 +16,13 @@ import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +73,16 @@ public class MypageService {
                 .build();
     }
 
+    public List<CheerMessageResponseDto> getCheerMessages(Integer memberId, PageRequest pageRequest) {
+
+        List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberId(memberId, pageRequest);
+
+        List<CheerMessageResponseDto> result = cheerMessageList.stream()
+                .map(cheerMessage -> new CheerMessageResponseDto(cheerMessage))
+                .collect(Collectors.toList());
+        return result;
+    }
+
     public BaseResponseDto deleteCheerMessage(Integer cheerMessageId) {
         cheerMessageRepository.deleteById(cheerMessageId);
 
@@ -77,6 +90,15 @@ public class MypageService {
                 .success(true)
                 .message(MypageEnum.SUCCESS_DELETE_CHEER_MESSAGE.getName())
                 .build();
+    }
+
+    public List<DdayResponseDto> getDdays(Integer memberId) {
+        List<Dday> ddayList = ddayRepository.findByMember_MemberId(memberId);
+
+        List<DdayResponseDto> result = ddayList.stream()
+                .map(dday -> new DdayResponseDto(dday))
+                .collect(Collectors.toList());
+        return result;
     }
 
     public BaseResponseDto writeDday(DdayRequestDto ddayRequestDto, Member member) {
@@ -135,5 +157,11 @@ public class MypageService {
     private Member getMember(Integer memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
         return member.get();
+    }
+
+    public BaseResponseDto getRoutineHistory(Integer memberId) {
+        return BaseResponseDto.builder()
+                .success(true)
+                .data(null).build();
     }
 }

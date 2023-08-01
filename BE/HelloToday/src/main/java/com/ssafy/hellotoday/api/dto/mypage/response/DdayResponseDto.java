@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.api.dto.mypage.response;
 
+import com.ssafy.hellotoday.db.entity.mypage.Dday;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,13 @@ public class DdayResponseDto {
         this.modifiedDate = modifiedDate;
         this.content = content;
         this.type = type;
+    }
+
+    public DdayResponseDto(Dday dday) {
+        this.memberId = dday.getMember().getMemberId();
+        this.createdDate = dday.getCreatedDate();
+        this.modifiedDate = dday.getModifiedDate();
+        this.content = dday.getContent();
+        this.type = String.valueOf(dday.getType());
     }
 }
