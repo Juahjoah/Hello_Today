@@ -4,6 +4,7 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.MypageService;
@@ -75,14 +76,18 @@ public class MypageController {
     @Operation(summary = "디데이 작성", description = "마이페이지 안에 있는 D-day 작성 API")
     @PostMapping("/dday")
     public BaseResponseDto writeDday(@RequestBody DdayRequestDto ddayRequestDto) {
-        System.out.println(ddayRequestDto.toString());
-        mypageService.writeDday(ddayRequestDto);
-        return BaseResponseDto.builder().build();
+        return mypageService.writeDday(ddayRequestDto);
     }
 
-//    @Operation(summary = "디데이 수정", description = "마이페이지 안에 있는 D-day 수정 API")
-//    @PutMapping("/dday")
-//    public BaseResponseDto modifyDday(@RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
-//
-//    }
+    @Operation(summary = "디데이 수정", description = "마이페이지 안에 있는 D-day 수정 API")
+    @PutMapping("/dday")
+    public BaseResponseDto modifyDday(@RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
+        return mypageService.modifyDday(ddayModifyRequestDto);
+    }
+
+    @Operation(summary = "디데이 삭제", description = "마이페이지 안에 있는 D-day 삭제 API")
+    @DeleteMapping("/{ddayId}")
+    public BaseResponseDto deleteDday(@PathVariable Integer ddayId) {
+        return mypageService.deleteDday(ddayId);
+    }
 }

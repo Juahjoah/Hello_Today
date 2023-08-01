@@ -58,9 +58,9 @@ public class RoutineCheck extends BaseEntity {
                 '}';
     }
 
-    public void update(RoutineCheck routineCheck) {
+    public void update(RoutineCheck routineCheck, String fullPath) {
         this.content = routineCheck.getContent();
-        this.imgPath = routineCheck.getImgPath();
+        this.imgPath = fullPath;
         this.imgOriginalName = routineCheck.getImgOriginalName();
         this.checkDate = LocalDateTime.now();
     }

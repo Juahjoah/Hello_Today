@@ -16,10 +16,13 @@ import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,12 +37,14 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDe
 @RequiredArgsConstructor
 @Transactional
 public class RoutineService {
-
+    @Value("${image.path}")
+    private String uploadDir;
     private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
     private final RoutineCheckRepository routineCheckRepository;
+
 
     public List<RoutineDetailResponseDto> detailRoutine() {
         List<RoutineDetailResponseDto> list = new ArrayList<>();
@@ -167,6 +172,19 @@ public class RoutineService {
     public void checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto) {
         RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckDto().getRoutineCheckId());
 
-        routineCheck.update(routineCheck);
+        System.out.println(">>" + uploadDir);
+
+//        MultipartFile file = routineCheckRequestDto.getRoutineCheckDto().getFile();
+//        String fullPath = uploadDir + file.getOriginalFilename();
+//
+//        System.out.println(">>" + fullPath);
+//
+//        try{
+//            file.transferTo(new File(fullPath));
+//
+//        } catch (Exception e) {
+//
+//        }
+//        routineCheck.update(routineCheck, fullPath);
     }
 }

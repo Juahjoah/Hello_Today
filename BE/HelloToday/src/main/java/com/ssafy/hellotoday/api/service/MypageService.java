@@ -3,6 +3,7 @@ package com.ssafy.hellotoday.api.service;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
@@ -61,7 +62,7 @@ public class MypageService {
         cheerMessageRepository.deleteById(cheerMessageId);
     }
 
-    public void writeDday(DdayRequestDto ddayRequestDto) {
+    public BaseResponseDto writeDday(DdayRequestDto ddayRequestDto) {
         Member member = getMember(ddayRequestDto.getMemberId());
 
         Dday dday = Dday.builder()
@@ -72,5 +73,34 @@ public class MypageService {
                 .build();
 
         ddayRepository.save(dday);
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(null)
+                .data(null)
+                .build();
+    }
+
+    public BaseResponseDto modifyDday(DdayModifyRequestDto ddayModifyRequestDto) {
+//        Member writer = getMember(ddayModifyRequestDto.getMemberId());
+
+        Dday dday = ddayRepository.findById(ddayModifyRequestDto.getDdayId()).get();
+
+        dday.update(ddayModifyRequestDto);
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(null)
+                .data(null)
+                .build();
+    }
+
+    public BaseResponseDto deleteDday(Integer ddayId) {
+        ddayRepository.deleteById(ddayId);
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(null)
+                .data(null)
+                .build();
     }
 }

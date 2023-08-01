@@ -2,6 +2,7 @@ package com.ssafy.hellotoday.api.dto.routine;
 
 import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ public class RoutineCheckDto {
     private String imgPath;
     private String imgOriName;
     private LocalDateTime checkDate;
+    private MultipartFile file;
 
     public RoutineCheckDto(RoutineCheck routineCheck) {
         this.routineCheckId = routineCheck.getRoutineCheckId();
