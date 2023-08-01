@@ -1,5 +1,5 @@
 import classes from "../components/Home/HomeThree.module.css";
-import SelectRoutineList from "../components/common/SelectRoutineList";
+import SelectRoutineList from "../components/ServicePage/SelectRoutineList";
 
 function RoutineSelectTest() {
   const testList = [1, 2, 3];
