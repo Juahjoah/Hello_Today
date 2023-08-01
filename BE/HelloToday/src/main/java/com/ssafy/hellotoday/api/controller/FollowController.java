@@ -31,7 +31,7 @@ public class FollowController {
     @Operation(summary = "사용자의 팔로워 목록 조회", description = "요청한 회원을 팔로우하고 있는 사용자들을 조회하는 API")
     @GetMapping("/follower")
     public List<MemberResponseDto> getFollowers(HttpServletRequest httpServletRequest) {
-        // 로그인 한 사용자 정보 조회 -> 로그인 사용자 정보가 잘못됐을 시 에러 발생코드 추가돼야 함
+
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
 
@@ -41,7 +41,7 @@ public class FollowController {
     @Operation(summary = "사용자의 팔로잉 목록 조회", description = "요청한 회원이 팔로우하고 있는 사용자들을 조회하는 API")
     @GetMapping("/following")
     public List<MemberResponseDto> getFollowings(HttpServletRequest httpServletRequest) {
-        // 로그인 한 사용자 정보 조회 -> 로그인 사용자 정보가 잘못됐을 시 에러 발생코드 추가돼야 함
+
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
 
@@ -54,7 +54,7 @@ public class FollowController {
                                         @RequestBody FollowSaveRequestDto followSaveRequestDto) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        System.out.println("dfdfd");
+
         Member member = memberService.findMemberByJwtToken(token);
         System.out.println(member.getMemberId());
         return followService.enrollFollow(member, followSaveRequestDto);

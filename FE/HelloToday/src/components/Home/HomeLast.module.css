@@ -1,28 +1,39 @@
 .HomeLast {
   font-family: TheJamsil5Bold;
-  position: relative;
-  text-align: center;
+  display: flex;
+
+  justify-content: center;
 }
 
 .HomeLastText {
   color: #181818;
   font-size: 64px;
-  font-weight: 400;
-  line-height: normal;
-  position: absolute;
-  top: 7%;
-  left: 30%;
   z-index: 1;
+  /* align-self: center; */
+  position: absolute;
+  margin-top: 20rem;
+  margin-right: 20rem;
+  line-height: 6rem;
 }
 
 .mountain {
   position: relative;
   margin-top: 20rem;
+  display: flex;
+  justify-content: center;
 }
 
 .mountainman {
   width: 569px;
-  height: 1012px;
   position: absolute;
-  left: 57%;
+  padding-top: 10rem;
+  left: 80rem;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-end; */
+  text-align: center;
+  background-color: rgba(255, 242, 204, 0.3);
 }
