@@ -1,7 +1,10 @@
 package com.ssafy.hellotoday.api.controller;
 
+import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutinePrivateCheckResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.api.service.RoutineService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +21,7 @@ import java.util.List;
 @Tag(name = "Routine", description = "루틴 관련 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/routine")
+@RequestMapping("/api/routine")
 public class RoutineController {
 
     private final RoutineService routineService;
@@ -35,9 +38,20 @@ public class RoutineController {
         return new ResponseEntity<>(routineService.getRecommendMents(), HttpStatus.OK);
     }
 
+    @Operation(summary = "개인 루틴 생성", description = "세분류 루틴 선택 이후 루틴 생성")
     @PostMapping("/private")
-    public ResponseEntity<String> makeRoutine(@RequestBody RoutineRequestDto routineRequestDto) {
-        routineService.makeRoutine(routineRequestDto);
-        return new ResponseEntity<>("루틴 생성 완료", HttpStatus.OK);
+    public BaseResponseDto makeRoutine(@RequestBody RoutineRequestDto routineRequestDto) {
+        return routineService.makeRoutine(routineRequestDto);
+    }
+
+    @GetMapping("private/{memberId}")
+    public ResponseEntity<RoutinePrivateCheckResponseDto> getPrivateRoutineCheck(@PathVariable Integer memberId) {
+        return new ResponseEntity<>(routineService.getPrivateRoutineCheck(memberId), HttpStatus.OK);
+    }
+
+    @PutMapping("private/check")
+    public void checkPrivateRoutine(@RequestBody RoutineCheckRequestDto routineCheckRequestDto) {
+        System.out.println("hello");
+        routineService.checkPrivateRoutine(routineCheckRequestDto);
     }
 }
