@@ -59,11 +59,12 @@ public class MypageController {
     public ShowInfoFlagsResponseDto myPageWidgetInfo(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token==null) return null;
+        if (token == null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
         return memberService.getWidgetInfo(findMember);
+    }
 
     @Operation(summary = "응원 메시지 조회", description = "마이페이지 내이 있는 전체 응원 메시지 조회<br>" +
                                                         "page: 조회 페이지 번호(0부터 시작), size: 한 페이지 당 보일 개수")
