@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.content {
+  padding: 10px 0px 10px 12.87px;
+}
+
+.login {
+  border: 1px solid black;
+  width: 90%;
+  height: 75vh;
+  margin: 170px auto 0 auto;
+  display: flex;
+  /* justify-content: center; */
+  justify-items: center;
+  align-items: center;
+}
+
+.LoginText {
+  color: #000;
+  font-family: The Jamsil OTF;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding-left: 300px;
+}
+p {
+  color: #000;
+  font-family: The Jamsil OTF;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+p:nth-child(1) {
+  color: #000;
+  font-family: The Jamsil OTF;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+p:nth-child(2) {
+  margin-top: 3rem;
+}
+p:nth-child(3) {
+  margin-top: -3rem;
+}
+
+.logo {
+  width: 13rem;
+  height: 10.75rem;
+  flex-shrink: 0;
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+}
+
+.kakao {
+}
+
+.naver {
+  width: 23.125rem;
+  height: 5.2rem;
+}
