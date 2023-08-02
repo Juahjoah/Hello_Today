@@ -22,7 +22,7 @@ import allAuth from "../../components/User/allAuth";
 
 function RoutineSelectMain() {
   // state & data
-  const API_URL = "http://localhost:8080";
+  const API_URL = "http://i9b308.p.ssafy.io:8080";
   const location = useLocation();
   // const memberId = location.state.memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
