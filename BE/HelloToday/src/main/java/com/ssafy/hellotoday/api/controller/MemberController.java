@@ -1,8 +1,12 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.member.LoginDto;
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
+import com.ssafy.hellotoday.api.dto.member.request.LoginRequestDto;
 import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
+import com.ssafy.hellotoday.api.dto.member.request.NickNameRequestDto;
+import com.ssafy.hellotoday.api.dto.member.response.LoginResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
@@ -36,8 +40,10 @@ public class MemberController {
     // 회원가입 또는 로그인
     @Operation(summary = "카카오로 로그인 및 회원가입", description = "카카오로 로그인 및 회원가입 하는 API")
     @PostMapping("/api/members/kakao/login")
-    public ResponseEntity<String> loginKakao(@RequestBody Map<String, String> codeRequest) {
-        Member member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.get("code"), redirectKakaoUrl);
+    public ResponseEntity<LoginResponseDto> loginKakao(@RequestBody LoginRequestDto codeRequest) {
+        LoginDto member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.getCode(), redirectKakaoUrl);
+
+
         String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getSocialId(), member.getSocialType());
         String refreshToken = jwtTokenProvider.createRefreshToken(member.getMemberId());
         jwtTokenProvider.storeRefreshToken(member.getMemberId(), refreshToken);
@@ -45,13 +51,16 @@ public class MemberController {
         return ResponseEntity.ok()
                 .header("Authorization", accessToken)
                 .header("Authorization-Refresh",refreshToken)
-                .body("로그인 되었습니다.");
+                .body(LoginResponseDto.builder()
+                        .message("카카오 로그인을 성공하셨습니다")
+                        .memberId(member.getMemberId())
+                        .firstLogin(member.isFirstLogin())
+                        .build());
     }
     @Operation(summary = "네이버로 로그인 및 회원가입", description = "네이버로 로그인 하는 API")
     @PostMapping("/api/members/naver/login")
-    public ResponseEntity<String> loginNaver(@RequestBody Map<String, String> codeRequest) {
-        System.out.println("codeRequest = " + codeRequest.get("code"));
-        Member member = memberService.findNaverMemberByAuthorizedCode(codeRequest.get("code"), naverState);
+    public ResponseEntity<LoginResponseDto> loginNaver(@RequestBody LoginRequestDto codeRequest) {
+        LoginDto member = memberService.findNaverMemberByAuthorizedCode(codeRequest.getCode(), naverState);
 
         String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getSocialId(),member.getSocialType());
         String refreshToken = jwtTokenProvider.createRefreshToken(member.getMemberId());
@@ -60,7 +69,11 @@ public class MemberController {
         return ResponseEntity.ok()
                 .header("Authorization", accessToken)
                 .header("Authorization-Refresh",refreshToken)
-                .body("로그인 되었습니다.");
+                .body(LoginResponseDto.builder()
+                        .message("네이버 로그인을 성공하셨습니다")
+                        .memberId(member.getMemberId())
+                        .firstLogin(member.isFirstLogin())
+                        .build());
     }
     @Operation(summary = "access&refresh 토큰 재발급", description = "access토큰 만료되면 refresh 토큰을 이용하여 재발급하는 API")
     @GetMapping("/api/members/reissue")
@@ -89,6 +102,18 @@ public class MemberController {
         Member findMember = memberService.findMemberByJwtToken(token);
 
         return memberService.updateMemberInfo(id,memberInfoUpdateRequestDto,findMember, file);
+    }
+
+    @Operation(summary = "닉네임 설정", description = "닉네임 중복 검사 및 설정")
+    @PutMapping("/api/members/nickname")
+    private BaseResponseDto setNickname(@RequestBody NickNameRequestDto nickNameRequestDto,
+                                        HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return memberService.updateNickname(nickNameRequestDto.getNickname(),findMember);
     }
 
     @GetMapping("/api/test")

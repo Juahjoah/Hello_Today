@@ -68,6 +68,9 @@ public class Member extends BaseEntity {
         this.profilePath = fileDto.getProfilePath();
     }
 
-    //버킷리스트한줄일기수정
+    //닉네임 수정
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
 }
