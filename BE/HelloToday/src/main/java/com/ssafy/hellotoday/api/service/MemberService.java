@@ -2,12 +2,11 @@ package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.FileDto;
+import com.ssafy.hellotoday.api.dto.member.LoginDto;
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
 import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
 import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
-import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
-import com.ssafy.hellotoday.api.dto.member.response.MemberUpdateResposneDto;
-import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
+import com.ssafy.hellotoday.api.dto.member.response.*;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
 import com.ssafy.hellotoday.db.entity.Member;
@@ -52,7 +51,7 @@ public class MemberService {
     private final RedisTemplate<String, String> redisTemplate;
     // authorizedCode로 가입된 사용자 조회
     @Transactional
-    public Member findKakaoMemberByAuthorizedCode(String authorizedCode, String redirectUri) {
+    public LoginDto findKakaoMemberByAuthorizedCode(String authorizedCode, String redirectUri) {
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
         KakaoMemberDto kakaoUserDto = kakaoOAuth2.getMemberInfo(authorizedCode, redirectUri);
         String email = kakaoUserDto.getEmail();
@@ -60,7 +59,15 @@ public class MemberService {
         String socialId = kakaoUserDto.getSocialId();
         Optional<Member> optionalMember = memberRepository.findBySocialId(socialId);
 
-        if(optionalMember.isPresent()) return optionalMember.get();
+        if(optionalMember.isPresent()){
+
+            return LoginDto.builder()
+                    .memberId(optionalMember.get().getMemberId())
+                    .socialId(optionalMember.get().getSocialId())
+                    .socialType(optionalMember.get().getSocialType())
+                    .firstLogin(false)
+                    .build();
+        }
             // 가입된 유저가 아니라면 회원가입 진행
         else {
             String name = kakaoUserDto.getName();
@@ -79,12 +86,18 @@ public class MemberService {
                     .member(saveMember)
                     .build();
             showInfoRepository.save(showInfo);
-            return saveMember;
+
+            return  LoginDto.builder()
+                    .memberId(member.getMemberId())
+                    .socialId(member.getSocialId())
+                    .socialType(member.getSocialType())
+                    .firstLogin(true)
+                    .build();
         }
     }
 
     @Transactional
-    public Member findNaverMemberByAuthorizedCode(String authorizedCode, String naverState) {
+    public LoginDto findNaverMemberByAuthorizedCode(String authorizedCode, String naverState) {
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
         NaverMemberDto naverMemberDto = naverOAuth2.getMemberInfo(authorizedCode, naverState);
         String email = naverMemberDto.getEmail();
@@ -92,17 +105,24 @@ public class MemberService {
         String socialId = naverMemberDto.getSocialId();
         Optional<Member> optionalMember = memberRepository.findBySocialId(socialId);
 
-        if(optionalMember.isPresent()) return optionalMember.get();
-            // 가입된 유저가 아니라면 회원가입 진행
-        else {
+        if (optionalMember.isPresent()) {
+            return LoginDto.builder()
+                    .memberId(optionalMember.get().getMemberId())
+                    .socialId(optionalMember.get().getSocialId())
+                    .socialType(optionalMember.get().getSocialType())
+                    .firstLogin(false)
+                    .build();
+        }
+        // 가입된 유저가 아니라면 회원가입 진행
 
+        else {
             String profilePath = naverMemberDto.getProfilePath();
 
 
             Member member = Member.builder()
                     .role(Role.USER)
                     .email(email)
-                    .nickname(UUID.randomUUID()+"hello")
+                    .nickname(UUID.randomUUID() + "hello")
                     .profilePath(profilePath)
                     .socialId(socialId)
                     .socialType(Social.NAVER)
@@ -114,7 +134,12 @@ public class MemberService {
                     .build();
             showInfoRepository.save(showInfo);
 
-            return saveMember;
+            return LoginDto.builder()
+                    .memberId(member.getMemberId())
+                    .socialId(member.getSocialId())
+                    .socialType(member.getSocialType())
+                    .firstLogin(true)
+                    .build();
         }
     }
 
@@ -249,6 +274,26 @@ public class MemberService {
     }
 
 
+    @Transactional
+    public BaseResponseDto updateNickname(String nickname, Member member) {
+
+        Member findMember = memberRepository.findByNickname(nickname).orElse(null);
+        //닉네임 중복
+        if (findMember != null) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, -100, "닉네임이 중복되었습니다");
+        }
 
 
+        member.updateNickname(nickname);
+
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("닉네임이 등록되었습니다")
+                .data(NickNameResponseDto.builder()
+                        .memberId(member.getMemberId())
+                        .nickname(member.getNickname())
+                        .build())
+                .build();
+    }
 }
