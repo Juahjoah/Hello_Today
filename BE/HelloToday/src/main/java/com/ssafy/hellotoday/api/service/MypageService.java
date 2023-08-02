@@ -7,14 +7,17 @@ import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
 import com.ssafy.hellotoday.db.entity.mypage.DdayType;
+import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
+import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -31,7 +34,7 @@ public class MypageService {
     private final CheerMessageRepository cheerMessageRepository;
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
-
+    private final RoutineRepository routineRepository;
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
         Member member = getMember(cheerMessageRequestDto.getMemberId());
 
@@ -159,9 +162,17 @@ public class MypageService {
         return member.get();
     }
 
-    public BaseResponseDto getRoutineHistory(Integer memberId) {
-        return BaseResponseDto.builder()
-                .success(true)
-                .data(null).build();
+
+    // 내가 진행한 루틴에 대한 routineDetail에 대한 정보
+    public List<RoutineResponseDto> getRoutineHistory(Integer memberId) {
+
+        System.out.println("memberId: " + memberId);
+        List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
+
+        List<RoutineResponseDto> result = routineList.stream()
+                .map(routine -> new RoutineResponseDto(routine))
+                .collect(Collectors.toList());
+
+        return result;
     }
 }

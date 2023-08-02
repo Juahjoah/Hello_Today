@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.api.dto.routine.response.RoutinePrivateCheckResponse
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.RoutineService;
+import com.ssafy.hellotoday.db.entity.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -44,20 +45,29 @@ public class RoutineController {
     @Operation(summary = "개인 루틴 생성", description = "세분류 루틴 선택 이후 루틴 생성")
     @PostMapping("/private")
     public BaseResponseDto makeRoutine(HttpServletRequest httpServletRequest, @RequestBody RoutineRequestDto routineRequestDto) {
-        return routineService.makeRoutine(routineRequestDto);
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+
+        return routineService.makeRoutine(routineRequestDto, member);
     }
 
 
     @Operation(summary = "개인 루틴 진행 현황", description = "현재 진행 중인 루틴인 있는 지에 대한 flag" +
             "                                               <br>진행 중인 루틴이 있다면 진행 중인 상세 루틴에 대한 인증 내역 출력 ")
-    @GetMapping("private/{memberId}")
-    public ResponseEntity<RoutinePrivateCheckResponseDto> getPrivateRoutineCheck(@PathVariable Integer memberId) {
-        return new ResponseEntity<>(routineService.getPrivateRoutineCheck(memberId), HttpStatus.OK);
+    @GetMapping("/private")
+    public ResponseEntity<RoutinePrivateCheckResponseDto> getPrivateRoutineCheck(HttpServletRequest httpServletRequest, @PathVariable Integer memberId) {
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+
+        return new ResponseEntity<>(routineService.getPrivateRoutineCheck(member), HttpStatus.OK);
     }
 
-    @PutMapping("private/check")
+    @PutMapping("/private/check")
     public void checkPrivateRoutine(@RequestBody RoutineCheckRequestDto routineCheckRequestDto) {
-        System.out.println(routineCheckRequestDto.toString());
+
         routineService.checkPrivateRoutine(routineCheckRequestDto);
+
     }
 }
