@@ -8,6 +8,5 @@ import lombok.ToString;
 public class CheerMessageModifyRequestDto {
     private Integer cheerMessageId;
     private Integer memberId;
-    private Integer writerId;
     private String content;
 }

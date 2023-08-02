@@ -1,5 +1,7 @@
 package com.ssafy.hellotoday.db.entity.routine;
 
+import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
+import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.db.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -58,10 +60,11 @@ public class RoutineCheck extends BaseEntity {
                 '}';
     }
 
-    public void update(RoutineCheck routineCheck) {
-        this.content = routineCheck.getContent();
-        this.imgPath = routineCheck.getImgPath();
-        this.imgOriginalName = routineCheck.getImgOriginalName();
+    public void update(RoutineCheckRequestDto routineCheckRequestDto) {
+        RoutineCheckDto routineCheckDto = routineCheckRequestDto.getRoutineCheckDto();
+        this.content = routineCheckDto.getContent();
+        this.imgPath = routineCheckDto.getImgPath();
+        this.imgOriginalName = routineCheckDto.getImgOriName();
         this.checkDate = LocalDateTime.now();
     }
 }

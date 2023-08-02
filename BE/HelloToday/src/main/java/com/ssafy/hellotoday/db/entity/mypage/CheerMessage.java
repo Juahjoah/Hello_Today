@@ -35,7 +35,6 @@ public class CheerMessage extends BaseEntity {
 
     public void update(CheerMessageModifyRequestDto cheerMessageModifyRequestDto, Member writer) {
         this.content = cheerMessageModifyRequestDto.getContent();
-        System.out.println(content);
         this.writer = writer;
     }
 }
