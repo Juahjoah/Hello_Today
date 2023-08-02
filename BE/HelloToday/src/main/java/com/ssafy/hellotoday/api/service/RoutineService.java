@@ -9,6 +9,7 @@ import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.*;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
+import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.routine.*;
 import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
@@ -34,12 +35,14 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDe
 @RequiredArgsConstructor
 @Transactional
 public class RoutineService {
-
+//    @Value("${image.path}")
+    private String uploadDir;
     private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
     private final RoutineCheckRepository routineCheckRepository;
+
 
     public List<RoutineDetailResponseDto> detailRoutine() {
         List<RoutineDetailResponseDto> list = new ArrayList<>();
@@ -80,9 +83,9 @@ public class RoutineService {
         return new RoutineRecMentResponseDto(recommendMent);
     }
 
-    public BaseResponseDto makeRoutine(RoutineRequestDto routineRequestDto) {
+    public BaseResponseDto makeRoutine(RoutineRequestDto routineRequestDto, Member member) {
         Routine routine = Routine.createRoutine(
-                routineRequestDto.getMemberId()
+                member.getMemberId()
                 , LocalDateTime.now()
                 , LocalDateTime.now().plusDays(7)
                 , (byte) 1
@@ -102,14 +105,11 @@ public class RoutineService {
 
         routineRepository.save(routine);
 
-        List<RoutineDetailCat> routineDetailCatList = RoutineResponseDto.builder().routineDetailCatList(routine.getRoutineDetailCats()).build().getRoutineDetailCatList();
-
         return BaseResponseDto.builder()
                 .success(true)
                 .message(RoutineEnum.SUCCESS_MAKE_ROTUINE.getName())
                 .data(RoutineResponseDto.builder()
                         .routineId(routine.getRoutineId())
-                        .memberId(routine.getMember().getMemberId())
 //                        .routineDetailCatList(routineDetailCatList)
                         .startDate(routine.getStartDate())
                         .endDate(routine.getEndDate())
@@ -124,14 +124,14 @@ public class RoutineService {
      * @param memberId
      * @return
      */
-    public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Integer memberId) {
+    public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Member member) {
         RoutinePrivateCheckResponseDto routinePrivateCheckResponseDto = null;
         List<RoutineCheckResponseDto> resultlist = new ArrayList<>();
         Routine currentRoutine = null;
 
         try {
             currentRoutine = queryFactory.selectFrom(routine)
-                    .where(routine.member.memberId.eq(memberId)
+                    .where(routine.member.memberId.eq(member.getMemberId())
                             .and(routine.activeFlag.eq((byte) 1))).fetchFirst();
 
             List<Integer> routiuneDetailCatIds = queryFactory.selectDistinct(routineDetailCat.routineDetailCatId)
@@ -167,6 +167,16 @@ public class RoutineService {
     public void checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto) {
         RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckDto().getRoutineCheckId());
 
-        routineCheck.update(routineCheck);
+//        try {
+//            MultipartFile file = routineCheckRequestDto.getRoutineCheckDto().getFile();
+//            String fullPath = uploadDir + routineCheckRequestDto.getRoutineCheckDto().getImgOriName();
+//
+//            file.transferTo(new File(fullPath));
+//            System.out.println(">>" + uploadDir);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+
+        routineCheck.update(routineCheckRequestDto);
     }
 }

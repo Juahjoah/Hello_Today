@@ -1,5 +1,7 @@
 package com.ssafy.hellotoday.db.entity;
 
+import com.ssafy.hellotoday.api.dto.member.FileDto;
+import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,13 +52,25 @@ public class Member extends BaseEntity {
         this.socialId = socialId;
         this.socialType = socialType;
     }
-
     //회원정보 수정
-    public void updateMemberInfo(String nickname, String stMsg, String profileOriginalName, String profilePath) {
-        this.nickname = nickname;
-        this.stMsg = stMsg;
-        this.profileOriginalName = profileOriginalName;
-        this.profilePath = profilePath;
-
+    public void updateMemberInfo(MemberInfoUpdateRequestDto mypageUpdateRequestDto, FileDto fileDto) {
+        this.nickname = mypageUpdateRequestDto.getNickname();
+        this.stMsg = mypageUpdateRequestDto.getStMsg();
+        this.profileOriginalName = fileDto.getProfileOriginalName();
+        this.profilePath = fileDto.getProfilePath();
     }
+    public void updateMemberInfo(MemberInfoUpdateRequestDto mypageUpdateRequestDto) {
+        this.nickname = mypageUpdateRequestDto.getNickname();
+        this.stMsg = mypageUpdateRequestDto.getStMsg();
+    }
+    public void updateMemberInfo(FileDto fileDto) {
+        this.profileOriginalName = fileDto.getProfileOriginalName();
+        this.profilePath = fileDto.getProfilePath();
+    }
+
+    //닉네임 수정
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
 }
