@@ -7,6 +7,5 @@ import lombok.ToString;
 @Getter
 @ToString
 public class RoutineCheckRequestDto {
-    private Integer memberId;
     private RoutineCheckDto routineCheckDto;
 }
