@@ -37,7 +37,7 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDe
 @RequiredArgsConstructor
 @Transactional
 public class RoutineService {
-    @Value("${image.path}")
+//    @Value("${image.path}")
     private String uploadDir;
     private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
