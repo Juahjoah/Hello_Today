@@ -10,6 +10,5 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class RoutineRequestDto {
-    private Integer memberId;
     private List<RoutineDetailDto> routineDetailDtoList = new ArrayList<>();
 }

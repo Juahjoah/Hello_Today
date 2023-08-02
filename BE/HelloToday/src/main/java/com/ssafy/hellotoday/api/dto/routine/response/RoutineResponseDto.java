@@ -2,6 +2,7 @@ package com.ssafy.hellotoday.api.dto.routine.response;
 
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailCatDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
+import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,19 +14,21 @@ import java.util.List;
 @Getter
 public class RoutineResponseDto {
     private Integer routineId;
-    private Integer memberId;
-    private List<RoutineDetailCat> routineDetailCatList = new ArrayList<>();
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private byte activeFlag;
 
     @Builder
-    public RoutineResponseDto(Integer routineId, Integer memberId, List<RoutineDetailCat> routineDetailCatList, LocalDateTime startDate, LocalDateTime endDate, byte activeFlag) {
+    public RoutineResponseDto(Integer routineId, LocalDateTime startDate, LocalDateTime endDate, byte activeFlag) {
         this.routineId = routineId;
-        this.memberId = memberId;
-        this.routineDetailCatList = routineDetailCatList;
         this.startDate = startDate;
         this.endDate = endDate;
         this.activeFlag = activeFlag;
+    }
+
+    public RoutineResponseDto(Routine routine) {
+        this.routineId = routine.getRoutineId();
+        this.startDate = routine.getStartDate();
+        this.endDate = routine.getEndDate();
     }
 }

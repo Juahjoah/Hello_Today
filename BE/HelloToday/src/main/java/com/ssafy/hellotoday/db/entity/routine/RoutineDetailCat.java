@@ -12,7 +12,6 @@ import java.util.List;
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
-@Setter
 @Getter
 @ToString
 @NoArgsConstructor
