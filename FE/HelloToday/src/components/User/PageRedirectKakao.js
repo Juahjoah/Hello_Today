@@ -50,7 +50,7 @@ function RedirectPageKakao() {
         dispatch(Loginstate());
         //회원정보 저장하는 거 구현하기
 
-        navigate("/unselectmain");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error.data);
