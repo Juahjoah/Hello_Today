@@ -1,6 +1,8 @@
 package com.ssafy.hellotoday.api.controller;
 
+import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
+import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
@@ -10,10 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -77,22 +77,26 @@ public class MemberController {
                 .body("refresh과 accesstoken 재발급 성공하였습니다.");
     }
 
+    @Operation(summary = "멤버 정보 수정", description = "멤버 정보(프로필,닉네임,상태메시지) 수정")
+    @PutMapping("/api/members/{id}")
+    private BaseResponseDto updateMemberInfo(@PathVariable Integer id,
+                                             @RequestPart(name = "request") MemberInfoUpdateRequestDto memberInfoUpdateRequestDto,
+                                             @RequestParam(value = "file",required = false) MultipartFile file
+                                             ,HttpServletRequest httpServletRequest) {
+
+        memberInfoUpdateRequestDto.setFile(file);
+        String token = httpServletRequest.getHeader("Authorization");
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return memberService.updateMemberInfo(id,memberInfoUpdateRequestDto,findMember, file);
+    }
+
     @GetMapping("/api/test")
-    public ResponseEntity<String> tokenTest(HttpServletRequest httpServletRequest) {
-        String accessToken = httpServletRequest.getHeader("Authorization");
-
-        Member findMember = memberService.findMemberByJwtToken(accessToken);
-
+    public ResponseEntity<String> tokenTest() {
 
 
         return new ResponseEntity<>("TokenTest성공", HttpStatus.OK);
     }
 
-
-    @GetMapping("/yyy")
-    public void test(HttpServletRequest servletRequest) {
-        String accessToken = servletRequest.getHeader("Authorization");
-
-    }
 
 }

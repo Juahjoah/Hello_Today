@@ -1,7 +1,10 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
+import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
+import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
@@ -13,50 +16,54 @@ import com.ssafy.hellotoday.api.service.MypageService;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.print.Pageable;
 import java.util.List;
 
+@Tag(name = "MyPage", description = "마이페이지 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/members")
+@RequestMapping("api/members")
 public class MypageController {
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
     private final MypageService mypageService;
 
-    //마이페이지 사용자 상세 정보 조회
+
+
+    //마이페이지 사용자 정보 조회
+    @Operation(summary = "마이페이지 사용자 정보 조회", description = "사용자 정보(닉네임,상테메세지,프로필사진경로)")
     @GetMapping
-    public MemberResponseDto DefaultMemberInfo(HttpServletRequest httpServletRequest) {
+    public MemberResponseDto defaultMemberInfo(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token == null) return null;
+        if (token==null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
         return memberService.getMemberInfo(findMember);
 
     }
+    //마이페이지 편집 모드
+    @Operation(summary = "마이페이지 위젯 사용 여부 조회", description = "마이페이지 위젯 사용 여부를 알 수 있다(0:미사용.1:사용)")
+    @GetMapping("/widget")
+    public ShowInfoFlagsResponseDto myPageWidgetInfo(HttpServletRequest httpServletRequest) {
 
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
 
-//    @GetMapping("/mypage")
-//    public MemberMypageResponse DefaultMemberInfo(HttpServletRequest httpServletRequest) {
-//
-//        String token = httpServletRequest.getHeader("Authorization");
-//        if (token==null) return null;
-//
-//        Member findMember = memberService.findMemberByJwtToken(token);
-//
-//        return memberService.getMemberInfo(findMember);
-//
-//    }
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return memberService.getWidgetInfo(findMember);
 
     @Operation(summary = "응원 메시지 조회", description = "마이페이지 내이 있는 전체 응원 메시지 조회<br>" +
                                                         "page: 조회 페이지 번호(0부터 시작), size: 한 페이지 당 보일 개수")
@@ -66,7 +73,7 @@ public class MypageController {
         PageRequest pageRequest = PageRequest.of(page, size);
         return mypageService.getCheerMessages(memberId, pageRequest);
     }
-    
+
     @Operation(summary = "응원 메시지 작성", description = "마이페이지 안에 있는 응원 메시지 작성 API")
     @PostMapping("/cheermsg")
     public BaseResponseDto writeCheerMessage(HttpServletRequest httpServletRequest, @RequestBody CheerMessageRequestDto cheerMsgRequestDto) {
@@ -124,7 +131,7 @@ public class MypageController {
     public BaseResponseDto deleteDday(@PathVariable Integer ddayId) {
         return mypageService.deleteDday(ddayId);
     }
-    
+
     @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 내이 있는 루틴 히스토리 조회 API")
     @GetMapping("/routinehistory/{memberId}")
     public BaseResponseDto getRoutineHistory(@PathVariable Integer memberId) {

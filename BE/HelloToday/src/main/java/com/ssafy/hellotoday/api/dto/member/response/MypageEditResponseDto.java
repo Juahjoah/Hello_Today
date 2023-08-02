@@ -5,17 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class MypageModifyResponse {
+public class MypageEditResponseDto {
 
     private final Integer MemberId;
     private final String nickname;
     private final String stMsg;
     private final String profileOriginalName;
     private final String profilePath;
-    private final ShowInfoFlagsResponse showInfo;
+    private final ShowInfoFlagsResponseDto showInfo;
 
     @Builder
-    public MypageModifyResponse(Member member, ShowInfoFlagsResponse showInfo) {
+    public MypageEditResponseDto(Member member, ShowInfoFlagsResponseDto showInfo) {
         MemberId = member.getMemberId();
         nickname = member.getNickname();
         stMsg = member.getStMsg();
