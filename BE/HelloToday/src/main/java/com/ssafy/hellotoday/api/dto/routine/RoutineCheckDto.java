@@ -17,7 +17,6 @@ public class RoutineCheckDto {
     private String imgPath;
     private String imgOriName;
     private LocalDateTime checkDate;
-    private MultipartFile file;
 
     public RoutineCheckDto(RoutineCheck routineCheck) {
         this.routineCheckId = routineCheck.getRoutineCheckId();

@@ -1,8 +1,6 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
-import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
-import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
@@ -11,22 +9,17 @@ import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.MypageService;
 import com.ssafy.hellotoday.db.entity.Member;
-import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Tag(name = "MyPage", description = "마이페이지 관련 API")
@@ -135,9 +128,7 @@ public class MypageController {
 
     @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 내이 있는 루틴 히스토리 조회 API")
     @GetMapping("/routinehistory/{memberId}")
-    public BaseResponseDto getRoutineHistory(@PathVariable Integer memberId) {
+    public List<RoutineResponseDto> getRoutineHistory(@PathVariable Integer memberId) {
         return mypageService.getRoutineHistory(memberId);
     }
-
-
 }
