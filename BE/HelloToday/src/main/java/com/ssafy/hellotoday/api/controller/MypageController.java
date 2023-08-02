@@ -7,12 +7,10 @@ import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.db.entity.Member;
-import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RequestMapping("api/mypage")
 @Slf4j
-public class MyPageController {
+public class MypageController {
 
     private final MemberService memberService;
 
