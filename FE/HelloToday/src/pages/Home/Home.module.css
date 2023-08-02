@@ -92,11 +92,13 @@
 }
 
 .HomeText p {
+  font-family: "TheJamsil5Bold";
   margin: 5px;
 }
 
 /* 작심삼일 텍스트 */
 .threedays {
+  font-family: "TheJamsil5Bold";
   color: #a581cf;
   font-size: 6rem;
   font-style: normal;

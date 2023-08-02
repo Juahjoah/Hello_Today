@@ -4,66 +4,16 @@ import "@splidejs/react-splide/css";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 import classes from "../Home/HomeThree.module.css";
+import { useSelector } from "react-redux";
 
-function SelectRoutineList({ idx }) {
-  // 나중에는 DB에서 useEffect 이용해서 데이터 전부 받아서 Redux에 전부 넣어두고
-  // 뒤에 페이지에서도 꺼내쓰게 하면 될듯?
-  //   useEffect(() => {
-  //     axios({...})
-  //   },[])
-
-  const testList = [
-    {
-      id: 1,
-      content: "명상하기",
-      imgPath: "meditation.png",
-    },
-    {
-      id: 2,
-      content: "규칙적인 기상",
-      imgPath: "getup.png",
-    },
-    {
-      id: 3,
-      content: "방 청소하기",
-      imgPath: "cleaning.png",
-    },
-    {
-      id: 4,
-      content: "독서하기",
-      imgPath: "book.png",
-    },
-    {
-      id: 5,
-      content: "음악듣기",
-      imgPath: "music.png",
-    },
-    {
-      id: 6,
-      content: "마음챙기기",
-      imgPath: "heart.png",
-    },
-    {
-      id: 7,
-      content: "지인 전화하기",
-      imgPath: "phonecall.png",
-    },
-    {
-      id: 8,
-      content: "규칙적인 수면",
-      imgPath: "sleep.png",
-    },
-    {
-      id: 9,
-      content: "사진 남기기",
-      imgPath: "takephoto.png",
-    },
-    {
-      id: 10,
-      content: "반려견 산책",
-      imgPath: "dog.png",
-    },
-  ];
+function SelectRoutineList({
+  bigRoutine,
+  idx,
+  updateSelectedCount,
+  selectedCount,
+}) {
+  const isLogin = useSelector((state) => state.login.isLogin);
+  const testList = bigRoutine.routineDetail;
 
   const option = {
     type: "loop",
@@ -93,10 +43,14 @@ function SelectRoutineList({ idx }) {
         {testList.map((item) => {
           return (
             <SelectRoutineItem
-              key={item.id}
-              routineId={item.id}
+              key={item.routineDetailId}
+              routineId={item.routineDetailId}
               routineContent={item.content}
               routineImg={item.imgPath}
+              isModalOpen={false}
+              updateSelectedCount={updateSelectedCount}
+              selectedCount={selectedCount}
+              isLogin={isLogin}
             />
           );
         })}
