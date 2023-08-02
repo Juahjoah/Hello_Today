@@ -1,6 +1,5 @@
 package com.ssafy.hellotoday.db.repository;
 
-import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponse;
 import com.ssafy.hellotoday.db.entity.ShowInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
