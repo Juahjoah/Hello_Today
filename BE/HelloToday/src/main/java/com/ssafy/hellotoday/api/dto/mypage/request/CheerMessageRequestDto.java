@@ -7,6 +7,5 @@ import lombok.ToString;
 @ToString
 public class CheerMessageRequestDto {
     private Integer memberId;
-    private Integer writerId;
     private String content;
 }

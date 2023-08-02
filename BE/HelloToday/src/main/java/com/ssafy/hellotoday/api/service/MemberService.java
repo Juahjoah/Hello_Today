@@ -1,6 +1,7 @@
 package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.FileDto;
 import com.ssafy.hellotoday.api.dto.member.LoginDto;
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
@@ -117,6 +118,7 @@ public class MemberService {
 
         else {
             String profilePath = naverMemberDto.getProfilePath();
+
 
 
             Member member = Member.builder()
