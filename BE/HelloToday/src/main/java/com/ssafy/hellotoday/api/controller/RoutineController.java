@@ -56,7 +56,7 @@ public class RoutineController {
     @Operation(summary = "개인 루틴 진행 현황", description = "현재 진행 중인 루틴인 있는 지에 대한 flag" +
             "                                               <br>진행 중인 루틴이 있다면 진행 중인 상세 루틴에 대한 인증 내역 출력 ")
     @GetMapping("/private")
-    public ResponseEntity<RoutinePrivateCheckResponseDto> getPrivateRoutineCheck(HttpServletRequest httpServletRequest, @PathVariable Integer memberId) {
+    public ResponseEntity<RoutinePrivateCheckResponseDto> getPrivateRoutineCheck(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
