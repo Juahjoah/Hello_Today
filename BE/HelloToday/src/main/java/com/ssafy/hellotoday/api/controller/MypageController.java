@@ -1,88 +1,95 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
+import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
+import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
-import com.ssafy.hellotoday.api.service.MypageService;
 import com.ssafy.hellotoday.db.entity.Member;
-import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "MyPage", description = "마이페이지 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/members")
+@RequestMapping("api/mypage")
+@Slf4j
 public class MypageController {
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
-    private final MypageService mypageService;
 
 
-    //마이페이지 사용자 상세 정보 조회
 
+    //마이페이지 사용자 정보 조회
+    @Operation(summary = "마이페이지 사용자 정보 조회", description = "사용자 정보(닉네임,상테메세지,프로필사진경로)")
     @GetMapping
-    public MemberResponseDto DefaultMemberInfo(HttpServletRequest httpServletRequest) {
+    public MemberResponseDto defaultMemberInfo(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token == null) return null;
+        if (token==null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
         return memberService.getMemberInfo(findMember);
 
     }
+    //마이페이지 편집 모드
+    @Operation(summary = "마이페이지 위젯 사용 여부 조회", description = "마이페이지 위젯 사용 여부를 알 수 있다(0:미사용.1:사용)")
+    @GetMapping("/widget")
+    public ShowInfoFlagsResponseDto myPageWidgetInfo(HttpServletRequest httpServletRequest) {
 
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
 
-//    @GetMapping("/mypage")
-//    public MemberMypageResponse DefaultMemberInfo(HttpServletRequest httpServletRequest) {
-//
-//        String token = httpServletRequest.getHeader("Authorization");
-//        if (token==null) return null;
-//
-//        Member findMember = memberService.findMemberByJwtToken(token);
-//
-//        return memberService.getMemberInfo(findMember);
-//
-//    }
+        Member findMember = memberService.findMemberByJwtToken(token);
 
-    @Operation(summary = "응원 메시지 작성", description = "마이페이지 안에 있는 메시지 작성 API")
-    @PostMapping("/cheermsg")
-    public BaseResponseDto writeCheerMessage(@RequestBody CheerMessageRequestDto cheerMsgRequestDto) {
-        System.out.println(cheerMsgRequestDto.toString());
-        return mypageService.writeCheerMessage(cheerMsgRequestDto);
+        return memberService.getWidgetInfo(findMember);
+
     }
 
-    @Operation(summary = "응원 메시지 수정", description = "마이페이지 안에 있는 메시지 수정 API")
-    @PutMapping("/cheermsg")
-    public BaseResponseDto modifyCheerMessage(@RequestBody CheerMessageModifyRequestDto cheerMessageRequestDto) {
-        mypageService.modifyCheerMessage(cheerMessageRequestDto);
-        return BaseResponseDto.builder().build();
+    @Operation(summary = "위젯 선택", description = "사용할려는 위젯 사용여부 업데이트")
+    @PutMapping("/widget")
+    public BaseResponseDto editWidget(@RequestBody ShowInfoEditRequestDto showInfoEditRequestDto, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+
+        return memberService.editShowInfo(findMember,showInfoEditRequestDto);
     }
 
-    @Operation(summary = "응원 메시지 삭제", description = "마이페이지 안에 있는 메시지 삭제 API")
-    @DeleteMapping("/cheermsg/{cheerMessageId}")
-    public void deleteCheerMessage(@PathVariable Integer cheerMessageId) {
-        mypageService.deleteCheerMessage(cheerMessageId);
+    @Operation(summary = "사용자 정보 수정", description = "사용자정보(닉네임,상테메시지,프로필사진) 수정")
+    @PutMapping("{id}")
+    //마이페이지 편집 모드 사용자 정보 수정
+    public BaseResponseDto updateMypage(@PathVariable Integer id,
+                                               @RequestPart(name = "request",required = false) MemberInfoUpdateRequestDto mypageUpdateRequestDto,
+                                               @RequestPart(value = "file", required = false) MultipartFile file,
+                                               HttpServletRequest httpServletRequest) {
+
+        if (mypageUpdateRequestDto != null) {
+
+            mypageUpdateRequestDto.setFile(file);
+        }
+        log.info(String.valueOf(mypageUpdateRequestDto));
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+
+        return memberService.updateMemberInfo(id, mypageUpdateRequestDto, findMember,file);
     }
 
-    @Operation(summary = "디데이 작성", description = "마이페이지 안에 있는 D-day 작성 API")
-    @PostMapping("/dday")
-    public BaseResponseDto writeDday(@RequestBody DdayRequestDto ddayRequestDto) {
-        System.out.println(ddayRequestDto.toString());
-        mypageService.writeDday(ddayRequestDto);
-        return BaseResponseDto.builder().build();
-    }
 
-//    @Operation(summary = "디데이 수정", description = "마이페이지 안에 있는 D-day 수정 API")
-//    @PutMapping("/dday")
-//    public BaseResponseDto modifyDday(@RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
-//
-//    }
+
+
+
+
 }

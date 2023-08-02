@@ -1,10 +1,15 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.member.FileDto;
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
-import com.ssafy.hellotoday.api.dto.member.response.MypageModifyResponse;
+import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
+import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
-import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponse;
+import com.ssafy.hellotoday.api.dto.member.response.MemberUpdateResposneDto;
+import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
+import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.Role;
 import com.ssafy.hellotoday.db.entity.ShowInfo;
@@ -25,10 +30,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,12 +42,13 @@ public class MemberService {
     @Value("${jwt.secretKey}")
     private String secretKey;
 
+
     private final KakaoOAuth2 kakaoOAuth2;
     private final NaverOAuth2 naverOAuth2;
     private final MemberRepository memberRepository;
     private final ShowInfoRepository showInfoRepository;
     private final JwtTokenProvider jwtTokenProvider;
-
+    private final FileUploadUtil fileUploadUtil;
     private final RedisTemplate<String, String> redisTemplate;
     // authorizedCode로 가입된 사용자 조회
     @Transactional
@@ -63,7 +69,7 @@ public class MemberService {
             Member member = Member.builder()
                     .role(Role.USER)
                     .email(email)
-                    .nickname(name)
+                    .nickname(UUID.randomUUID()+"hello")
                     .profilePath(profilePath)
                     .socialId(socialId)
                     .socialType(Social.KAKAO)
@@ -93,11 +99,10 @@ public class MemberService {
             String profilePath = naverMemberDto.getProfilePath();
 
 
-
             Member member = Member.builder()
                     .role(Role.USER)
                     .email(email)
-                    .nickname("1")
+                    .nickname(UUID.randomUUID()+"hello")
                     .profilePath(profilePath)
                     .socialId(socialId)
                     .socialType(Social.NAVER)
@@ -137,7 +142,7 @@ public class MemberService {
         if (!refreshToken.equals(redisRefreshToken)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, -1, "refresh Token 불일치");
         }
-        String newAccessToken = jwtTokenProvider.createAccessToken(findMember.getMemberId(), findMember.getEmail(), findMember.getSocialType());
+        String newAccessToken = jwtTokenProvider.createAccessToken(findMember.getMemberId(), findMember.getSocialId(), findMember.getSocialType());
         String newRefreshToken = jwtTokenProvider.createRefreshToken(findMember.getMemberId());
 
         jwtTokenProvider.storeRefreshToken(findMember.getMemberId(),newRefreshToken);
@@ -169,26 +174,81 @@ public class MemberService {
 
     }
     @Transactional(readOnly = true)
-    public MypageModifyResponse getWidgetInfo(Member findMember) {
-
+    public ShowInfoFlagsResponseDto getWidgetInfo(Member findMember) {
         ShowInfo showInfo = showInfoRepository.findByIdWithMember(findMember.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 유저의 공개정보가 없습니다"));
-
-        ShowInfoFlagsResponse showInfoFlag = ShowInfoFlagsResponse.builder()
-                .cheerMessageFlag(showInfo.getCheerMessageFlag())
-                .ddayFlag(showInfo.getDdayFlag())
-                .galleryFlag(showInfo.getGalleryFlag())
-                .oneDiaryFlag(showInfo.getOneDiaryFlag())
-                .goalFlag(showInfo.getGoalFlag())
-                .routineHistoryFlag(showInfo.getRoutineHistoryFlag())
-                .wishListFlag(showInfo.getWishListFlag())
+        return ShowInfoFlagsResponseDto.builder()
+                .showinfo(showInfo)
                 .build();
+    }
+
+    @Transactional
+    public BaseResponseDto updateMemberInfo(Integer id, MemberInfoUpdateRequestDto mypageUpdateRequestDto, Member findMember, MultipartFile file) {
+
+        if (findMember.getMemberId()!=id) {
+            throw new IllegalArgumentException("잘못된 접근입니다");
+        }
 
 
-        return MypageModifyResponse.builder()
-                .member(findMember)
-                .showInfo(showInfoFlag)
-                .build();
+        if (mypageUpdateRequestDto == null) {
+
+            if (file != null) {
+                FileDto newfileDto = fileUploadUtil.uploadFile(file, findMember);
+                findMember.updateMemberInfo(newfileDto);
+            }
+
+        } else {
+            if (mypageUpdateRequestDto.getNickname() == null) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, -101, "닉네임은 null이 될 수 없습니다");
+            }
+
+
+            Optional<Member> findNickname = memberRepository.findByNickname(mypageUpdateRequestDto.getNickname());
+
+            //넥네임 중복체크
+            if (findNickname.isPresent()&&!findMember.getNickname().equals(findNickname.get().getNickname())) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, -100, "닉네임이 중복되었습니다");
+            }
+
+            if (mypageUpdateRequestDto.getFile() != null) {
+                FileDto newfileDto = fileUploadUtil.uploadFile(mypageUpdateRequestDto.getFile(), findMember);
+                findMember.updateMemberInfo(mypageUpdateRequestDto, newfileDto);
+            } else {
+                findMember.updateMemberInfo(mypageUpdateRequestDto);
+            }
+        }
+            MemberUpdateResposneDto newMember = MemberUpdateResposneDto.builder()
+                    .nickname(findMember.getNickname())
+                    .stMsg(findMember.getStMsg())
+                    .profilePath(findMember.getProfilePath())
+                    .build();
+
+            return BaseResponseDto.builder()
+                    .success(true)
+                    .message("사용자 정보를 수정하였습니다")
+                    .data(newMember)
+                    .build();
+
 
     }
+
+    @Transactional
+    public BaseResponseDto editShowInfo(Member findMember, ShowInfoEditRequestDto showInfoEditRequestDto) {
+
+        ShowInfo findShowInfo = showInfoRepository.findByIdWithMember(findMember.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 " + findMember.getMemberId() + " 유저의 공개정보가 없습니다"));
+
+        findShowInfo.updateShowInfo(showInfoEditRequestDto);
+
+        ShowInfoFlagsResponseDto newShowInfo = ShowInfoFlagsResponseDto.builder().showinfo(findShowInfo).build();
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("마이페이지 위젯 편집을 성공하셨습니다")
+                .data(newShowInfo)
+                .build();
+    }
+
+
+
+
 }
