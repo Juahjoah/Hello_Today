@@ -1,5 +1,6 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
 const events = [{ title: "Meeting", start: new Date() }];
 
@@ -7,7 +8,7 @@ export function ProfileCalender() {
   return (
     <div>
       <FullCalendar
-        plugins={[dayGridPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         weekends={true}
         events={events}
@@ -16,6 +17,8 @@ export function ProfileCalender() {
         height={"300px"}
         // dayMinWidth={"50px"}
         expandRows={false}
+        editable={true}
+        selecttable={true}
       />
     </div>
   );
