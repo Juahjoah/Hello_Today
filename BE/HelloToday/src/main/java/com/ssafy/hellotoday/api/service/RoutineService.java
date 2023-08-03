@@ -18,9 +18,12 @@ import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,6 +37,7 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDe
 @Service
 @RequiredArgsConstructor
 @Transactional
+@EnableScheduling
 public class RoutineService {
 //    @Value("${image.path}")
     private String uploadDir;
@@ -42,7 +46,7 @@ public class RoutineService {
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
     private final RoutineCheckRepository routineCheckRepository;
-
+//    private Integer scheduleRoutineId;
 
     public List<RoutineDetailResponseDto> detailRoutine() {
         List<RoutineDetailResponseDto> list = new ArrayList<>();
@@ -105,6 +109,10 @@ public class RoutineService {
 
         routineRepository.save(routine);
 
+//        scheduleRoutineId = routine.getRoutineId();
+
+//        routineSchedule();
+
         return BaseResponseDto.builder()
                 .success(true)
                 .message(RoutineEnum.SUCCESS_MAKE_ROTUINE.getName())
@@ -118,10 +126,22 @@ public class RoutineService {
                 .build();
     }
 
+    private void routineSchedule() {
+//        Routine routine = routineRepository.findById(scheduleRoutineId).get();
+
+//        LocalDate targetDate = LocalDate.from(routine.getEndDate().plusDays(1));
+
+        LocalDate today = LocalDate.now();
+
+        System.out.println(today);
+//        if(today.equals(targetDate) || today.isAfter(targetDate)) {
+//        }
+    }
+
     /**
      * 사용자가 진행중인 루틴이 있는지에 대한 activeFlag와 진행중인 루틴이 있으면 routineDetailCat에 대한 인증 내역들 반환
      *
-     * @param memberId
+     * @param member
      * @return
      */
     public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Member member) {
