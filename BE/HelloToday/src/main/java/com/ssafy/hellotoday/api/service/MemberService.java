@@ -63,6 +63,7 @@ public class MemberService {
                     .memberId(optionalMember.get().getMemberId())
                     .socialId(optionalMember.get().getSocialId())
                     .socialType(optionalMember.get().getSocialType())
+                    .nickname(optionalMember.get().getNickname())
                     .firstLogin(false)
                     .build();
         }
@@ -89,6 +90,7 @@ public class MemberService {
                     .memberId(member.getMemberId())
                     .socialId(member.getSocialId())
                     .socialType(member.getSocialType())
+                    .nickname(member.getNickname())
                     .firstLogin(true)
                     .build();
         }
@@ -108,6 +110,7 @@ public class MemberService {
                     .memberId(optionalMember.get().getMemberId())
                     .socialId(optionalMember.get().getSocialId())
                     .socialType(optionalMember.get().getSocialType())
+                    .nickname(optionalMember.get().getNickname())
                     .firstLogin(false)
                     .build();
         }
@@ -137,6 +140,7 @@ public class MemberService {
                     .memberId(member.getMemberId())
                     .socialId(member.getSocialId())
                     .socialType(member.getSocialType())
+                    .nickname(member.getNickname())
                     .firstLogin(true)
                     .build();
         }
