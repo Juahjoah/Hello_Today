@@ -12,9 +12,13 @@ import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
+import com.ssafy.hellotoday.api.dto.wishdiary.request.WishDiaryRequestDto;
+import com.ssafy.hellotoday.api.dto.wishdiary.response.WishDiaryResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.MypageService;
+import com.ssafy.hellotoday.api.service.WishDiaryService;
 import com.ssafy.hellotoday.db.entity.Member;
+import com.ssafy.hellotoday.db.entity.widget.wishdiary.Type;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +31,12 @@ import java.util.List;
 @Tag(name = "MyPage", description = "마이페이지 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/members")
+@RequestMapping("/api/mypage")
 public class MypageController {
 
     private final MemberService memberService;
     private final MypageService mypageService;
-
+    private final WishDiaryService wishDiaryService;
 
 
     //마이페이지 사용자 정보 조회
@@ -142,5 +146,102 @@ public class MypageController {
     @GetMapping("/routinehistory/{memberId}")
     public List<RoutineResponseDto> getRoutineHistory(@PathVariable Integer memberId) {
         return mypageService.getRoutineHistory(memberId);
+    }
+
+    @Operation(summary = "버킷리스트 전체 조회", description = "버킷리스트 전체 조회")
+    @GetMapping("/bucketlist")
+    public List<WishDiaryResponseDto> getBucketList(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return wishDiaryService.getWishDiary(findMember, Type.BUCKETLIST);
+    }
+
+    @Operation(summary = "한줄 일기 전체 조회", description = "한줄 일기 전체 조회")
+    @GetMapping("/onediary")
+    public List<WishDiaryResponseDto> getOneDiary(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return wishDiaryService.getWishDiary(findMember,Type.ONEDIARY);
+    }
+
+
+    @Operation(summary = "버킷리스트 작성", description = "버킷리스트 작성")
+    @PostMapping("/bucketlist")
+    public BaseResponseDto writeBucketList(@RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
+                                           HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return wishDiaryService.writeBucketDiary(findMember, wishDiaryUpdateRequestDto,Type.BUCKETLIST);
+    }
+
+    @Operation(summary = "한줄일기 작성", description = "한줄일기 작성")
+    @PostMapping("/onediary")
+    public BaseResponseDto writeOneDiary(@RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
+                                         HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return wishDiaryService.writeBucketDiary(findMember, wishDiaryUpdateRequestDto,Type.ONEDIARY);
+    }
+
+    @Operation(summary = "버킷리스트 내용 수정", description = "버킷리스트 내용 수정")
+    @PutMapping("/bucketlist/{bucketListId}")
+    public BaseResponseDto updateBucketList(@PathVariable Integer bucketListId, @RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
+                                            HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return wishDiaryService.updateBucketDiary(bucketListId, findMember, wishDiaryUpdateRequestDto,Type.BUCKETLIST);
+    }
+
+    @Operation(summary = "한 줄 일기 내용 수정", description = "한 줄 일기 내용 수정")
+    @PutMapping("/onediary/{oneDiaryId}")
+    public BaseResponseDto updateOneDairy(@PathVariable Integer oneDiaryId, @RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
+                                          HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return wishDiaryService.updateBucketDiary(oneDiaryId, findMember, wishDiaryUpdateRequestDto,Type.ONEDIARY);
+    }
+
+    @Operation(summary = "버킷리스트 내용 삭제", description = "버킷리스트 내용 삭제")
+    @DeleteMapping("/bucketlist/{bucketListId}")
+    public BaseResponseDto deleteBucketList(@PathVariable Integer bucketListId, HttpServletRequest httpServletRequest) {
+
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+        return wishDiaryService.deleteWishDiary(bucketListId,findMember,Type.BUCKETLIST);
+
+    }
+
+
+    @Operation(summary = "한줄 일기 내용 삭제", description = "한줄 일기 내용 삭제")
+    @DeleteMapping("/onediary/{oneDiaryId}")
+    public BaseResponseDto deleteOneDiary(@PathVariable Integer oneDiaryId, HttpServletRequest httpServletRequest) {
+
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return wishDiaryService.deleteWishDiary(oneDiaryId,findMember, Type.ONEDIARY);
+
     }
 }
