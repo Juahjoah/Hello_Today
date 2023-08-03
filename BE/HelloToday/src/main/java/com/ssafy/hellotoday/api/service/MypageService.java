@@ -12,7 +12,6 @@ import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
-import com.ssafy.hellotoday.db.entity.mypage.DdayType;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
@@ -110,7 +109,6 @@ public class MypageService {
                 .member(member)
                 .finalDate(ddayRequestDto.getFinalDate())
                 .content(ddayRequestDto.getContent())
-                .type(DdayType.valueOf(ddayRequestDto.getType()))
                 .build();
 
         ddayRepository.save(dday);
@@ -124,7 +122,6 @@ public class MypageService {
                         .content(dday.getContent())
                         .createdDate(dday.getCreatedDate())
                         .modifiedDate(dday.getModifiedDate())
-                        .type(String.valueOf(dday.getType()))
                         .build())
                 .build();
     }
@@ -144,7 +141,6 @@ public class MypageService {
                         .content(dday.getContent())
                         .createdDate(dday.getCreatedDate())
                         .modifiedDate(dday.getModifiedDate())
-                        .type(String.valueOf(dday.getType()))
                         .build())
                 .build();
     }
