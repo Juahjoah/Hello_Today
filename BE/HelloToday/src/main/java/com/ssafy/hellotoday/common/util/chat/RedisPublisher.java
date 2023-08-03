@@ -1,6 +1,6 @@
 package com.ssafy.hellotoday.common.util.chat;
 
-import com.ssafy.hellotoday.api.dto.chat.Message;
+import com.ssafy.hellotoday.api.dto.chat.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -12,7 +12,7 @@ public class RedisPublisher {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public void publish(ChannelTopic topic, Message message) {
-        redisTemplate.convertAndSend(topic.getTopic(), message);
+    public void publish(ChannelTopic topic, ChatMessage chatMessage) {
+        redisTemplate.convertAndSend(topic.getTopic(), chatMessage);
     }
 }
