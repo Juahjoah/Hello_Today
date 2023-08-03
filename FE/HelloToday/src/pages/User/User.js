@@ -1,9 +1,9 @@
 import React from "react";
 //import { Navigate } from "react-router-dom";
 //추가
-import classes from "../components/User/button.module.css";
+import classes from "../../components/User/button.module.css";
 import classe from "./User.module.css";
-import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../components/User/config";
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../../components/User/config";
 
 const User = () => {
   // const [go, setGo] = useState(false);

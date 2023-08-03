@@ -25,7 +25,8 @@ function RedirectPageKakao() {
   const dispatch = useDispatch();
   useEffect(() => {
     //useEffect에 빈 배열을 전달하게 되면, 콜백함수가 mount된 시점에만 작동
-    const REST_URL = `http://i9b308.p.ssafy.io:8080`;
+    const REST_URL = `https://i9b308.p.ssafy.io`;
+    // const REST_URL = `http://localhost:8080`;
     console.log(code);
 
     axios({
@@ -40,6 +41,10 @@ function RedirectPageKakao() {
     })
       .then((res) => {
         console.log(res.headers);
+        const isFirstLogin = res.data.firstLogin;
+        const memberId = res.data.memberId;
+        console.log(res.data);
+        console.log(isFirstLogin);
 
         const accessToken = res.headers["authorization"];
         const refreshToken = res.headers["authorization-refresh"];
@@ -50,7 +55,12 @@ function RedirectPageKakao() {
         dispatch(Loginstate());
         //회원정보 저장하는 거 구현하기
 
-        navigate("/");
+        navigate("/unselectmain", {
+          state: {
+            isFirstLogin: isFirstLogin,
+            memberId: memberId,
+          },
+        });
       })
       .catch((error) => {
         console.log(error.data);

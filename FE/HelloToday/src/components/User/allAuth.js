@@ -1,12 +1,12 @@
 //각각의 페이지에서 access 토큰을 이용해서 실시간으로 소통을 하는 함수
 // Page > allAuth > AuthToken
-import { setRefreshToken } from "./CookieStorage";
+import { setRefreshToken } from "../../components/User/CookieStorage";
 import { SET_TOKEN } from "../../store/TokenSlice";
 import { Loginstate } from "../../store/LoginSlice";
 import {
   getRefreshToken,
   getAccessToken,
-} from "./AuthToken";
+} from "../../components/User/AuthToken";
 import { Cookies } from "react-cookie";
 
 const allAuth = (isAccess, dispatch) => {
