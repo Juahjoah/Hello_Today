@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
 import com.ssafy.hellotoday.api.dto.member.request.NickNameRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.LoginResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
+import com.ssafy.hellotoday.common.util.property.RedirectUrlProperties;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,8 +31,6 @@ public class MemberController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
 
-    @Value("${oauth2.kakao.redirect-uri}")
-    private String redirectKakaoUrl;
 
     @Value("${oauth2.naver.state}")
     private String naverState;
@@ -41,7 +40,7 @@ public class MemberController {
     @Operation(summary = "카카오로 로그인 및 회원가입", description = "카카오로 로그인 및 회원가입 하는 API")
     @PostMapping("/api/members/kakao/login")
     public ResponseEntity<LoginResponseDto> loginKakao(@RequestBody LoginRequestDto codeRequest) {
-        LoginDto member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.getCode(), redirectKakaoUrl);
+        LoginDto member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.getCode(), RedirectUrlProperties.KAKAO_REDIRECT_URL);
 
 
         String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getSocialId(), member.getSocialType());
