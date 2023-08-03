@@ -8,6 +8,9 @@ import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.*;
+import com.ssafy.hellotoday.common.exception.CustomException;
+import com.ssafy.hellotoday.common.exception.message.RoutineErrorEnum;
+import com.ssafy.hellotoday.common.exception.validator.RoutineValidator;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.routine.*;
@@ -18,6 +21,7 @@ import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -46,7 +50,8 @@ public class RoutineService {
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
     private final RoutineCheckRepository routineCheckRepository;
-//    private Integer scheduleRoutineId;
+
+    private final RoutineValidator routineValidator;
 
     public List<RoutineDetailResponseDto> detailRoutine() {
         List<RoutineDetailResponseDto> list = new ArrayList<>();
@@ -88,6 +93,10 @@ public class RoutineService {
     }
 
     public BaseResponseDto makeRoutine(RoutineRequestDto routineRequestDto, Member member) {
+
+        // 현재 사용자가 진행하는 루틴이 있는지 확인하고 error;
+        routineValidator.checkPrivateRoutineExist(routineRepository, member);
+
         Routine routine = Routine.createRoutine(
                 member.getMemberId()
                 , LocalDateTime.now()

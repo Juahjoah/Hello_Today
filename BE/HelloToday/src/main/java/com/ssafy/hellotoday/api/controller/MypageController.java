@@ -5,10 +5,7 @@ import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberInfoResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.request.*;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
@@ -138,9 +135,14 @@ public class MypageController {
         return mypageService.deleteDday(ddayId);
     }
 
-    @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 내이 있는 루틴 히스토리 조회 API")
+    @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 안에 있는 루틴 히스토리 조회 API")
     @GetMapping("/routinehistory/{memberId}")
     public List<RoutineResponseDto> getRoutineHistory(@PathVariable Integer memberId) {
         return mypageService.getRoutineHistory(memberId);
+    }
+
+    @Operation(summary = "갤러리 조회", description = "마이페이지 안에 있는 갤러리 조회")
+    @GetMapping("/gallery/{memberId}")
+    public void getGallery(@PathVariable Integer memberId) {
     }
 }
