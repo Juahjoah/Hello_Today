@@ -37,7 +37,7 @@ function RoutineAuthMain() {
   const [routineAuthText, setRoutineAuthText] = useState(""); // 루틴 인증 내용
 
   // function
-  console.log(selectRoutineState);
+
   const closeModal = () => {
     setModalIsOpen(false);
   };

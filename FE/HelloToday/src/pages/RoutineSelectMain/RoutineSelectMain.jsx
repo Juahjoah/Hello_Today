@@ -13,7 +13,7 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import classes from "./RoutineSelectMain.module.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-// import NickNamePopup from "../components/PopUp/NickNamePopup";
+import NickNamePopup from "../../components/PopUp/NickNamePopup";
 
 //로그인
 
@@ -22,12 +22,12 @@ import allAuth from "../../components/User/allAuth";
 
 function RoutineSelectMain() {
   // state & data
-  const API_URL = "http://i9b308.p.ssafy.io:8080";
+  const API_URL = "https://i9b308.p.ssafy.io";
   const location = useLocation();
   // const memberId = location.state.memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   // const isFirstLogin = location.state.isFirstLogin;
-  //
+
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
   //
@@ -36,7 +36,7 @@ function RoutineSelectMain() {
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   // const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  const [FirstLogin, setFirstLogin] = useState(true);
+  const [FirstLogin, setFirstLogin] = useState(false);
   const dispatch = useDispatch();
 
   console.log(AccsesToken);
@@ -93,15 +93,6 @@ function RoutineSelectMain() {
   };
 
   const submitSelectedRoutine = () => {
-    // TODO: 사용자 루틴 등록 API 완성되면 axios 요청보내기
-    // {
-    //   "memberId": 1,
-    //   "routineDetailDtoList": [
-    //     {"routineDetailId": 1, "content": "test", "imgPath": ""},
-    //     {"routineDetailId": 2, "content": "test2", "imgPath": ""}
-    //    ]
-    // }
-
     axios({
       url: `${API_URL}/api/routine/private`,
       method: "post",
@@ -112,7 +103,6 @@ function RoutineSelectMain() {
         Authorization: AccsesToken,
       },
     });
-    console.log(selectRoutineState);
 
     dispatch(haveRoutine(true));
     closeModal();
@@ -227,7 +217,11 @@ function RoutineSelectMain() {
       </Modal>
 
       {/* NickName Modal */}
-      {/* <NickNamePopup FirstLogin={FirstLogin} setFirstLogin={setFirstLogin} /> */}
+      <NickNamePopup
+        FirstLogin={FirstLogin}
+        setFirstLogin={setFirstLogin}
+        Token={AccsesToken}
+      />
     </>
   );
 }
