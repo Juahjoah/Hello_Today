@@ -19,14 +19,15 @@ export const getRefreshToken = async (refreshtoken_) => {
   try {
     console.log("머가 문제");
     console.log("refreshtoken_ = ", refreshtoken_);
-    // const res = await axios.get(
-    //   `${process.env.REACT_APP_BASE_URL}/api/members/reissue`,
-    //   data
-    // );
     const res = await axios.get(
-      `https://i9b308.p.ssafy.io/api/members/reissue`,
+      `${process.env.REACT_APP_BASE_URL}/api/members/reissue`,
       data
     );
+    // const res = await axios.get(
+    //   `https://i9b308.p.ssafy.io/api/members/reissue`,
+    //   data
+    // );
+    
     console.log("requestAccessToken");
     return res;
   } catch (error) {
@@ -43,14 +44,14 @@ export const getAccessToken = async (refreshtoken_, accesstoken_) => {
     },
   };
   try {
-    // const res = await axios.get(
-    //   `${process.env.REACT_APP_BASE_URL}/api/test`,
-    //   data
-    // );
     const res = await axios.get(
-      `https://i9b308.p.ssafy.io/api/members/reissue`,
+      `${process.env.REACT_APP_BASE_URL}/api/test`,
       data
     );
+    // const res = await axios.get(
+    //   `https://i9b308.p.ssafy.io/api/members/reissue`,
+    //   data
+    // );
     console.log("매개변수 받은 accesstoken = ", accesstoken_);
     console.log("만료 안 함. 해당 페이지에 있어도 ok ");
     return res; //access만료 안함. 해당 페이지에 있어도 괜찮다.

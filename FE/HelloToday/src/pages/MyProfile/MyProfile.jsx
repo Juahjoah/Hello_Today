@@ -37,6 +37,7 @@ function MyProfile(user) {
         {/* 화면 오른쪽 화면 창 */}
         <div className={classes.ProfileRight}>
           <div className={classes.ProfileCalender}>
+            <div>잉 뭐여</div>
             <ProfileCalender />
           </div>
           <div className={classes.ProfileCustom}>
