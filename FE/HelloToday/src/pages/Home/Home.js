@@ -8,11 +8,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function Home() {
-  const API_URL = "http://i9b308.p.ssafy.io:8080";
+  const API_URL = "https://i9b308.p.ssafy.io";
   const [AllRoutineList, setAllRoutineList] = useState([]);
-  console.log("here");
+
   useEffect(() => {
-    console.log("wfwfwfwfwwwwwwwwwwwwww");
     async function axiosRoutineData() {
       try {
         const routineResponse = await axios.get(
