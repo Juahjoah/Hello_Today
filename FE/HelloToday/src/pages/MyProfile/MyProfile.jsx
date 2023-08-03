@@ -2,14 +2,16 @@
 import Nav from "../../components/common/Nav";
 import classes from "./MyProfile.module.css";
 import ProfileCalender from "../../components/Profile/ProfileCalender";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 //로그인
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
 import allAuth from "../../components/User/allAuth";
 
-function MyProfile(user) {
+function MyProfile() {
   //------------------------------로그인 시작
   const dispatch = useDispatch();
   const isAccess = useSelector((state) => state.authToken.accessToken);
@@ -18,6 +20,34 @@ function MyProfile(user) {
     allAuth(isAccess, dispatch);
   }, [dispatch]);
   //-----------------------------------여기까지
+
+  // api 요청 후 받아온 user 정보 (모듈화 진행)
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
+
+  // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
+  const baseURL = "http://localhost:8080"; // 개발용
+
+  // const profileApi = axios.create({
+  //   baseURL: `${baseURL}/api/mypage`,
+  //   headers: {
+  //     // "Content-Type": "application/json",
+  //     Authorization: AccsesToken,
+  //   },
+  // });
+  // const userProfile = () => profileApi.get();
+
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${baseURL}/api/mypage`, {
+        headers: { Authorization: AccsesToken },
+      })
+      .then((response) => {
+        setUser(response.data);
+        console.log(response.data);
+      });
+  }, []);
+
   return (
     <div>
       <Nav />
