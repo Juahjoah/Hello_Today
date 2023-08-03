@@ -54,6 +54,7 @@ public class MemberController {
                 .body(LoginResponseDto.builder()
                         .message("카카오 로그인을 성공하셨습니다")
                         .memberId(member.getMemberId())
+                        .nickname(member.getNickname())
                         .firstLogin(member.isFirstLogin())
                         .build());
     }
@@ -72,6 +73,7 @@ public class MemberController {
                 .body(LoginResponseDto.builder()
                         .message("네이버 로그인을 성공하셨습니다")
                         .memberId(member.getMemberId())
+                        .nickname(member.getNickname())
                         .firstLogin(member.isFirstLogin())
                         .build());
     }
