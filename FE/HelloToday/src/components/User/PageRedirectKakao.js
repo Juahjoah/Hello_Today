@@ -43,6 +43,7 @@ function RedirectPageKakao() {
         console.log(res.headers);
         const isFirstLogin = res.data.firstLogin;
         const memberId = res.data.memberId;
+        const nickName = res.data.nickname;
         console.log(res.data);
         console.log(isFirstLogin);
 
@@ -59,6 +60,7 @@ function RedirectPageKakao() {
           state: {
             isFirstLogin: isFirstLogin,
             memberId: memberId,
+            nickName: nickName,
           },
         });
       })
