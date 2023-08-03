@@ -2,6 +2,7 @@ package com.ssafy.hellotoday.db.entity;
 
 import com.ssafy.hellotoday.api.dto.member.FileDto;
 import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
+import com.ssafy.hellotoday.common.util.property.ApplicationProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -73,4 +74,11 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
     }
 
+
+    public String getProfileImagePath() {
+        if(profileOriginalName == null) return null;
+        else if(profileOriginalName.contains("https://i9b308.p.ssafy.io/")) return profileOriginalName;
+
+        return ApplicationProperties.HOST_IMAGE_URL + "profile/" + profileOriginalName;
+    }
 }

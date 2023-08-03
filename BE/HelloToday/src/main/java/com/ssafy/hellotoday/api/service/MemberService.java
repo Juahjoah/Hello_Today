@@ -10,10 +10,7 @@ import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.*;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
-import com.ssafy.hellotoday.db.entity.Member;
-import com.ssafy.hellotoday.db.entity.Role;
-import com.ssafy.hellotoday.db.entity.ShowInfo;
-import com.ssafy.hellotoday.db.entity.Social;
+import com.ssafy.hellotoday.db.entity.*;
 
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.ShowInfoRepository;
@@ -190,13 +187,10 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public MemberResponseDto getMemberInfo(Member findMember) {
+    public MemberInfoResponseDto getMemberInfo(Member findMember) {
 
-        return MemberResponseDto.builder()
-                .memberId(findMember.getMemberId())
-                .stMsg(findMember.getStMsg())
-                .email(findMember.getEmail())
-                .profilePath(findMember.getProfilePath())
+        return MemberInfoResponseDto.builder()
+                .member(findMember)
                 .build();
 
     }
@@ -222,6 +216,7 @@ public class MemberService {
             if (file != null) {
                 FileDto newfileDto = fileUploadUtil.uploadFile(file, findMember);
                 findMember.updateMemberInfo(newfileDto);
+                findMember.getProfileImagePath();
             }
 
         } else {
@@ -279,13 +274,6 @@ public class MemberService {
     @Transactional
     public BaseResponseDto updateNickname(String nickname, Member member) {
 
-        Member findMember = memberRepository.findByNickname(nickname).orElse(null);
-        //닉네임 중복
-        if (findMember != null) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, -100, "닉네임이 중복되었습니다");
-        }
-
-
         member.updateNickname(nickname);
 
 
@@ -295,6 +283,33 @@ public class MemberService {
                 .data(NickNameResponseDto.builder()
                         .memberId(member.getMemberId())
                         .nickname(member.getNickname())
+                        .build())
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public BaseResponseDto validNickname(String nickname, Member member) {
+        Member findMember = memberRepository.findByNickname(nickname).orElse(null);
+        //닉네임 중복
+        if (findMember != null) {
+
+            return BaseResponseDto.builder()
+                    .success(false)
+                    .message("닉네임이 중복되었습니다")
+                    .data(NickNameResponseDto.builder()
+                            .memberId(member.getMemberId())
+                            .nickname(nickname)
+                            .build())
+                    .build();
+        }
+
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("닉네임이 서용가능합니다")
+                .data(NickNameResponseDto.builder()
+                        .memberId(member.getMemberId())
+                        .nickname(nickname)
                         .build())
                 .build();
     }

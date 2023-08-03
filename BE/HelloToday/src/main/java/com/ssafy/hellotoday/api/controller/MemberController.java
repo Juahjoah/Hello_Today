@@ -93,18 +93,21 @@ public class MemberController {
     @Operation(summary = "멤버 정보 수정", description = "멤버 정보(프로필,닉네임,상태메시지) 수정")
     @PutMapping("/api/members/{id}")
     private BaseResponseDto updateMemberInfo(@PathVariable Integer id,
-                                             @RequestPart(name = "request") MemberInfoUpdateRequestDto memberInfoUpdateRequestDto,
+                                             @RequestPart(name = "request",required = false) MemberInfoUpdateRequestDto memberInfoUpdateRequestDto,
                                              @RequestParam(value = "file",required = false) MultipartFile file
-                                             ,HttpServletRequest httpServletRequest) {
+            ,HttpServletRequest httpServletRequest) {
 
-        memberInfoUpdateRequestDto.setFile(file);
+        if (memberInfoUpdateRequestDto != null) {
+
+            memberInfoUpdateRequestDto.setFile(file);
+        }
         String token = httpServletRequest.getHeader("Authorization");
         Member findMember = memberService.findMemberByJwtToken(token);
 
         return memberService.updateMemberInfo(id,memberInfoUpdateRequestDto,findMember, file);
     }
 
-    @Operation(summary = "닉네임 설정", description = "닉네임 중복 검사 및 설정")
+    @Operation(summary = "닉네임 설정", description = "닉네임 설정")
     @PutMapping("/api/members/nickname")
     private BaseResponseDto setNickname(@RequestBody NickNameRequestDto nickNameRequestDto,
                                         HttpServletRequest httpServletRequest) {
@@ -115,6 +118,20 @@ public class MemberController {
 
         return memberService.updateNickname(nickNameRequestDto.getNickname(),findMember);
     }
+
+    @Operation(summary = "닉네임 중복 검사", description = "닉네임 중복 검사")
+    @GetMapping("/api/members/nickname")
+    private BaseResponseDto validNickname(@RequestBody NickNameRequestDto nickNameRequestDto,
+                                        HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return memberService.validNickname(nickNameRequestDto.getNickname(),findMember);
+    }
+
+
 
     @GetMapping("/api/test")
     public ResponseEntity<String> tokenTest() {
