@@ -121,14 +121,14 @@ public class MemberController {
 
     @Operation(summary = "닉네임 중복 검사", description = "닉네임 중복 검사")
     @GetMapping("/api/members/nickname")
-    private BaseResponseDto validNickname(@RequestBody NickNameRequestDto nickNameRequestDto,
+    public BaseResponseDto validNickname(@RequestParam("nickname") String nickname,
                                         HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
         if (token==null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return memberService.validNickname(nickNameRequestDto.getNickname(),findMember);
+        return memberService.validNickname(nickname,findMember);
     }
 
 
