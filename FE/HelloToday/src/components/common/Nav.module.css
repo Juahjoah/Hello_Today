@@ -1,0 +1,101 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.nav {
+  position: fixed;
+  top: 0px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  background: rgba(254, 250, 237, 1);
+  padding-top: 10px;
+  z-index: 10;
+}
+
+.navLeft {
+  display: flex;
+  flex: 5;
+  justify-content: space-evenly;
+}
+
+.navLeftLogo {
+  width: 140px;
+  height: 90px;
+  margin-left: 50px;
+  cursor: pointer;
+}
+
+.navMid {
+  flex: 1;
+}
+
+.navRight {
+  display: flex;
+  flex: 4;
+  justify-content: space-evenly;
+}
+
+.navRightSearchbar {
+  display: flex;
+  align-items: center;
+}
+
+.navRightSearchbarInput {
+  width: 350px;
+  height: 45px;
+  border-radius: 10px;
+  border: 4px solid rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0);
+  font-size: 24px;
+  font-family: "TheJamsil5Bold";
+  color: rgba(0, 0, 0, 0.8);
+  outline: none;
+}
+
+.navLeftPersonal,
+.navLeftGroup,
+.navLeftProfile {
+  color: rgba(0, 0, 0, 0.4);
+  font-family: "TheJamsil5Bold";
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 28px;
+  transition: all 300ms ease-in-out;
+  padding: 40px 40px 35px 40px;
+  border-radius: 25px 25px 5px 5px;
+}
+
+.navLeftPersonal:hover,
+.navLeftGroup:hover,
+.navLeftProfile:hover {
+  color: black;
+  background-color: #ffec8d;
+  font-size: 32px;
+}
+
+.navRightLogout {
+  color: rgba(0, 0, 0, 0.4);
+  font-family: "TheJamsil5Bold";
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 28px;
+  transition: all 300ms ease-in-out;
+  padding: 20px 40px 20px 40px;
+  border-radius: 25px 25px 0px 0px;
+}
+
+.navRightLogout:hover {
+  color: black;
+  font-size: 32px;
+}

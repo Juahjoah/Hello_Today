@@ -1,0 +1,267 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@keyframes jumpAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.GroupRoomSection {
+  width: 70%;
+  margin: auto;
+  font-family: "TheJamsil5Bold";
+}
+
+.divideLine {
+  width: 70%;
+  height: 3px;
+  background-color: rgba(131, 129, 129, 0.2);
+}
+
+/* footer banner */
+
+.makeRoom {
+  width: 70%;
+  height: 40vh;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 20px;
+  display: flex;
+  background: rgb(255, 255, 255);
+  font-family: "TheJamsil5Bold";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+}
+
+.makeRoomLeft {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 50px;
+}
+
+.makeRoomLeftTitle {
+  font-size: 50px;
+}
+
+.makeRoomLeftDesc {
+  font-size: 35px;
+  margin-bottom: 20px;
+  margin-top: 0px;
+}
+
+.makeRoomLeftBtn {
+  font-family: "TheJamsil5Bold";
+  font-size: 28px;
+  width: 360px;
+  height: 90px;
+  padding: 16px 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: #ffd24c;
+  box-shadow: -4px 4px 0px 0px #ffd24c;
+  color: #fff;
+  transition: all 250ms ease-in;
+}
+
+.makeRoomLeftBtn:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.makeRoomRight {
+  flex: 4;
+}
+
+.makeRoomRightImg {
+  animation: jumpAnimation 3s infinite;
+}
+
+/* make room Modal */
+
+.makeRoomModal {
+  font-family: "TheJamsil5Bold";
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalClose {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  transition: all 250ms ease-in;
+  width: 50px;
+  height: 50px;
+}
+
+.modalClose:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.makeRoomModalTitle {
+  flex: 2;
+  font-size: 40px;
+}
+
+.makeRoomModalMain {
+  flex: 7;
+  display: flex;
+  flex-direction: column;
+  font-size: 28px;
+  width: 100%;
+}
+
+.makeRoomModalMainRoomTitle {
+  flex: 1.5;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.makeRoomModalMainRoomTitleLabel {
+  flex: 1.2;
+}
+
+.makeRoomModalMainRoomTitleInput {
+  flex: 8.8;
+  height: 40%;
+  padding: 8px 12px;
+  font-size: 24px;
+  font-family: "TheJamsil5Bold";
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 8px;
+}
+
+.makeRoomModalMainRoomDesc {
+  flex: 6.5;
+  display: flex;
+  width: 100%;
+}
+
+.makeRoomModalMainRoomDescLabel {
+  flex: 1.2;
+}
+
+.makeRoomModalMainRoomDescInput {
+  flex: 8.8;
+  resize: none;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 8px;
+  font-size: 24px;
+  font-family: "TheJamsil5Bold";
+  padding: 8px 12px;
+}
+
+.makeRoomModalMainRoomCount {
+  flex: 2;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.makeRoomModalMainRoomCountInputSection {
+  flex: 1.5;
+  display: flex;
+}
+
+.makeRoomModalMainRoomCountLabel {
+  flex: 1.2;
+}
+
+.makeRoomModalMainRoomCountInput {
+  width: 25%;
+  height: 40%;
+  padding: 8px 12px;
+  font-size: 24px;
+  font-family: "TheJamsil5Bold";
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  text-align: center;
+  flex: 4;
+}
+
+.makeRoomModalMainRoomCountMinusBtn,
+.makeRoomModalMainRoomCountPlusBtn {
+  flex: 3;
+  font-family: "TheJamsil5Bold";
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  color: rgb(117, 117, 117);
+  font-size: 30px;
+  transition: all 250ms ease-in-out;
+}
+
+.makeRoomModalMainRoomCountMinusBtn {
+  border-radius: 8px 0px 0px 8px;
+}
+
+.makeRoomModalMainRoomCountPlusBtn {
+  border-radius: 0px 8px 8px 0px;
+}
+
+.makeRoomModalMainRoomCountMinusBtn:hover,
+.makeRoomModalMainRoomCountPlusBtn:hover {
+  cursor: pointer;
+  background-color: #a581cf;
+  color: white;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.makeRoomModalMainRoomCountNone {
+  flex: 7.2;
+}
+
+.makeRoomModalBtn {
+  flex: 1;
+  font-family: "TheJamsil5Bold";
+  font-size: 28px;
+  width: 360px;
+  height: 90px;
+  padding: 16px 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: #ffd24c;
+  box-shadow: -4px 4px 0px 0px #ffd24c;
+  color: #fff;
+  transition: all 250ms ease-in;
+}
+
+.makeRoomModalBtn:hover {
+  cursor: pointer;
+  color: black;
+}

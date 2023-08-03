@@ -1,11 +1,32 @@
 import classes from "./Home.module.css";
 import { Link } from "react-router-dom";
-import HomeOne from "../components/Home/HomeOne";
-import HomeTwo from "../components/Home/HomeTwo";
-import HomeThree from "../components/Home/HomeThree";
-import HomeLast from "../components/Home/HomeLast";
+import HomeOne from "../../components/Home/HomeOne";
+import HomeTwo from "../../components/Home/HomeTwo";
+import HomeThree from "../../components/Home/HomeThree";
+import HomeLast from "../../components/Home/HomeLast";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Home() {
+  const API_URL = "https://i9b308.p.ssafy.io";
+  const [AllRoutineList, setAllRoutineList] = useState([]);
+
+  useEffect(() => {
+    async function axiosRoutineData() {
+      try {
+        const routineResponse = await axios.get(
+          `${API_URL}/api/routine/detail`
+        );
+        console.log(routineResponse);
+        setAllRoutineList(routineResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    axiosRoutineData();
+  }, []);
+  console.log(AllRoutineList);
+
   return (
     <div className={classes.HomeMain}>
       <div
@@ -76,7 +97,8 @@ function Home() {
 
       <HomeOne />
       <HomeTwo />
-      <HomeThree />
+      {/* <HomeThree /> */}
+      <HomeThree AllRoutineList={AllRoutineList} />
       <HomeLast />
     </div>
   );

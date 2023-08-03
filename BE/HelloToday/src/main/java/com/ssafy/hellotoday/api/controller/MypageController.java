@@ -1,6 +1,8 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
+import com.ssafy.hellotoday.api.dto.member.response.MemberInfoResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
@@ -36,7 +38,7 @@ public class MypageController {
     //마이페이지 사용자 정보 조회
     @Operation(summary = "마이페이지 사용자 정보 조회", description = "사용자 정보(닉네임,상테메세지,프로필사진경로)")
     @GetMapping
-    public MemberResponseDto defaultMemberInfo(HttpServletRequest httpServletRequest) {
+    public MemberInfoResponseDto defaultMemberInfo(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
         if (token==null) return null;
@@ -58,7 +60,17 @@ public class MypageController {
 
         return memberService.getWidgetInfo(findMember);
     }
+    @Operation(summary = "위젯 선택", description = "사용할려는 위젯 사용여부 업데이트")
+    @PutMapping("/widget")
+    public BaseResponseDto editWidget(@RequestBody ShowInfoEditRequestDto showInfoEditRequestDto, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
 
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+
+        return memberService.editShowInfo(findMember,showInfoEditRequestDto);
+    }
     @Operation(summary = "응원 메시지 조회", description = "마이페이지 내이 있는 전체 응원 메시지 조회<br>" +
                                                         "page: 조회 페이지 번호(0부터 시작), size: 한 페이지 당 보일 개수")
     @GetMapping("/cheermsg/{memberId}")
