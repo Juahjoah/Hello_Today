@@ -126,18 +126,6 @@ public class RoutineService {
                 .build();
     }
 
-    private void routineSchedule() {
-//        Routine routine = routineRepository.findById(scheduleRoutineId).get();
-
-//        LocalDate targetDate = LocalDate.from(routine.getEndDate().plusDays(1));
-
-        LocalDate today = LocalDate.now();
-
-        System.out.println(today);
-//        if(today.equals(targetDate) || today.isAfter(targetDate)) {
-//        }
-    }
-
     /**
      * 사용자가 진행중인 루틴이 있는지에 대한 activeFlag와 진행중인 루틴이 있으면 routineDetailCat에 대한 인증 내역들 반환
      *

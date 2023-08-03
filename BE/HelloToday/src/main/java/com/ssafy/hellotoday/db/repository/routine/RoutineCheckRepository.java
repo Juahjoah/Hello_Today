@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoutineCheckRepository extends JpaRepository<RoutineCheck, Integer> {
     RoutineCheck findByRoutineCheckId(Integer routineCheckId);
+
 }
+
