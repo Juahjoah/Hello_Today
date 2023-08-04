@@ -14,7 +14,7 @@ const SelectRoutineSlice = createSlice({
     },
     deleteRoutine(state, action) {
       const { routineId } = action.payload;
-      return state.filter((item) => item.routineId !== routineId);
+      return state.filter((item) => item.routineDetailId !== routineId);
     },
     resetRoutine() {
       return [];

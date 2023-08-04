@@ -12,7 +12,8 @@ function SelectRoutineList({
   updateSelectedCount,
   selectedCount,
 }) {
-  const isLogin = useSelector((state) => state.login.isLogin);
+  // const isLogin = useSelector((state) => state.login.isLogin);
+  const isLogin = true;
   const testList = bigRoutine.routineDetail;
 
   const option = {
