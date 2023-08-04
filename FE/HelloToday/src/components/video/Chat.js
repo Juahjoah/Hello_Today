@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import classes from "./Chat.module.css";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 function Chat(props) {
   const [messageList, setMessageList] = useState([]);
@@ -78,20 +79,22 @@ function Chat(props) {
 
   return (
     <div className={classes.chatRoom}>
-      <div className={classes.chatRoomTop}>
-        <div ref={chatScroll} className={classes.chatRoomLog}>
-          {messageList.map((data, i) => (
-            <div key={i}>
-              <div>
-                <p className={classes.writer}> {data.nickname} : </p>
+      <Scrollbars>
+        <div className={classes.chatRoomTop}>
+          <div ref={chatScroll} className={classes.chatRoomLog}>
+            {messageList.map((data, i) => (
+              <div key={i}>
+                <div>
+                  <p className={classes.writer}> {data.nickname} : </p>
+                </div>
+                <div>
+                  <p className={classes.content}>{data.message}</p>
+                </div>
               </div>
-              <div>
-                <p className={classes.content}>{data.message}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </Scrollbars>
       <div id="messageInput" className={classes.chatRoomInputSection}>
         <input
           placeholder="write message"
