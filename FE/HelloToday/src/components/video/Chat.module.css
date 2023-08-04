@@ -9,7 +9,7 @@
 .chatRoom {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 95%;
   height: 100%;
   border-radius: 20px;
   background: rgba(165, 129, 207, 0.1);

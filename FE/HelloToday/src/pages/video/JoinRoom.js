@@ -30,6 +30,7 @@ function JoinRoom() {
   // 새로운 OpenVidu 객체 생성
   const [OV, setOV] = useState(<OpenVidu />);
   // const OV = new OpenVidu();
+  const roomTitle = location.state.roomTitle;
 
   // 2) 화면 렌더링 시 최초 1회 실행
   useEffect(() => {
@@ -43,7 +44,7 @@ function JoinRoom() {
       return;
     }
 
-    // 이전 페이지에서 받아온 데이터 -> redux로 변경 필요 !!
+    // 이전 페이지에서 받아온 데이터 -> redux로 변경 필요 !
     setMySessionId(location.state.roomId);
     setMyUserName(location.state.myUserName);
     setVideoEnabled(location.state.videoEnabled);
@@ -211,23 +212,45 @@ function JoinRoom() {
     <div>
       <div>
         {session !== undefined ? (
-          <div className={`${classes.container}`}>
-            <div className={`${classes.leftside}`}>
-              {publisher !== undefined ? (
-                <div id="publisher">
-                  <UserVideoComponent streamManager={publisher} />
-                </div>
-              ) : null}
+          <div className={classes.container}>
+            <div className={classes.leftside}>
+              <div className={classes.leftsideRoomInfo}>
+                <div className={classes.leftsideRoomInfoTitle}>{roomTitle}</div>
+                <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div>
+              </div>
+              <div className={classes.divideline}></div>
+              <div className={classes.leftsideRoomUsers}>
+                {publisher !== undefined ? (
+                  <div id="publisher">
+                    <UserVideoComponent streamManager={publisher} />
+                  </div>
+                ) : null}
 
-              {subscribers.map((sub, i) => (
-                <div key={`${i}-subscriber`} className="subscribers">
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              ))}
+                {subscribers.map((sub, i) => (
+                  <div key={`${i}-subscriber`} className="subscribers">
+                    <UserVideoComponent streamManager={sub} />
+                  </div>
+                ))}
+              </div>
+              <div className={classes.divideline}></div>
+              <div className={classes.leftsideRoomBtnSection}>
+                <input
+                  type="button"
+                  onClick={toggleVideo}
+                  value={`비디오 ${videoEnabled ? "OFF" : "ON"}`}
+                />
+                <input
+                  type="button"
+                  onClick={toggleAudio}
+                  value={`마이크 ${audioEnabled ? "OFF" : "ON"}`}
+                />
+                <input type="button" onClick={leaveSession} value="나가기" />
+                <input type="button" value="질문 받기" />
+              </div>
             </div>
-
+            {/* Chat Log */}
             {myUserName !== undefined && mainStreamManager !== undefined && (
-              <div className={`${classes.logs}`}>
+              <div className={classes.logs}>
                 <Chat
                   myUserName={myUserName}
                   mainStreamManager={mainStreamManager}
@@ -237,19 +260,6 @@ function JoinRoom() {
           </div>
         ) : null}
       </div>
-
-      <h1>Room ID: {mySessionId}</h1>
-      <input
-        type="button"
-        onClick={toggleVideo}
-        value={`비디오 ${videoEnabled ? "OFF" : "ON"}`}
-      />
-      <input
-        type="button"
-        onClick={toggleAudio}
-        value={`마이크 ${audioEnabled ? "OFF" : "ON"}`}
-      />
-      <input type="button" onClick={leaveSession} value="나가기" />
     </div>
   );
 }

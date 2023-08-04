@@ -71,6 +71,7 @@ function GroupRoutine() {
     navigate("/roomId", {
       state: {
         roomId: roomId,
+        roomTitle: roomName,
         myUserName: myUserName,
         videoEnabled: videoEnabled,
         audioEnabled: audioEnabled,
