@@ -5,7 +5,7 @@ import axios from "axios";
 import UserVideoComponent from "../../components/video/UserVideoComponent";
 import Chat from "../../components/video/Chat";
 
-import style from "./JoinRoom.module.css";
+import classes from "./JoinRoom.module.css";
 
 // 세션 입장
 function JoinRoom() {
@@ -211,8 +211,8 @@ function JoinRoom() {
     <div>
       <div>
         {session !== undefined ? (
-          <div className={`${style.container}`}>
-            <div className={`${style.leftside}`}>
+          <div className={`${classes.container}`}>
+            <div className={`${classes.leftside}`}>
               {publisher !== undefined ? (
                 <div id="publisher">
                   <UserVideoComponent streamManager={publisher} />
@@ -227,7 +227,7 @@ function JoinRoom() {
             </div>
 
             {myUserName !== undefined && mainStreamManager !== undefined && (
-              <div className={`${style.logs}`}>
+              <div className={`${classes.logs}`}>
                 <Chat
                   myUserName={myUserName}
                   mainStreamManager={mainStreamManager}

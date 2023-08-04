@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.chatRoom {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: rgba(165, 129, 207, 0.1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.chatRoomTop {
+  flex: 9.3;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 8px 12px;
+}
+
+.chatRoomInputSection {
+  flex: 0.7;
+  display: flex;
+}
+
+.writer {
+  font-family: "TheJamsil5Bold" !important;
+  font-size: 30px !important;
+}
+
+.content {
+  font-family: "TheJamsil5Bold" !important;
+  font-size: 30px !important;
+}
+
+.chatRoomInputSectionInput {
+  flex: 8;
+  font-size: 25px;
+  border-radius: 0px 0px 0px 20px;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  padding: 8px 12px;
+  outline: none;
+}
+
+.chatRoomInputSectionBtn {
+  flex: 2;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 0px 0px 20px 0px;
+  transition: all 250ms ease-in-out;
+  font-size: 20px;
+}
+
+.chatRoomInputSectionBtn:hover {
+  cursor: pointer;
+  background-color: #a581cf;
+  color: white;
+}

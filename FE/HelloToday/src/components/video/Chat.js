@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import classes from "./Chat.module.css";
 
 function Chat(props) {
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState("");
 
-  const chatScroll = React.createRef();
+  // const chatScroll = React.createRef();
+  const chatScroll = useRef(null);
 
   useEffect(() => {
     // Receiver of the message (usually before calling 'session.connect')
@@ -16,9 +18,12 @@ function Chat(props) {
         message: data.message, // Message
       };
       setMessageList((prev) => [...prev, newMessageList]);
-      scrollToBottom();
     });
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList]);
 
   // 아래는 메세지 보내는 것 관련 -----------------------------
   const messageChangeHandler = (e) => {
@@ -57,37 +62,47 @@ function Chat(props) {
     setMessage("");
   };
 
+  // const scrollToBottom = () => {
+  //   setTimeout(() => {
+  //     try {
+  //       chatScroll.current.scrollTop = chatScroll.current.scrollHeight;
+  //     } catch (err) {}
+  //   }, 20);
+  // };
+
   const scrollToBottom = () => {
-    setTimeout(() => {
-      try {
-        chatScroll.current.scrollTop = chatScroll.current.scrollHeight;
-      } catch (err) {}
-    }, 20);
+    if (chatScroll.current) {
+      chatScroll.current.scrollTop = chatScroll.current.scrollHeight;
+    }
   };
 
   return (
-    <>
-      <div id="messageInput">
+    <div className={classes.chatRoom}>
+      <div className={classes.chatRoomTop}>
+        <div ref={chatScroll} className={classes.chatRoomLog}>
+          {messageList.map((data, i) => (
+            <div key={i}>
+              <div>
+                <p className={classes.writer}> {data.nickname} : </p>
+              </div>
+              <div>
+                <p className={classes.content}>{data.message}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div id="messageInput" className={classes.chatRoomInputSection}>
         <input
-          placeholder="메세지를 보네세요"
+          placeholder="write message"
           value={message}
           onChange={messageChangeHandler}
-          onKeyPress={keyPressHandler}
+          onKeyDown={keyPressHandler}
+          className={classes.chatRoomInputSectionInput}
         />
+        <button className={classes.chatRoomInputSectionBtn}>GO</button>
       </div>
-      <div ref={chatScroll}>
-        {messageList.map((data, i) => (
-          <div key={i}>
-            <div>
-              <p> {data.nickname}</p>
-            </div>
-            <div>
-              <p>{data.message}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
+    </div>
   );
 }
 

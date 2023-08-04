@@ -27,10 +27,6 @@
   outline: none;
 }
 
-.nickNamePopupDescInput:focus {
-  border: none;
-}
-
 .cantCheck {
   height: 100%;
   padding: 8px 12px;
