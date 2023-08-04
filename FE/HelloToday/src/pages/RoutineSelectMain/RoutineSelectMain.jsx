@@ -26,7 +26,7 @@ function RoutineSelectMain() {
   const location = useLocation();
   // const memberId = location.state.memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  // const isFirstLogin = location.state.isFirstLogin;
+  const isFirstLogin = location.state.isFirstLogin;
 
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
@@ -35,11 +35,11 @@ function RoutineSelectMain() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
-  // const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  const [FirstLogin, setFirstLogin] = useState(false);
+  const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
+  const [nickName, setNickName] = useState(location.state.nickName);
+  // const [FirstLogin, setFirstLogin] = useState(true);
   const dispatch = useDispatch();
 
-  console.log(AccsesToken);
   // 최초 렌더 시 루틴 데이터 받아오기
   useEffect(() => {
     async function axiosRoutineData() {
@@ -187,7 +187,7 @@ function RoutineSelectMain() {
             icon={faCircleXmark}
             className={classes.modalClose}
           />
-          <p>XX님이 선택하신 루틴 입니다.</p>
+          <p>{nickName}님이 선택하신 루틴 입니다.</p>
           <Splide options={option}>
             {selectRoutineState.map((item, index) => {
               return (
@@ -221,6 +221,7 @@ function RoutineSelectMain() {
         FirstLogin={FirstLogin}
         setFirstLogin={setFirstLogin}
         Token={AccsesToken}
+        setNickName={setNickName}
       />
     </>
   );
