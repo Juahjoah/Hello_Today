@@ -29,8 +29,6 @@ function SelectRoutineItem({
     if (!selected) {
       if (selectedCount < 5) {
         dispatch(addRoutine({ routineId, routineContent, routineImg }));
-        // dispatch(addRoutine({ routineDetailId, content, imgPath }));
-
         updateSelectedCount(selectedCount + 1);
         setSelected(!selected);
       } else {
