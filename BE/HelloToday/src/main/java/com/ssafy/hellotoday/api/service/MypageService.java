@@ -1,13 +1,15 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.response.CalendarDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
-import com.ssafy.hellotoday.api.dto.routine.response.RoutineCheckResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
@@ -17,17 +19,22 @@ import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.ssafy.hellotoday.db.entity.QMember.member;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutine.routine;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineCheck.routineCheck;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetail.routineDetail;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDetailCat;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +44,8 @@ public class MypageService {
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
     private final RoutineRepository routineRepository;
-    private final RoutineCheckRepository routineCheckRepository;
+    private final JPAQueryFactory queryFactory;
+
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
         Member member = getMember(cheerMessageRequestDto.getMemberId());
 
@@ -174,8 +182,24 @@ public class MypageService {
         return result;
     }
 
-    public List<RoutineCheckResponseDto> getCalendarRoutineDetail(Integer memberId, LocalDateTime checkDate) {
-        routineCheckRepository.findByMemberIdAndCheckDate(memberId, checkDate);
-        return null;
+    public List<CalendarDetailResponseDto> getCalendarRoutineDetail(Integer memberId, LocalDate checkDate) {
+
+        List<CalendarDetailResponseDto> calendarDetailList = queryFactory
+                .select(Projections.constructor(CalendarDetailResponseDto.class
+                        , routineDetail.content
+                        , routineCheck.modifiedDate
+                        , routineCheck.imgPath
+                        , routineCheck.content))
+                .from(routineCheck)
+                .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+                .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
+                .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
+                .where(member.memberId.eq(memberId)
+                        .and(routineCheck.checkDate.between(checkDate.atStartOfDay(), checkDate.plusDays(1).atStartOfDay()))
+                )
+                .fetch();
+
+        return calendarDetailList;
     }
 }
