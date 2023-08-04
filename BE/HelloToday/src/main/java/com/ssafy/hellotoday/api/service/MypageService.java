@@ -7,6 +7,7 @@ import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutineCheckResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
@@ -16,12 +17,14 @@ import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
+import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +37,7 @@ public class MypageService {
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
     private final RoutineRepository routineRepository;
+    private final RoutineCheckRepository routineCheckRepository;
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
         Member member = getMember(cheerMessageRequestDto.getMemberId());
 
@@ -158,9 +162,7 @@ public class MypageService {
         return member.get();
     }
 
-
-    // 내가 진행한 루틴에 대한 routineDetail에 대한 정보
-    public List<RoutineResponseDto> getRoutineHistory(Integer memberId) {
+    public List<RoutineResponseDto> getCalendar(Integer memberId) {
 
         System.out.println("memberId: " + memberId);
         List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
@@ -170,5 +172,10 @@ public class MypageService {
                 .collect(Collectors.toList());
 
         return result;
+    }
+
+    public List<RoutineCheckResponseDto> getCalendarRoutineDetail(Integer memberId, LocalDateTime checkDate) {
+        routineCheckRepository.findByMemberIdAndCheckDate(memberId, checkDate);
+        return null;
     }
 }

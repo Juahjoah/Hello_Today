@@ -3,7 +3,6 @@ package com.ssafy.hellotoday.api.controller;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberInfoResponseDto;
-import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
@@ -11,6 +10,7 @@ import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.RoutineCheckResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.api.dto.wishdiary.request.WishDiaryRequestDto;
 import com.ssafy.hellotoday.api.dto.wishdiary.response.WishDiaryResponseDto;
@@ -26,6 +26,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "MyPage", description = "마이페이지 관련 API")
@@ -145,7 +146,8 @@ public class MypageController {
     @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 안에 있는 루틴 히스토리 조회 API")
     @GetMapping("/routinehistory/{memberId}")
     public List<RoutineResponseDto> getRoutineHistory(@PathVariable Integer memberId) {
-        return mypageService.getRoutineHistory(memberId);
+//        return mypageService.getRoutineHistory(memberId);
+        return null;
     }
 
     @Operation(summary = "버킷리스트 전체 조회", description = "버킷리스트 전체 조회")
@@ -230,7 +232,7 @@ public class MypageController {
         return wishDiaryService.deleteWishDiary(bucketListId,findMember,Type.BUCKETLIST);
 
     }
-
+    
 
     @Operation(summary = "한줄 일기 내용 삭제", description = "한줄 일기 내용 삭제")
     @DeleteMapping("/onediary/{oneDiaryId}")
@@ -244,7 +246,18 @@ public class MypageController {
         return wishDiaryService.deleteWishDiary(oneDiaryId,findMember, Type.ONEDIARY);
 
     }
+    
+    @Operation(summary = "캘린더 내 루틴 조회", description = "캘린더 내 루틴의 시작, 종료일자")
+    @GetMapping("/calendar/{memberId}")
+    public List<RoutineResponseDto> getCalendarRoutine(@PathVariable Integer memberId) {
+        return mypageService.getCalendar(memberId);
+    }
 
+    @Operation(summary = "캘린더 내 루틴 상세 조회", description = "캘린더에 있는 루틴의 날짜를 눌렀을 때")
+    @GetMapping("/calendar/{memberId}")
+    public List<RoutineCheckResponseDto> getCalendarRoutineDetail(@PathVariable Integer memberId, LocalDateTime checkDate) {
+        return mypageService.getCalenda ..  rRoutineDetail(memberId, checkDate);
+    }
     @Operation(summary = "갤러리 조회", description = "마이페이지 안에 있는 갤러리 조회")
     @GetMapping("/gallery/{memberId}")
     public void getGallery(@PathVariable Integer memberId) {
