@@ -24,7 +24,7 @@ export const getRefreshToken = async (refreshtoken_) => {
     //   data
     // );
     const res = await axios.get(
-      `http://localhost:8080/api/members/reissue`,
+      `https://i9b308.p.ssafy.io/api/members/reissue`,
       data
     );
     console.log("requestAccessToken");
@@ -48,7 +48,7 @@ export const getAccessToken = async (refreshtoken_, accesstoken_) => {
     //   data
     // );
     const res = await axios.get(
-      `http://localhost:8080/api/members/reissue`,
+      `https://i9b308.p.ssafy.io/api/members/reissue`,
       data
     );
     console.log("매개변수 받은 accesstoken = ", accesstoken_);

@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class MemberUpdateResposneDto {
+public class MemberInfoResponseDto {
 
+    private Integer memberId;
+    private String email;
     private String nickname;
     private String stMsg;
     private String profilePath;
-
     @Builder
-    public MemberUpdateResposneDto(Member member) {
+    public MemberInfoResponseDto(Member member) {
+        this.memberId = member.getMemberId();
+        this.email = member.getEmail();
         this.nickname = member.getNickname();
         this.stMsg = member.getStMsg();
         this.profilePath = member.getProfileImagePath();

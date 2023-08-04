@@ -10,10 +10,7 @@ import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.*;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
-import com.ssafy.hellotoday.db.entity.Member;
-import com.ssafy.hellotoday.db.entity.Role;
-import com.ssafy.hellotoday.db.entity.ShowInfo;
-import com.ssafy.hellotoday.db.entity.Social;
+import com.ssafy.hellotoday.db.entity.*;
 
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.ShowInfoRepository;
@@ -66,6 +63,7 @@ public class MemberService {
                     .memberId(optionalMember.get().getMemberId())
                     .socialId(optionalMember.get().getSocialId())
                     .socialType(optionalMember.get().getSocialType())
+                    .nickname(optionalMember.get().getNickname())
                     .firstLogin(false)
                     .build();
         }
@@ -92,6 +90,7 @@ public class MemberService {
                     .memberId(member.getMemberId())
                     .socialId(member.getSocialId())
                     .socialType(member.getSocialType())
+                    .nickname(member.getNickname())
                     .firstLogin(true)
                     .build();
         }
@@ -111,6 +110,7 @@ public class MemberService {
                     .memberId(optionalMember.get().getMemberId())
                     .socialId(optionalMember.get().getSocialId())
                     .socialType(optionalMember.get().getSocialType())
+                    .nickname(optionalMember.get().getNickname())
                     .firstLogin(false)
                     .build();
         }
@@ -140,6 +140,7 @@ public class MemberService {
                     .memberId(member.getMemberId())
                     .socialId(member.getSocialId())
                     .socialType(member.getSocialType())
+                    .nickname(member.getNickname())
                     .firstLogin(true)
                     .build();
         }
@@ -186,17 +187,14 @@ public class MemberService {
                 .parseClaimsJws(token).getBody().get("id"));
 
         return memberRepository.findById(Integer.parseInt(id))
-                .orElseThrow(() -> new IllegalArgumentException("소셜아이디 \""+ id+" \" 에해당하는 사용자가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("회원아이디 \""+ id+" \" 에해당하는 사용자가 존재하지 않습니다."));
     }
 
     @Transactional(readOnly = true)
-    public MemberResponseDto getMemberInfo(Member findMember) {
+    public MemberInfoResponseDto getMemberInfo(Member findMember) {
 
-        return MemberResponseDto.builder()
-                .memberId(findMember.getMemberId())
-                .stMsg(findMember.getStMsg())
-                .email(findMember.getEmail())
-                .profilePath(findMember.getProfilePath())
+        return MemberInfoResponseDto.builder()
+                .member(findMember)
                 .build();
 
     }
@@ -222,10 +220,11 @@ public class MemberService {
             if (file != null) {
                 FileDto newfileDto = fileUploadUtil.uploadFile(file, findMember);
                 findMember.updateMemberInfo(newfileDto);
+                findMember.getProfileImagePath();
             }
 
         } else {
-            if (mypageUpdateRequestDto.getNickname() == null) {
+            if (mypageUpdateRequestDto.getNickname() == null||mypageUpdateRequestDto.getNickname().isBlank()) {
                 throw new CustomException(HttpStatus.BAD_REQUEST, -101, "닉네임은 null이 될 수 없습니다");
             }
 
@@ -240,14 +239,13 @@ public class MemberService {
             if (mypageUpdateRequestDto.getFile() != null) {
                 FileDto newfileDto = fileUploadUtil.uploadFile(mypageUpdateRequestDto.getFile(), findMember);
                 findMember.updateMemberInfo(mypageUpdateRequestDto, newfileDto);
+                findMember.getProfileImagePath();
             } else {
                 findMember.updateMemberInfo(mypageUpdateRequestDto);
             }
         }
             MemberUpdateResposneDto newMember = MemberUpdateResposneDto.builder()
-                    .nickname(findMember.getNickname())
-                    .stMsg(findMember.getStMsg())
-                    .profilePath(findMember.getProfilePath())
+                    .member(findMember)
                     .build();
 
             return BaseResponseDto.builder()
@@ -279,13 +277,6 @@ public class MemberService {
     @Transactional
     public BaseResponseDto updateNickname(String nickname, Member member) {
 
-        Member findMember = memberRepository.findByNickname(nickname).orElse(null);
-        //닉네임 중복
-        if (findMember != null) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, -100, "닉네임이 중복되었습니다");
-        }
-
-
         member.updateNickname(nickname);
 
 
@@ -295,6 +286,33 @@ public class MemberService {
                 .data(NickNameResponseDto.builder()
                         .memberId(member.getMemberId())
                         .nickname(member.getNickname())
+                        .build())
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public BaseResponseDto validNickname(String nickname, Member member) {
+        Member findMember = memberRepository.findByNickname(nickname).orElse(null);
+        //닉네임 중복
+        if (findMember != null) {
+
+            return BaseResponseDto.builder()
+                    .success(false)
+                    .message("닉네임이 중복되었습니다")
+                    .data(NickNameResponseDto.builder()
+                            .memberId(member.getMemberId())
+                            .nickname(nickname)
+                            .build())
+                    .build();
+        }
+
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("닉네임이 서용가능합니다")
+                .data(NickNameResponseDto.builder()
+                        .memberId(member.getMemberId())
+                        .nickname(nickname)
                         .build())
                 .build();
     }
