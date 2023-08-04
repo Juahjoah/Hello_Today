@@ -6,7 +6,7 @@ import RoutineSelectMain from "./pages/RoutineSelectMain/RoutineSelectMain";
 import GroupRoutine from "./pages/GroupRoutine/GroupRoutine";
 import MyProfile from "./pages/MyProfile/MyProfile";
 import RoutineAuthMain from "./pages/RoutineAuthMain/RoutineAuthMain";
-// import JoinRoom from "./pages/video/JoinRoom";
+import JoinRoom from "./pages/video/JoinRoom";
 import Modal from "react-modal";
 
 // openvidu demo ver
@@ -27,7 +27,7 @@ function App() {
       <Route path="/selectmain" element={<RoutineAuthMain />} />
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
       <Route path="/MyProfile" element={<MyProfile />} />
-      {/* <Route path="/roomId" element={<JoinRoom />} /> */}
+      <Route path="/roomId" element={<JoinRoom />} />
       {/* <Route path="/roomId" element={<VideoRoomComponent />} /> */}
       <Route
         path="/login/oauth2/code/kakao"

@@ -26,7 +26,7 @@ function GroupRoutine() {
   const [roomDesc, setRoomDesc] = useState("");
 
   const [myUserName, setMyUserName] = useState("홍길동");
-  const roomId = "sessiontest0001010112312351";
+  const roomId = "sessiontest9199191919191199";
   const videoEnabled = true;
   const audioEnabled = true;
 
