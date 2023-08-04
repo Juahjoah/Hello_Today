@@ -9,7 +9,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 //로그인
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
 import allAuth from "../../components/User/allAuth";
