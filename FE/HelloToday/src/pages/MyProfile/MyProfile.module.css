@@ -22,7 +22,7 @@
 .UserProfile {
   font-family: "TheJamsil5Bold";
   /* width: 40%; */
-  width: 25rem;
+  width: 20rem;
   margin: 2rem;
   background-color: bisque;
   display: flex;
@@ -35,7 +35,6 @@
 .UserFollow {
   font-family: "TheJamsil5Bold";
   font-size: 0.7rem;
-  width: 70%;
   margin: 2rem;
   height: 100%;
   text-align: center;
@@ -43,11 +42,20 @@
 
 .UserProfileMenu {
   font-family: "TheJamsil5Bold";
+  margin: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* justify-items: center; */
+}
+
+.Profilecontent {
+  font-family: "TheJamsil5Bold";
   width: 70%;
   margin: 2rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
-  justify-items: center;
 }

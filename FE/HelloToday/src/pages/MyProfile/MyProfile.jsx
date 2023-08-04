@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Nav from "../../components/common/Nav";
 import classes from "./MyProfile.module.css";
-import ProfileCalender from "../../components/Profile/ProfileCalender";
+
 import ProfileMenu from "../../components/Profile/ProfileMenu";
+import ProfileMain from "../../components/Profile/ProfileMain";
+
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -73,13 +75,7 @@ function MyProfile() {
         </div>
         {/* 화면 오른쪽 화면 출력 창 */}
         <div className={classes.Profilecontent}>
-          <div className={classes.ProfileCalender}>
-            <ProfileCalender />
-          </div>
-          <div className={classes.ProfileCustom}>
-            {/* <h3>{user.name}</h3> */}
-            {/* <p>{user.email}</p> */}
-          </div>
+          <ProfileMain />
         </div>
       </div>
     </div>
