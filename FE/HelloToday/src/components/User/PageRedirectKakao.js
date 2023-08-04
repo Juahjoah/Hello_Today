@@ -40,15 +40,12 @@ function RedirectPageKakao() {
       },
     })
       .then((res) => {
-        console.log(res.headers);
         const isFirstLogin = res.data.firstLogin;
         const memberId = res.data.memberId;
         const nickName = res.data.nickname;
-        console.log(res.data);
-        console.log(isFirstLogin);
-
         const accessToken = res.headers["authorization"];
         const refreshToken = res.headers["authorization-refresh"];
+
         console.log("Access Token:", accessToken);
         console.log("Refresh Token:", refreshToken);
         dispatch(SET_TOKEN(accessToken));
