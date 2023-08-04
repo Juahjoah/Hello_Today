@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+
 import "./App.css";
 import Home from "./pages/Home/Home";
 import User from "./pages/User/User";
@@ -14,7 +15,8 @@ import Modal from "react-modal";
 import RedirectPageKakao from "./components/User/PageRedirectKakao";
 import RedirectPageNaver from "./components/User/PageRedirectNaver";
 import LogoutPage from "./components/User/PageLogout";
-import { UseSelector, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import ProfileCalenderDetail from "./components/Profile/ProfileCalenderDetail";
 //직접 경로 url 막기
 // import PublicRoute from "./Router/PublicRoute";
 // import PrivateRoute from "./Router/PrivateRoute";
@@ -62,6 +64,10 @@ function App() {
       <Route
         path="/login/oauth2/code/naver"
         element={<RedirectPageNaver />}
+      ></Route>
+      <Route
+        path="/MyProfile/calen/:date"
+        element={<ProfileCalenderDetail />}
       ></Route>
       {/* <Route path="/roomId" element={<JoinRoom />} /> */}
       {/* <Route path="/roomId" element={<VideoRoomComponent />} /> */}
