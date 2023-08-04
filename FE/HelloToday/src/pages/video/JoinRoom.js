@@ -4,8 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import UserVideoComponent from "../../components/video/UserVideoComponent";
 import Chat from "../../components/video/Chat";
-
 import classes from "./JoinRoom.module.css";
+import classNames from "classnames";
 
 // 세션 입장
 function JoinRoom() {
@@ -31,6 +31,16 @@ function JoinRoom() {
   const [OV, setOV] = useState(<OpenVidu />);
   // const OV = new OpenVidu();
   const roomTitle = location.state.roomTitle;
+
+  const isVideoOn = classNames({
+    [classes.videoOff]: !videoEnabled,
+    [classes.videoOn]: videoEnabled,
+  });
+
+  const isMicOn = classNames({
+    [classes.micOff]: !audioEnabled,
+    [classes.micOn]: audioEnabled,
+  });
 
   // 2) 화면 렌더링 시 최초 1회 실행
   useEffect(() => {
@@ -232,25 +242,40 @@ function JoinRoom() {
                   </div>
                 ))}
               </div>
-              <div className={classes.divideline}></div>
-              <div className={classes.leftsideRoomBtnSection}>
-                <input
-                  type="button"
-                  onClick={toggleVideo}
-                  value={`비디오 ${videoEnabled ? "OFF" : "ON"}`}
-                />
-                <input
-                  type="button"
-                  onClick={toggleAudio}
-                  value={`마이크 ${audioEnabled ? "OFF" : "ON"}`}
-                />
-                <input type="button" onClick={leaveSession} value="나가기" />
-                <input type="button" value="질문 받기" />
-              </div>
             </div>
             {/* Chat Log */}
             {myUserName !== undefined && mainStreamManager !== undefined && (
               <div className={classes.logs}>
+                <div className={classes.leftsideRoomBtnSection}>
+                  <div className={classes.firstBtnSec}>
+                    <input
+                      className={isVideoOn}
+                      type="button"
+                      onClick={toggleVideo}
+                      value={`비디오 ${videoEnabled ? "OFF" : "ON"}`}
+                    />
+                    <input
+                      className={isMicOn}
+                      type="button"
+                      onClick={toggleAudio}
+                      value={`마이크 ${audioEnabled ? "OFF" : "ON"}`}
+                    />
+                  </div>
+                  <div className={classes.secondBtnSec}>
+                    <input
+                      className={classes.questionBtn}
+                      type="button"
+                      value="질문 받기"
+                    />
+                    <input
+                      className={classes.leaveBtn}
+                      type="button"
+                      onClick={leaveSession}
+                      value="회의 종료"
+                    />
+                  </div>
+                </div>
+                <div className={classes.divideline}></div>
                 <Chat
                   myUserName={myUserName}
                   mainStreamManager={mainStreamManager}
