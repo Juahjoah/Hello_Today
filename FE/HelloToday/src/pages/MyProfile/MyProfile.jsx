@@ -2,6 +2,7 @@
 import Nav from "../../components/common/Nav";
 import classes from "./MyProfile.module.css";
 import ProfileCalender from "../../components/Profile/ProfileCalender";
+import ProfileMenu from "../../components/Profile/ProfileMenu";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -62,12 +63,12 @@ function MyProfile() {
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
-              <p>팔로잉</p>
-              <p>팔로워</p>
+              <p></p>
+              <p>팔로잉/팔로워</p>
             </div>
           </div>
           <div className={classes.UserProfileMenu}>
-            <p>hihi everybody</p>
+            <ProfileMenu />
           </div>
         </div>
         {/* 화면 오른쪽 화면 출력 창 */}

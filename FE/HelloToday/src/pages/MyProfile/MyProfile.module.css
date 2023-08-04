@@ -7,6 +7,8 @@
 }
 
 .MyProfile {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
   border: 1px solid black;
   width: 90%;
   height: 75vh;
@@ -28,6 +30,15 @@
   justify-content: center;
   justify-items: center;
   /* margin-top: 170px; */
+}
+
+.UserFollow {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  width: 70%;
+  margin: 2rem;
+  height: 100%;
+  text-align: center;
 }
 
 .UserProfileMenu {
