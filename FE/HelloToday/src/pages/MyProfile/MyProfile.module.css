@@ -17,7 +17,7 @@
   align-items: center;
 }
 
-.ProfileLeft {
+.UserProfile {
   font-family: "TheJamsil5Bold";
   /* width: 40%; */
   width: 25rem;
@@ -30,7 +30,7 @@
   /* margin-top: 170px; */
 }
 
-.ProfileRight {
+.UserProfileMenu {
   font-family: "TheJamsil5Bold";
   width: 70%;
   margin: 2rem;

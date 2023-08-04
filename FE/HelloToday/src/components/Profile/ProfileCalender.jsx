@@ -14,7 +14,7 @@ export function ProfileCalender() {
         events={events}
         eventContent={renderEventContent}
         fixedWeekCount={false}
-        height={"300px"}
+          height={"300px"}
         // dayMinWidth={"50px"}
         expandRows={false}
         editable={true}

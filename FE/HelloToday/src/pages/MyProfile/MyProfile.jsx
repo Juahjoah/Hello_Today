@@ -45,6 +45,7 @@ function MyProfile() {
       .then((response) => {
         setUser(response.data);
         console.log(response.data);
+        console.log(user);
       });
   }, []);
 
@@ -53,19 +54,24 @@ function MyProfile() {
       <Nav />
       <div className={classes.MyProfile}>
         {/* 화면 왼쪽 개인 정보 */}
-        <div className={classes.ProfileLeft}>
-          <div className={classes.ProfileLeftInfo}>
-            <img src={user.profile_path} alt={user.profile_ori_name} />
+        <div className={classes.UserProfile}>
+          <div className={classes.UserInfo}>
+            <img src={user.profilePath} alt={user.Userprofilepic} />
             <p>{user.nickname}</p>
+            <hr />
+            {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
+            {/* 팔로잉/팔로워 */}
+            <div className={classes.UserFollow}>
+              <p>팔로잉</p>
+              <p>팔로워</p>
+            </div>
           </div>
-          <div className={classes.ProfileLeftMenu}>
+          <div className={classes.UserProfileMenu}>
             <p>hihi everybody</p>
-            {/* <h3>{user.name}</h3> */}
-            {/* <p>{user.email}</p> */}
           </div>
         </div>
-        {/* 화면 오른쪽 화면 창 */}
-        <div className={classes.ProfileRight}>
+        {/* 화면 오른쪽 화면 출력 창 */}
+        <div className={classes.Profilecontent}>
           <div className={classes.ProfileCalender}>
             <ProfileCalender />
           </div>
