@@ -1,6 +1,8 @@
+import classes from "./ProfileMenu.module.css";
+
 function ProfileMenu() {
   return (
-    <div>
+    <div className={classes.ProfileMenu}>
       <h1>ProfileMenu</h1>
       <p>ProfileMain</p>
       <p>WidgetGroupRoutine</p> {/* 그룹 루틴 참여 기록*/}
