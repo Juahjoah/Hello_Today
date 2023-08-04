@@ -5,6 +5,7 @@ import axios from "axios";
 import classNames from "classnames";
 
 function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
+  const API_URL = "https://i9b308.p.ssafy.io";
   const [userName, setUserName] = useState("");
   // 정규식 통과 검사(닉네임 형식)
   const [isUserName, setIsUserName] = useState(false);
@@ -13,6 +14,16 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
   // 닉네임 사용가능 여부 메시지
   const [userNameMessage, setUserNameMessage] = useState("");
   const [checkUserNameMessage, setCheckUserNameMessage] = useState("❌");
+
+  const validCheck = classNames({
+    [classes.cantCheck]: true,
+    [classes.canCheck]: isUserName,
+  });
+
+  const validChange = classNames({
+    [classes.cantChange]: true,
+    [classes.canChange]: validUserName,
+  });
 
   const onChangeUserName = (e) => {
     const currentUserName = e.target.value;
@@ -27,16 +38,15 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
       );
       setIsUserName(false);
     } else {
-      setUserNameMessage("중복확인 ㄱㄱ");
+      setUserNameMessage("사용가능한 닉네임 형식입니다.");
       setIsUserName(true);
     }
     setCheckUserNameMessage("❌");
   };
 
   const nickNameCheckAxios = () => {
-    console.log(userName);
     axios({
-      url: "http://localhost:8080/api/members/nickname",
+      url: `${API_URL}/api/members/nickname`,
       method: "get",
       params: {
         nickname: userName,
@@ -63,7 +73,7 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
 
   const changeNickName = () => {
     axios({
-      url: "http://localhost:8080/api/members/nickname",
+      url: `${API_URL}/api/members/nickname`,
       method: "put",
       data: {
         nickname: userName,
@@ -93,10 +103,10 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "300px",
-      left: "300px",
-      right: "300px",
-      bottom: "200px",
+      top: "400px",
+      left: "600px",
+      right: "600px",
+      bottom: "400px",
       border: "5px solid black",
       borderRadius: "20px",
     },
@@ -116,18 +126,28 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
             onChange={onChangeUserName}
           />
           {isUserName ? (
-            <button onClick={nickNameCheckAxios}>중복확인</button>
+            <button className={validCheck} onClick={nickNameCheckAxios}>
+              중복확인
+            </button>
           ) : (
-            <button disabled>중복확인</button>
+            <button className={validCheck} disabled>
+              중복확인
+            </button>
           )}
-          <div>{checkUserNameMessage}</div>
+          <div className={classes.checkUserNameMessage}>
+            {checkUserNameMessage}
+          </div>
         </div>
         <div style={{ fontSize: "20px" }}>{userNameMessage}</div>
 
         {validUserName ? (
-          <button onClick={changeNickName}>설정 완료</button>
+          <button className={validChange} onClick={changeNickName}>
+            설정 완료
+          </button>
         ) : (
-          <button disabled>설정 완료</button>
+          <button className={validChange} disabled>
+            설정 완료
+          </button>
         )}
       </div>
     </Modal>
