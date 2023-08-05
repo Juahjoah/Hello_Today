@@ -22,11 +22,13 @@ import allAuth from "../../components/User/allAuth";
 
 function RoutineSelectMain() {
   // state & data
-  const API_URL = "https://i9b308.p.ssafy.io";
+  // const API_URL = "https://i9b308.p.ssafy.io";
+  const API_URL = "http://localhost:8080";
   const location = useLocation();
   // const memberId = location.state.memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const isFirstLogin = location.state.isFirstLogin;
+  // const isFirstLogin = location.state.isFirstLogin;
+  const isFirstLogin = false;
 
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
@@ -126,12 +128,12 @@ function RoutineSelectMain() {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "300px",
-      left: "300px",
-      right: "300px",
-      bottom: "200px",
-      border: "5px solid black",
-      borderRadius: "20px",
+      top: "100px",
+      left: "100px",
+      right: "100px",
+      bottom: "100px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
 
@@ -140,8 +142,8 @@ function RoutineSelectMain() {
     drag: "free",
     gap: "20px",
     focus: "center",
-    fixedWidth: "250px",
-    fixedHeight: "250px",
+    fixedWidth: "200px",
+    fixedHeight: "200px",
     arrows: false,
   };
 
@@ -157,8 +159,8 @@ function RoutineSelectMain() {
           {AllRoutineList.map((bigRoutine, index) => {
             const bigRoutineMent = routineMent[index].content;
             return (
-              <div key={index}>
-                <p className={classes.bigRoutineMent}>{bigRoutineMent}</p>
+              <div key={index} style={{ marginTop: "30px" }}>
+                <div className={classes.bigRoutineMent}>{bigRoutineMent}</div>
                 <SelectRoutineList
                   bigRoutine={bigRoutine}
                   idx={index}
@@ -187,7 +189,9 @@ function RoutineSelectMain() {
             icon={faCircleXmark}
             className={classes.modalClose}
           />
-          <p>{nickName}님이 선택하신 루틴 입니다.</p>
+          <div className={classes.modalDescriptionTitle}>
+            {nickName}님이 선택하신 루틴 입니다.
+          </div>
           <Splide options={option}>
             {selectRoutineState.map((item, index) => {
               return (
@@ -201,10 +205,12 @@ function RoutineSelectMain() {
               );
             })}
           </Splide>
-          <p className={classes.modalDescriptionOne}>
+          <div className={classes.modalDescriptionOne}>
             해당 루틴은 7일간 진행됩니다.
-          </p>{" "}
-          <p>루틴이 제대로 선택되었는지, 확인해주세요!</p>
+          </div>{" "}
+          <div className={classes.modalDescriptionTwo}>
+            루틴이 제대로 선택되었는지, 확인해주세요!
+          </div>
           <div className="modalBtnSection">
             <button
               className={classes.routinSubmitModal}

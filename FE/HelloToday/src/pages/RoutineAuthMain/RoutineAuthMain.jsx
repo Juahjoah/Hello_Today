@@ -16,7 +16,6 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import React, { useEffect } from "react";
 // 로그인 시 필요한 함수
 import allAuth from "../../components/User/allAuth";
-
 function RoutineAuthMain() {
   const routineAuthBannerImg = "main_banner_routineAuth1";
   const routineAuthBannerMents = [
@@ -91,12 +90,12 @@ function RoutineAuthMain() {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "300px",
-      left: "300px",
-      right: "300px",
-      bottom: "200px",
-      border: "5px solid black",
-      borderRadius: "20px",
+      top: "60px",
+      left: "100px",
+      right: "100px",
+      bottom: "60px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
 
@@ -134,15 +133,15 @@ function RoutineAuthMain() {
       {/* 하단 그룹배너 */}
       <div className={classes.toGroupBanner}>
         <div className={classes.toGroupBannerLeft}>
-          <p className={classes.toGroupBannerLeftTitle}>
+          <div className={classes.toGroupBannerLeftTitle}>
             혼자 루틴을 진행하기 어려우신가요?
-          </p>
-          <p className={classes.toGroupBannerLeftDesc}>
+          </div>
+          <div className={classes.toGroupBannerLeftDesc}>
             단체 루틴을 통해 다른 오늘러와 공유해보세요!
-          </p>
-          <p className={classes.toGroupBannerLeftDesc}>
+          </div>
+          <div className={classes.toGroupBannerLeftDesc}>
             오늘의 루틴을 진행할 힘을 얻을 수 있을거랍니다!
-          </p>
+          </div>
           <Link to="/GroupRoutine">
             <button className={classes.toGroupBannerLeftBtn}>
               단체루틴 바로가기
@@ -170,18 +169,18 @@ function RoutineAuthMain() {
             className={classes.modalClose}
           />
           <div className={classes.authModalTitle}>
-            <p>
+            <div>
               User 님의 "
               <span style={{ color: "#a581cf" }}>{toAuthRoutine.content}</span>"
               루틴
-            </p>
+            </div>
           </div>
 
           <div className={classes.authModalMain}>
             <div className={classes.authModalMainLeft}>
-              <p className={classes.authModalMainLeftTitle}>
+              <div className={classes.authModalMainLeftTitle}>
                 루틴 인증 날짜를 선택해주세요
-              </p>
+              </div>
               <Calendar
                 onChange={onChange}
                 value={value}
@@ -190,7 +189,9 @@ function RoutineAuthMain() {
             </div>
             <div className={classes.authModalMainRight}>
               <div className={classes.authModalMainRightText}>
-                <p>이번 루틴은 어떠셨나요?</p>
+                <div className={classes.authModalMainRightDescOne}>
+                  이번 루틴은 어떠셨나요?
+                </div>
                 <textarea
                   className={classes.authModalMainRightTextArea}
                   name="textarea"
@@ -200,7 +201,9 @@ function RoutineAuthMain() {
                 ></textarea>
               </div>
               <div className={classes.authModalMainRightImg}>
-                <p>이미지 업로드</p>
+                <div className={classes.authModalMainRightDescTwo}>
+                  이미지 업로드
+                </div>
                 <div>
                   <input
                     className={classes.uploadName}
