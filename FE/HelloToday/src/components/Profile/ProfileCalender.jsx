@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "@fullcalendar/core";
 import axios from "axios";
+import { DateTime } from "luxon";
 
 import FullCalendar from "@fullcalendar/react"; //풀캘린더 import
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -66,10 +67,11 @@ export function ProfileCalender() {
         navLinkDayClick={(date) => {
           //일(숫자)을 누르면 상세 페이지로 이동
           console.log("navLink");
-          console.log(date.toISOString().split("T")[0]);
-          navigate(
-            `/MyProfile/${memberId}/calen/${date.toISOString().split("T")[0]}`
-          );
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          const formatdate = `${year}-${month}-${day}`;
+          navigate(`/MyProfile/${memberId}/calen/${formatdate}`);
         }}
         //dateClick : 달력에서 해당 날자(네모칸)를 클릭했을 때 발생하는 이벤트 함수
         dateClick={(info) => {
