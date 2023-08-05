@@ -20,13 +20,14 @@ export const getRefreshToken = async (refreshtoken_) => {
     console.log("머가 문제");
     console.log("refreshtoken_ = ", refreshtoken_);
     const res = await axios.get(
-      "http://localhost:8080/api/members/reissue",
+      `${process.env.REACT_APP_BASE_URL}/api/members/reissue`,
       data
     );
     // const res = await axios.get(
     //   `https://i9b308.p.ssafy.io/api/members/reissue`,
     //   data
     // );
+
     console.log("requestAccessToken");
     return res;
   } catch (error) {
@@ -43,7 +44,10 @@ export const getAccessToken = async (refreshtoken_, accesstoken_) => {
     },
   };
   try {
-    const res = await axios.get("http://localhost:8080/api/test", data);
+    const res = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/api/test`,
+      data
+    );
     // const res = await axios.get(
     //   `https://i9b308.p.ssafy.io/api/members/reissue`,
     //   data
