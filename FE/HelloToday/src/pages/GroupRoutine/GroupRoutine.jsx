@@ -114,12 +114,12 @@ function GroupRoutine() {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "300px",
+      top: "100px",
       left: "300px",
       right: "300px",
-      bottom: "200px",
-      border: "5px solid black",
-      borderRadius: "20px",
+      bottom: "100px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
   //------------------------------로그인 시작
@@ -147,15 +147,15 @@ function GroupRoutine() {
       {/* 하단 방만들기 배너 */}
       <div className={classes.makeRoom}>
         <div className={classes.makeRoomLeft}>
-          <p className={classes.makeRoomLeftTitle}>
+          <div className={classes.makeRoomLeftTitle}>
             지금 당장 원하는 방이 없으신가요?
-          </p>
-          <p className={classes.makeRoomLeftDesc}>
+          </div>
+          <div className={classes.makeRoomLeftDesc}>
             내가 원하는 방이 없으시다면
-          </p>
-          <p className={classes.makeRoomLeftDesc}>
+          </div>
+          <div className={classes.makeRoomLeftDesc}>
             직접 방을 개설해 보시는건 어떠세요?
-          </p>
+          </div>
 
           <button onClick={openModal} className={classes.makeRoomLeftBtn}>
             방 생성하기
@@ -181,7 +181,7 @@ function GroupRoutine() {
             className={classes.modalClose}
           />
           <div className={classes.makeRoomModalTitle}>
-            <p>단체 루틴방 생성하기</p>
+            <div style={{ marginTop: "10px" }}>단체 루틴방 생성하기</div>
           </div>
           <div className={classes.makeRoomModalMain}>
             <div className={classes.makeRoomModalMainRoomTitle}>

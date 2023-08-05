@@ -1,4 +1,4 @@
-// import style from './UserVideoComponent.module.css'
+import classes from "./UserVideoComponent.module.css";
 import OpenViduVideoComponent from "./OvVideo";
 
 function VideoComponent(props) {
@@ -9,7 +9,7 @@ function VideoComponent(props) {
   return (
     <>
       {props.streamManager !== undefined ? (
-        <div className="streamcomponent">
+        <div className={classes.streamcomponent}>
           <OpenViduVideoComponent streamManager={props.streamManager} />
         </div>
       ) : null}

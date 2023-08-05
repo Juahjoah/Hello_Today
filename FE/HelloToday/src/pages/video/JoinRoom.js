@@ -180,7 +180,7 @@ function JoinRoom() {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: audioEnabled, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: videoEnabled, // Whether you want to start publishing with your video enabled or not
-              resolution: "640x480", // The resolution of your video
+              resolution: "270x202.5", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: true, // Whether to mirror your local video or not
@@ -225,22 +225,29 @@ function JoinRoom() {
           <div className={classes.container}>
             <div className={classes.leftside}>
               <div className={classes.leftsideRoomInfo}>
-                <div className={classes.leftsideRoomInfoTitle}>{roomTitle}</div>
+                <div className={classes.leftsideRoomInfoTitle}>
+                  {roomTitle ?? "roomTitle"}
+                </div>
                 <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div>
               </div>
               <div className={classes.divideline}></div>
               <div className={classes.leftsideRoomUsers}>
-                {publisher !== undefined ? (
-                  <div id="publisher">
-                    <UserVideoComponent streamManager={publisher} />
-                  </div>
-                ) : null}
+                <div className={classes.userCameraZone}>
+                  {publisher !== undefined ? (
+                    <div className={classes.publisher}>
+                      <UserVideoComponent streamManager={publisher} />
+                    </div>
+                  ) : null}
 
-                {subscribers.map((sub, i) => (
-                  <div key={`${i}-subscriber`} className="subscribers">
-                    <UserVideoComponent streamManager={sub} />
-                  </div>
-                ))}
+                  {subscribers.map((sub, i) => (
+                    <div
+                      key={`${i}-subscriber`}
+                      className={classes.subscribers}
+                    >
+                      <UserVideoComponent streamManager={sub} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             {/* Chat Log */}

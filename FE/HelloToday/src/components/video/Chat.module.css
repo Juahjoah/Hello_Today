@@ -12,8 +12,9 @@
   flex-direction: column;
   width: 95%;
   height: 100%;
-  border-radius: 20px;
-  background: rgba(165, 129, 207, 0.1);
+  border-radius: 12px;
+  /* background: rgba(165, 129, 207, 0.1); */
+  background: rgb(244, 241, 250);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -31,24 +32,24 @@
 
 .writer {
   font-family: "TheJamsil5Bold" !important;
-  font-size: 30px !important;
+  font-size: 12px !important;
 }
 
 .content {
   font-family: "TheJamsil5Bold" !important;
-  font-size: 30px !important;
+  font-size: 12px !important;
 }
 
 .chatRoomInputSectionInput {
   flex: 8;
-  font-size: 25px;
-  border-radius: 0px 0px 0px 20px;
+  font-size: 12px;
+  border-radius: 0px 0px 0px 12px;
   background: rgba(250, 249, 252, 1);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);
   padding: 8px 12px;
   outline: none;
-  height: 50px;
+  height: 25px;
   font-family: "TheJamsil5Bold" !important;
 }
 
@@ -57,9 +58,9 @@
   background: rgba(250, 249, 252, 1);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);
-  border-radius: 0px 0px 20px 0px;
+  border-radius: 0px 0px 12px 0px;
   transition: all 250ms ease-in-out;
-  font-size: 20px;
+  font-size: 12px;
   font-family: "TheJamsil5Bold" !important;
 }
 
