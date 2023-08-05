@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
 import com.ssafy.hellotoday.api.dto.member.request.NickNameRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.LoginResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
+import com.ssafy.hellotoday.common.util.property.RedirectUrlProperties;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,8 +31,6 @@ public class MemberController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
 
-    @Value("${oauth2.kakao.redirect-uri}")
-    private String redirectKakaoUrl;
 
     @Value("${oauth2.naver.state}")
     private String naverState;
@@ -41,7 +40,7 @@ public class MemberController {
     @Operation(summary = "카카오로 로그인 및 회원가입", description = "카카오로 로그인 및 회원가입 하는 API")
     @PostMapping("/api/members/kakao/login")
     public ResponseEntity<LoginResponseDto> loginKakao(@RequestBody LoginRequestDto codeRequest) {
-        LoginDto member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.getCode(), redirectKakaoUrl);
+        LoginDto member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.getCode(), RedirectUrlProperties.KAKAO_REDIRECT_URL);
 
 
         String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getSocialId(), member.getSocialType());
@@ -54,6 +53,7 @@ public class MemberController {
                 .body(LoginResponseDto.builder()
                         .message("카카오 로그인을 성공하셨습니다")
                         .memberId(member.getMemberId())
+                        .nickname(member.getNickname())
                         .firstLogin(member.isFirstLogin())
                         .build());
     }
@@ -72,6 +72,7 @@ public class MemberController {
                 .body(LoginResponseDto.builder()
                         .message("네이버 로그인을 성공하셨습니다")
                         .memberId(member.getMemberId())
+                        .nickname(member.getNickname())
                         .firstLogin(member.isFirstLogin())
                         .build());
     }
@@ -91,8 +92,8 @@ public class MemberController {
     }
 
     @Operation(summary = "멤버 정보 수정", description = "멤버 정보(프로필,닉네임,상태메시지) 수정")
-    @PutMapping("/api/members/{id}")
-    private BaseResponseDto updateMemberInfo(@PathVariable Integer id,
+    @PutMapping("/api/members/{memberId}")
+    private BaseResponseDto updateMemberInfo(@PathVariable Integer memberId,
                                              @RequestPart(name = "request",required = false) MemberInfoUpdateRequestDto memberInfoUpdateRequestDto,
                                              @RequestParam(value = "file",required = false) MultipartFile file
             ,HttpServletRequest httpServletRequest) {
@@ -104,7 +105,7 @@ public class MemberController {
         String token = httpServletRequest.getHeader("Authorization");
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return memberService.updateMemberInfo(id,memberInfoUpdateRequestDto,findMember, file);
+        return memberService.updateMemberInfo(memberId,memberInfoUpdateRequestDto,findMember, file);
     }
 
     @Operation(summary = "닉네임 설정", description = "닉네임 설정")

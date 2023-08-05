@@ -1,5 +1,7 @@
 package com.ssafy.hellotoday.config;
 
+import com.ssafy.hellotoday.common.util.property.RedisProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,15 +13,10 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
+@RequiredArgsConstructor
 public class RedisConfig {
-    @Value("${redis.host}")
-    private String redisHost;
 
-    @Value("${redis.port}")
-    private int redisPort;
-
-    @Value("${redis.password}")
-    private String redisPassword;
+    private final RedisProperties redisProperties;
     /*
     RedisTemplate을 이용한 방식
 
@@ -29,9 +26,9 @@ public class RedisConfig {
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisHost);
-        redisStandaloneConfiguration.setPort(redisPort);
-        redisStandaloneConfiguration.setPassword(redisPassword);
+        redisStandaloneConfiguration.setHostName(redisProperties.getREDIS_HOST());
+        redisStandaloneConfiguration.setPort(redisProperties.getREDIS_PORT());
+        redisStandaloneConfiguration.setPassword(redisProperties.getREDIS_PASSWORD());
 
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
