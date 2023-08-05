@@ -1,7 +1,7 @@
 function WidgetGroupRoutine() {
   return (
     <div className="WidgetGroupRoutine">
-      <p> WidgetGroupRoutine</p>
+      <p> 단체 루틴 히스토리 </p>
     </div>
   );
 }

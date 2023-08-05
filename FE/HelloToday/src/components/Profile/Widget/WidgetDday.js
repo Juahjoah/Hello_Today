@@ -1,7 +1,7 @@
 function WidgetDday() {
   return (
     <div className="WidgetDday">
-      <p>WidgetDday</p>
+      <p> 디데이 위젯 </p>
     </div>
   );
 }

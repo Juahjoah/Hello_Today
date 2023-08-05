@@ -1,7 +1,6 @@
 import classes from "./ProfileMenu.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import ProfileMain from "./ProfileMain";
 import WidgetComments from "./Widget/WidgetComments";
 import WidgetGroupRoutine from "./Widget/WidgetGroupRoutine";
 import WidgetBucket from "./Widget/WidgetBucket";
@@ -38,104 +37,69 @@ function ProfileMenu({ setMenu }) {
 
       <div>
         <p
-          onClick={(e) => {
-            UserSelectMenu(e);
-          }}
-        >
-          WidgetGroupRoutine
-        </p>
-        <p
-          onClick={(e) => {
-            UserSelectMenu(e);
+          onClick={(event) => {
+            UserSelectMenu(event);
           }}
         >
           WidgetComments
         </p>
         <p
-          onClick={(e) => {
-            UserSelectMenu(e);
+          onClick={(event) => {
+            UserSelectMenu(event);
           }}
         >
           WidgetBucket
         </p>
-        <p
-          onClick={(e) => {
-            UserSelectMenu(e);
+        <event
+          onClick={(event) => {
+            UserSelectMenu(event);
           }}
         >
           WidgetGoals
-        </p>
+        </event>
         {/* 일/월/연 목표 */}
         <p
-          onClick={(e) => {
-            UserSelectMenu(e);
+          onClick={(event) => {
+            UserSelectMenu(event);
           }}
         >
           WidgetDiary
         </p>
         {/* 한 줄 일기 */}
         <p
-          onClick={(e) => {
-            UserSelectMenu(e);
+          onClick={(event) => {
+            UserSelectMenu(event);
           }}
         >
           WidgetHistory
         </p>
         {/* 루틴 히스토리 */}
         <p
-          onClick={(e) => {
-            UserSelectMenu(e);
+          onClick={(event) => {
+            UserSelectMenu(event);
+          }}
+        >
+          WidgetGroupRoutine
+        </p>
+        <p
+          onClick={(event) => {
+            UserSelectMenu(event);
+          }}
+        >
+          WidgetDday
+        </p>
+        {/* 디데이 */}
+        <p
+          onClick={(event) => {
+            UserSelectMenu(event);
           }}
         >
           WidgetGallery
         </p>
         {/* 갤러리 */}
-        <p
-          onClick={(e) => {
-            UserSelectMenu(e);
-          }}
-        >
-          WidgetDday
-        </p>{" "}
-        {/* 디데이 */}
       </div>
     </div>
   );
 }
 
 export default ProfileMenu;
-
-// function ProfileMenu() {
-//   const MenuList = [
-//     WidgetComments,
-//     WidgetGroupRoutine,
-//     WidgetBucket,
-//     WidgetGoals,
-//     WidgetDiary,
-//     WidgetHistory,
-//     WidgetGallery,
-//     WidgetDday,
-//   ];
-
-// const ProfileMenuChange = function (props) {
-//   const WidgetComments = <WidgetComments />;
-//   const WidgetGroupRoutine = <WidgetGroupRoutine />;
-//   const WidgetBucket = <WidgetBucket />;
-//   const WidgetGoals = <WidgetGoals />;
-//   const WidgetDiary = <WidgetDiary />;
-//   const WidgetHistory = <WidgetHistory />;
-//   const WidgetGallery = <WidgetGallery />;
-//   const WidgetDday = <WidgetDday />;
-//   return [
-//     WidgetComments,
-//     WidgetGroupRoutine,
-//     WidgetBucket,
-//     WidgetGoals,
-//     WidgetDiary,
-//     WidgetHistory,
-//     WidgetGallery,
-//     WidgetDday,
-//   ];
-// };
-
-// const ProfileMenuChange =

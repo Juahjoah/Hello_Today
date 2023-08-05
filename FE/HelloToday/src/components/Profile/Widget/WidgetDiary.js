@@ -1,7 +1,7 @@
 function WidgetDiary() {
   return (
     <div className="WidgetDiary">
-      <p>WidgetDiary</p>
+      <p> 한 줄 일기 </p>
     </div>
   );
 }

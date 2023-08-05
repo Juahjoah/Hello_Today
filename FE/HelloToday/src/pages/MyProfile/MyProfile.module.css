@@ -35,6 +35,8 @@
 .ProfileImg {
   width: 10rem;
   height: 10rem;
+  display: flex;
+  margin: 0 auto;
 }
 
 .ProfilenNickName {

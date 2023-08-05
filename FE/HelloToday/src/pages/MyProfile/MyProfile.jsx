@@ -73,7 +73,6 @@ function MyProfile() {
             <p className={classes.ProfilenNickName}>{user.nickname}</p>
             <p className={classes.ProfileNickName}>{user.nickname}</p>
             <p className={classes.ProfileMsg}>{user.stMsg}</p>
-            <hr />
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
@@ -81,6 +80,7 @@ function MyProfile() {
               <p>팔로잉/팔로워</p>
             </div>
           </div>
+          <hr />
           <div className={classes.UserProfileMenu}>
             <ProfileMenu setMenu={setMenu} />
           </div>

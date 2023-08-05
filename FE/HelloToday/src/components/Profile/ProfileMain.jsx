@@ -12,7 +12,6 @@ function ProfileMain(props) {
         {/* menu에서 받아온 정보 출력 */}
         {props.Menu}
       </div>
-      <p>ProfileMain</p>
     </div>
   );
 }

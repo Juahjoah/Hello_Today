@@ -1,7 +1,7 @@
 function WidgetBucket() {
   return (
     <div className="WidgetBucket">
-      <p>WidgetBucket</p>
+      <p>버킷리스트</p>
     </div>
   );
 }

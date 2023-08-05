@@ -1,7 +1,7 @@
 function WidgetHistory() {
   return (
     <div className="widget-history">
-      <p>WidgetHistory</p>
+      <p> 루틴 히스토리 </p>
     </div>
   );
 }
