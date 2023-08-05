@@ -1,7 +1,7 @@
 function WidgetComments() {
   return (
     <div className="WidgetComments">
-      <p> WidgetComments</p>
+      <p> 응원 댓글</p>
     </div>
   );
 }

@@ -2,17 +2,16 @@ import classes from "./ProfileMain.module.css";
 
 import ProfileCalender from "../../components/Profile/ProfileCalender";
 
-function ProfileMain() {
+function ProfileMain(props) {
   return (
     <div className="ProfileMain">
       <div className={classes.ProfileCalender}>
         <ProfileCalender />
       </div>
       <div className={classes.ProfileCustom}>
-        {/* <h3>{user.name}</h3> */}
-        {/* <p>{user.email}</p> */}
+        {/* menu에서 받아온 정보 출력 */}
+        {props.Menu}
       </div>
-      <p>ProfileMain</p>
     </div>
   );
 }
