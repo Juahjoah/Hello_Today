@@ -6,6 +6,15 @@ import UserVideoComponent from "../../components/video/UserVideoComponent";
 import Chat from "../../components/video/Chat";
 import classes from "./JoinRoom.module.css";
 import classNames from "classnames";
+import {
+  BsCameraVideoFill,
+  BsCameraVideoOffFill,
+  BsFillMicFill,
+  BsFillMicMuteFill,
+  BsFillDoorOpenFill,
+} from "react-icons/bs";
+
+import { MdQuestionAnswer } from "react-icons/md";
 
 // 세션 입장
 function JoinRoom() {
@@ -218,6 +227,9 @@ function JoinRoom() {
     }
   };
 
+  // ICON STYLE
+  const Iconstyle = { marginTop: "3px", fontSize: "1.2em" };
+
   return (
     <div>
       <div>
@@ -255,31 +267,53 @@ function JoinRoom() {
               <div className={classes.logs}>
                 <div className={classes.leftsideRoomBtnSection}>
                   <div className={classes.firstBtnSec}>
-                    <input
-                      className={isVideoOn}
-                      type="button"
-                      onClick={toggleVideo}
-                      value={`비디오 ${videoEnabled ? "OFF" : "ON"}`}
-                    />
-                    <input
-                      className={isMicOn}
-                      type="button"
-                      onClick={toggleAudio}
-                      value={`마이크 ${audioEnabled ? "OFF" : "ON"}`}
-                    />
+                    <button className={isVideoOn} onClick={toggleVideo}>
+                      <div className={classes.BtnInside}>
+                        <div>
+                          {videoEnabled ? (
+                            <BsCameraVideoOffFill style={Iconstyle} />
+                          ) : (
+                            <BsCameraVideoFill style={Iconstyle} />
+                          )}
+                        </div>
+                        <div style={{ marginLeft: "5px" }}>{`비디오 ${
+                          videoEnabled ? "OFF" : "ON"
+                        }`}</div>
+                      </div>
+                    </button>
+                    <button className={isMicOn} onClick={toggleAudio}>
+                      <div className={classes.BtnInside}>
+                        <div>
+                          {audioEnabled ? (
+                            <BsFillMicMuteFill style={Iconstyle} />
+                          ) : (
+                            <BsFillMicFill style={Iconstyle} />
+                          )}
+                        </div>
+                        <div style={{ marginLeft: "5px" }}>{`마이크 ${
+                          audioEnabled ? "OFF" : "ON"
+                        }`}</div>
+                      </div>
+                    </button>
                   </div>
                   <div className={classes.secondBtnSec}>
-                    <input
-                      className={classes.questionBtn}
-                      type="button"
-                      value="질문 받기"
-                    />
-                    <input
-                      className={classes.leaveBtn}
-                      type="button"
-                      onClick={leaveSession}
-                      value="회의 종료"
-                    />
+                    <button className={classes.questionBtn}>
+                      <div className={classes.BtnInside}>
+                        <div>
+                          <MdQuestionAnswer style={Iconstyle} />
+                        </div>
+                        <div style={{ marginLeft: "5px" }}>질문 받기</div>
+                      </div>
+                    </button>
+
+                    <button className={classes.leaveBtn} onClick={leaveSession}>
+                      <div className={classes.BtnInside}>
+                        <div>
+                          <BsFillDoorOpenFill style={Iconstyle} />
+                        </div>
+                        <div style={{ marginLeft: "5px" }}>회의 종료</div>
+                      </div>
+                    </button>
                   </div>
                 </div>
                 <div className={classes.divideline}></div>
