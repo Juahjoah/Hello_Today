@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import classes from "./ProfileCalenderDetail.module.css";
 import { SET_CALENDAR_DATA } from "../../store/calendarDetailSlice";
 import { useDispatch } from "react-redux";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
 
 import axios from "axios";
 
@@ -14,13 +16,13 @@ function ProfileCalenderDetail() {
     {
       date: "2023-08-07",
       routine_name: "운동하기",
-      img_path: "/images/Delete/망충.png",
+      img_path: "/images/Delete/강쥐.jpg",
       text: "여려분의 루틴을 일주일 간 함께해요!",
     },
     {
       date: "2023-08-07",
       routine_name: "책 읽기",
-      img_path: "/images/Delete/이모티콘.png",
+      img_path: "/images/Delete/계란.jpg",
       text: "매주 월요일의 시작",
     },
     {
@@ -54,8 +56,7 @@ function ProfileCalenderDetail() {
   return (
     <div className={classes.calDetailContain}>
       <div className={classes.calDetailContent}>
-        <p>하하하하</p>
-        <p>{data.date}</p>
+        <p>{data[0].date}</p>
         <hr />
         <div>
           {data.map((item) => {
@@ -70,6 +71,7 @@ function ProfileCalenderDetail() {
                       alt="img"
                     />
                   </div>
+                  <div className={classes.v_line}></div>
                   <div className={classes.txt}>
                     <p>{item.text}</p>
                   </div>
@@ -82,6 +84,8 @@ function ProfileCalenderDetail() {
 
       <div>
         <button
+          type="button"
+          className={"classes.btn-bd-primary"}
           onClick={() => {
             navigate(-1);
           }}

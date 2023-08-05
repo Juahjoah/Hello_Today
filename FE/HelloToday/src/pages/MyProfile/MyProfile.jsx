@@ -19,7 +19,7 @@ function MyProfile() {
   const isAccess = useSelector((state) => state.authToken.accessToken);
   useEffect(() => {
     allAuth(isAccess, dispatch);
-  }, [dispatch]);
+  }, []);
   //-----------------------------------여기까지
 
   // api 요청 후 받아온 user 정보 (모듈화 진행)
@@ -37,18 +37,18 @@ function MyProfile() {
   // });
   // const userProfile = () => profileApi.get();
 
-  const [user, setUser] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${baseURL}/api/mypage`, {
-        headers: { Authorization: AccsesToken },
-      })
-      .then((response) => {
-        setUser(response.data);
-        console.log(response.data);
-        console.log(user);
-      });
-  }, []);
+  // const [user, setUser] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${baseURL}/api/mypage`, {
+  //       headers: { Authorization: AccsesToken },
+  //     })
+  //     .then((response) => {
+  //       setUser(response.data);
+  //       console.log(response.data);
+  //       console.log(user);
+  //     });
+  // }, []);
 
   return (
     <div>
@@ -57,8 +57,8 @@ function MyProfile() {
         {/* 화면 왼쪽 개인 정보 */}
         <div className={classes.UserProfile}>
           <div className={classes.UserInfo}>
-            <img src={user.profilePath} alt={user.Userprofilepic} />
-            <p>{user.nickname}</p>
+            {/* <img src={user.profilePath} alt={user.Userprofilepic} /> */}
+            {/* <p>{user.nickname}</p> */}
             <hr />
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {/* 팔로잉/팔로워 */}
