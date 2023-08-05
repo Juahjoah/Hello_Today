@@ -1,7 +1,6 @@
 package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
-import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.FileDto;
 import com.ssafy.hellotoday.api.dto.member.LoginDto;
 import com.ssafy.hellotoday.api.dto.member.TokenDto;
@@ -327,5 +326,15 @@ public class MemberService {
                 .data(findMember.getMemberId())
                 .build();
 
+    }
+
+    public MemberInfoResponseDto getDetailMemberInfo(Integer memberId) {
+
+        Member targetMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("회원아이디 \"" + memberId + " \" 에해당하는 사용자가 존재하지 않습니다."));
+
+        return MemberInfoResponseDto.builder()
+                .member(targetMember)
+                .build();
     }
 }

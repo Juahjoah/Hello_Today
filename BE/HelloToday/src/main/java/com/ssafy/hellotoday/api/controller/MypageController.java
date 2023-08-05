@@ -52,6 +52,15 @@ public class MypageController {
         return memberService.getMemberInfo(findMember);
 
     }
+
+    //마이페이지 특정 사용자 정보 조회
+    @Operation(summary = "마이페이지 특정 사용자 정보 조회", description = "특정 사용자 정보(닉네임,상테메세지,프로필사진경로)")
+    @GetMapping("/{memberId}")
+    public MemberInfoResponseDto DetailMemberInfo(@PathVariable Integer memberId) {
+
+        return memberService.getDetailMemberInfo(memberId);
+
+    }
     //마이페이지 편집 모드
     @Operation(summary = "마이페이지 위젯 사용 여부 조회", description = "마이페이지 위젯 사용 여부를 알 수 있다(0:미사용.1:사용)")
     @GetMapping("/widget")
