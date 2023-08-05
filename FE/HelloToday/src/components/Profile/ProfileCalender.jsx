@@ -11,62 +11,15 @@ import bootstrap5Plugin from "@fullcalendar/bootstrap5";
 import { INITIAL_EVENTS, createEventId } from "./event-utils"; //달력에 일정 데이터 import함
 
 export function ProfileCalender() {
-  // API로 데이터 가져오기
-  const [events, setEvents] = useState([]);
   const navigate = useNavigate();
 
+  // API로 데이터 가져오기
+  // const [events, setEvents] = useState([]);
   // useEffect(() => {
   //     axios.get('주소')
   //     .then(res=>setEvents(res.data.calendarList))
   //    .catch(err=>console.log(err));
   //    }, []);
-
-  //------------------------
-  const handleDateSelect = (selectInfo) => {
-    let title = prompt("Please enter a new title for your event");
-    let calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    }
-  };
-  //------------------------
-  const handleEventClick = (clickInfo) => {
-    //클릭하면 세부 페이지로 이동하게 하기
-    //이거 디테일 세부 페이지에서 data 받을 때 url 뒤에 unique 숫자 붙여야할듯?
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove();
-    }
-  };
-  //------------------------
-  // const handleEvents = (events) => {
-  //   setCurrentEvents(events);
-  // };
-
-  //------------------------
-  const renderEventContent = (eventInfo) => {
-    return (
-      <>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
-      </>
-    );
-  };
-  // const calendarDetailRouter = (info) =>{
-  //   router.push(`/detail/${info.dateStr}`)
-  // }
 
   return (
     <div>
@@ -105,30 +58,11 @@ export function ProfileCalender() {
           console.log("dateLink");
           console.log(info.dateStr);
           navigate(`/MyProfile/calen/${info.dateStr}`);
-
           //해당 날짜가 alert에 뜬다.
         }}
-        events={events} //달력에 표시할 값
-        eventContent={renderEventContent} // custom render function
-        // dayMinWidth={"50px"}
-        expandRows={false}
-        // editable={true} //수정 가능
-        selecttable={false} //달력 일자 드래그 가능
-        selectMirror={true} //
-        dayMaxEvents={true} //
+        // events={events} //달력에 표시할 값
         initialEvents={INITIAL_EVENTS}
-        select={handleDateSelect}
-        eventClick={handleEventClick} //이벤트 다루는 툴
-        // eventClick={((info) => router.push(`/detail/${info.dateStr}`))} //해당 상세 페이지로 이동
         locale="ko" // 한국어 설정
-        // nowIndicator={true}
-
-        // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-        /* you can update a remote database when these fire:
-        eventAdd={function(){}}
-        eventChange={function(){}}
-        eventRemove={function(){}}
-        */
       />
     </div>
   );

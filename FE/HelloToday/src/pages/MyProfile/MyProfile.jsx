@@ -81,6 +81,7 @@ function MyProfile() {
       // Cookie에 저장된 Refresh Token 정보를 삭제
       removeCookieToken();
       dispatch(Logoutstate());
+      sessionStorage.clear();
       navigate("/");
     } catch (error) {
       console.log(error);
