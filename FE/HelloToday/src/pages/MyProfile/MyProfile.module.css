@@ -32,6 +32,16 @@
   /* margin-top: 170px; */
 }
 
+.ProfileImg {
+  width: 10rem;
+  height: 10rem;
+}
+
+.ProfilenNickName {
+  font-family: "TheJamsil5Bold";
+  font-size: 2rem;
+}
+
 .UserFollow {
   font-family: "TheJamsil5Bold";
   font-size: 0.7rem;
