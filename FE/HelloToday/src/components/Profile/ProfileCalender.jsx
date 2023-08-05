@@ -17,7 +17,7 @@ export function ProfileCalender() {
   // API로 데이터 가져오기
   // nav에서 memberId 고정한 것 고쳐주기
   // const [events, setEvents] = useState([]);
-  // const memberId = useParams().memberId;
+  const memberId = useParams().memberId;
   // console.log(memberId);
   // useEffect(() => {
   //   axios
@@ -35,6 +35,7 @@ export function ProfileCalender() {
   //       console.log(error);
   //     });
   // }, []);
+  //d-day추가하면 캘린더 데이터 수정해주기
 
   return (
     <div>
@@ -62,18 +63,21 @@ export function ProfileCalender() {
         weekends={true}
         //Date Nav Links
         navLinks={true} //일과 주를 누르면 해당 페이지로 이동
-        navLinkDayClick={(info) => {
+        navLinkDayClick={(date) => {
           //일(숫자)을 누르면 상세 페이지로 이동
           console.log("navLink");
-          console.log(info.dateStr);
-          navigate(`/MyProfile/calen/${info.dateStr}`);
+          console.log(date.toISOString().split("T")[0]);
+          navigate(
+            `/MyProfile/${memberId}/calen/${date.toISOString().split("T")[0]}`
+          );
         }}
         //dateClick : 달력에서 해당 날자(네모칸)를 클릭했을 때 발생하는 이벤트 함수
         dateClick={(info) => {
           // <Link to={`/calen/${info.dateStr}`} />;
           console.log("dateLink");
           console.log(info.dateStr);
-          navigate(`/MyProfile/calen/${info.dateStr}`);
+          console.log(typeof info.dateStr);
+          navigate(`/MyProfile/${memberId}/calen/${info.dateStr}`);
           //해당 날짜가 alert에 뜬다.
         }}
         events={events} //달력에 표시할 값

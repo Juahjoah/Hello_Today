@@ -13,7 +13,7 @@
   /*루틴 인증*/
   /* border: 4px solid #be1616; */
 }
-.routinename {
+.routineContent {
   /*루틴 이름*/
 }
 .img_txt {
@@ -40,7 +40,7 @@
   height: 200px;
   margin-right: 10px;
 }
-.txt {
+.content {
   /*루틴 인증 글*/
 }
 

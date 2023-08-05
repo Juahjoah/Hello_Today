@@ -67,7 +67,7 @@ function App() {
         element={<RedirectPageNaver />}
       ></Route>
       <Route
-        path="/MyProfile/calen/:date"
+        path="/MyProfile/:memberId/calen/:checkDate"
         element={<ProfileCalenderDetail />}
       ></Route>
       {/* <Route path="/roomId" element={<JoinRoom />} /> */}
