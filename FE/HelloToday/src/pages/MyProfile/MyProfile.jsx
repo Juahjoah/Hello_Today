@@ -13,20 +13,28 @@ import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
 import allAuth from "../../components/User/allAuth";
 
+//회원탈퇴
+import { useNavigate } from "react-router";
+
+import { removeCookieToken } from "../../components/User/CookieStorage";
+import { DELETE_TOKEN } from "../../store/TokenSlice";
+
+import Spinner from "../../components/User/PageSpinner";
+import { Logoutstate } from "../../store/LoginSlice";
+
 function MyProfile() {
   //------------------------------로그인 시작
   const dispatch = useDispatch();
-  const isAccess = useSelector((state) => state.authToken.accessToken);
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
+
   useEffect(() => {
-    allAuth(isAccess, dispatch);
+    allAuth(AccsesToken, dispatch);
   }, []);
   //-----------------------------------여기까지
 
   // api 요청 후 받아온 user 정보 (모듈화 진행)
-  const AccsesToken = useSelector((state) => state.authToken.accessToken);
-
-  const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
-  // const baseURL = "http://localhost:8080"; // 개발용
+  // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
+  const baseURL = "http://localhost:8080"; // 개발용
 
   const [user, setUser] = useState([]);
 
@@ -56,6 +64,29 @@ function MyProfile() {
 
   const [Menu, setMenu] = useState();
 
+  const navigate = useNavigate();
+
+  const handleunregister = async () => {
+    //백에 요청 날리고
+    const data = {
+      headers: {
+        Authorization: AccsesToken,
+      },
+    };
+    try {
+      await axios.get(`${process.env.REACT_APP_BASE_URL}/api/test`, data);
+      //logoutpage 하기
+      // store에 저장된 Access Token 정보를 삭제
+      dispatch(DELETE_TOKEN());
+      // Cookie에 저장된 Refresh Token 정보를 삭제
+      removeCookieToken();
+      dispatch(Logoutstate());
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Nav />
@@ -77,6 +108,7 @@ function MyProfile() {
               <p></p>
               <p>팔로잉/팔로워</p>
             </div>
+            <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>
           <hr />
           <div className={classes.UserProfileMenu}>
