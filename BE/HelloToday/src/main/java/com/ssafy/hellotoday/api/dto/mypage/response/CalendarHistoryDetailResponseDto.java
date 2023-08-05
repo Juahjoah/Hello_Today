@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 
 @ToString
 @Getter
-public class CalendarDetailResponseDto {
+public class CalendarHistoryDetailResponseDto {
     private String routineContent;
     private LocalDateTime writeDate;
     private String imgPath;
     private String content;
 
-    public CalendarDetailResponseDto(String routineContent, LocalDateTime checkDate, String imgPath, String content) {
+    public CalendarHistoryDetailResponseDto(String routineContent, LocalDateTime checkDate, String imgPath, String content) {
         this.routineContent = routineContent;
         this.writeDate = checkDate;
         this.imgPath = imgPath;
