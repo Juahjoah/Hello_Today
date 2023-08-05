@@ -19,7 +19,6 @@ import { useNavigate } from "react-router";
 import { removeCookieToken } from "../../components/User/CookieStorage";
 import { DELETE_TOKEN } from "../../store/TokenSlice";
 
-import Spinner from "../../components/User/PageSpinner";
 import { Logoutstate } from "../../store/LoginSlice";
 
 function MyProfile() {
@@ -73,18 +72,22 @@ function MyProfile() {
         Authorization: AccsesToken,
       },
     };
-    try {
-      await axios.get(`${process.env.REACT_APP_BASE_URL}/api/test`, data);
-      //logoutpage 하기
-      // store에 저장된 Access Token 정보를 삭제
-      dispatch(DELETE_TOKEN());
-      // Cookie에 저장된 Refresh Token 정보를 삭제
-      removeCookieToken();
-      dispatch(Logoutstate());
-      sessionStorage.clear();
-      navigate("/");
-    } catch (error) {
-      console.log(error);
+    if (window.confirm("정말로 탈퇴하시겠습니까?")) {
+      try {
+        await axios.get(`${process.env.REACT_APP_BASE_URL}/api/test`, data);
+        //logoutpage 하기
+        // store에 저장된 Access Token 정보를 삭제
+        dispatch(DELETE_TOKEN());
+        // Cookie에 저장된 Refresh Token 정보를 삭제
+        removeCookieToken();
+        dispatch(Logoutstate());
+        sessionStorage.clear();
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("회원탈퇴를 취소하셨습니다.");
     }
   };
 
