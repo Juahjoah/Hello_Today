@@ -316,4 +316,16 @@ public class MemberService {
                         .build())
                 .build();
     }
+
+    public BaseResponseDto deleteMember(Member findMember) {
+
+        memberRepository.delete(findMember);
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("회원 탈퇴를 하셨습니다")
+                .data(findMember.getMemberId())
+                .build();
+
+    }
 }

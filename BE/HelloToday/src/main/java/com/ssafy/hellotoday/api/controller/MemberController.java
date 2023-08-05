@@ -131,6 +131,15 @@ public class MemberController {
 
         return memberService.validNickname(nickname,findMember);
     }
+    @Operation(summary = "회원 탈퇴", description = "회원 탈퇴")
+    @DeleteMapping("/api/members/withdrawal")
+    public BaseResponseDto withdrawal(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return memberService.deleteMember(findMember);
+    }
 
 
 
