@@ -17,6 +17,9 @@ function Nav() {
   const PersonalRoutine = isUserhaveRoutine ? "/selectmain" : "/unselectmain";
 
   const dispatch = useDispatch();
+  //일단 고정 
+  const memberId = 1; 
+
 
   return (
     <nav className={classes.nav}>
@@ -54,7 +57,8 @@ function Nav() {
             단체 루틴
           </button>
         </Link>
-        <Link to="/MyProfile">
+        {/*멤버 아이디*/}
+        <Link to={`/MyProfile/${memberId}`}>
           <button
             onClick={() => {
               if (isUserhaveRoutine) {
