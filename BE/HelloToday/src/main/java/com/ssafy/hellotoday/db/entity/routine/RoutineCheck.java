@@ -6,6 +6,7 @@ import com.ssafy.hellotoday.db.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
+@ToString
 public class RoutineCheck extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

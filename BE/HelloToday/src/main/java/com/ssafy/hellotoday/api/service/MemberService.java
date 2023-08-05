@@ -187,7 +187,7 @@ public class MemberService {
                 .parseClaimsJws(token).getBody().get("id"));
 
         return memberRepository.findById(Integer.parseInt(id))
-                .orElseThrow(() -> new IllegalArgumentException("소셜아이디 \""+ id+" \" 에해당하는 사용자가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("회원아이디 \""+ id+" \" 에해당하는 사용자가 존재하지 않습니다."));
     }
 
     @Transactional(readOnly = true)
@@ -224,7 +224,7 @@ public class MemberService {
             }
 
         } else {
-            if (mypageUpdateRequestDto.getNickname() == null) {
+            if (mypageUpdateRequestDto.getNickname() == null||mypageUpdateRequestDto.getNickname().isBlank()) {
                 throw new CustomException(HttpStatus.BAD_REQUEST, -101, "닉네임은 null이 될 수 없습니다");
             }
 
@@ -239,14 +239,13 @@ public class MemberService {
             if (mypageUpdateRequestDto.getFile() != null) {
                 FileDto newfileDto = fileUploadUtil.uploadFile(mypageUpdateRequestDto.getFile(), findMember);
                 findMember.updateMemberInfo(mypageUpdateRequestDto, newfileDto);
+                findMember.getProfileImagePath();
             } else {
                 findMember.updateMemberInfo(mypageUpdateRequestDto);
             }
         }
             MemberUpdateResposneDto newMember = MemberUpdateResposneDto.builder()
-                    .nickname(findMember.getNickname())
-                    .stMsg(findMember.getStMsg())
-                    .profilePath(findMember.getProfilePath())
+                    .member(findMember)
                     .build();
 
             return BaseResponseDto.builder()
