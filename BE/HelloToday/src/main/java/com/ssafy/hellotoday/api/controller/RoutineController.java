@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.api.dto.routine.response.RoutinePrivateCheckResponse
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.RoutineService;
+import com.ssafy.hellotoday.db.entity.BaseEntity;
 import com.ssafy.hellotoday.db.entity.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -67,9 +69,18 @@ public class RoutineController {
     }
 
     @PutMapping("/private/check")
-    public void checkPrivateRoutine(@RequestBody RoutineCheckRequestDto routineCheckRequestDto) {
+    public BaseResponseDto checkPrivateRoutine(@RequestPart(name = "request") RoutineCheckRequestDto routineCheckRequestDto,
+                                          @RequestParam(value = "file",required = false) MultipartFile file,
+                                          HttpServletRequest httpServletRequest) {
 
-        routineService.checkPrivateRoutine(routineCheckRequestDto);
+        if (routineCheckRequestDto != null) {
+            routineCheckRequestDto.setFile(file);
+        }
 
+        String token = httpServletRequest.getHeader("Authorization");
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+
+        return routineService.checkPrivateRoutine(routineCheckRequestDto,findMember,file);
     }
 }

@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class FileDto {
 
-    private String profileOriginalName;
+    private String fileOriginalName;
 
-    private String profilePath;
+    private String filePath;
 }

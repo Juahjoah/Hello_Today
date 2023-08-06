@@ -21,8 +21,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/profile/**")
-                .addResourceLocations("file:///" + ApplicationProperties.PROFILE_PATH)
+        registry.addResourceHandler("/profile/**","/routine/**")
+                .addResourceLocations("file:///" + ApplicationProperties.PROFILE_PATH,"file:///" + ApplicationProperties.ROUTINECHECK_PATH)
                 .setCachePeriod(60 * 10)
                 .resourceChain(true);
     }

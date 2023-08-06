@@ -3,15 +3,16 @@ package com.ssafy.hellotoday.api.service;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.member.FileDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.*;
-import com.ssafy.hellotoday.common.exception.CustomException;
-import com.ssafy.hellotoday.common.exception.message.RoutineErrorEnum;
 import com.ssafy.hellotoday.common.exception.validator.RoutineValidator;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
+import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
+import com.ssafy.hellotoday.db.entity.BaseEntity;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.routine.*;
 import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
@@ -21,13 +22,11 @@ import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,6 +49,7 @@ public class RoutineService {
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
     private final RoutineCheckRepository routineCheckRepository;
+    private final FileUploadUtil fileUploadUtil;
 
     private final RoutineValidator routineValidator;
 
@@ -181,19 +181,28 @@ public class RoutineService {
         return routinePrivateCheckResponseDto;
     }
 
-    public void checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto) {
-        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckDto().getRoutineCheckId());
+    public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto, Member findMember, MultipartFile file) {
+        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckId());
 
-//        try {
-//            MultipartFile file = routineCheckRequestDto.getRoutineCheckDto().getFile();
-//            String fullPath = uploadDir + routineCheckRequestDto.getRoutineCheckDto().getImgOriName();
-//
-//            file.transferTo(new File(fullPath));
-//            System.out.println(">>" + uploadDir);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+        if (findMember.getMemberId() != routineCheck.getRoutineDetailCat().getRoutine().getMember().getMemberId()) {
+            throw new IllegalArgumentException("잘못된 접근입니다");
+        }
 
-        routineCheck.update(routineCheckRequestDto);
+        if (file != null) {
+            FileDto fileDto = fileUploadUtil.uploadRoutineFile(file, routineCheck);
+            routineCheck.update(routineCheckRequestDto, fileDto);
+            routineCheck.getRoutineImagePath();
+        } else {
+            routineCheck.update(routineCheckRequestDto);
+        }
+
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("루틴 인증 작성을 성공하셨습니다")
+                .data(RoutineCheckUpdateDto.builder()
+                        .routineCheck(routineCheck)
+                        .build())
+                .build();
     }
 }
