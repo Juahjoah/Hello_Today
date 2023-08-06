@@ -41,6 +41,15 @@ function JoinRoom() {
   // const OV = new OpenVidu();
   const roomTitle = location.state.roomTitle;
 
+  // 질문 test
+
+  const [questionList, setQuestionList] = useState([]); // 질문리스트
+  const [questionTurn, setQuestionTurn] = useState(null); // 질문 순서(index)
+  const [isQuestionClick, setIsQuestionClick] = useState(0); // 질문 버튼 클릭 여부
+
+  // TODO: maybe??
+  // const [question,setQuestion] = useState("")
+
   const isVideoOn = classNames({
     [classes.videoOff]: !videoEnabled,
     [classes.videoOn]: videoEnabled,
@@ -227,6 +236,38 @@ function JoinRoom() {
     }
   };
 
+  // 질문받기(test)
+
+  const callQuestion = () => {
+    // TODO: API 나오면 AXIOS 요청해서 질문 받아올 것
+    // axios({
+    //   method:'get',
+    //   headers: {
+    //     Authorization : AccessToken,
+    //   },
+    //   data: {
+    //     ...
+    //   }
+    // })
+    // .then((res) => {
+    //   const question = res.data.content
+    //   setQuestionList(question)
+    //   setIsQuestionClick(true);
+    // })
+
+    const testQuestion = [
+      "이 방에는 각자 서로 다른 루틴을 진행하는 사람들이 모여있습니다. 서로 어떤 루틴을 진행하고 있는지 간단하게 공유하는 시간을 가져보아요.",
+      "각자 루틴을 며칠동안 꾸준히 진행했는지 말하는 시간을 가져보아요.",
+      "현재 자신의 진행 상황에서 아쉬운 점과 잘 하고 있는 점을 공유해봅시다. (서로 격려하는 말도 해보는건 어떤가요?",
+    ];
+
+    setQuestionList(testQuestion); // 질문 리스트 받아와서 바꿔주고
+
+    setQuestionTurn(questionTurn + 1);
+
+    setIsQuestionClick(true);
+  };
+
   // ICON STYLE
   const Iconstyle = { marginTop: "3px", fontSize: "1.2em" };
 
@@ -297,7 +338,10 @@ function JoinRoom() {
                     </button>
                   </div>
                   <div className={classes.secondBtnSec}>
-                    <button className={classes.questionBtn}>
+                    <button
+                      className={classes.questionBtn}
+                      onClick={callQuestion}
+                    >
                       <div className={classes.BtnInside}>
                         <div>
                           <MdQuestionAnswer style={Iconstyle} />
@@ -320,6 +364,10 @@ function JoinRoom() {
                 <Chat
                   myUserName={myUserName}
                   mainStreamManager={mainStreamManager}
+                  questionList={questionList}
+                  questionTurn={questionTurn}
+                  isQuestionClick={isQuestionClick}
+                  setIsQuestionClick={setIsQuestionClick}
                 />
               </div>
             )}

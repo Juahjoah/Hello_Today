@@ -2,16 +2,25 @@ import React, { useEffect, useState, useRef } from "react";
 import classes from "./Chat.module.css";
 import { Scrollbars } from "react-custom-scrollbars-2";
 
-function Chat(props) {
+function Chat({
+  myUserName,
+  mainStreamManager,
+  questionList,
+  questionTurn,
+  isQuestionClick,
+  setIsQuestionClick,
+}) {
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState("");
 
   // const chatScroll = React.createRef();
   const chatScroll = useRef(null);
 
+  console.log(questionList, questionTurn, isQuestionClick, setIsQuestionClick);
+
   useEffect(() => {
     // Receiver of the message (usually before calling 'session.connect')
-    props.mainStreamManager.stream.session.on("signal:chat", (event) => {
+    mainStreamManager.stream.session.on("signal:chat", (event) => {
       const data = JSON.parse(event.data);
       let newMessageList = {
         connectionId: event.from.connectionId, // Connection object of the sender
@@ -37,17 +46,56 @@ function Chat(props) {
     }
   };
 
+  // 질문 test
+
+  const sendQuestion = (Question) => {
+    const data = {
+      message: Question,
+      nickname: "[시스템 관리자]",
+      streamId: mainStreamManager.stream.streamId,
+    };
+
+    // Sender of the message (after 'session.connect')
+    mainStreamManager.stream.session
+      .signal({
+        data: JSON.stringify(data), // Any string (optional)
+        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+        type: "chat", // The type of message (optional)
+      })
+      .then(() => {
+        console.log("메세지가 성공적으로 보내졌습니다.");
+        setIsQuestionClick(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (isQuestionClick) {
+      console.log(
+        questionList,
+        questionTurn,
+        isQuestionClick,
+        setIsQuestionClick
+      );
+      console.log(questionList[questionTurn]);
+      sendQuestion(questionList[questionTurn]);
+    }
+  }, [isQuestionClick]);
+
   // 연결된 모든 참가자에게 broadcast message로 메세지 보내기
   const sendMessage = () => {
     let newMessage = message.replace(/ +(?= )/g, "");
     if (newMessage !== "" && newMessage !== " ") {
       const data = {
         message: message,
-        nickname: props.myUserName,
-        streamId: props.mainStreamManager.stream.streamId,
+        nickname: myUserName,
+        streamId: mainStreamManager.stream.streamId,
       };
+
       // Sender of the message (after 'session.connect')
-      props.mainStreamManager.stream.session
+      mainStreamManager.stream.session
         .signal({
           data: JSON.stringify(data), // Any string (optional)
           to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
@@ -63,18 +111,17 @@ function Chat(props) {
     setMessage("");
   };
 
-  // const scrollToBottom = () => {
-  //   setTimeout(() => {
-  //     try {
-  //       chatScroll.current.scrollTop = chatScroll.current.scrollHeight;
-  //     } catch (err) {}
-  //   }, 20);
-  // };
-
   const scrollToBottom = () => {
     if (chatScroll.current) {
       chatScroll.current.scrollTop = chatScroll.current.scrollHeight;
     }
+  };
+
+  const renderNickname = (nickname) => {
+    if (nickname === myUserName) {
+      return "나";
+    }
+    return nickname;
   };
 
   return (
@@ -85,7 +132,10 @@ function Chat(props) {
             {messageList.map((data, i) => (
               <div key={i}>
                 <div>
-                  <p className={classes.writer}> {data.nickname} : </p>
+                  <p className={classes.writer}>
+                    {" "}
+                    {renderNickname(data.nickname)} :{" "}
+                  </p>
                 </div>
                 <div>
                   <p className={classes.content}>{data.message}</p>

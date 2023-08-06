@@ -27,8 +27,8 @@ function RoutineSelectMain() {
   const location = useLocation();
   // const memberId = location.state.memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  // const isFirstLogin = location.state.isFirstLogin;
-  const isFirstLogin = false;
+  const isFirstLogin = location.state.isFirstLogin;
+  // const isFirstLogin = false;
 
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
