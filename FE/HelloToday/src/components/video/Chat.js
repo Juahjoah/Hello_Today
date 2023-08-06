@@ -5,8 +5,7 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 function Chat({
   myUserName,
   mainStreamManager,
-  questionList,
-  questionTurn,
+  question,
   isQuestionClick,
   setIsQuestionClick,
 }) {
@@ -79,7 +78,7 @@ function Chat({
       //   setIsQuestionClick
       // );
       // console.log(questionList[questionTurn]);
-      sendQuestion(questionList[questionTurn]);
+      sendQuestion(question);
     }
   }, [isQuestionClick]);
 
