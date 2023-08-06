@@ -50,13 +50,13 @@ function ProfileMenu({ setMenu }) {
         >
           WidgetBucket
         </p>
-        <event
+        <p
           onClick={(event) => {
             UserSelectMenu(event);
           }}
         >
           WidgetGoals
-        </event>
+        </p>
         {/* 일/월/연 목표 */}
         <p
           onClick={(event) => {
