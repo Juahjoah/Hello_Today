@@ -3,6 +3,7 @@ package com.ssafy.hellotoday.db.entity.routine;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.hellotoday.db.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.Subselect;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
