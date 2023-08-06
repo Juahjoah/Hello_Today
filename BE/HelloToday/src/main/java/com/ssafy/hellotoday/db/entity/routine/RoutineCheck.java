@@ -1,12 +1,16 @@
 package com.ssafy.hellotoday.db.entity.routine;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ssafy.hellotoday.api.dto.member.FileDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
+import com.ssafy.hellotoday.common.util.property.ApplicationProperties;
 import com.ssafy.hellotoday.db.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,6 +30,7 @@ public class RoutineCheck extends BaseEntity {
     private String content;
     private String imgPath;
     private String imgOriginalName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkDate;
 
     @Builder
@@ -62,11 +67,23 @@ public class RoutineCheck extends BaseEntity {
                 '}';
     }
 
+    public void update(RoutineCheckRequestDto routineCheckRequestDto, FileDto fileDto) {
+        this.content = routineCheckRequestDto.getContent();
+        this.imgPath = fileDto.getFilePath();
+        this.imgOriginalName = fileDto.getFileOriginalName();
+        this.checkDate = routineCheckRequestDto.getCheckDate();
+    }
+
     public void update(RoutineCheckRequestDto routineCheckRequestDto) {
-        RoutineCheckDto routineCheckDto = routineCheckRequestDto.getRoutineCheckDto();
-        this.content = routineCheckDto.getContent();
-        this.imgPath = routineCheckDto.getImgPath();
-        this.imgOriginalName = routineCheckDto.getImgOriName();
-        this.checkDate = LocalDateTime.now();
+        this.checkDaySeq = routineCheckRequestDto.getCheckDaySeq();
+        this.content = routineCheckRequestDto.getContent();
+        this.checkDate = routineCheckRequestDto.getCheckDate();
+    }
+
+    public String getRoutineImagePath() {
+        if(imgOriginalName == null) return null;
+        else if(imgOriginalName.contains("https://i9b308.p.ssafy.io/")) return imgOriginalName;
+
+        return ApplicationProperties.HOST_IMAGE_URL + "routine/" + imgOriginalName;
     }
 }

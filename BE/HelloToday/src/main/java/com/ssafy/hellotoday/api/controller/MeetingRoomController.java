@@ -3,6 +3,7 @@ package com.ssafy.hellotoday.api.controller;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomQuestionResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.service.MeetingRoomService;
 import com.ssafy.hellotoday.api.service.MemberService;
@@ -29,7 +30,7 @@ public class MeetingRoomController {
 
     /**
      * 방을 생성하고 참여하기 위한 세션 아이디, 토큰을 반환
-     * @return 세션 아이디, 토큰 리턴
+     * @return 미팅룸 아이디, 세션 아이디, 토큰 리턴
      */
     @PostMapping
     public BaseResponseDto createRoom(@RequestBody(required = false) RoomCreateRequestDto requestDto,
@@ -42,7 +43,9 @@ public class MeetingRoomController {
         BaseResponseDto responseDto = openviduService.createRoom(requestDto);
 
         String sessionId = ((RoomCreateResponseDto) responseDto.getData()).getSessionId();
-        meetingRoomService.saveRoomInfo(member, requestDto, sessionId);
+        ((RoomCreateResponseDto) responseDto.getData())
+                .setRoomId(meetingRoomService.saveRoomInfo(member, requestDto, sessionId));
+
         return responseDto;
     }
 
@@ -59,5 +62,10 @@ public class MeetingRoomController {
     @GetMapping("/list")
     public List<MeetingRoomDto> roomList() {
         return openviduService.roomList();
+    }
+
+    @GetMapping("/{roomId}/question")
+    public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId) {
+        return meetingRoomService.getQuestion(roomId);
     }
 }
