@@ -6,6 +6,7 @@ import {
   SET_ISEDIT,
   SET_DDAY_DATA,
   ADD_DDAY_DATA,
+  SET_DDAYID,
 } from "../../../store/ddaySlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,17 +19,24 @@ function WidgetDdayEdit() {
   const ddaydata = useSelector((state) => state.dday.ddayData);
   const ddayinput = useSelector((state) => state.dday.ddayInput);
 
-  const isedit = useSelector((state) => state.isEdit);
-
-  const [newDday, setNewDday] = useState({
-
-    finalDate: '',
-    content: '',
-  });
+  const isedit = useSelector((state) => state.dday.isEdit);
 
   //State 상태 변경
+  const ddayid = useSelector((state) => state.dday.ddayID);
+
+  const [newDday, setNewDday] = useState({
+    finalDate: "",
+    content: "",
+  });
+  useEffect(() => {
+    const propdata = ddaydata.find((item) => item.ddayId == ddayid);
+    setNewDday({ finalDate: propdata.finalDate, content: propdata.content });
+    console.log(newDday.finalDate);
+    console.log(newDday.content);
+  }, []);
   const handleChangeState = (e) => {
-    ADD_DDAY_DATA({
+    setNewDday({
+      ...newDday,
       [e.target.name]: e.target.value,
     });
   };
@@ -36,8 +44,9 @@ function WidgetDdayEdit() {
   // submit 보냄
   // back에 axios 같이 보냄
   const handleSubmit = () => {
-    if (ddayinput.content.length < 1) {
+    if (newDday.content.length < 1) {
       //focus
+      console.log("한 개 이상의 글을 쓰시오");
       ddaycontentinput.current.focus();
       return;
     }
@@ -58,13 +67,20 @@ function WidgetDdayEdit() {
     // })
     alert("저장 성공");
     //submit한 데이터 저장하기
-    SET_DDAY_DATA([ddayinput, ...ddaydata]);
-
+    const updatedDdayData = ddaydata.map((item) =>
+      item.ddayId === ddayid ? { ...item, ...newDday } : item
+    );
+    dispatch(SET_DDAY_DATA(updatedDdayData));
     //버튼 누르면 초기화하기 위해
     setNewDday({
       finalDate: "",
       content: "",
     });
+    dispatch(SET_ISEDIT(false));
+    dispatch(SET_DDAYID(""));
+  };
+  const handleCancle = () => {
+    dispatch(SET_ISEDIT(false));
   };
   return (
     <div className={classes.WidgetDday_edit}>
@@ -75,7 +91,7 @@ function WidgetDdayEdit() {
           type="date"
           placeholder="날짜를 선택해주세요."
           name="finalDate" //이거 써야 변수와 연결
-          value={ddayinput.finalDate}
+          value={newDday.finalDate}
           onChange={handleChangeState}
         />
       </div>
@@ -85,12 +101,15 @@ function WidgetDdayEdit() {
           type="text"
           ref={ddaycontentinput}
           name="content"
-          value={ddayinput.content}
+          value={newDday.content}
           onChange={handleChangeState}
         ></input>
       </div>
       <div>
         <button onClick={handleSubmit}>완료</button>
+      </div>
+      <div>
+        <button onClick={handleCancle}>취소</button>
       </div>
     </div>
   );

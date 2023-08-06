@@ -2,7 +2,11 @@ import classes from "./WidgetDday.module.css";
 import { useState, useRef, useCallback, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { SET_ISEDIT, SET_DDAY_DATA } from "../../../store/ddaySlice";
+import {
+  SET_ISEDIT,
+  SET_DDAY_DATA,
+  SET_DDAYID,
+} from "../../../store/ddaySlice";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetDdayEdit from "./WidgetDdayEdit";
 import WidgetDdayregist from "./WidgetDdayregist";
@@ -38,7 +42,7 @@ function WidgetDday() {
 
   // 배열 형태 데이터
   const ddaydata = useSelector((state) => state.dday.ddayData);
-  const isedit = useSelector((state) => state.isEdit);
+  const isedit = useSelector((state) => state.dday.isEdit);
 
   // 배열
   //axios로 불러오기
@@ -60,9 +64,12 @@ function WidgetDday() {
     console.log("다시 렌더링");
   }, [dispatch]);
 
-  const handleEditState = () => {
+  const handleEditState = (target) => {
     //수정
-    dispatch(SET_ISEDIT());
+    dispatch(SET_ISEDIT(true));
+    dispatch(SET_DDAYID(target));
+    console.log(isedit);
+    console.log(target);
 
     // const data = {
     //   ddayId : 0,
