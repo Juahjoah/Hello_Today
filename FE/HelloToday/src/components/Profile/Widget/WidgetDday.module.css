@@ -1,0 +1,19 @@
+.WidgetDday {
+  border: 4px solid;
+}
+.WidgetDday_name {
+}
+.WidgetDday_content {
+  box-shadow: 0 0 5px #333;
+  display: flex;
+  border: 4px solid;
+}
+.WidgetDday_text {
+  border: 4px solid;
+}
+.WidgetDday_edit {
+  border: 4px solid;
+}
+.WidgetDday_txt{
+    
+}
