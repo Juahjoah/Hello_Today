@@ -16,8 +16,6 @@ function Chat({
   // const chatScroll = React.createRef();
   const chatScroll = useRef(null);
 
-  console.log(questionList, questionTurn, isQuestionClick, setIsQuestionClick);
-
   useEffect(() => {
     // Receiver of the message (usually before calling 'session.connect')
     mainStreamManager.stream.session.on("signal:chat", (event) => {
@@ -74,13 +72,13 @@ function Chat({
   useEffect(() => {
     if (isQuestionClick) {
       // TODO: 보내주는 형식에 맞춰 변경 필요
-      console.log(
-        questionList,
-        questionTurn,
-        isQuestionClick,
-        setIsQuestionClick
-      );
-      console.log(questionList[questionTurn]);
+      // console.log(
+      //   questionList,
+      //   questionTurn,
+      //   isQuestionClick,
+      //   setIsQuestionClick
+      // );
+      // console.log(questionList[questionTurn]);
       sendQuestion(questionList[questionTurn]);
     }
   }, [isQuestionClick]);
@@ -119,14 +117,13 @@ function Chat({
   };
 
   // 지금 전부다 홍길동이라 누가 치든 '나' 라고 나옴
-  const renderNickname = (nickname) => {
-    if (nickname === myUserName) {
-      return "나";
-    }
-    return nickname;
-  };
+  // const renderNickname = (nickname) => {
+  //   if (nickname === myUserName) {
+  //     return "나";
+  //   }
+  //   return nickname;
+  // };
 
-  console.log(messageList);
   return (
     <div className={classes.chatRoom}>
       <Scrollbars>
@@ -142,10 +139,7 @@ function Chat({
                 }
               >
                 <div>
-                  <div className={classes.writer}>
-                    {" "}
-                    {renderNickname(data.nickname)} :{" "}
-                  </div>
+                  <div className={classes.writer}> {data.nickname} : </div>
                 </div>
                 <div>
                   <p className={classes.content}>{data.message}</p>

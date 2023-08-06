@@ -27,8 +27,8 @@ function App() {
       <Route path="/selectmain" element={<RoutineAuthMain />} />
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
       <Route path="/MyProfile" element={<MyProfile />} />
-      <Route path="/roomId" element={<JoinRoom />} />
-      {/* <Route path="/roomId" element={<VideoRoomComponent />} /> */}
+      <Route path="/:roomId" element={<JoinRoom />} />
+
       <Route
         path="/login/oauth2/code/kakao"
         element={<RedirectPageKakao />}

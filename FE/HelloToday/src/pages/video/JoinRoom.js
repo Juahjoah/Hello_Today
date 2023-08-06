@@ -28,6 +28,7 @@ function JoinRoom() {
   const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState("");
   const [session, setSession] = useState(undefined);
+  const [myRoomId, setMyRoomId] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
@@ -40,6 +41,7 @@ function JoinRoom() {
   const [OV, setOV] = useState(<OpenVidu />);
   // const OV = new OpenVidu();
   const roomTitle = location.state.roomTitle;
+  const token = location.state.Token;
 
   // 질문 test
 
@@ -64,7 +66,8 @@ function JoinRoom() {
   useEffect(() => {
     if (
       location.state === null ||
-      location.state.roomId === null ||
+      // location.state.roomId === null ||
+      location.state.sessionId === null ||
       location.state.myUserName === null
     ) {
       console.log("location.state의 정보가 없습니다.");
@@ -73,10 +76,12 @@ function JoinRoom() {
     }
 
     // 이전 페이지에서 받아온 데이터 -> redux로 변경 필요 !
-    setMySessionId(location.state.roomId);
+    // setMySessionId(location.state.roomId);
+    setMySessionId(location.state.sessionId);
     setMyUserName(location.state.myUserName);
     setVideoEnabled(location.state.videoEnabled);
     setAudioEnabled(location.state.audioEnabled);
+    setMyRoomId(location.state.roomId);
 
     // 윈도우 객체에 화면 종료 이벤트 추가
     window.addEventListener("beforeunload", onBeforeUnload);
@@ -108,6 +113,8 @@ function JoinRoom() {
     setMainStreamManager(undefined);
     setPublisher(undefined);
     setSubscribers([]);
+    //
+    setMyRoomId(undefined);
 
     navigate("/GroupRoutine");
   };
@@ -184,37 +191,34 @@ function JoinRoom() {
 
   // 사용자의 토큰으로 세션 연결 (session 객체 변경 시에만 실행)
   useEffect(() => {
-    if (session) {
-      getToken().then((token) => {
-        console.log(token, typeof token);
-        // 첫 번째 매개변수는 OpenVidu deployment로 부터 얻은 토큰, 두 번째 매개변수는 이벤트의 모든 사용자가 검색할 수 있음.
-        session
-          .connect(token, { clientData: myUserName })
-          .then(async () => {
-            // Get your own camera stream ---
-            // publisher 객체 생성
-            let publisher = await OV.initPublisherAsync(undefined, {
-              audioSource: undefined, // The source of audio. If undefined default microphone
-              videoSource: undefined, // The source of video. If undefined default webcam
-              publishAudio: audioEnabled, // Whether you want to start publishing with your audio unmuted or not
-              publishVideo: videoEnabled, // Whether you want to start publishing with your video enabled or not
-              resolution: "270x202.5", // The resolution of your video
-              frameRate: 30, // The frame rate of your video
-              insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-              mirror: true, // Whether to mirror your local video or not
-            });
-            // Publish your stream ---
-            session.publish(publisher);
-            // Set the main video in the page to display our webcam and store our Publisher
-            setPublisher(publisher);
-            setMainStreamManager(publisher);
-          })
-          .catch((error) => {
-            console.log(error);
-            alert("세션 연결 오류");
-            navigate("/");
+    if (session && token) {
+      // 첫 번째 매개변수는 OpenVidu deployment로 부터 얻은 토큰, 두 번째 매개변수는 이벤트의 모든 사용자가 검색할 수 있음.
+      session
+        .connect(token, { clientData: myUserName })
+        .then(async () => {
+          // Get your own camera stream ---
+          // publisher 객체 생성
+          let publisher = await OV.initPublisherAsync(undefined, {
+            audioSource: undefined, // The source of audio. If undefined default microphone
+            videoSource: undefined, // The source of video. If undefined default webcam
+            publishAudio: audioEnabled, // Whether you want to start publishing with your audio unmuted or not
+            publishVideo: videoEnabled, // Whether you want to start publishing with your video enabled or not
+            resolution: "270x202.5", // The resolution of your video
+            frameRate: 30, // The frame rate of your video
+            insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+            mirror: true, // Whether to mirror your local video or not
           });
-      });
+          // Publish your stream ---
+          session.publish(publisher);
+          // Set the main video in the page to display our webcam and store our Publisher
+          setPublisher(publisher);
+          setMainStreamManager(publisher);
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("세션 연결 오류");
+          navigate("/");
+        });
     }
   }, [session]);
 
