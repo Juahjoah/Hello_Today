@@ -12,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 public class MeetingRoomDto implements Serializable {
+    private int roomId;
     private int memberId;
     private String sessionId;
     private String name;

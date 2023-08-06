@@ -4,7 +4,6 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
-import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomJoinResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.exception.message.OpenviduErrorEnum;
 import com.ssafy.hellotoday.common.exception.validator.OpenviduValidator;
@@ -73,7 +72,8 @@ public class OpenviduService {
         return BaseResponseDto.builder()
                 .success(true)
                 .message(OpenviduResponseEnum.SUCCESS_GET_TOKEN.getName())
-                .data(RoomJoinResponseDto.builder()
+                .data(RoomCreateResponseDto.builder()
+                        .sessionId(sessionId)
                         .token(connection.getToken())
                         .build())
                 .build();
@@ -92,6 +92,7 @@ public class OpenviduService {
         List<String> sessionIds = activeSessions.stream().map(Session::getSessionId).collect(Collectors.toList());
         List<MeetingRoom> rooms = meetingRoomRepository.findBySessionIdIn(sessionIds);
         return rooms.stream().map(meetingRoom -> MeetingRoomDto.builder()
+                        .roomId(meetingRoom.getMeetingRoomId())
                 .memberId(meetingRoom.getMember().getMemberId())
                 .sessionId(meetingRoom.getSessionId())
                 .name(meetingRoom.getName())
