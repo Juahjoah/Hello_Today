@@ -20,24 +20,24 @@ function WidgetDday() {
 
   // 더미 데이터
   const dummyList = [
-    {
-      memberId: 1,
-      finalDate: "2023-08-06T04:05:01.540Z",
-      createdDate: "2023-08-06T04:05:01.540Z",
-      modifiedDate: "2023-08-06T04:05:01.540Z",
-      content: "내 생일",
-      calDate: 30,
-      ddayId: 1,
-    },
-    {
-      memberId: 1,
-      finalDate: "2023-08-07T04:05:01.540Z",
-      createdDate: "2023-08-07T04:05:01.540Z",
-      modifiedDate: "2023-08-07T04:05:01.540Z",
-      content: "수능",
-      calDate: 50,
-      ddayId: 2,
-    },
+    // {
+    //   memberId: 1,
+    //   finalDate: "2023-08-06T04:05:01.540Z",
+    //   createdDate: "2023-08-06T04:05:01.540Z",
+    //   modifiedDate: "2023-08-06T04:05:01.540Z",
+    //   content: "내 생일",
+    //   calDate: 30,
+    //   ddayId: 1,
+    // },
+    // {
+    //   memberId: 1,
+    //   finalDate: "2023-08-07T04:05:01.540Z",
+    //   createdDate: "2023-08-07T04:05:01.540Z",
+    //   modifiedDate: "2023-08-07T04:05:01.540Z",
+    //   content: "수능",
+    //   calDate: 50,
+    //   ddayId: 2,
+    // },
   ];
 
   // 배열 형태 데이터
@@ -109,7 +109,9 @@ function WidgetDday() {
         <div className={classes.WidgetDday_text}>
           {/* 내 생일 d-30  */}
           {/* dday 데이터 있으면 뿌려주고 아니면 글 써달라는 거 써놓기  */}
-          {ddaydata &&
+          {ddaydata.length === 0 ? (
+            <div>새로운 dday를 입력해주세요!</div>
+          ) : (
             ddaydata.map((item) => {
               return (
                 <div className={classes.routinediary} key={item.ddayId}>
@@ -127,7 +129,8 @@ function WidgetDday() {
                   </div>
                 </div>
               );
-            })}
+            })
+          )}
         </div>
         <div className={classes.WidgetDday_edit}>
           {isedit ? <WidgetDdayEdit /> : <WidgetDdayregist />}
