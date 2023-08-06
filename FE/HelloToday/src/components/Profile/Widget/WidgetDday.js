@@ -2,12 +2,17 @@ import classes from "./WidgetDday.module.css";
 import { useState, useRef, useCallback, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { SET_ISEDIT, SET_DDAY_DATA } from "../../../store/ddaySlice";
+import { useDispatch, useSelector } from "react-redux";
+import WidgetDdayEdit from "./WidgetDdayEdit";
+import WidgetDdayregist from "./WidgetDdayregist";
 
 function WidgetDday() {
   //submit 조건에 충족 안 할 때 DOM 선택해서 커서 가게 할려고
   const ddaycontentinput = useRef();
   const ddaydataId = useRef(0);
   const memberId = useParams().memberId; //url에서 param가져오기
+  const dispatch = useDispatch();
 
   // 더미 데이터
   const dummyList = [
@@ -32,14 +37,8 @@ function WidgetDday() {
   ];
 
   // 배열 형태 데이터
-  const [ddayData, setDdayData] = useState([]);
-  // 객체 형태 데이터
-  const [ddayInput, setDdayInput] = useState({
-    finalDate: "",
-    content: "",
-  });
-
-  const [isEdit, setIsEdit] = useState(false);
+  const ddaydata = useSelector((state) => state.dday.ddayData);
+  const isedit = useSelector((state) => state.isEdit);
 
   // 배열
   //axios로 불러오기
@@ -48,7 +47,7 @@ function WidgetDday() {
   //     .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${memberId}`)
   //     .then((res) => {
   //       console.log(res);
-  //       setDdayData(res.data);
+  //       SET_DDAY_DATA(res.data);
   //     })
   //     .then((err) => {
   //       console.log(err);
@@ -56,55 +55,15 @@ function WidgetDday() {
   // });
 
   useEffect(() => {
-    setDdayData(dummyList);
+    dispatch(SET_DDAY_DATA(dummyList));
+    console.log(ddaydata);
     console.log("다시 렌더링");
-  }, [setDdayData]);
-
-  //State 상태 변경
-  const handleChangeState = (e) => {
-    setDdayInput({
-      ...ddayInput,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // submit 보냄
-  // back에 axios 같이 보냄
-  const handleSubmit = () => {
-    if (ddayInput.content.length < 1) {
-      //focus
-      ddaycontentinput.current.focus();
-      return;
-    }
-
-    //백에 연락 날리기
-    // const data = {
-    //   finalDate : ddayInput.finalDate,
-    //   content : ddayInput.content,
-    //   type : "1"
-    // }
-    // console.log(ddayInput);
-    // axios.post(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`,data)
-    // .then((res) => {
-    //   console.log(res)
-    // })
-    // .then((err) => {
-    //   console.log(err)
-    // })
-    alert("저장 성공");
-    //submit한 데이터 저장하기
-    setDdayData([ddayInput, ...ddayData]);
-
-    //버튼 누르면 초기화하기 위해
-    setDdayInput({
-      finalDate: "",
-      content: "",
-    });
-  };
+  }, [dispatch]);
 
   const handleEditState = () => {
     //수정
-    setIsEdit(true);
+    dispatch(SET_ISEDIT());
+
     // const data = {
     //   ddayId : 0,
     //   finalDate : ddayInput.finalDate,
@@ -133,8 +92,8 @@ function WidgetDday() {
     console.log(target);
     // console.log(`${item.ddayId}를 삭제합니다`);
     // alert("삭제하겠습니까?");
-    const newDdayList = ddayData.filter((item) => item.ddayId !== target);
-    setDdayData(newDdayList);
+    const newDdayList = ddaydata.filter((item) => item.ddayId !== target);
+    dispatch(SET_DDAY_DATA(newDdayList));
   };
   return (
     <div className={classes.WidgetDday}>
@@ -142,51 +101,30 @@ function WidgetDday() {
       <div className={classes.WidgetDday_content}>
         <div className={classes.WidgetDday_text}>
           {/* 내 생일 d-30  */}
-          {ddayData.map((item) => {
-            return (
-              <div className={classes.routinediary} key={item.ddayId}>
-                <p className={classes.routineContent}>
-                  {item.content} D-{item.calDate}
-                </p>
-                <div className={classes.btn_edit_delete}>
-                  {/* 콜백으로 안 하면 그냥 다 삭제함 */}
-                  <button onClick={() => handleEditState(item.ddayId)}>
-                    수정
-                  </button>
-                  <button onClick={() => handleDeleteState(item.ddayId)}>
-                    삭제
-                  </button>
+          {/* dday 데이터 있으면 뿌려주고 아니면 글 써달라는 거 써놓기  */}
+          {ddaydata &&
+            ddaydata.map((item) => {
+              return (
+                <div className={classes.routinediary} key={item.ddayId}>
+                  <p className={classes.routineContent}>
+                    {item.content} D-{item.calDate}
+                  </p>
+                  <div className={classes.btn_edit_delete}>
+                    {/* 콜백으로 안 하면 그냥 다 삭제함 */}
+                    <button onClick={() => handleEditState(item.ddayId)}>
+                      수정
+                    </button>
+                    <button onClick={() => handleDeleteState(item.ddayId)}>
+                      삭제
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
-
         <div className={classes.WidgetDday_edit}>
-          {/* 수정 */}
-          <div>
-            <p className={classes.WidgetDday_txt}>날짜</p>
-            <input
-              type="date"
-              placeholder="날짜를 선택해주세요."
-              name="finalDate" //이거 써야 변수와 연결
-              value={ddayInput.finalDate}
-              onChange={handleChangeState}
-            />
-          </div>
-          <div>
-            <p className={classes.WidgetDday_txt}>이벤트 입력</p>
-            <input
-              type="text"
-              ref={ddaycontentinput}
-              name="content"
-              value={ddayInput.content}
-              onChange={handleChangeState}
-            ></input>
-          </div>
-          <div>
-            <button onClick={handleSubmit}>완료</button>
-          </div>
+          {isedit ? <WidgetDdayEdit /> : <WidgetDdayregist />}
+          {isedit ? <div>수정</div> : <div>등록</div>}
         </div>
       </div>
     </div>
