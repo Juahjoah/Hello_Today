@@ -70,3 +70,8 @@
   color: white;
   font-family: "TheJamsil5Bold" !important;
 }
+
+.questionMessage {
+  color: #a581cf;
+  /* font-size: 18px; */
+}

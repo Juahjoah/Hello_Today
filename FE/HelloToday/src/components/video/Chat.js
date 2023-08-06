@@ -73,6 +73,7 @@ function Chat({
 
   useEffect(() => {
     if (isQuestionClick) {
+      // TODO: 보내주는 형식에 맞춰 변경 필요
       console.log(
         questionList,
         questionTurn,
@@ -117,6 +118,7 @@ function Chat({
     }
   };
 
+  // 지금 전부다 홍길동이라 누가 치든 '나' 라고 나옴
   const renderNickname = (nickname) => {
     if (nickname === myUserName) {
       return "나";
@@ -124,18 +126,26 @@ function Chat({
     return nickname;
   };
 
+  console.log(messageList);
   return (
     <div className={classes.chatRoom}>
       <Scrollbars>
         <div className={classes.chatRoomTop}>
           <div ref={chatScroll} className={classes.chatRoomLog}>
             {messageList.map((data, i) => (
-              <div key={i}>
+              <div
+                key={i}
+                className={
+                  data.nickname === "[시스템 관리자]"
+                    ? classes.questionMessage
+                    : "null"
+                }
+              >
                 <div>
-                  <p className={classes.writer}>
+                  <div className={classes.writer}>
                     {" "}
                     {renderNickname(data.nickname)} :{" "}
-                  </p>
+                  </div>
                 </div>
                 <div>
                   <p className={classes.content}>{data.message}</p>
