@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.MeetingRoom;
@@ -21,7 +22,7 @@ public class MeetingRoomService {
     private final MeetingRoomQuestionRepository meetingRoomQuestionRepository;
 
     @Transactional
-    public void saveRoomInfo(Member member, RoomCreateRequestDto requestDto, String sessionId) {
+    public int saveRoomInfo(Member member, RoomCreateRequestDto requestDto, String sessionId) {
         Optional<MeetingRoomQuestion> question = meetingRoomQuestionRepository.findById(1);
         checkQuestion(question);
 
@@ -34,7 +35,28 @@ public class MeetingRoomService {
                 .build();
 
         meetingRoom.updateQuestion(question.get());
-        meetingRoomRepository.save(meetingRoom);
+        return meetingRoomRepository.save(meetingRoom).getMeetingRoomId();
+    }
+
+    @Transactional
+    public BaseResponseDto getQuestion(int roomId) {
+        MeetingRoom room = meetingRoomRepository.findByIdWithQuestionId(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("질문 조회 실패"));
+
+        long count = meetingRoomQuestionRepository.count();
+        int questionId = room.getQuestion().getQuestionId();
+        System.out.println(questionId);
+        if (questionId >= count) questionId = 0;
+        questionId++;
+        MeetingRoomQuestion question = meetingRoomQuestionRepository.findById(questionId)
+                .orElseThrow(() -> new IllegalArgumentException("질문 조회 실패"));
+
+        room.updateQuestion(question);
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("질문 조회 성공")
+                .data(question)
+                .build();
     }
 
     private void checkQuestion(Optional<MeetingRoomQuestion> question) {

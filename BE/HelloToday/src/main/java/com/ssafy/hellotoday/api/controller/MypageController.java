@@ -8,9 +8,7 @@ import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.response.CalendarDetailResponseDto;
-import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
-import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
+import com.ssafy.hellotoday.api.dto.mypage.response.*;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.api.dto.wishdiary.request.WishDiaryRequestDto;
 import com.ssafy.hellotoday.api.dto.wishdiary.response.WishDiaryResponseDto;
@@ -52,6 +50,15 @@ public class MypageController {
         Member findMember = memberService.findMemberByJwtToken(token);
 
         return memberService.getMemberInfo(findMember);
+
+    }
+
+    //마이페이지 특정 사용자 정보 조회
+    @Operation(summary = "마이페이지 특정 사용자 정보 조회", description = "특정 사용자 정보(닉네임,상테메세지,프로필사진경로)")
+    @GetMapping("/{memberId}")
+    public MemberInfoResponseDto DetailMemberInfo(@PathVariable Integer memberId) {
+
+        return memberService.getDetailMemberInfo(memberId);
 
     }
     //마이페이지 편집 모드
@@ -142,13 +149,6 @@ public class MypageController {
     @DeleteMapping("/dday/{ddayId}")
     public BaseResponseDto deleteDday(@PathVariable Integer ddayId) {
         return mypageService.deleteDday(ddayId);
-    }
-
-    @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 안에 있는 루틴 히스토리 조회 API")
-    @GetMapping("/routinehistory/{memberId}")
-    public List<RoutineResponseDto> getRoutineHistory(@PathVariable Integer memberId) {
-//        return mypageService.getRoutineHistory(memberId);
-        return null;
     }
 
     @Operation(summary = "버킷리스트 전체 조회", description = "버킷리스트 전체 조회")
@@ -256,10 +256,26 @@ public class MypageController {
 
     @Operation(summary = "캘린더 내 루틴 상세 조회", description = "캘린더에 있는 루틴의 날짜를 눌렀을 때<br>writeDate: 인증을 한 날짜! (루틴이 진행된 날짜와는 별개)")
     @GetMapping("/calendar/{memberId}/{checkDate}")
-    public List<CalendarDetailResponseDto> getCalendarRoutineDetail(@PathVariable Integer memberId,
+    public List<CalendarHistoryDetailResponseDto> getCalendarRoutineDetail(@PathVariable Integer memberId,
                                                                     @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable LocalDate checkDate) {
         return mypageService.getCalendarRoutineDetail(memberId, checkDate);
     }
+
+    @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 안에 있는 루틴 히스토리")
+    @GetMapping("/routinehistory/{memberId}")
+    public List<RoutineHistoryResponseDto> getRoutineHistory(@PathVariable Integer memberId, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return mypageService.getRoutineHistory(memberId, pageRequest);
+
+    }
+
+    @Operation(summary = "루틴 히스토리 상세 조회", description = "루틴 히스토리 디데일을 조회하는 API")
+    @GetMapping("routinehistory/{memberId}/{routineId}")
+    public List<RoutineDetailHistoryResponseDto> getRoutineHistoryDetail(@PathVariable Integer routineId) {
+        return mypageService.getRoutineHistoryDetail(routineId);
+    }
+
     @Operation(summary = "갤러리 조회", description = "마이페이지 안에 있는 갤러리 조회")
     @GetMapping("/gallery/{memberId}")
     public void getGallery(@PathVariable Integer memberId) {

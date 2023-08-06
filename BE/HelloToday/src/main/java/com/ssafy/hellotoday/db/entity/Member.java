@@ -57,16 +57,16 @@ public class Member extends BaseEntity {
     public void updateMemberInfo(MemberInfoUpdateRequestDto mypageUpdateRequestDto, FileDto fileDto) {
         this.nickname = mypageUpdateRequestDto.getNickname();
         this.stMsg = mypageUpdateRequestDto.getStMsg();
-        this.profileOriginalName = fileDto.getProfileOriginalName();
-        this.profilePath = fileDto.getProfilePath();
+        this.profileOriginalName = fileDto.getFileOriginalName();
+        this.profilePath = fileDto.getFilePath();
     }
     public void updateMemberInfo(MemberInfoUpdateRequestDto mypageUpdateRequestDto) {
         this.nickname = mypageUpdateRequestDto.getNickname();
         this.stMsg = mypageUpdateRequestDto.getStMsg();
     }
     public void updateMemberInfo(FileDto fileDto) {
-        this.profileOriginalName = fileDto.getProfileOriginalName();
-        this.profilePath = fileDto.getProfilePath();
+        this.profileOriginalName = fileDto.getFileOriginalName();
+        this.profilePath = fileDto.getFilePath();
     }
 
     //닉네임 수정
