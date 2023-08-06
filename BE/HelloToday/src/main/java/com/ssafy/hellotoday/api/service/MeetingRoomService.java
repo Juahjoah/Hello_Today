@@ -29,6 +29,7 @@ public class MeetingRoomService {
                 .member(member)
                 .sessionId(sessionId)
                 .name(requestDto.getTitle())
+                .description(requestDto.getDescription())
                 .memberLimit(requestDto.getMemberLimit())
                 .build();
 

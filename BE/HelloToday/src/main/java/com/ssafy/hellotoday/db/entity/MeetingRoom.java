@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class MeetingRoom {
+public class MeetingRoom extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer meetingRoomId;
@@ -29,6 +29,8 @@ public class MeetingRoom {
 
     private String name;
 
+    private String description;
+
     private int memberLimit = 6;
 
     private byte activeFlag = 1;
@@ -40,10 +42,11 @@ public class MeetingRoom {
     private MeetingRoomQuestion question;
 
     @Builder
-    public MeetingRoom(String sessionId, Member member, String name, int memberLimit) {
+    public MeetingRoom(String sessionId, Member member, String name, String description, int memberLimit) {
         this.sessionId = sessionId;
         this.member = member;
         this.name = name;
+        this.description = description;
         this.memberLimit = memberLimit;
     }
 

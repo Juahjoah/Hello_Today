@@ -1,6 +1,7 @@
 package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomJoinResponseDto;
@@ -8,6 +9,8 @@ import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.exception.message.OpenviduErrorEnum;
 import com.ssafy.hellotoday.common.exception.validator.OpenviduValidator;
 import com.ssafy.hellotoday.common.util.constant.OpenviduResponseEnum;
+import com.ssafy.hellotoday.db.entity.MeetingRoom;
+import com.ssafy.hellotoday.db.repository.MeetingRoomRepository;
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
@@ -23,12 +26,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class OpenviduService {
     private final OpenviduValidator openviduValidator;
+    private final MeetingRoomRepository meetingRoomRepository;
 
     @Value("${openvidu.url}")
     private String OPENVIDU_URL;
@@ -80,12 +86,21 @@ public class OpenviduService {
                 .build();
     }
 
-    public BaseResponseDto roomList() {
-        return BaseResponseDto.builder()
-                .success(true)
-                .message("ddd")
-                .data(openvidu.getActiveSessions())
-                .build();
+    public List<MeetingRoomDto> roomList() {
+        List<Session> activeSessions = openvidu.getActiveSessions();
+
+        List<String> sessionIds = activeSessions.stream().map(Session::getSessionId).collect(Collectors.toList());
+        List<MeetingRoom> rooms = meetingRoomRepository.findBySessionIdIn(sessionIds);
+        return rooms.stream().map(meetingRoom -> MeetingRoomDto.builder()
+                .memberId(meetingRoom.getMember().getMemberId())
+                .sessionId(meetingRoom.getSessionId())
+                .name(meetingRoom.getName())
+                .description(meetingRoom.getDescription())
+                .memberLimit(meetingRoom.getMemberLimit())
+                .createdDate(meetingRoom.getCreatedDate())
+                .modifiedDate(meetingRoom.getModifiedDate())
+                .build())
+                .collect(Collectors.toList());
     }
 
     private Session createSession(RecordingProperties recordingProperties) {

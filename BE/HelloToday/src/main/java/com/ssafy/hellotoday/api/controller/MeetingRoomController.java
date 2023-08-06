@@ -1,6 +1,7 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.service.MeetingRoomService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -55,7 +57,7 @@ public class MeetingRoomController {
     }
 
     @GetMapping("/list")
-    public BaseResponseDto roomList() {
+    public List<MeetingRoomDto> roomList() {
         return openviduService.roomList();
     }
 }
