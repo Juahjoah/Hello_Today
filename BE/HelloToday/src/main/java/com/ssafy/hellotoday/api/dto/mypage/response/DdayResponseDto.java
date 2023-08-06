@@ -13,6 +13,7 @@ import java.time.Period;
 @NoArgsConstructor
 public class DdayResponseDto {
     private Integer memberId;
+    private Integer ddayId;
     private LocalDateTime finalDate;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -20,8 +21,9 @@ public class DdayResponseDto {
     private Integer calDate;
 
     @Builder
-    public DdayResponseDto(Integer memberId, LocalDateTime finalDate, LocalDateTime createdDate, LocalDateTime modifiedDate, String content, Integer calDate) {
+    public DdayResponseDto(Integer memberId, Integer ddayId, LocalDateTime finalDate, LocalDateTime createdDate, LocalDateTime modifiedDate, String content, Integer calDate) {
         this.memberId = memberId;
+        this.ddayId = ddayId;
         this.finalDate = finalDate;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
@@ -31,6 +33,7 @@ public class DdayResponseDto {
 
     public DdayResponseDto(Dday dday) {
         this.memberId = dday.getMember().getMemberId();
+        this.ddayId = dday.getDdayId();
         this.finalDate = dday.getFinalDate();
         this.createdDate = dday.getCreatedDate();
         this.modifiedDate = dday.getModifiedDate();
