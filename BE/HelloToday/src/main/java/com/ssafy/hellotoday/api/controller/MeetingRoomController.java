@@ -3,7 +3,6 @@ package com.ssafy.hellotoday.api.controller;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
-import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomQuestionResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.service.MeetingRoomService;
 import com.ssafy.hellotoday.api.service.MemberService;
