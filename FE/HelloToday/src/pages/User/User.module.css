@@ -30,7 +30,7 @@
   line-height: normal;
   padding-left: 300px;
 }
-p {
+.MainText {
   color: #000;
   font-family: The Jamsil OTF;
   font-size: 3rem;
@@ -38,7 +38,8 @@ p {
   font-weight: 400;
   line-height: normal;
 }
-p:nth-child(1) {
+
+.MainText:nth-child(1) {
   color: #000;
   font-family: The Jamsil OTF;
   font-size: 3rem;
@@ -47,10 +48,10 @@ p:nth-child(1) {
   line-height: normal;
 }
 
-p:nth-child(2) {
+.MainText:nth-child(2) {
   margin-top: 3rem;
 }
-p:nth-child(3) {
+.MainText:nth-child(3) {
   margin-top: -3rem;
 }
 
