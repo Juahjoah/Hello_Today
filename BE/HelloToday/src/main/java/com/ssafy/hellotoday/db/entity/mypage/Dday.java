@@ -21,16 +21,13 @@ public class Dday extends BaseEntity {
     private Member member;
     private LocalDateTime finalDate;
     private String content;
-    @Enumerated(EnumType.STRING)
-    private DdayType type;
 
     @Builder
-    public Dday(Integer ddayId, Member member, LocalDateTime finalDate, String content, DdayType type) {
+    public Dday(Integer ddayId, Member member, LocalDateTime finalDate, String content) {
         this.ddayId = ddayId;
         this.member = member;
         this.finalDate = finalDate;
         this.content = content;
-        this.type = type;
     }
 
     public void update(DdayModifyRequestDto ddayModifyRequestDto, Member member) {
