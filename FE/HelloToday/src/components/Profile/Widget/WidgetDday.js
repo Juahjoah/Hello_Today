@@ -20,24 +20,24 @@ function WidgetDday() {
 
   // 더미 데이터
   const dummyList = [
-    // {
-    //   memberId: 1,
-    //   finalDate: "2023-08-06T04:05:01.540Z",
-    //   createdDate: "2023-08-06T04:05:01.540Z",
-    //   modifiedDate: "2023-08-06T04:05:01.540Z",
-    //   content: "내 생일",
-    //   calDate: 30,
-    //   ddayId: 1,
-    // },
-    // {
-    //   memberId: 1,
-    //   finalDate: "2023-08-07T04:05:01.540Z",
-    //   createdDate: "2023-08-07T04:05:01.540Z",
-    //   modifiedDate: "2023-08-07T04:05:01.540Z",
-    //   content: "수능",
-    //   calDate: 50,
-    //   ddayId: 2,
-    // },
+    {
+      memberId: 1,
+      finalDate: "2023-08-06T04:05:01.540Z",
+      createdDate: "2023-08-06T04:05:01.540Z",
+      modifiedDate: "2023-08-06T04:05:01.540Z",
+      content: "내 생일",
+      calDate: 30,
+      ddayId: 1,
+    },
+    {
+      memberId: 1,
+      finalDate: "2023-08-07T04:05:01.540Z",
+      createdDate: "2023-08-07T04:05:01.540Z",
+      modifiedDate: "2023-08-07T04:05:01.540Z",
+      content: "수능",
+      calDate: 50,
+      ddayId: 2,
+    },
   ];
 
   // 배열 형태 데이터
@@ -104,7 +104,7 @@ function WidgetDday() {
   };
   return (
     <div className={classes.WidgetDday}>
-      <div className={classes.WidgetDday_name}>D-Day</div>
+      <span className={classes.WidgetDday_name}>D-Day</span>
       <div className={classes.WidgetDday_content}>
         <div className={classes.WidgetDday_text}>
           {/* 내 생일 d-30  */}
@@ -115,26 +115,40 @@ function WidgetDday() {
             ddaydata.map((item) => {
               return (
                 <div className={classes.routinediary} key={item.ddayId}>
-                  <p className={classes.routineContent}>
-                    {item.content} D-{item.calDate}
-                  </p>
-                  <div className={classes.btn_edit_delete}>
-                    {/* 콜백으로 안 하면 그냥 다 삭제함 */}
-                    <button onClick={() => handleEditState(item.ddayId)}>
-                      수정
-                    </button>
-                    <button onClick={() => handleDeleteState(item.ddayId)}>
-                      삭제
-                    </button>
+                  <div className={classes.routineContentCenter}>
+                    <p className={classes.routineContent}>
+                      {item.content} D-{item.calDate}
+                    </p>
+
+                    <div className={classes.btn_edit_delete}>
+                      {/* 콜백으로 안 하면 그냥 다 삭제함 */}
+                      <button className={classes.buttonstyle}>
+                        <img
+                          className={classes.edit}
+                          src="../../images/Widget/edit.png"
+                          alt="edit"
+                          onClick={() => handleEditState(item.ddayId)}
+                        />
+                      </button>
+                      <button className={classes.buttonstyle}>
+                        <img
+                          className={classes.clear}
+                          src="../../images/Widget/clear.png"
+                          alt="clear"
+                          onClick={() => handleDeleteState(item.ddayId)}
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
             })
           )}
         </div>
+        <div className={classes.v_line}></div>
         <div className={classes.WidgetDday_edit}>
           {isedit ? <WidgetDdayEdit /> : <WidgetDdayregist />}
-          {isedit ? <div>수정</div> : <div>등록</div>}
+          {/* {isedit ? <div>수정</div> : <div>등록</div>} */}
         </div>
       </div>
     </div>

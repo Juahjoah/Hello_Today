@@ -85,7 +85,7 @@ function WidgetDdayEdit() {
   return (
     <div className={classes.WidgetDday_edit}>
       {/* 수정 */}
-      <div>
+      <div className={classes.WidgetDday_date}>
         <p className={classes.WidgetDday_txt}>날짜</p>
         <input
           type="date"
@@ -97,19 +97,22 @@ function WidgetDdayEdit() {
       </div>
       <div>
         <p className={classes.WidgetDday_txt}>이벤트 입력</p>
-        <input
-          type="text"
-          ref={ddaycontentinput}
-          name="content"
-          value={newDday.content}
-          onChange={handleChangeState}
-        ></input>
-      </div>
-      <div>
-        <button onClick={handleSubmit}>완료</button>
-      </div>
-      <div>
-        <button onClick={handleCancle}>취소</button>
+        <div className={classes.WidgetDday_input_btn}>
+          <input
+            className={classes.WidgetDday_input}
+            type="text"
+            ref={ddaycontentinput}
+            name="content"
+            value={newDday.content}
+            onChange={handleChangeState}
+          ></input>
+          <div>
+            <button onClick={handleSubmit}>완료</button>
+          </div>
+          <div>
+            <button onClick={handleCancle}>취소</button>
+          </div>
+        </div>
       </div>
     </div>
   );

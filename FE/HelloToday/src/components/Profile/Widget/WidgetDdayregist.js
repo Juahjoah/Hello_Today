@@ -64,7 +64,7 @@ function WidgetDdayregist() {
 
   return (
     <div>
-      <div>
+      <div className={classes.WidgetDday_date}>
         <p className={classes.WidgetDday_txt}>날짜</p>
         <input
           type="date"
@@ -76,16 +76,20 @@ function WidgetDdayregist() {
       </div>
       <div>
         <p className={classes.WidgetDday_txt}>이벤트 입력</p>
-        <input
-          type="text"
-          ref={ddaycontentinput}
-          name="content"
-          value={newDday.content}
-          onChange={handleChangeState}
-        ></input>
-      </div>
-      <div>
-        <button onClick={handleSubmit}>완료</button>
+        <div className={classes.input_btn}>
+        <div className={classes.input}>
+          <input
+            type="text"
+            ref={ddaycontentinput}
+            name="content"
+            value={newDday.content}
+            onChange={handleChangeState}
+          ></input>
+        </div>
+        <div>
+          <button onClick={handleSubmit}>완료</button>
+        </div>
+        </div>
       </div>
     </div>
   );
