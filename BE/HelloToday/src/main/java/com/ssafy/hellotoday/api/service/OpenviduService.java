@@ -80,6 +80,14 @@ public class OpenviduService {
                 .build();
     }
 
+    public BaseResponseDto roomList() {
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("ddd")
+                .data(openvidu.getActiveSessions())
+                .build();
+    }
+
     private Session createSession(RecordingProperties recordingProperties) {
         try {
             SessionProperties sessionProperties = new SessionProperties.Builder()
@@ -109,4 +117,5 @@ public class OpenviduService {
                     .build();
         }
     }
+
 }

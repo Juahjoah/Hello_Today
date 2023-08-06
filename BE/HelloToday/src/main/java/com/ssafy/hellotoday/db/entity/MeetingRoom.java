@@ -1,6 +1,7 @@
 package com.ssafy.hellotoday.db.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,15 +25,29 @@ public class MeetingRoom {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private String sessionId;
+
     private String name;
 
-    private int memberLimit;
+    private int memberLimit = 6;
 
-    private byte activeFlag;
+    private byte activeFlag = 1;
 
-    private int joinCnt;
+    private int joinCnt = 1;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private MeetingRoomQuestion question;
+
+    @Builder
+    public MeetingRoom(String sessionId, Member member, String name, int memberLimit) {
+        this.sessionId = sessionId;
+        this.member = member;
+        this.name = name;
+        this.memberLimit = memberLimit;
+    }
+
+    public void updateQuestion(MeetingRoomQuestion question) {
+        this.question = question;
+    }
 }
