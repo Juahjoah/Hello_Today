@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.api.dto.routine.response.RoutinePrivateCheckResponse
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.RoutineService;
+import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.BaseEntity;
 import com.ssafy.hellotoday.db.entity.Member;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Tag(name = "Routine", description = "루틴 관련 API")
@@ -67,20 +69,24 @@ public class RoutineController {
 
         return new ResponseEntity<>(routineService.getPrivateRoutineCheck(member), HttpStatus.OK);
     }
-
+    @Operation(summary = "개인 루틴 인증 등록", description = "루틴인증(날짜(yyyy-MM-dd HH:mm:ss),내용,이미지(선택) 등록")
     @PutMapping("/private/check")
-    public BaseResponseDto checkPrivateRoutine(@RequestPart(name = "request") RoutineCheckRequestDto routineCheckRequestDto,
+    public BaseResponseDto checkPrivateRoutine(@RequestPart(name = "request") Optional<RoutineCheckRequestDto> routineCheckRequestDto,
                                           @RequestParam(value = "file",required = false) MultipartFile file,
                                           HttpServletRequest httpServletRequest) {
 
-        if (routineCheckRequestDto != null) {
-            routineCheckRequestDto.setFile(file);
+        RoutineCheckRequestDto routineCheckRequest = routineCheckRequestDto.orElse(null);
+
+        if (routineCheckRequest != null) {
+            routineCheckRequest.setFile(file);
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, -1, "필수(날짜,내용) 내용이 없습니다");
         }
 
         String token = httpServletRequest.getHeader("Authorization");
         Member findMember = memberService.findMemberByJwtToken(token);
 
 
-        return routineService.checkPrivateRoutine(routineCheckRequestDto,findMember,file);
+        return routineService.checkPrivateRoutine(routineCheckRequest,findMember,file);
     }
 }

@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RoutineCheckRepository extends JpaRepository<RoutineCheck, Integer> {
-    RoutineCheck findByRoutineCheckId(Integer routineCheckId);
+    RoutineCheck findByRoutineCheckIdAndCheckDaySeq(Integer routineCheckId,Integer checkDaySeq);
 }
 

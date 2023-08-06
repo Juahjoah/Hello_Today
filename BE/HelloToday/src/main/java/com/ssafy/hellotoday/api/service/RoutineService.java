@@ -182,7 +182,7 @@ public class RoutineService {
     }
 
     public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto, Member findMember, MultipartFile file) {
-        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckId());
+        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckIdAndCheckDaySeq(routineCheckRequestDto.getRoutineCheckId(),routineCheckRequestDto.getCheckDaySeq());
 
         if (findMember.getMemberId() != routineCheck.getRoutineDetailCat().getRoutine().getMember().getMemberId()) {
             throw new IllegalArgumentException("잘못된 접근입니다");
