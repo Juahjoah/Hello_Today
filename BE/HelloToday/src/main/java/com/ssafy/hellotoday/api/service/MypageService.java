@@ -1,9 +1,12 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.response.CalendarDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
@@ -12,7 +15,6 @@ import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
-import com.ssafy.hellotoday.db.entity.mypage.DdayType;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
@@ -23,9 +25,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.ssafy.hellotoday.db.entity.QMember.member;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutine.routine;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineCheck.routineCheck;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetail.routineDetail;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDetailCat;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +44,8 @@ public class MypageService {
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
     private final RoutineRepository routineRepository;
+    private final JPAQueryFactory queryFactory;
+
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
         Member member = getMember(cheerMessageRequestDto.getMemberId());
 
@@ -110,7 +121,6 @@ public class MypageService {
                 .member(member)
                 .finalDate(ddayRequestDto.getFinalDate())
                 .content(ddayRequestDto.getContent())
-                .type(DdayType.valueOf(ddayRequestDto.getType()))
                 .build();
 
         ddayRepository.save(dday);
@@ -124,7 +134,6 @@ public class MypageService {
                         .content(dday.getContent())
                         .createdDate(dday.getCreatedDate())
                         .modifiedDate(dday.getModifiedDate())
-                        .type(String.valueOf(dday.getType()))
                         .build())
                 .build();
     }
@@ -144,7 +153,6 @@ public class MypageService {
                         .content(dday.getContent())
                         .createdDate(dday.getCreatedDate())
                         .modifiedDate(dday.getModifiedDate())
-                        .type(String.valueOf(dday.getType()))
                         .build())
                 .build();
     }
@@ -162,9 +170,7 @@ public class MypageService {
         return member.get();
     }
 
-
-    // 내가 진행한 루틴에 대한 routineDetail에 대한 정보
-    public List<RoutineResponseDto> getRoutineHistory(Integer memberId) {
+    public List<RoutineResponseDto> getCalendar(Integer memberId) {
 
         System.out.println("memberId: " + memberId);
         List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
@@ -174,5 +180,26 @@ public class MypageService {
                 .collect(Collectors.toList());
 
         return result;
+    }
+
+    public List<CalendarDetailResponseDto> getCalendarRoutineDetail(Integer memberId, LocalDate checkDate) {
+
+        List<CalendarDetailResponseDto> calendarDetailList = queryFactory
+                .select(Projections.constructor(CalendarDetailResponseDto.class
+                        , routineDetail.content
+                        , routineCheck.modifiedDate
+                        , routineCheck.imgPath
+                        , routineCheck.content))
+                .from(routineCheck)
+                .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+                .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
+                .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
+                .where(member.memberId.eq(memberId)
+                        .and(routineCheck.checkDate.between(checkDate.atStartOfDay(), checkDate.plusDays(1).atStartOfDay()))
+                )
+                .fetch();
+
+        return calendarDetailList;
     }
 }

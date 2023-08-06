@@ -60,4 +60,7 @@ public class Routine {
                 ", activeFlag=" + activeFlag +
                 '}';
     }
+    public void update(int i) {
+        this.activeFlag = (byte) i;
+    }
 }
