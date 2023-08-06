@@ -69,12 +69,10 @@ function MyProfile() {
               alt={user.Userprofilepic}
             />
             <p className={classes.ProfilenNickName}>{user.nickname}</p>
-            <p className={classes.ProfileNickName}>{user.nickname}</p>
             <p className={classes.ProfileMsg}>{user.stMsg}</p>
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
-              <p></p>
               <p>팔로잉/팔로워</p>
             </div>
           </div>
