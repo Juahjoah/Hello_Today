@@ -3,6 +3,9 @@
 }
 .WidgetDday_name {
 }
+.routinediary {
+  display: flex;
+}
 .WidgetDday_content {
   box-shadow: 0 0 5px #333;
   display: flex;
@@ -14,6 +17,8 @@
 .WidgetDday_edit {
   border: 4px solid;
 }
-.WidgetDday_txt{
-    
+.WidgetDday_txt {
+}
+.btn_edit_delete {
+  display: flex;
 }
