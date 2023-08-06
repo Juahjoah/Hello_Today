@@ -8,6 +8,7 @@ function ProfileMain(props) {
       <div className={classes.ProfileCalender}>
         <ProfileCalender />
       </div>
+      <br />
       <div className={classes.ProfileCustom}>
         {/* menu에서 받아온 정보 출력 */}
         {props.Menu}

@@ -1,6 +1,7 @@
 .calDetailContain {
   /*전체 detail*/
   box-shadow: 0 0 5px #333;
+  margin: 2rem;
 }
 
 .calDetailContent {
@@ -43,4 +44,3 @@
 .content {
   /*루틴 인증 글*/
 }
-
