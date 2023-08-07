@@ -1,6 +1,6 @@
 .calDetailContain {
   /*전체 detail*/
-  border: 4px solid #000000;
+  box-shadow: 0 0 5px #333;
   margin: 2rem;
 }
 
