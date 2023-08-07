@@ -17,9 +17,8 @@ function Nav() {
   const PersonalRoutine = isUserhaveRoutine ? "/selectmain" : "/unselectmain";
 
   const dispatch = useDispatch();
-  //일단 고정 
-  const memberId = 1; 
-
+  //일단 고정
+  const memberId = sessionStorage.getItem("memberId");
 
   return (
     <nav className={classes.nav}>
@@ -82,7 +81,7 @@ function Nav() {
           />
         </div>
         <Link to="/logout">
-        <button className={classes.navRightLogout}>로그아웃</button>
+          <button className={classes.navRightLogout}>로그아웃</button>
         </Link>
       </div>
     </nav>
