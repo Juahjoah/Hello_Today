@@ -15,7 +15,7 @@ function ProfileMenu({ setMenu }) {
     "응원 메세지": <WidgetComments />,
     "단체 루틴을 함께한 사람": <WidgetGroupRoutine />,
     버킷리스트: <WidgetBucket />,
-    "작고 소중한 목표": <WidgetGoals />,
+    "소중한 목표": <WidgetGoals />,
     "한 줄 일기": <WidgetDiary />,
     "나의 루틴들": <WidgetHistory />,
     갤러리: <WidgetGallery />,
@@ -53,7 +53,7 @@ function ProfileMenu({ setMenu }) {
             UserSelectMenu(event);
           }}
         >
-          작고 소중한 목표
+          소중한 목표
         </p>
         {/* 일/월/연 목표 */}
         <p

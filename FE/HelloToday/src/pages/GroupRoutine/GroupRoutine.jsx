@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 //로그인
 import React, { useEffect } from "react";
@@ -20,15 +21,21 @@ function GroupRoutine() {
 
   const navigate = useNavigate();
 
+  const API_URL = "http://localhost:8080";
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [memberCount, setMemberCount] = useState(2);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
 
+  // Access Token
+  const accessToken = useSelector((state) => state.authToken.accessToken);
+
   const [myUserName, setMyUserName] = useState("홍길동");
-  const roomId = "sessiontest0001010112312351";
+  // const roomId = "sessiontest9199191919191199";
   const videoEnabled = true;
   const audioEnabled = true;
+
+  const [groupRoomList, setGroupRoomList] = useState([]);
 
   const groupRoutineBannerImg = "main_banner_groupRoutine1";
   const groupRoutineBannerMents = [
@@ -36,6 +43,18 @@ function GroupRoutine() {
     "너무 자책하지 말아요!",
     "다른 오늘러들과 얘기나누며 다시 시작해봐요.",
   ];
+
+  useEffect(() => {
+    async function axiosGroupRoomList() {
+      try {
+        const groupRoomResponse = await axios.get(`${API_URL}/api/rooms/list`);
+        setGroupRoomList(groupRoomResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    axiosGroupRoomList();
+  }, []);
 
   // function
 
@@ -67,27 +86,47 @@ function GroupRoutine() {
     setRoomDesc(event.target.value);
   };
 
-  const enterRoom = () => {
-    navigate("/roomId", {
+  const enterRoom = (sessionId, Token, roomId) => {
+    navigate(`/${roomId}`, {
       state: {
         roomId: roomId,
+        sessionId: sessionId,
+        roomTitle: roomName,
         myUserName: myUserName,
         videoEnabled: videoEnabled,
         audioEnabled: audioEnabled,
+        Token: Token,
       },
     });
   };
 
   const handleMakeRoomInfo = () => {
-    // TODO: 형식 정해지면 axios 보내기 + openvidu 방 생성 로직 들어가야할 듯!
-    console.log(roomName, roomDesc, memberCount);
     if (roomName && roomDesc) {
       console.log(`방 제목 : ${roomName}`);
       console.log(`방 설명 : ${roomDesc}`);
       console.log(`방 제한 인원 : ${memberCount}`);
-      // 1. axios.post : 생성된 방의 정보 보내주는 로직
-      // 2. 생성 즉시 방으로 입장
-      enterRoom();
+
+      const requestData = {
+        title: roomName,
+        description: roomDesc,
+        memberLimit: memberCount,
+      };
+
+      axios({
+        url: `${API_URL}/api/rooms`,
+        method: "post",
+        headers: {
+          Authorization: accessToken,
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify(requestData),
+      }).then((res) => {
+        const sessionId = res.data.data.sessionId;
+        const Token = res.data.data.token;
+        const roomId = res.data.data.roomId;
+        // console.log(roomId);
+        enterRoom(sessionId, Token, roomId);
+      });
     } else if (!roomName) {
       alert("방제목을 설정해주세요");
     } else if (!roomDesc) {
@@ -113,12 +152,12 @@ function GroupRoutine() {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "300px",
+      top: "100px",
       left: "300px",
       right: "300px",
-      bottom: "200px",
-      border: "5px solid black",
-      borderRadius: "20px",
+      bottom: "100px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
   //------------------------------로그인 시작
@@ -140,21 +179,36 @@ function GroupRoutine() {
       />
       {/* 그룹 채팅방 섹션 */}
       <div className={classes.GroupRoomSection}>
-        <GroupRoom />
+        {groupRoomList.map((room) => {
+          console.log(room);
+          return (
+            <GroupRoom
+              key={room.roomId}
+              createdDate={room.createdDate}
+              title={room.name}
+              description={room.description}
+              roomId={room.roomId}
+              sessionId={room.sessionId}
+              memberLimit={room.memberLimit}
+              joinCnt={room.joinCnt}
+              myUserName={myUserName}
+            />
+          );
+        })}
       </div>
       <hr className={classes.divideLine} />
       {/* 하단 방만들기 배너 */}
       <div className={classes.makeRoom}>
         <div className={classes.makeRoomLeft}>
-          <p className={classes.makeRoomLeftTitle}>
+          <div className={classes.makeRoomLeftTitle}>
             지금 당장 원하는 방이 없으신가요?
-          </p>
-          <p className={classes.makeRoomLeftDesc}>
+          </div>
+          <div className={classes.makeRoomLeftDesc}>
             내가 원하는 방이 없으시다면
-          </p>
-          <p className={classes.makeRoomLeftDesc}>
+          </div>
+          <div className={classes.makeRoomLeftDesc}>
             직접 방을 개설해 보시는건 어떠세요?
-          </p>
+          </div>
 
           <button onClick={openModal} className={classes.makeRoomLeftBtn}>
             방 생성하기
@@ -180,7 +234,7 @@ function GroupRoutine() {
             className={classes.modalClose}
           />
           <div className={classes.makeRoomModalTitle}>
-            <p>단체 루틴방 생성하기</p>
+            <div style={{ marginTop: "10px" }}>단체 루틴방 생성하기</div>
           </div>
           <div className={classes.makeRoomModalMain}>
             <div className={classes.makeRoomModalMainRoomTitle}>

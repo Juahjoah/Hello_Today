@@ -7,7 +7,7 @@ import RoutineSelectMain from "./pages/RoutineSelectMain/RoutineSelectMain";
 import GroupRoutine from "./pages/GroupRoutine/GroupRoutine";
 import MyProfile from "./pages/MyProfile/MyProfile";
 import RoutineAuthMain from "./pages/RoutineAuthMain/RoutineAuthMain";
-// import JoinRoom from "./pages/video/JoinRoom";
+import JoinRoom from "./pages/video/JoinRoom";
 import Modal from "react-modal";
 
 // openvidu demo ver
@@ -56,8 +56,10 @@ function App() {
       <Route path="/unselectmain" element={<RoutineSelectMain />} />
       <Route path="/selectmain" element={<RoutineAuthMain />} />
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
-      {/* memberid가져오기 */}
+      {/* 남의 memberid 가져오기 */}
       <Route path="/MyProfile/:memberId" element={<MyProfile />} />
+      <Route path="/:roomId" element={<JoinRoom />} />
+
       <Route
         path="/login/oauth2/code/kakao"
         element={<RedirectPageKakao />}

@@ -3,13 +3,13 @@ package com.ssafy.hellotoday.api.controller;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
-import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomQuestionResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.service.MeetingRoomService;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.OpenviduService;
 import com.ssafy.hellotoday.db.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,12 +51,12 @@ public class MeetingRoomController {
 
     /**
      * 방에 참여하기 위한 토큰을 반환
-     * @param sessionId 세션 아이디
+     * @param roomId 세션 아이디
      * @return 방에 연결을 할 수 있는 토큰 리턴
      */
-    @GetMapping("/{sessionId}/connections")
-    public BaseResponseDto joinRoom(@PathVariable("sessionId") String sessionId) {
-        return openviduService.joinRoom(sessionId);
+    @GetMapping("/{roomId}/connections")
+    public BaseResponseDto joinRoom(@PathVariable("roomId") int roomId) {
+        return openviduService.joinRoom(roomId);
     }
 
     @GetMapping("/list")
@@ -67,5 +67,10 @@ public class MeetingRoomController {
     @GetMapping("/{roomId}/question")
     public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId) {
         return meetingRoomService.getQuestion(roomId);
+    }
+
+    @DeleteMapping("/{roomId}")
+    public BaseResponseDto deleteConnection(@PathVariable("roomId") int roomId) {
+        return meetingRoomService.deleteConnection(roomId);
     }
 }
