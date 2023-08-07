@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -63,19 +64,24 @@ public class OpenviduService {
                 .build();
     }
 
-    public BaseResponseDto joinRoom(String sessionId) {
-        Session session = openvidu.getActiveSession(sessionId);
-        openviduValidator.checkSession(session, sessionId);
+    public BaseResponseDto joinRoom(int roomId) {
+        MeetingRoom room = meetingRoomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalStateException("미팅룸 조회 실패"));
+        Session session = openvidu.getActiveSession(room.getSessionId());
+        openviduValidator.checkSession(session, room.getSessionId());
 
         Connection connection = createConnection(session);
+
+        RoomCreateResponseDto response = RoomCreateResponseDto.builder()
+                .sessionId(room.getSessionId())
+                .token(connection.getToken())
+                .build();
+        response.setRoomId(roomId);
 
         return BaseResponseDto.builder()
                 .success(true)
                 .message(OpenviduResponseEnum.SUCCESS_GET_TOKEN.getName())
-                .data(RoomCreateResponseDto.builder()
-                        .sessionId(sessionId)
-                        .token(connection.getToken())
-                        .build())
+                .data(response)
                 .build();
     }
 
