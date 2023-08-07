@@ -53,7 +53,10 @@ function RedirectPageKakao() {
         dispatch(Loginstate());
         //회원정보 저장하는 거 구현하기
 
-        navigate("/unselectmain", {
+        // Dahye
+        // 메인페이지 화면 구조 변경으로 
+        // /unselectmain -> / 으로 바꿨음
+        navigate("/", {
           state: {
             isFirstLogin: isFirstLogin,
             memberId: memberId,
