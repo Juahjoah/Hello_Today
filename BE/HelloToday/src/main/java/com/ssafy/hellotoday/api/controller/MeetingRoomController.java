@@ -50,12 +50,12 @@ public class MeetingRoomController {
 
     /**
      * 방에 참여하기 위한 토큰을 반환
-     * @param sessionId 세션 아이디
+     * @param roomId 세션 아이디
      * @return 방에 연결을 할 수 있는 토큰 리턴
      */
-    @GetMapping("/{sessionId}/connections")
-    public BaseResponseDto joinRoom(@PathVariable("sessionId") String sessionId) {
-        return openviduService.joinRoom(sessionId);
+    @GetMapping("/{roomId}/connections")
+    public BaseResponseDto joinRoom(@PathVariable("roomId") int roomId) {
+        return openviduService.joinRoom(roomId);
     }
 
     @GetMapping("/list")
