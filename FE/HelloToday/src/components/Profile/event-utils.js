@@ -1,8 +1,7 @@
 //더미 데이터
 let eventGuid = 0;
-let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
-export const INITIAL_EVENTS = [
+export const events = [
   {
     id: createEventId(), //일정 번호 생성 //unique한 id라 생각하기
     title: "All-day event", // 일정 이름
