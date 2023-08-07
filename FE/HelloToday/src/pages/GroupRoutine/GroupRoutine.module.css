@@ -23,7 +23,10 @@
   margin: auto;
   font-family: "TheJamsil5Bold";
   margin-top: 30px;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .divideLine {

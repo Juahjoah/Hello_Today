@@ -70,14 +70,6 @@ function Chat({
 
   useEffect(() => {
     if (isQuestionClick) {
-      // TODO: 보내주는 형식에 맞춰 변경 필요
-      // console.log(
-      //   questionList,
-      //   questionTurn,
-      //   isQuestionClick,
-      //   setIsQuestionClick
-      // );
-      // console.log(questionList[questionTurn]);
       sendQuestion(question);
     }
   }, [isQuestionClick]);

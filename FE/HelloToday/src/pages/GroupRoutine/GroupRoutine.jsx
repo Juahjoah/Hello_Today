@@ -101,8 +101,6 @@ function GroupRoutine() {
   };
 
   const handleMakeRoomInfo = () => {
-    // TODO: 형식 정해지면 axios 보내기 + openvidu 방 생성 로직 들어가야할 듯!
-    console.log(roomName, roomDesc, memberCount, accessToken);
     if (roomName && roomDesc) {
       console.log(`방 제목 : ${roomName}`);
       console.log(`방 설명 : ${roomDesc}`);
@@ -129,10 +127,6 @@ function GroupRoutine() {
         // console.log(roomId);
         enterRoom(sessionId, Token, roomId);
       });
-
-      // 1. axios.post : 생성된 방의 정보 보내주는 로직
-      // 2. 생성 즉시 방으로 입장
-      // enterRoom();
     } else if (!roomName) {
       alert("방제목을 설정해주세요");
     } else if (!roomDesc) {
@@ -188,10 +182,11 @@ function GroupRoutine() {
         {groupRoomList.map((room) => {
           return (
             <GroupRoom
-              key={room.sessionId}
+              key={room.roomId}
               createdDate={room.createdDate}
               title={room.name}
               description={room.description}
+              roomId={room.roomId}
               sessionId={room.sessionId}
               memberLimit={room.memberLimit}
               myUserName={myUserName}
