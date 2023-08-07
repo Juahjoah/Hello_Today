@@ -94,32 +94,41 @@ public class OpenviduService {
     }
 
     public List<MeetingRoomDto> roomList() {
-        List<Session> activeSessions = openvidu.getActiveSessions();
-        System.out.println("=========================================");
-        System.out.println(activeSessions.size());
+        try {
+            openvidu.fetch();
+            List<Session> activeSessions = openvidu.getActiveSessions();
+            System.out.println("=========================================");
+            System.out.println(activeSessions.size());
 
-        List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
-        List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
-        List<MeetingRoom> rooms = meetingRoomRepository.findBySessionIdIn(sessionIds);
+            List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
+            List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
+            List<MeetingRoom> rooms = meetingRoomRepository.findBySessionIdIn(sessionIds);
 
-        List<MeetingRoomDto> response = new ArrayList<>();
+            List<MeetingRoomDto> response = new ArrayList<>();
 
-        for (int i = 0; i < sessionIds.size(); i++) {
-            MeetingRoom meetingRoom = rooms.get(i);
-            int joinCnt = sessionInfos.get(i).getJoinCnt();
-            response.add(MeetingRoomDto.builder()
-                    .roomId(meetingRoom.getMeetingRoomId())
-                    .memberId(meetingRoom.getMember().getMemberId())
-                    .sessionId(meetingRoom.getSessionId())
-                    .name(meetingRoom.getName())
-                    .description(meetingRoom.getDescription())
-                    .memberLimit(meetingRoom.getMemberLimit())
-                    .joinCnt(joinCnt)
-                    .createdDate(meetingRoom.getCreatedDate())
-                    .modifiedDate(meetingRoom.getModifiedDate())
-                    .build());
+            for (int i = 0; i < rooms.size(); i++) {
+                MeetingRoom meetingRoom = rooms.get(i);
+                int joinCnt = sessionInfos.get(i).getJoinCnt();
+                response.add(MeetingRoomDto.builder()
+                        .roomId(meetingRoom.getMeetingRoomId())
+                        .memberId(meetingRoom.getMember().getMemberId())
+                        .sessionId(meetingRoom.getSessionId())
+                        .name(meetingRoom.getName())
+                        .description(meetingRoom.getDescription())
+                        .memberLimit(meetingRoom.getMemberLimit())
+                        .joinCnt(joinCnt)
+                        .createdDate(meetingRoom.getCreatedDate())
+                        .modifiedDate(meetingRoom.getModifiedDate())
+                        .build());
+            }
+            return response;
+        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
+            throw CustomException.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .code(8005)
+                    .message("방 목록 조회에 실패했습니다: openvidu fetch 실패")
+                    .build();
         }
-        return response;
     }
 
     private Session createSession(RecordingProperties recordingProperties) {
@@ -160,5 +169,4 @@ public class OpenviduService {
                         .build())
                 .collect(Collectors.toList());
     }
-
 }
