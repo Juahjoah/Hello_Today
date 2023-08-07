@@ -66,6 +66,11 @@ public class MeetingRoomService {
                 .build();
     }
 
+    public BaseResponseDto deleteConnection(int roomId) {
+        MeetingRoom room = meetingRoomRepository.findById(roomId).orElseThrow();
+        return null;
+    }
+
     private void checkQuestion(Optional<MeetingRoomQuestion> question) {
         if (question.isEmpty()) throw CustomException.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

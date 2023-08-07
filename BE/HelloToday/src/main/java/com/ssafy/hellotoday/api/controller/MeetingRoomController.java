@@ -9,6 +9,7 @@ import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.OpenviduService;
 import com.ssafy.hellotoday.db.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,5 +67,10 @@ public class MeetingRoomController {
     @GetMapping("/{roomId}/question")
     public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId) {
         return meetingRoomService.getQuestion(roomId);
+    }
+
+    @DeleteMapping("/{roomId}")
+    public BaseResponseDto deleteConnection(@PathVariable("roomId") int roomId) {
+        return meetingRoomService.deleteConnection(roomId);
     }
 }
