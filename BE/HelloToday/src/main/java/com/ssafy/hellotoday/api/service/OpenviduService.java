@@ -2,6 +2,7 @@ package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.SessionInfo;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
@@ -25,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,20 +95,31 @@ public class OpenviduService {
 
     public List<MeetingRoomDto> roomList() {
         List<Session> activeSessions = openvidu.getActiveSessions();
+        System.out.println("=========================================");
+        System.out.println(activeSessions.size());
 
-        List<String> sessionIds = activeSessions.stream().map(Session::getSessionId).collect(Collectors.toList());
+        List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
+        List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
         List<MeetingRoom> rooms = meetingRoomRepository.findBySessionIdIn(sessionIds);
-        return rooms.stream().map(meetingRoom -> MeetingRoomDto.builder()
-                        .roomId(meetingRoom.getMeetingRoomId())
-                .memberId(meetingRoom.getMember().getMemberId())
-                .sessionId(meetingRoom.getSessionId())
-                .name(meetingRoom.getName())
-                .description(meetingRoom.getDescription())
-                .memberLimit(meetingRoom.getMemberLimit())
-                .createdDate(meetingRoom.getCreatedDate())
-                .modifiedDate(meetingRoom.getModifiedDate())
-                .build())
-                .collect(Collectors.toList());
+
+        List<MeetingRoomDto> response = new ArrayList<>();
+
+        for (int i = 0; i < sessionIds.size(); i++) {
+            MeetingRoom meetingRoom = rooms.get(i);
+            int joinCnt = sessionInfos.get(i).getJoinCnt();
+            response.add(MeetingRoomDto.builder()
+                    .roomId(meetingRoom.getMeetingRoomId())
+                    .memberId(meetingRoom.getMember().getMemberId())
+                    .sessionId(meetingRoom.getSessionId())
+                    .name(meetingRoom.getName())
+                    .description(meetingRoom.getDescription())
+                    .memberLimit(meetingRoom.getMemberLimit())
+                    .joinCnt(joinCnt)
+                    .createdDate(meetingRoom.getCreatedDate())
+                    .modifiedDate(meetingRoom.getModifiedDate())
+                    .build());
+        }
+        return response;
     }
 
     private Session createSession(RecordingProperties recordingProperties) {
@@ -137,6 +150,15 @@ public class OpenviduService {
                     .message(OpenviduErrorEnum.CREATE_CONNECTION_FAILED.getMessage())
                     .build();
         }
+    }
+
+    private List<SessionInfo> getSessionInfos(List<Session> activeSessions) {
+        return activeSessions.stream()
+                .map(session -> SessionInfo.builder()
+                        .sessionId(session.getSessionId())
+                        .joinCnt(session.getActiveConnections().size())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }
