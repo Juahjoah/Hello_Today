@@ -37,8 +37,8 @@ function RoutineSelectMain() {
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  const [nickName, setNickName] = useState(location?.state?.nickName ?? false);
-  // const [FirstLogin, setFirstLogin] = useState(true);
+  const [nickName, setNickName] = useState(location?.state?.nickName ?? "user");
+
   const dispatch = useDispatch();
 
   // 최초 렌더 시 루틴 데이터 받아오기

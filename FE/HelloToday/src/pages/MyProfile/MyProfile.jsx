@@ -4,6 +4,8 @@ import classes from "./MyProfile.module.css";
 
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileMain from "../../components/Profile/ProfileMain";
+import FollowButton from "../../components/Profile/FollowButton";
+import FollowList from "../../components/Profile/FollowList";
 
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
@@ -45,13 +47,13 @@ function MyProfile() {
       })
       .then((response) => {
         setUser(response.data);
-        sessionStorage.setItem("user", JSON.stringify(response.data));
-        console.log("user");
-        console.log(response.data);
+        sessionStorage.setItem(user, JSON.stringify(response.data));
+        // console.log("user");
+        // console.log(response.data);
       })
       .catch((error) => {
-        console.log(error);
-        sessionStorage.setItem("user", ["error"]);
+        // console.log(error);
+        sessionStorage.setItem(user, ["error"]);
       });
   }, []);
 
@@ -62,10 +64,11 @@ function MyProfile() {
   //   sessionStorage.setItem("user");
   // };
 
-  const [Menu, setMenu] = useState();
+  const [Menu, setMenu] = useState(0);
+
+  const [FollowButtonClick, setFollowButtonClick] = useState(false);
 
   const navigate = useNavigate();
-
   const handleunregister = async () => {
     //백에 요청 날리고
     const data = {
@@ -200,19 +203,27 @@ function MyProfile() {
               {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
               {/* 팔로잉/팔로워 */}
               <div className={classes.UserFollow}>
-                <p>팔로잉/팔로워</p>
+                <FollowButton
+                memberId={user.memberId}
+                setFollowButtonClick={setFollowButtonClick}
+              />
               </div>
             </div>
           )}
           <button onClick={() => handleunregister()}>회원 탈퇴</button>
           <hr />
           <div className={classes.UserProfileMenu}>
-            <ProfileMenu setMenu={setMenu} />
+            <ProfileMenu
+              setMenu={setMenu}
+              setFollowButtonClick={setFollowButtonClick}
+            />
           </div>
         </div>
         {/* 화면 오른쪽 화면 출력 창 */}
+
         <div className={classes.Profilecontent}>
-          <ProfileMain Menu={Menu} />
+          {FollowButtonClick ? <FollowList /> : <ProfileMain Menu={Menu} />}
+          {/* <ProfileMain Menu={Menu} /> */}
         </div>
       </div>
     </div>
