@@ -21,7 +21,8 @@ function JoinRoom() {
   const APPLICATION_SERVER_URL =
     process.env.NODE_ENV === "production" ? "" : "https://demos.openvidu.io/";
 
-  const API_URL = "https://i9b308.p.ssafy.io";
+  // const API_URL = "https://i9b308.p.ssafy.io";
+  const API_URL = "http://localhost:8080";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,7 +30,7 @@ function JoinRoom() {
   // session, state 선언
   const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState("");
-  // const [myMemberId, setMyMemberId] = useState(undefined);
+  const [myMemberId, setMyMemberId] = useState(undefined);
   const [session, setSession] = useState(undefined);
   const [myRoomId, setMyRoomId] = useState(undefined);
   const [myAccessToken, setMyAccessToken] = useState(undefined);
@@ -75,6 +76,9 @@ function JoinRoom() {
       return;
     }
 
+    console.log(location.state.memberId);
+    console.log(location.state.accessToken);
+
     // 이전 페이지에서 받아온 데이터 -> redux로 변경 필요 !
     // setMySessionId(location.state.roomId);
     setMySessionId(location.state.sessionId);
@@ -83,7 +87,7 @@ function JoinRoom() {
     setAudioEnabled(location.state.audioEnabled);
     setMyRoomId(location.state.roomId);
     setMyAccessToken(location.state.accessToken);
-    // setMyMemberId(location.state.memberId);
+    setMyMemberId(location.state.memberId);
 
     // 윈도우 객체에 화면 종료 이벤트 추가
     window.addEventListener("beforeunload", onBeforeUnload);
@@ -212,7 +216,9 @@ function JoinRoom() {
     if (session && token) {
       // 첫 번째 매개변수는 OpenVidu deployment로 부터 얻은 토큰, 두 번째 매개변수는 이벤트의 모든 사용자가 검색할 수 있음.
       session
-        .connect(token, { clientData: myUserName })
+        .connect(token, {
+          clientData: { nickName: myUserName, memberId: myMemberId },
+        })
         .then(async () => {
           // Get your own camera stream ---
           // publisher 객체 생성
@@ -305,7 +311,10 @@ function JoinRoom() {
                       key={`${i}-subscriber`}
                       className={classes.subscribers}
                     >
-                      <UserVideoComponent streamManager={sub} />
+                      <UserVideoComponent
+                        accessToken={myAccessToken}
+                        streamManager={sub}
+                      />
                     </div>
                   ))}
                 </div>
