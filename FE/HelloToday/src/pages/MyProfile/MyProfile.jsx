@@ -36,21 +36,22 @@ function MyProfile() {
   const baseURL = "http://localhost:8080"; // 개발용
 
   const [user, setUser] = useState([]);
+  const memberId = sessionStorage.getItem("memberId");
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/mypage`, {
+      .get(`${baseURL}/api/mypage/${memberId}`, {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
         setUser(response.data);
-        sessionStorage.setItem("user", response.data);
-        // console.log(user);
-        // console.log(response.data);
+        sessionStorage.setItem("user", JSON.stringify(response.data));
+        console.log("user");
+        console.log(response.data);
       })
       .catch((error) => {
-        // console.log(error);
-        sessionStorage.setItem("user", []);
+        console.log(error);
+        sessionStorage.setItem("user", ["error"]);
       });
   }, []);
 

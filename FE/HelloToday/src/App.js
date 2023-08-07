@@ -56,7 +56,7 @@ function App() {
       <Route path="/unselectmain" element={<RoutineSelectMain />} />
       <Route path="/selectmain" element={<RoutineAuthMain />} />
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
-      {/* memberid가져오기 */}
+      {/* 남의 memberid 가져오기 */}
       <Route path="/MyProfile/:memberId" element={<MyProfile />} />
       <Route
         path="/login/oauth2/code/kakao"
