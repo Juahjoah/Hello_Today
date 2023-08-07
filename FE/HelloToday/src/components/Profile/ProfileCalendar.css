@@ -1,5 +1,4 @@
-/* 일요일 날짜 빨간색 */
-.fc-day-sun a {
+일요일 날짜 빨간색 .fc-day-sun a {
   color: #ff6767 !important;
 }
 /* 토요일 날짜 파란색 */
@@ -8,8 +7,8 @@
 }
 
 .fc-button-primary {
-  background-color: #ccaaff !important;
-  border: #ccaaff !important;
+  background-color: #ccbbff !important;
+  border: #ccbbff !important;
 }
 /* .scrollbar {
   width: 250px;
@@ -25,8 +24,22 @@
 }
 .fc-toolbar-title {
   /*제목*/
-  background-color: #ccaaff !important;
-  border: #ccaaff !important;
+  background-color: #ccbbff !important;
+  border: #ccbbff !important;
   padding: 5px 20px 5px 20px;
   border-radius: 15px;
+}
+/*스크롤바*/
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #bcadcd;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
 }
