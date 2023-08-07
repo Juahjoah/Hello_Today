@@ -1,18 +1,20 @@
 import classes from "./RoutineAuthCard.module.css";
 
 function RoutineAuthCard({
-  content,
-  routineId,
-  imgPath,
-  handleModalOpen,
-  handleAuthInfo,
+  routineDetailDto,
+  routineCheckDtoList
+  // content,
+  // routineId,
+  // imgPath,
+  // handleModalOpen,
+  // handleAuthInfo,
 }) {
-  const selectRoutineImgPath = `images/Routine/${imgPath}`;
+  const selectRoutineImgPath = `images/Routine/${routineDetailDto.imgPath}`;
 
-  const handleAuthButtonClick = () => {
-    handleAuthInfo({ routineId, content });
-    handleModalOpen(true);
-  };
+  // const handleAuthButtonClick = () => {
+  //   handleAuthInfo({ routineId, content });
+  //   handleModalOpen(true);
+  // };
 
   return (
     <div className={classes.routineAuthCard}>
@@ -23,12 +25,12 @@ function RoutineAuthCard({
             src={selectRoutineImgPath}
             alt=""
           />
-          <p className={classes.routineName}>{content}</p>
+          <p className={classes.routineName}>{routineDetailDto.content}</p>
         </div>
       </div>
       <div className={classes.routuneAuthMid}>
         <p className={classes.routineAuthMidDes}>
-          "<span style={{ color: "#a581cf" }}>{content}</span>
+          "<span style={{ color: "#a581cf" }}>{routineDetailDto.content}</span>
           "루틴을 진행하셨나요?
         </p>
         <p className={classes.routineAuthMidDes}>
@@ -36,7 +38,8 @@ function RoutineAuthCard({
         </p>
       </div>
       <div className={classes.routineAuthRight}>
-        <button className={classes.goToAuth} onClick={handleAuthButtonClick}>
+        <button className={classes.goToAuth} >
+        {/* <button className={classes.goToAuth} onClick={handleAuthButtonClick}> */}
           인증하러가기
         </button>
       </div>
