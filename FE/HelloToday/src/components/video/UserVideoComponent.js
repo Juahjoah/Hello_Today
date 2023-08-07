@@ -50,9 +50,9 @@ function VideoComponent(props) {
       {props.streamManager !== undefined ? (
         <div className={classes.streamcomponent}>
           <OpenViduVideoComponent streamManager={props.streamManager} />
-          <div>
+          <div className={classes.streamcomponentBottom}>
             <div>{nickName}</div>
-            <button onClick={follow}>Follow</button>
+            {props.isMe ? null : <button onClick={follow}>Follow</button>}
           </div>
         </div>
       ) : null}

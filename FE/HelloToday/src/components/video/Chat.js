@@ -102,12 +102,12 @@ function Chat({
   };
 
   // 지금 전부다 홍길동이라 누가 치든 '나' 라고 나옴
-  // const renderNickname = (nickname) => {
-  //   if (nickname === myUserName) {
-  //     return "나";
-  //   }
-  //   return nickname;
-  // };
+  const renderNickname = (nickname) => {
+    if (nickname === myUserName) {
+      return "나";
+    }
+    return nickname;
+  };
 
   const scrollToBottom = () => {
     if (chatScroll.current) {
@@ -134,7 +134,10 @@ function Chat({
                 }
               >
                 <div>
-                  <div className={classes.writer}> {data.nickname} : </div>
+                  <div className={classes.writer}>
+                    {" "}
+                    {renderNickname(data.nickname)} :{" "}
+                  </div>
                 </div>
                 <div>
                   <p className={classes.content}>{data.message}</p>

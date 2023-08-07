@@ -9,3 +9,8 @@
   margin: 0px;
   margin: 40px 0px 20px 0px;
 }
+
+.streamcomponentBottom {
+  display: flex;
+  justify-content: space-between;
+}

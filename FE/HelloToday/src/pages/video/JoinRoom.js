@@ -137,6 +137,7 @@ function JoinRoom() {
     setSubscribers([]);
     //
     setMyRoomId(undefined);
+    // TODO: 토큰이랑 멤버아이디 초기화 해줘야할지도?
 
     navigate("/GroupRoutine");
   };
@@ -302,7 +303,10 @@ function JoinRoom() {
                 <div className={classes.userCameraZone}>
                   {publisher !== undefined ? (
                     <div className={classes.publisher}>
-                      <UserVideoComponent streamManager={publisher} />
+                      <UserVideoComponent
+                        isMe={true}
+                        streamManager={publisher}
+                      />
                     </div>
                   ) : null}
 
@@ -314,6 +318,7 @@ function JoinRoom() {
                       <UserVideoComponent
                         accessToken={myAccessToken}
                         streamManager={sub}
+                        isMe={false}
                       />
                     </div>
                   ))}
