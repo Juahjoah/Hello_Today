@@ -6,7 +6,7 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileMain from "../../components/Profile/ProfileMain";
 
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 //로그인
 import { useDispatch, useSelector } from "react-redux";
@@ -94,6 +94,53 @@ function MyProfile() {
       console.log("회원탈퇴를 취소하셨습니다.");
     }
   };
+  //회원정보 수정
+  // const [user, setUser] = useState([]);
+  // const memberId = sessionStorage.getItem("memberId");
+  const [isUserEdit, setIsUserEdit] = useState(false);
+  const nicknameinput = useRef();
+  const stMsginput = useRef();
+  const handleUserEdit = () => {
+    setIsUserEdit(true);
+  };
+  const handleChangeState = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+    console.log(e.target.value);
+  };
+  const handleSubmit = () => {
+    if (user.nickname.length < 1) {
+      //focus
+      nicknameinput.current.focus();
+      return;
+    }
+    if (user.stMsg === null || user.stMsg.length < 1) {
+      //focus
+      stMsginput.current.focus();
+      return;
+    }
+    const data = user;
+    //백이랑 통신
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/api/memvers/${memberId}`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // session에 덮어쓰기
+    sessionStorage.setItem("user", user);
+
+    //edit모드 false로 바꾸기
+    setIsUserEdit(false);
+  };
+  const handleCancle = () => {
+    /*취소*/
+    setIsUserEdit(false);
+  };
 
   return (
     <div>
@@ -101,21 +148,63 @@ function MyProfile() {
       <div className={classes.MyProfile}>
         {/* 화면 왼쪽 개인 정보 */}
         <div className={classes.UserProfile}>
-          <div className={classes.UserInfo}>
-            <img
-              className={classes.ProfileImg}
-              src={user.profilePath}
-              alt={user.Userprofilepic}
-            />
-            <p className={classes.ProfilenNickName}>{user.nickname}</p>
-            <p className={classes.ProfileMsg}>{user.stMsg}</p>
-            {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
-            {/* 팔로잉/팔로워 */}
-            <div className={classes.UserFollow}>
-              <p>팔로잉/팔로워</p>
+          {isUserEdit ? (
+            <div className={classes.UserInfo}>
+              <img
+                className={classes.ProfileImg}
+                src={user.profilePath}
+                alt={user.Userprofilepic}
+              />
+              <button>파일 올리기</button>
+              <div className={classes.ProfilenNickName}>
+                <input
+                  type="text"
+                  value={user.nickname}
+                  placeholder="닉네임을 입력하세요"
+                  ref={nicknameinput}
+                  onChange={handleChangeState}
+                ></input>
+              </div>
+              <div className={classes.ProfileMsg}>
+                <input
+                  type="text"
+                  value={user.stMsg}
+                  placeholder="상태메세지를 입력하세요"
+                  ref={stMsginput}
+                  onChange={handleChangeState}
+                ></input>
+              </div>
+              <button onClick={handleSubmit}>완료</button>
+              <button onClick={handleCancle}>취소</button>
             </div>
-            <button onClick={() => handleunregister()}>회원 탈퇴</button>
-          </div>
+          ) : (
+            <div className={classes.UserInfo}>
+              <img
+                className={classes.ProfileImg}
+                src={user.profilePath}
+                alt={user.Userprofilepic}
+              />
+              <button className={classes.editbtn}>
+                <img
+                  src="../../images/Widget/gear.png"
+                  alt="useredit"
+                  onClick={handleUserEdit}
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                  }}
+                />
+              </button>
+              <p className={classes.ProfilenNickName}>{user.nickname}</p>
+              <p className={classes.ProfileMsg}>{user.stMsg}</p>
+              {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
+              {/* 팔로잉/팔로워 */}
+              <div className={classes.UserFollow}>
+                <p>팔로잉/팔로워</p>
+              </div>
+            </div>
+          )}
+          <button onClick={() => handleunregister()}>회원 탈퇴</button>
           <hr />
           <div className={classes.UserProfileMenu}>
             <ProfileMenu setMenu={setMenu} />
