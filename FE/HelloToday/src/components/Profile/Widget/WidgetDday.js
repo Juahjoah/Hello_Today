@@ -6,6 +6,9 @@ import {
   SET_ISEDIT,
   SET_DDAY_DATA,
   SET_DDAYID,
+  ADD_DDAY_DATA,
+  SET_ISREGIST,
+  SET_ISEDITF,
 } from "../../../store/ddaySlice";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetDdayEdit from "./WidgetDdayEdit";
@@ -19,31 +22,32 @@ function WidgetDday() {
   const dispatch = useDispatch();
 
   // 더미 데이터
-  const dummyList = [
-    {
-      memberId: 1,
-      finalDate: "2023-08-06T04:05:01.540Z",
-      createdDate: "2023-08-06T04:05:01.540Z",
-      modifiedDate: "2023-08-06T04:05:01.540Z",
-      content: "내 생일",
-      calDate: 30,
-      ddayId: 1,
-    },
-    {
-      memberId: 1,
-      finalDate: "2023-08-07T04:05:01.540Z",
-      createdDate: "2023-08-07T04:05:01.540Z",
-      modifiedDate: "2023-08-07T04:05:01.540Z",
-      content: "수능",
-      calDate: 50,
-      ddayId: 2,
-    },
-  ];
+  // const dummyList = [
+  //   {
+  //     memberId: 1,
+  //     finalDate: "2023-08-06T04:05:01.540Z",
+  //     createdDate: "2023-08-06T04:05:01.540Z",
+  //     modifiedDate: "2023-08-06T04:05:01.540Z",
+  //     content: "내 생일",
+  //     calDate: 30,
+  //     ddayId: 1,
+  //   },
+  //   {
+  //     memberId: 1,
+  //     finalDate: "2023-08-07T04:05:01.540Z",
+  //     createdDate: "2023-08-07T04:05:01.540Z",
+  //     modifiedDate: "2023-08-07T04:05:01.540Z",
+  //     content: "수능",
+  //     calDate: 50,
+  //     ddayId: 2,
+  //   },
+  // ];
 
   // 배열 형태 데이터
   const ddaydata = useSelector((state) => state.dday.ddayData);
   const isedit = useSelector((state) => state.dday.isEdit);
-
+  const isRegist = useSelector((state) => state.dday.isRegist);
+  const iseditf = useSelector((state) => state.dday.isEditF);
   // 배열
   //axios로 불러오기
   useEffect(() => {
@@ -52,17 +56,17 @@ function WidgetDday() {
       .then((res) => {
         console.log(res);
         dispatch(SET_DDAY_DATA(res.data));
+        if (isRegist) {
+          dispatch(SET_ISREGIST(false));
+        }
+        if (iseditf) {
+          dispatch(SET_ISEDITF(false));
+        }
       })
-      .then((err) => {
+      .catch((err) => {
         console.log(err);
       });
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(SET_DDAY_DATA(dummyList));
-  //   console.log(ddaydata);
-  //   console.log("다시 렌더링");
-  // }, [dispatch]);
+  }, [dispatch, isRegist, iseditf]);
 
   const handleEditState = (target) => {
     //수정
@@ -80,21 +84,21 @@ function WidgetDday() {
     // .then((res) => {
     //   console.log(res)
     // })
-    // .then((err) => {
+    // .catch(err) => {
     //   console.log(err)
     // })
     //프런트에서 수정
   };
   const handleDeleteState = (target) => {
     //삭제
-    // axios
-    //   .delete(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${ddayId}`)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .then((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .delete(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${target}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     //프런트에서 삭제
     console.log(target);
     // console.log(`${item.ddayId}를 삭제합니다`);
@@ -102,6 +106,7 @@ function WidgetDday() {
     const newDdayList = ddaydata.filter((item) => item.ddayId !== target);
     dispatch(SET_DDAY_DATA(newDdayList));
   };
+
   return (
     <div className={classes.WidgetDday}>
       <span className={classes.WidgetDday_name}>D-Day</span>
