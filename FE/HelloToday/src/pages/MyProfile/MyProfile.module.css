@@ -22,9 +22,9 @@
 .UserProfile {
   font-family: "TheJamsil5Bold";
   /* width: 40%; */
+
   width: 20rem;
   margin: 2rem;
-  background-color: bisque;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,24 +32,38 @@
   /* margin-top: 170px; */
 }
 
+.UserInfo {
+  background: linear-gradient(rgba(165, 129, 207, 0.5), white);
+  border-radius: 1rem;
+}
+
 .ProfileImg {
   width: 10rem;
   height: 10rem;
   display: flex;
   margin: 0 auto;
+  border-radius: 50%;
 }
 
 .ProfilenNickName {
   font-family: "TheJamsil5Bold";
-  font-size: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.ProfileMsg {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  text-align: center;
+  margin: 0.5rem;
 }
 
 .UserFollow {
   font-family: "TheJamsil5Bold";
   font-size: 0.7rem;
-  margin: 2rem;
+  margin: 1rem;
   height: 100%;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .UserProfileMenu {
@@ -58,8 +72,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* justify-items: center; */
 }
 
 .Profilecontent {
@@ -69,5 +81,4 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
 }

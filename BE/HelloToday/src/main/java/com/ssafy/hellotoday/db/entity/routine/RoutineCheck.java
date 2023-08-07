@@ -81,8 +81,7 @@ public class RoutineCheck extends BaseEntity {
     }
 
     public String getRoutineImagePath() {
-        if(imgOriginalName == null) return null;
-        else if(imgOriginalName.contains("https://i9b308.p.ssafy.io/")) return imgOriginalName;
+        if(imgPath == null) return null;
 
         return ApplicationProperties.HOST_IMAGE_URL + "routine/" + imgOriginalName;
     }
