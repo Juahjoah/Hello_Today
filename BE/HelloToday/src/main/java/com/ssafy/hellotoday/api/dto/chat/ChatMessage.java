@@ -10,11 +10,15 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message {
+public class ChatMessage {
     private MessageType type;
     private int roomId;
     private int senderId;
     private String content;
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public void newConnect() {
         this.type = MessageType.ENTER;

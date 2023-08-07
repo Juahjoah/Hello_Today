@@ -40,9 +40,9 @@ const User = () => {
         <img className={classe.logo} src="/images/logo.png" alt="logo" />
         <div /*이미지 넣기*/></div>
         <div className={classe.LoginText}>
-          <p>간편하게 로그인하고</p>
-          <p>나만의 루틴을 생성하여</p>
-          <p>규칙적인 생활습관을 만들어보아요</p>
+          <p className={classe.MainText}>간편하게 로그인하고</p>
+          <p className={classe.MainText}>나만의 루틴을 생성하여</p>
+          <p className={classe.MainText}>규칙적인 생활습관을 만들어보아요</p>
         </div>
         <div className={classe.btn}>
           <button className={classes.buttonstyle}>
