@@ -5,6 +5,7 @@ import classes from "./MyProfile.module.css";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileMain from "../../components/Profile/ProfileMain";
 import FollowButton from "../../components/Profile/FollowButton";
+import FollowList from "../../components/Profile/FollowList";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -110,7 +111,7 @@ function MyProfile() {
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
-              <p>팔로잉/팔로워</p>
+              <FollowList />
               <FollowButton />
             </div>
             <button onClick={() => handleunregister()}>회원 탈퇴</button>
