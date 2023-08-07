@@ -21,6 +21,8 @@ function JoinRoom() {
   const APPLICATION_SERVER_URL =
     process.env.NODE_ENV === "production" ? "" : "https://demos.openvidu.io/";
 
+  const API_URL = "https://i9b308.p.ssafy.io";
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -102,7 +104,7 @@ function JoinRoom() {
   // 1명이 방안에 남았을 때, 세션 out 요청
   const axiosSessionDelete = () => {
     axios({
-      url: `http://localhost:8080/api/rooms/${myRoomId}`,
+      url: `${API_URL}/api/rooms/${myRoomId}`,
       method: "delete",
       headers: {
         Authorization: myAccessToken,
@@ -261,7 +263,7 @@ function JoinRoom() {
   const callQuestion = () => {
     console.log(myRoomId);
     axios({
-      url: `http://localhost:8080/api/rooms/${myRoomId}/question`,
+      url: `${API_URL}/api/rooms/${myRoomId}/question`,
       method: "get",
       headers: {
         Authorization: myAccessToken,

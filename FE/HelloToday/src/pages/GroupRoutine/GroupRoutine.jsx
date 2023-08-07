@@ -21,7 +21,8 @@ function GroupRoutine() {
 
   const navigate = useNavigate();
 
-  const API_URL = "http://localhost:8080";
+  // const API_URL = "http://localhost:8080";
+  const API_URL = "https://i9b308.p.ssafy.io";
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [memberCount, setMemberCount] = useState(2);
   const [roomName, setRoomName] = useState("");
