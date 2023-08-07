@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.config;
 
+import com.ssafy.hellotoday.common.util.property.ApplicationProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -14,8 +15,16 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .exposedHeaders("Authorization", "Access-Token")
+                .exposedHeaders("Authorization", "Access-Token","Authorization-Refresh","Refresh-Token")
                 .maxAge(3600);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/profile/**","/routine/**")
+                .addResourceLocations("file:///" + ApplicationProperties.PROFILE_PATH,"file:///" + ApplicationProperties.ROUTINECHECK_PATH)
+                .setCachePeriod(60 * 10)
+                .resourceChain(true);
     }
 
 }

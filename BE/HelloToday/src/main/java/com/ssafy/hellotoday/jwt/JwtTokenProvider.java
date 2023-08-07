@@ -2,6 +2,7 @@ package com.ssafy.hellotoday.jwt;
 
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.Member;
+import com.ssafy.hellotoday.db.entity.Social;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -45,10 +46,10 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(Integer id, String userPk) {
+    public String createAccessToken(Integer id, String userPk, Social socialType) {
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣음
         claims.put("id", id);
-
+        claims.put("socialType",socialType);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
@@ -77,7 +78,8 @@ public class JwtTokenProvider {
     }
 
     public String getUserPk(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        String id = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return id ;
     }
 
     public String getUserId(String token) {
@@ -99,8 +101,6 @@ public class JwtTokenProvider {
 
     public void storeRefreshToken(int id, String refreshToken) {
         Member member = memberRepository.findById(id).orElse(null);
-        System.out.println("member = " + member);
-        System.out.println("refreshTokendb저장 = " + refreshToken);
         if (member != null) {
             redisTemplate.opsForValue().set(
                     Integer.toString(id),
@@ -119,15 +119,16 @@ public class JwtTokenProvider {
             return !claims.getBody().getExpiration().before(new Date());
         } catch (SignatureException e) {
             log.warn("JWT 서명이 유효하지 않습니다.");
-            throw new JwtException("잘못된 JWT 시그니쳐");
+            throw new SignatureException("잘못된 JWT 시그니쳐");
         } catch (MalformedJwtException e) {
             log.warn("유효하지 않은 JWT 토큰입니다.");
-            throw new JwtException("유효하지 않은 JWT 토큰");
+            throw new MalformedJwtException("유효하지 않은 JWT 토큰");
         } catch (ExpiredJwtException e) {
             log.warn("만료된 JWT 토큰입니다.");
-            throw new JwtException("토큰 기간 만료");
+            throw new ExpiredJwtException(null,null,"토큰 기간 만료");
         } catch (UnsupportedJwtException e) {
             log.warn("지원되지 않는 JWT 토큰입니다.");
+            throw new UnsupportedJwtException("지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
             log.warn("JWT claims string is empty.");
         } catch (NullPointerException e){

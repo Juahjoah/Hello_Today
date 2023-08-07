@@ -1,7 +1,10 @@
 package com.ssafy.hellotoday.db.repository;
 
 import com.ssafy.hellotoday.db.entity.Member;
+import com.ssafy.hellotoday.db.entity.ShowInfo;
+import com.ssafy.hellotoday.db.entity.Social;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +15,10 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     Optional<Member> findByEmail(String email);
 
     Optional<Member> findBySocialId(String socialId);
+
+    Optional<Member> findByEmailAndSocialType(String email, Social socialType);
+
+    Optional<Member> findByNickname(String nickname);
+
+
 }

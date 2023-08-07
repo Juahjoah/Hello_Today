@@ -23,6 +23,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         } catch (JwtException ex) {
             // JwtAuthenticationFilter에서 예외 발생하면 바로 setErrorResponse 호출
             setErrorResponse(request, response, ex);
+            return;
         }
     }
 
@@ -36,7 +37,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         body.put("message", ex.getMessage());
         body.put("path", req.getServletPath());
         final ObjectMapper mapper = new ObjectMapper();
+        res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         mapper.writeValue(res.getOutputStream(), body);
-        res.setStatus(HttpServletResponse.SC_OK);
     }
 }

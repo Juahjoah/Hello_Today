@@ -32,11 +32,10 @@ public class FollowService {
 
     /**
      * 요청자를 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
-     * @param memberId 팔로워 목록 조회를 요청하는 사용자의 memberId
+     * @param member 팔로워 목록 조회를 요청하는 사용자
      * @return 요청자를 팔로우하고 있는 사용자 정보 목록
      */
-    public List<MemberResponseDto> getFollowers(int memberId) {
-        Member member = getMember(memberId);
+    public List<MemberResponseDto> getFollowers(Member member) {
 
         List<Follow> followers = followRepository.findAllByFollowing(member.getMemberId());
         return followers.stream()
@@ -52,11 +51,10 @@ public class FollowService {
 
     /**
      * 요청자가 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
-     * @param memberId 팔로잉 목록 조회를 요청하는 사용자의 memberId
+     * @param member 팔로잉 목록 조회를 요청하는 사용자
      * @return 요청자가 팔로우하고 있는 사용자 정보 목록
      */
-    public List<MemberResponseDto> getFollowings(int memberId) {
-        Member member = getMember(memberId);
+    public List<MemberResponseDto> getFollowings(Member member) {
 
         List<Follow> followings = followRepository.findAllByFollower(member.getMemberId());
         return followings.stream()
@@ -72,15 +70,15 @@ public class FollowService {
 
     /**
      * 팔로우를 등록하는 메서드
-     * @param followerId 팔로우 신청자의 memberId
+     * @param follower 팔로우 신청자
      * @param followSaveRequestDto 팔로우 할 대상의 memberId를 담는 Dto
      * @return 팔로우 정상 등록 시 followId, followerId, followingId를 리턴, 에러 시 에러코드와 메세지 리턴
      */
     @Transactional
-    public BaseResponseDto enrollFollow(int followerId, FollowSaveRequestDto followSaveRequestDto) {
+    public BaseResponseDto enrollFollow(Member follower, FollowSaveRequestDto followSaveRequestDto) {
+        int followerId = follower.getMemberId();
         memberValidator.checkDifferentMembers(followerId, followSaveRequestDto.getFollowingId());
 
-        Member follower = getMember(followerId);
         Member followee = getMember(followSaveRequestDto.getFollowingId());
 
         followValidator.checkFollowNotExist(followRepository, follower, followee);
@@ -100,15 +98,15 @@ public class FollowService {
 
     /**
      * 팔로우를 취소하는 메서드
-     * @param followerId 팔로우 취소를 요청하는 사용자의 memberId
+     * @param follower 팔로우 취소를 요청하는 사용자
      * @param followeeId 팔로우 취소 대상의 memberId
      * @return 팔로우 정상 취소 시 취소된 followId, followerId, followingId를 리턴, 에러 시 에러코드와 메세지 리턴
      */
     @Transactional
-    public BaseResponseDto deleteFollow(int followerId, int followeeId) {
+    public BaseResponseDto deleteFollow(Member follower, int followeeId) {
+        int followerId = follower.getMemberId();
         memberValidator.checkDifferentMembers(followerId, followeeId);
 
-        Member follower = getMember(followerId);
         Member followee = getMember(followeeId);
 
         Follow follow = followValidator.checkFollowExist(followRepository, follower, followee);
@@ -139,7 +137,7 @@ public class FollowService {
 
     private Member getMember(int memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
-        memberValidator.checkMember(member);
+        memberValidator.checkMember(member, memberId);
         return member.get();
     }
 }

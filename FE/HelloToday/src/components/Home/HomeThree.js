@@ -1,11 +1,12 @@
 import classes from "./HomeThree.module.css";
-import SelectRoutineList from "../common/SelectRoutineList";
+import SelectRoutineList from "../routine/SelectRoutineList";
 import { useEffect, useState } from "react";
 
-function HomeThree() {
+function HomeThree({ AllRoutineList }) {
   const [num, setNum] = useState(1);
+
   useEffect(() => {
-    if (num < 30) {
+    if (num < 26) {
       const interval = setInterval(() => {
         setNum((prevNum) => prevNum + 1);
       }, 50);
@@ -16,6 +17,8 @@ function HomeThree() {
     }
   }, [num]);
 
+  console.log(AllRoutineList);
+
   // 대분류 3가지
   const testList = [1, 2, 3];
 
@@ -25,8 +28,10 @@ function HomeThree() {
         <span className={classes.routineNum}>{num}</span>여종의{" "}
         <span className={classes.routineNumSelect}>루틴 선택</span> 가능{" "}
       </p>
-      {testList.map((List, index) => {
-        return <SelectRoutineList key={index} idx={index} />;
+      {AllRoutineList.map((bigRoutine, index) => {
+        return (
+          <SelectRoutineList key={index} idx={index} bigRoutine={bigRoutine} />
+        );
       })}
     </div>
   );
