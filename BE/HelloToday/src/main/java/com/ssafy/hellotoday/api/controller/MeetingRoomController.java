@@ -7,6 +7,7 @@ import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.service.MeetingRoomService;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.OpenviduService;
+import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,22 +56,37 @@ public class MeetingRoomController {
      * @return 방에 연결을 할 수 있는 토큰 리턴
      */
     @GetMapping("/{roomId}/connections")
-    public BaseResponseDto joinRoom(@PathVariable("roomId") int roomId) {
+    public BaseResponseDto joinRoom(@PathVariable("roomId") int roomId,
+                                    HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
         return openviduService.joinRoom(roomId);
     }
 
     @GetMapping("/list")
-    public List<MeetingRoomDto> roomList() {
+    public List<MeetingRoomDto> roomList(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
         return openviduService.roomList();
     }
 
     @GetMapping("/{roomId}/question")
-    public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId) {
+    public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId,
+                                       HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
         return meetingRoomService.getQuestion(roomId);
     }
 
     @DeleteMapping("/{roomId}")
-    public BaseResponseDto deleteConnection(@PathVariable("roomId") int roomId) {
-        return meetingRoomService.deleteConnection(roomId);
+    public BaseResponseDto deleteConnection(@PathVariable("roomId") int roomId,
+                                            HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
+        return openviduService.deleteConnection(roomId);
     }
 }
