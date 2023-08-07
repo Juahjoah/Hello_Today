@@ -18,6 +18,7 @@ public class MeetingRoomDto implements Serializable {
     private String name;
     private String description;
     private int memberLimit;
+    private int joinCnt;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;
 }
