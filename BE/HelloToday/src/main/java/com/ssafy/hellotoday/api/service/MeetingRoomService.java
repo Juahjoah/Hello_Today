@@ -52,13 +52,17 @@ public class MeetingRoomService {
         MeetingRoomQuestion question = meetingRoomQuestionRepository.findById(questionId)
                 .orElseThrow(() -> new IllegalArgumentException("질문 조회 실패"));
 
+        System.out.println(MeetingRoomQuestionResponseDto.builder()
+                .id(question.getQuestionId())
+                .content(question.getContent()));
         room.updateQuestion(question);
         return BaseResponseDto.builder()
                 .success(true)
                 .message("질문 조회 성공")
                 .data(MeetingRoomQuestionResponseDto.builder()
                         .id(question.getQuestionId())
-                        .content(question.getContent()))
+                        .content(question.getContent())
+                        .build())
                 .build();
     }
 
