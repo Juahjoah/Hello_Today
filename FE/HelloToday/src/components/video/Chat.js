@@ -43,6 +43,10 @@ function Chat({
     }
   };
 
+  const onClick = () => {
+    sendMessage();
+  };
+
   // 질문 test
 
   const sendQuestion = (Question) => {
@@ -148,7 +152,9 @@ function Chat({
           onKeyDown={keyPressHandler}
           className={classes.chatRoomInputSectionInput}
         />
-        <button className={classes.chatRoomInputSectionBtn}>GO</button>
+        <button onClick={onClick} className={classes.chatRoomInputSectionBtn}>
+          GO
+        </button>
       </div>
     </div>
   );

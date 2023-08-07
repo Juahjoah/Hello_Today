@@ -180,6 +180,7 @@ function GroupRoutine() {
       {/* 그룹 채팅방 섹션 */}
       <div className={classes.GroupRoomSection}>
         {groupRoomList.map((room) => {
+          console.log(room);
           return (
             <GroupRoom
               key={room.roomId}
@@ -189,6 +190,7 @@ function GroupRoutine() {
               roomId={room.roomId}
               sessionId={room.sessionId}
               memberLimit={room.memberLimit}
+              joinCnt={room.joinCnt}
               myUserName={myUserName}
             />
           );

@@ -9,12 +9,13 @@ function GroupRoom({
   roomId,
   sessionId,
   memberLimit,
+  joinCnt,
   myUserName,
 }) {
+  console.log(joinCnt);
+
   const API_URL = "http://localhost:8080";
   const navigate = useNavigate();
-
-  console.log(createdDate);
 
   const enterRoom = (sessionId, Token, roomId) => {
     navigate(`/${roomId}`, {
