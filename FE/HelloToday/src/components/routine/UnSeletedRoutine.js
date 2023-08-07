@@ -18,6 +18,7 @@ import MainBanner from "../common/MainBanner";
 function UnSelectedRoutine(props) {
   // state & data
   const API_URL = "https://i9b308.p.ssafy.io";
+  const LOCAL_URL = "http://localhost:8080"
   const location = useLocation();
   // const memberId = location.state.memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
@@ -69,8 +70,6 @@ function UnSelectedRoutine(props) {
   }, [dispatch]);
   //-----------------------------------여기까지
 
-
-
   // 루틴 제출 시 redirect
   if (redirectToAuth) {
     return <Navigate to="/selectmain" />;
@@ -91,7 +90,7 @@ function UnSelectedRoutine(props) {
 
   const submitSelectedRoutine = () => {
     axios({
-      url: `${API_URL}/api/routine/private`,
+      url: `${LOCAL_URL}/api/routine/private`,
       method: "post",
       data: {
         routineDetailDtoList: selectRoutineState,
@@ -103,7 +102,9 @@ function UnSelectedRoutine(props) {
 
     dispatch(haveRoutine(true));
     closeModal();
-    setRedirectToAuth(true);
+    // setRedirectToAuth(true);
+    // 메인으로 돌아가기
+    return <Navigate to="/selectmain" />;
   };
 
   // modal style

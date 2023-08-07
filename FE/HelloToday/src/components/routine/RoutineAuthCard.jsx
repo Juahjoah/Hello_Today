@@ -2,19 +2,19 @@ import classes from "./RoutineAuthCard.module.css";
 
 function RoutineAuthCard({
   routineDetailDto,
-  routineCheckDtoList
-  // content,
-  // routineId,
+  routineCheckDtoList,
+  handleAuthInfo, 
+  content,
+  routineId,
   // imgPath,
-  // handleModalOpen,
-  // handleAuthInfo,
+  handleModalOpen,
 }) {
   const selectRoutineImgPath = `images/Routine/${routineDetailDto.imgPath}`;
-
-  // const handleAuthButtonClick = () => {
-  //   handleAuthInfo({ routineId, content });
-  //   handleModalOpen(true);
-  // };
+  
+  const handleAuthButtonClick = () => {
+    handleAuthInfo({ routineId, content });
+    handleModalOpen(true);
+  };
 
   return (
     <div className={classes.routineAuthCard}>
@@ -38,9 +38,9 @@ function RoutineAuthCard({
         </p>
       </div>
       <div className={classes.routineAuthRight}>
-        <button className={classes.goToAuth} >
-        {/* <button className={classes.goToAuth} onClick={handleAuthButtonClick}> */}
-          인증하러가기
+        {/* <button className={classes.goToAuth} > */}
+        <button className={classes.goToAuth} onClick={handleAuthButtonClick}>
+          인증하러 가기
         </button>
       </div>
     </div>
