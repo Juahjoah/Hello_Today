@@ -1,6 +1,5 @@
 package com.ssafy.hellotoday.api.dto.meetingroom.request;
 
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

@@ -3,13 +3,11 @@ package com.ssafy.hellotoday.api.controller;
 import com.ssafy.hellotoday.api.dto.chat.ChatMessage;
 import com.ssafy.hellotoday.api.service.ChatService;
 import com.ssafy.hellotoday.common.util.chat.RedisPublisher;
-import com.ssafy.hellotoday.common.util.constant.MessageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Slf4j
