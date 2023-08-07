@@ -11,12 +11,21 @@ body {
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif; */
+  font-family: "TheJamsil5Bold";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "TheJamsil5Bold";
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/*캘린더 css 여기서 오버라이딩하기*/
+/* .fc-prev-button {
+  background-color: #9ec5fe;
+} */
+.btn-primary {
+  background-color: #ccaaff;
+  border: #ccaaff;
 }

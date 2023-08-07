@@ -57,16 +57,16 @@ public class Member extends BaseEntity {
     public void updateMemberInfo(MemberInfoUpdateRequestDto mypageUpdateRequestDto, FileDto fileDto) {
         this.nickname = mypageUpdateRequestDto.getNickname();
         this.stMsg = mypageUpdateRequestDto.getStMsg();
-        this.profileOriginalName = fileDto.getProfileOriginalName();
-        this.profilePath = fileDto.getProfilePath();
+        this.profileOriginalName = fileDto.getFileOriginalName();
+        this.profilePath = fileDto.getFilePath();
     }
     public void updateMemberInfo(MemberInfoUpdateRequestDto mypageUpdateRequestDto) {
         this.nickname = mypageUpdateRequestDto.getNickname();
         this.stMsg = mypageUpdateRequestDto.getStMsg();
     }
     public void updateMemberInfo(FileDto fileDto) {
-        this.profileOriginalName = fileDto.getProfileOriginalName();
-        this.profilePath = fileDto.getProfilePath();
+        this.profileOriginalName = fileDto.getFileOriginalName();
+        this.profilePath = fileDto.getFilePath();
     }
 
     //닉네임 수정
@@ -76,9 +76,8 @@ public class Member extends BaseEntity {
 
 
     public String getProfileImagePath() {
-        if(profileOriginalName == null) return null;
-        else if(profileOriginalName.contains("https://i9b308.p.ssafy.io/")) return profileOriginalName;
-
+        if(profilePath == null) return null;
+        else if(profilePath.contains("http://k.kakaocdn.net/")||profilePath.contains("pstatic.net/")) return profilePath;
         return ApplicationProperties.HOST_IMAGE_URL + "profile/" + profileOriginalName;
     }
 }

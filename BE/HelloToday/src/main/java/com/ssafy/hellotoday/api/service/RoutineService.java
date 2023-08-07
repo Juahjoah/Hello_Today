@@ -3,22 +3,24 @@ package com.ssafy.hellotoday.api.service;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
+import com.ssafy.hellotoday.api.dto.member.FileDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.*;
+import com.ssafy.hellotoday.common.exception.validator.RoutineValidator;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
+import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.routine.*;
-import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
+import com.ssafy.hellotoday.db.repository.routine.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -34,15 +36,16 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDe
 @Service
 @RequiredArgsConstructor
 @Transactional
+@EnableScheduling
 public class RoutineService {
-//    @Value("${image.path}")
-    private String uploadDir;
     private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
     private final RoutineCheckRepository routineCheckRepository;
-
+    private final FileUploadUtil fileUploadUtil;
+    private final RoutineTagRepository routineTagRepository;
+    private final RoutineValidator routineValidator;
 
     public List<RoutineDetailResponseDto> detailRoutine() {
         List<RoutineDetailResponseDto> list = new ArrayList<>();
@@ -84,6 +87,10 @@ public class RoutineService {
     }
 
     public BaseResponseDto makeRoutine(RoutineRequestDto routineRequestDto, Member member) {
+
+        // 현재 사용자가 진행하는 루틴이 있는지 확인하고 error;
+        routineValidator.checkPrivateRoutineExist(routineRepository, member);
+
         Routine routine = Routine.createRoutine(
                 member.getMemberId()
                 , LocalDateTime.now()
@@ -121,7 +128,7 @@ public class RoutineService {
     /**
      * 사용자가 진행중인 루틴이 있는지에 대한 activeFlag와 진행중인 루틴이 있으면 routineDetailCat에 대한 인증 내역들 반환
      *
-     * @param memberId
+     * @param member
      * @return
      */
     public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Member member) {
@@ -164,19 +171,34 @@ public class RoutineService {
         return routinePrivateCheckResponseDto;
     }
 
-    public void checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto) {
-        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckId(routineCheckRequestDto.getRoutineCheckDto().getRoutineCheckId());
+    public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto, Member findMember, MultipartFile file) {
+        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckIdAndCheckDaySeq(routineCheckRequestDto.getRoutineCheckId(),routineCheckRequestDto.getCheckDaySeq());
 
-//        try {
-//            MultipartFile file = routineCheckRequestDto.getRoutineCheckDto().getFile();
-//            String fullPath = uploadDir + routineCheckRequestDto.getRoutineCheckDto().getImgOriName();
-//
-//            file.transferTo(new File(fullPath));
-//            System.out.println(">>" + uploadDir);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+        if (findMember.getMemberId() != routineCheck.getRoutineDetailCat().getRoutine().getMember().getMemberId()) {
+            throw new IllegalArgumentException("잘못된 접근입니다");
+        }
 
-        routineCheck.update(routineCheckRequestDto);
+        if (file != null) {
+            FileDto fileDto = fileUploadUtil.uploadRoutineFile(file, routineCheck);
+            routineCheck.update(routineCheckRequestDto, fileDto);
+            routineCheck.getRoutineImagePath();
+        } else {
+            routineCheck.update(routineCheckRequestDto);
+        }
+
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message("루틴 인증 작성을 성공하셨습니다")
+                .data(RoutineCheckUpdateDto.builder()
+                        .routineCheck(routineCheck)
+                        .build())
+                .build();
+    }
+
+    public List<TagResponseDto> getTags() {
+        return routineTagRepository.findAll().stream()
+                .map(TagResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
