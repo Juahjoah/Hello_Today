@@ -26,12 +26,15 @@ function GroupRoutine() {
   const [memberCount, setMemberCount] = useState(2);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
+  // user Info
+  const nickName = localStorage.getItem("nickName");
+  // const memberId = localStorage.getItem("memberId");
 
   // Access Token
   const accessToken = useSelector((state) => state.authToken.accessToken);
 
-  const [myUserName, setMyUserName] = useState("홍길동");
-  // const roomId = "sessiontest9199191919191199";
+  const [myUserName, setMyUserName] = useState(nickName);
+
   const videoEnabled = true;
   const audioEnabled = true;
 
@@ -47,7 +50,14 @@ function GroupRoutine() {
   useEffect(() => {
     async function axiosGroupRoomList() {
       try {
-        const groupRoomResponse = await axios.get(`${API_URL}/api/rooms/list`);
+        const groupRoomResponse = await axios({
+          url: `${API_URL}/api/rooms/list`,
+          method: "get",
+          headers: {
+            Authorization: accessToken,
+          },
+        });
+
         setGroupRoomList(groupRoomResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -96,6 +106,8 @@ function GroupRoutine() {
         videoEnabled: videoEnabled,
         audioEnabled: audioEnabled,
         Token: Token,
+        accessToken: accessToken,
+        // memberId: memberId,
       },
     });
   };
@@ -192,6 +204,7 @@ function GroupRoutine() {
               memberLimit={room.memberLimit}
               joinCnt={room.joinCnt}
               myUserName={myUserName}
+              accessToken={accessToken}
             />
           );
         })}

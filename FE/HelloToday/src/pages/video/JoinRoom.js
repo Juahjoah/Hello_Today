@@ -27,8 +27,10 @@ function JoinRoom() {
   // session, state 선언
   const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState("");
+  // const [myMemberId, setMyMemberId] = useState(undefined);
   const [session, setSession] = useState(undefined);
   const [myRoomId, setMyRoomId] = useState(undefined);
+  const [myAccessToken, setMyAccessToken] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
@@ -43,13 +45,9 @@ function JoinRoom() {
   const roomTitle = location.state.roomTitle;
   const token = location.state.Token;
 
-  // 질문 test
-
-  // const [questionList, setQuestionList] = useState([]); // 질문리스트
-  // const [questionTurn, setQuestionTurn] = useState(null); // 질문 순서(index)
+  // 질문
   const [isQuestionClick, setIsQuestionClick] = useState(0); // 질문 버튼 클릭 여부
 
-  // TODO: maybe??
   const [question, setQuestion] = useState("");
 
   const isVideoOn = classNames({
@@ -82,6 +80,8 @@ function JoinRoom() {
     setVideoEnabled(location.state.videoEnabled);
     setAudioEnabled(location.state.audioEnabled);
     setMyRoomId(location.state.roomId);
+    setMyAccessToken(location.state.accessToken);
+    // setMyMemberId(location.state.memberId);
 
     // 윈도우 객체에 화면 종료 이벤트 추가
     window.addEventListener("beforeunload", onBeforeUnload);
@@ -99,11 +99,27 @@ function JoinRoom() {
     leaveSession();
   };
 
+  // 1명이 방안에 남았을 때, 세션 out 요청
+  const axiosSessionDelete = () => {
+    axios({
+      url: `http://localhost:8080/api/rooms/${myRoomId}`,
+      method: "delete",
+      headers: {
+        Authorization: myAccessToken,
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   // 세션 나가기
   const leaveSession = () => {
     if (session) {
       session.disconnect();
     }
+    // 위 함수 호출
+
+    axiosSessionDelete();
 
     // session, state 초기화
     setOV(null);
@@ -247,6 +263,9 @@ function JoinRoom() {
     axios({
       url: `http://localhost:8080/api/rooms/${myRoomId}/question`,
       method: "get",
+      headers: {
+        Authorization: myAccessToken,
+      },
     }).then((res) => {
       console.log(res.data.data.content);
       const question = res.data.data.content;
