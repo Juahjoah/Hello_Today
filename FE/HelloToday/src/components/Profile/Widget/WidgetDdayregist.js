@@ -6,6 +6,8 @@ import {
   SET_ISEDIT,
   SET_DDAY_DATA,
   ADD_DDAY_DATA,
+  SET_ISREGIST,
+  SET_ISEDITF,
 } from "../../../store/ddaySlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,6 +16,7 @@ function WidgetDdayregist() {
   const ddaydataId = useRef(0);
   const memberId = useParams().memberId; //url에서 param가져오기
   const dispatch = useDispatch();
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
 
   const ddaydata = useSelector((state) => state.dday.ddayData);
 
@@ -23,6 +26,8 @@ function WidgetDdayregist() {
     content: "",
   });
   const handleChangeState = (e) => {
+    // console.log(e.target.value);
+    // console.log(typeof e.target.value);
     setNewDday({
       ...newDday,
       [e.target.name]: e.target.value,
@@ -39,27 +44,31 @@ function WidgetDdayregist() {
     }
 
     //백에 연락 날리기
-    // const data = {
-    //   finalDate : ddayInput.finalDate,
-    //   content : ddayInput.content,
-    //   type : "1"
-    // }
-    // console.log(ddayInput);
-    // axios.post(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`,data)
-    // .then((res) => {
-    //   console.log(res)
-    // })
-    // .then((err) => {
-    //   console.log(err)
-    // })
-    alert("저장 성공");
-    //submit한 데이터 저장하기
-    dispatch(ADD_DDAY_DATA(newDday));
-    //버튼 누르면 초기화하기 위해
-    setNewDday({
-      finalDate: "",
-      content: "",
-    });
+    const data = {
+      finalDate: new Date(newDday.finalDate).toISOString(),
+      content: newDday.content,
+      type: "1",
+    };
+    console.log(newDday);
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`, data, {
+        headers: { Authorization: AccsesToken },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("저장 성공");
+        //submit한 데이터 저장하기
+        dispatch(ADD_DDAY_DATA(newDday));
+        //버튼 누르면 초기화하기 위해
+        dispatch(SET_ISREGIST(true));
+        setNewDday({
+          finalDate: "",
+          content: "",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -77,18 +86,18 @@ function WidgetDdayregist() {
       <div>
         <p className={classes.WidgetDday_txt}>이벤트 입력</p>
         <div className={classes.input_btn}>
-        <div className={classes.input}>
-          <input
-            type="text"
-            ref={ddaycontentinput}
-            name="content"
-            value={newDday.content}
-            onChange={handleChangeState}
-          ></input>
-        </div>
-        <div>
-          <button onClick={handleSubmit}>완료</button>
-        </div>
+          <div className={classes.input}>
+            <input
+              type="text"
+              ref={ddaycontentinput}
+              name="content"
+              value={newDday.content}
+              onChange={handleChangeState}
+            ></input>
+          </div>
+          <div>
+            <button onClick={handleSubmit}>완료</button>
+          </div>
         </div>
       </div>
     </div>

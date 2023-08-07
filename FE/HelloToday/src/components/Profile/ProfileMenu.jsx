@@ -10,7 +10,7 @@ import WidgetHistory from "./Widget/WidgetHistory";
 import WidgetGallery from "./Widget/WidgetGallery";
 import WidgetDday from "./Widget/WidgetDday";
 
-function ProfileMenu({ setMenu }) {
+function ProfileMenu({ setMenu, setFollowButtonClick }) {
   const MenuList = {
     "응원 메세지": <WidgetComments />,
     "단체 루틴을 함께한 사람": <WidgetGroupRoutine />,
@@ -23,8 +23,9 @@ function ProfileMenu({ setMenu }) {
   };
 
   const UserSelectMenu = (event) => {
-    console.log(event.target.innerText);
+    // console.log(event.target.innerText);
     setMenu(MenuList[event.target.innerText]);
+    setFollowButtonClick(false);
   };
 
   useEffect(() => {

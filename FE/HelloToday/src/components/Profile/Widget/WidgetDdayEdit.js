@@ -7,6 +7,7 @@ import {
   SET_DDAY_DATA,
   ADD_DDAY_DATA,
   SET_DDAYID,
+  SET_ISEDITF,
 } from "../../../store/ddaySlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,6 +24,7 @@ function WidgetDdayEdit() {
 
   //State 상태 변경
   const ddayid = useSelector((state) => state.dday.ddayID);
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
 
   const [newDday, setNewDday] = useState({
     finalDate: "",
@@ -52,32 +54,37 @@ function WidgetDdayEdit() {
     }
 
     //백에 연락 날리기
-    // const data = {
-    //   finalDate : ddayInput.finalDate,
-    //   content : ddayInput.content,
-    //   type : "1"
-    // }
-    // console.log(ddayInput);
-    // axios.post(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`,data)
-    // .then((res) => {
-    //   console.log(res)
-    // })
-    // .then((err) => {
-    //   console.log(err)
-    // })
-    alert("저장 성공");
-    //submit한 데이터 저장하기
-    const updatedDdayData = ddaydata.map((item) =>
-      item.ddayId === ddayid ? { ...item, ...newDday } : item
-    );
-    dispatch(SET_DDAY_DATA(updatedDdayData));
-    //버튼 누르면 초기화하기 위해
-    setNewDday({
-      finalDate: "",
-      content: "",
-    });
-    dispatch(SET_ISEDIT(false));
-    dispatch(SET_DDAYID(""));
+
+    const data = {
+      finalDate: new Date(newDday.finalDate).toISOString(),
+      content: newDday.content,
+      ddayId: ddayid,
+    };
+    console.log(newDday);
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`, data, {
+        headers: { Authorization: AccsesToken },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("저장 성공");
+        //submit한 데이터 저장하기
+        const updatedDdayData = ddaydata.map((item) =>
+          item.ddayId === ddayid ? { ...item, ...newDday } : item
+        );
+        dispatch(SET_DDAY_DATA(updatedDdayData));
+        //버튼 누르면 초기화하기 위해
+        setNewDday({
+          finalDate: "",
+          content: "",
+        });
+        dispatch(SET_ISEDIT(false));
+        dispatch(SET_DDAYID(""));
+        dispatch(SET_ISEDITF(true));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const handleCancle = () => {
     dispatch(SET_ISEDIT(false));
