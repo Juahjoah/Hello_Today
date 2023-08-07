@@ -23,7 +23,7 @@ public class RoutineCheckDto {
         this.routineDetailCatId = routineCheck.getRoutineDetailCat().getRoutineDetailCatId();
         this.checkDaySeq = routineCheck.getCheckDaySeq();
         this.content = routineCheck.getContent();
-        this.imgPath = routineCheck.getImgPath();
+        this.imgPath = routineCheck.getRoutineImagePath();
         this.imgOriName = routineCheck.getImgOriginalName();
         this.checkDate = routineCheck.getCheckDate();
     }

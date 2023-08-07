@@ -6,8 +6,11 @@ import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutinePrivateCheckResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.TagResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.RoutineService;
+import com.ssafy.hellotoday.common.exception.CustomException;
+import com.ssafy.hellotoday.db.entity.BaseEntity;
 import com.ssafy.hellotoday.db.entity.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,15 +18,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Tag(name = "Routine", description = "루틴 관련 API")
 @RequiredArgsConstructor
 @RestController
+@EnableScheduling
 @RequestMapping("/api/routine")
 public class RoutineController {
 
@@ -63,11 +70,30 @@ public class RoutineController {
 
         return new ResponseEntity<>(routineService.getPrivateRoutineCheck(member), HttpStatus.OK);
     }
-
+    @Operation(summary = "개인 루틴 인증 등록", description = "루틴인증(날짜(yyyy-MM-dd HH:mm:ss),내용,이미지(선택) 등록")
     @PutMapping("/private/check")
-    public void checkPrivateRoutine(@RequestBody RoutineCheckRequestDto routineCheckRequestDto) {
+    public BaseResponseDto checkPrivateRoutine(@RequestPart(name = "request") Optional<RoutineCheckRequestDto> routineCheckRequestDto,
+                                          @RequestParam(value = "file",required = false) MultipartFile file,
+                                          HttpServletRequest httpServletRequest) {
 
-        routineService.checkPrivateRoutine(routineCheckRequestDto);
+        RoutineCheckRequestDto routineCheckRequest = routineCheckRequestDto.orElse(null);
 
+        if (routineCheckRequest != null) {
+            routineCheckRequest.setFile(file);
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, -1, "필수(날짜,내용) 내용이 없습니다");
+        }
+
+        String token = httpServletRequest.getHeader("Authorization");
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+
+        return routineService.checkPrivateRoutine(routineCheckRequest,findMember,file);
+    }
+
+    @Operation(summary = "루틴 태그 조회", description = "모든 루틴 태그 조회 API")
+    @GetMapping("/tag")
+    public List<TagResponseDto> getTags() {
+        return routineService.getTags();
     }
 }

@@ -22,9 +22,9 @@
   width: 80%;
   height: 50vh;
   margin: auto;
-  margin-top: 170px;
+  margin-top: 80px;
   border: 1px solid rgba(131, 129, 129, 0.2);
-  border-radius: 20px;
+  border-radius: 12px;
   display: flex;
   background: rgb(255, 255, 255);
   background: linear-gradient(
@@ -44,12 +44,12 @@
 }
 
 .bannerLeftTitle {
-  font-size: 60px;
-  margin: 40px 0px;
+  font-size: 40px;
+  margin: 20px 0px;
 }
 
 .bannerLeftDescription {
-  font-size: 40px;
+  font-size: 25px;
 }
 
 .bannerRight {

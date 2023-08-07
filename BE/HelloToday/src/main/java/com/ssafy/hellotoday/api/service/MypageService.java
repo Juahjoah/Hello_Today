@@ -1,31 +1,47 @@
 package com.ssafy.hellotoday.api.service;
 
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.response.CheerMessageResponseDto;
+import com.ssafy.hellotoday.api.dto.mypage.response.*;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.response.DdayResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
-import com.ssafy.hellotoday.db.entity.mypage.DdayType;
+import com.ssafy.hellotoday.db.entity.routine.QRoutineCheck;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
+import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
+import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.querydsl.core.types.dsl.Expressions.stringPath;
+import static com.ssafy.hellotoday.db.entity.QMember.member;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutine.routine;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineCheck.routineCheck;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetail.routineDetail;
+import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDetailCat;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +51,9 @@ public class MypageService {
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
     private final RoutineRepository routineRepository;
+    private final RoutineCheckRepository routineCheckRepository;
+    private final JPAQueryFactory queryFactory;
+
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
         Member member = getMember(cheerMessageRequestDto.getMemberId());
 
@@ -110,7 +129,6 @@ public class MypageService {
                 .member(member)
                 .finalDate(ddayRequestDto.getFinalDate())
                 .content(ddayRequestDto.getContent())
-                .type(DdayType.valueOf(ddayRequestDto.getType()))
                 .build();
 
         ddayRepository.save(dday);
@@ -124,7 +142,6 @@ public class MypageService {
                         .content(dday.getContent())
                         .createdDate(dday.getCreatedDate())
                         .modifiedDate(dday.getModifiedDate())
-                        .type(String.valueOf(dday.getType()))
                         .build())
                 .build();
     }
@@ -144,7 +161,6 @@ public class MypageService {
                         .content(dday.getContent())
                         .createdDate(dday.getCreatedDate())
                         .modifiedDate(dday.getModifiedDate())
-                        .type(String.valueOf(dday.getType()))
                         .build())
                 .build();
     }
@@ -162,9 +178,7 @@ public class MypageService {
         return member.get();
     }
 
-
-    // 내가 진행한 루틴에 대한 routineDetail에 대한 정보
-    public List<RoutineResponseDto> getRoutineHistory(Integer memberId) {
+    public List<RoutineResponseDto> getCalendar(Integer memberId) {
 
         System.out.println("memberId: " + memberId);
         List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
@@ -172,6 +186,78 @@ public class MypageService {
         List<RoutineResponseDto> result = routineList.stream()
                 .map(routine -> new RoutineResponseDto(routine))
                 .collect(Collectors.toList());
+
+        return result;
+    }
+
+    public List<CalendarHistoryDetailResponseDto> getCalendarRoutineDetail(Integer memberId, LocalDate checkDate) {
+
+        List<CalendarHistoryDetailResponseDto> calendarDetailList = queryFactory
+                .select(Projections.constructor(CalendarHistoryDetailResponseDto.class
+                        , routineDetail.content
+                        , routineCheck.modifiedDate
+                        , routineCheck.imgPath
+                        , routineCheck.content))
+                .from(routineCheck)
+                .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+                .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
+                .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
+                .where(member.memberId.eq(memberId)
+                        .and(routineCheck.checkDate.between(checkDate.atStartOfDay(), checkDate.plusDays(1).atStartOfDay()))
+                )
+                .fetch();
+
+        return calendarDetailList;
+    }
+
+    public List<RoutineHistoryResponseDto> getRoutineHistory(Integer memberId, PageRequest pageRequest) {
+
+        // calendarHistory + 대표 이미지 사진
+        // 이미지가 있으면 우선으로 보이게 하도록 설정하는 Case문
+        List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
+        List<RoutineHistoryResponseDto> result = new ArrayList<>();
+
+        for (Routine routineItem : routineList) {
+            String imgPath = queryFactory.select(routineCheck.imgPath).from(routineCheck)
+                    .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+                    .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                    .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
+                    .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(routineCheck.imgPath.desc()).fetch().get(0);
+
+            result.add(RoutineHistoryResponseDto.builder()
+                            .startDate(routineItem.getStartDate())
+                            .endDate(routineItem.getEndDate())
+                            .imgPath(imgPath)
+                    .build());
+        }
+
+        return result;
+    }
+
+    public List<RoutineDetailHistoryResponseDto> getRoutineHistoryDetail(Integer routineId) {
+
+        // 일차별로 묶어서 routine_check 했던 것들 list로 반환함
+        List<RoutineDetailHistoryResponseDto> result = new ArrayList<>();
+
+        for (int i = 1; i < 8; i++) {
+            List<CalendarHistoryDetailResponseDto> routineDetailList = queryFactory.select(Projections.constructor(CalendarHistoryDetailResponseDto.class
+                            , routineDetail.content
+                            , routineCheck.modifiedDate
+                            , routineCheck.imgPath
+                            , routineCheck.content))
+                    .from(routineCheck)
+                    .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+                    .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                    .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
+                    .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
+                    .where(routine.routineId.eq(routineId)
+                            .and(routineCheck.checkDaySeq.eq(i))
+                            .and(routineCheck.checkDate.isNotNull()))
+                    .fetch();
+
+            result.add(new RoutineDetailHistoryResponseDto(i, routineDetailList));
+        }
 
         return result;
     }
