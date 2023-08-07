@@ -10,32 +10,32 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; //필요없는 것 같기도?
 import bootstrap5Plugin from "@fullcalendar/bootstrap5";
 
-import { events, setEvents } from "./event-utils"; //달력에 일정 데이터 import함
+// import { events, setEvents } from "./event-utils"; //달력에 일정 데이터 import함
 
 export function ProfileCalender() {
   const navigate = useNavigate();
 
   // API로 데이터 가져오기
   // nav에서 memberId 고정한 것 고쳐주기
-  // const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
   const memberId = useParams().memberId;
-  // console.log(memberId);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`)
-  //     .then((res) => {
-  //       const dbdata = res.data.map((item) => ({
-  //         id: item.routineId,
-  //         start: item.startDate,
-  //         end: item.endDate,
-  //         title: item.activeFlag,
-  //       }));
-  //       setEvents(dbdata);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  console.log(memberId);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`)
+      .then((res) => {
+        const dbdata = res.data.map((item) => ({
+          id: item.routineId,
+          start: item.startDate,
+          end: item.endDate,
+          title: item.activeFlag,
+        }));
+        setEvents(dbdata);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   //d-day추가하면 캘린더 데이터 수정해주기
 
   return (
