@@ -140,4 +140,22 @@ public class FollowService {
         memberValidator.checkMember(member, memberId);
         return member.get();
     }
+
+    public BaseResponseDto checkFollowStatus(int memberId) {
+        Optional<Follow> follow = followRepository.findByFollowing_MemberId(memberId);
+
+        if (follow.isPresent()) {
+            return BaseResponseDto.builder()
+                    .success(true)
+                    .message("팔로우 되어있는 상태입니다.")
+                    .data(true)
+                    .build();
+        } else {
+            return BaseResponseDto.builder()
+                    .success(true)
+                    .message("팔로우 되어있지 않은 상태입니다.")
+                    .data(true)
+                    .build();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import com.ssafy.hellotoday.api.dto.routine.request.RoutineRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineDetailResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutinePrivateCheckResponseDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineRecMentResponseDto;
+import com.ssafy.hellotoday.api.dto.routine.response.TagResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.RoutineService;
 import com.ssafy.hellotoday.common.exception.CustomException;
@@ -88,5 +89,11 @@ public class RoutineController {
 
 
         return routineService.checkPrivateRoutine(routineCheckRequest,findMember,file);
+    }
+
+    @Operation(summary = "루틴 태그 조회", description = "모든 루틴 태그 조회 API")
+    @GetMapping("/tag")
+    public List<TagResponseDto> getTags() {
+        return routineService.getTags();
     }
 }

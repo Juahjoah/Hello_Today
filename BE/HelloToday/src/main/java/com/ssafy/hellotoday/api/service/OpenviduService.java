@@ -5,6 +5,7 @@ import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.SessionInfo;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomOutResponse;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.exception.message.OpenviduErrorEnum;
 import com.ssafy.hellotoday.common.exception.validator.OpenviduValidator;
@@ -128,6 +129,36 @@ public class OpenviduService {
                     .code(8005)
                     .message("방 목록 조회에 실패했습니다: openvidu fetch 실패")
                     .build();
+        }
+    }
+
+    public BaseResponseDto deleteConnection(int roomId) {
+        MeetingRoom room = meetingRoomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("미팅룸 정보 조회에 실패했습니다."));
+
+        try {
+            openvidu.fetch();
+            Session session = openvidu.getActiveSession(room.getSessionId());
+            // 인원 수가 1이라면 세션까지 닫기
+            if (session.getActiveConnections().size() <= 1) {
+                session.close();
+                return BaseResponseDto.builder()
+                        .success(true)
+                        .message("미팅룸이 종료되었습니다.")
+                        .data(RoomOutResponse.builder().code(100).build())
+                        .build();
+            } else {
+                return BaseResponseDto.builder()
+                        .success(true)
+                        .message("미팅룸을 나갔습니다.")
+                        .data(RoomOutResponse.builder().code(200).build())
+                        .build();
+            }
+
+
+            // 아니라면 커넥션만 끊기
+        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
+            throw new RuntimeException(e);
         }
     }
 
