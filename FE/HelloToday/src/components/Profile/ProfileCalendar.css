@@ -1,0 +1,32 @@
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+  color: #ff6767 !important;
+}
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+  color: #568ddf !important;
+}
+
+.fc-button-primary {
+  background-color: #ccaaff !important;
+  border: #ccaaff !important;
+}
+/* .scrollbar {
+  width: 250px;
+  height: 250px;
+  overflow-y: scroll;
+} */
+.fc-today-button {
+  background-color: #ffd24c !important;
+}
+.fc-h-event {
+  background-color: #f9dd7c !important;
+  border: #f9dd7c !important;
+}
+.fc-toolbar-title {
+  /*제목*/
+  background-color: #ccaaff !important;
+  border: #ccaaff !important;
+  padding: 5px 20px 5px 20px;
+  border-radius: 15px;
+}

@@ -75,7 +75,10 @@ function MyProfile() {
     };
     if (window.confirm("정말로 탈퇴하시겠습니까?")) {
       try {
-        await axios.get(`${process.env.REACT_APP_BASE_URL}/api/test`, data);
+        await axios.delete(
+          `${process.env.REACT_APP_BASE_URL}/api/members/withdrawal`,
+          data
+        );
         //logoutpage 하기
         // store에 저장된 Access Token 정보를 삭제
         dispatch(DELETE_TOKEN());

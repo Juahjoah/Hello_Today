@@ -122,7 +122,7 @@ function WidgetDday() {
                 <div className={classes.routinediary} key={item.ddayId}>
                   <div className={classes.routineContentCenter}>
                     <p className={classes.routineContent}>
-                      {item.content} D-{item.calDate}
+                      {item.content} D{item.calDate}
                     </p>
 
                     <div className={classes.btn_edit_delete}>
