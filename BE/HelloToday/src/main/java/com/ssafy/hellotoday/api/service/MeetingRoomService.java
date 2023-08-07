@@ -2,6 +2,7 @@ package com.ssafy.hellotoday.api.service;
 
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomQuestionResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.MeetingRoom;
 import com.ssafy.hellotoday.db.entity.MeetingRoomQuestion;
@@ -55,7 +56,9 @@ public class MeetingRoomService {
         return BaseResponseDto.builder()
                 .success(true)
                 .message("질문 조회 성공")
-                .data(question)
+                .data(MeetingRoomQuestionResponseDto.builder()
+                        .id(question.getQuestionId())
+                        .content(question.getContent()))
                 .build();
     }
 
