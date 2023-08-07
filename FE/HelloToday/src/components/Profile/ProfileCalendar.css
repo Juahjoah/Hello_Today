@@ -1,4 +1,5 @@
-일요일 날짜 빨간색 .fc-day-sun a {
+/*일요일 날짜 빨간색*/
+.fc-day-sun a {
   color: #ff6767 !important;
 }
 /* 토요일 날짜 파란색 */
