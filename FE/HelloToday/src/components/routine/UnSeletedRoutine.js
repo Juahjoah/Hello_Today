@@ -13,6 +13,7 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { Splide } from "@splidejs/react-splide";
 import SelectRoutineItem from "./SelectRoutineItem";
 import NickNamePopup from "../PopUp/NickNamePopup";
+import MainBanner from "../common/MainBanner";
 
 function UnSelectedRoutine(props) {
   // state & data
@@ -33,6 +34,13 @@ function UnSelectedRoutine(props) {
 //   const [nickName, setNickName] = useState(location.state.nickName);
   // const [FirstLogin, setFirstLogin] = useState(true);
   const dispatch = useDispatch();
+  const routineSelectBannerImg = "main_banner_routineselect1";
+  const routineSelectMainBannerMents = [
+    "쉽지 않은 생활 습관 만들기",
+    "계획을 떠나 아예 뭘 해야할지 모르겠다구요?",
+    "결심했다는 마음이 중요한거예요 :)",
+  ];
+
 
   // 최초 렌더 시 루틴 데이터 받아오기
   useEffect(() => {
@@ -136,6 +144,10 @@ function UnSelectedRoutine(props) {
 
     return (
         <>
+        <MainBanner
+          bannerImg={routineSelectBannerImg}
+          bannerMent={routineSelectMainBannerMents}
+        />
         <div className={classes.routineSelectMain}>
           <div className={classes.test}>
             {AllRoutineList.map((bigRoutine, index) => {

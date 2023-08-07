@@ -41,6 +41,20 @@ function Nav() {
             개인 루틴
           </button>
         </Link>
+
+        {/* <Link to={PersonalRoutine}>
+          <button
+            onClick={() => {
+              if (isUserhaveRoutine) {
+                return;
+              }
+              dispatch(resetRoutine());
+            }}
+            className={classes.navLeftPersonal}
+          >
+            개인 루틴
+          </button>
+        </Link> */}
         <Link to="/GroupRoutine">
           <button
             onClick={() => {
@@ -78,7 +92,7 @@ function Nav() {
           />
         </div>
         <Link to="/logout">
-        <button className={classes.navRightLogout}>로그아웃</button>
+          <button className={classes.navRightLogout}>로그아웃</button>
         </Link>
       </div>
     </nav>
