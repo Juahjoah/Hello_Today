@@ -22,11 +22,12 @@ import allAuth from "../../components/User/allAuth";
 
 function RoutineSelectMain() {
   // state & data
-  const API_URL = "https://i9b308.p.ssafy.io";
+  // const API_URL = "https://i9b308.p.ssafy.io";
+  const API_URL = "http://localhost:8080";
   const location = useLocation();
   // const memberId = location.state.memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const isFirstLogin = location.state.isFirstLogin;
+  const isFirstLogin = location?.state?.isFirstLogin ?? false;
 
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
@@ -36,7 +37,7 @@ function RoutineSelectMain() {
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  const [nickName, setNickName] = useState(location.state.nickName);
+  const [nickName, setNickName] = useState(location?.state?.nickName ?? false);
   // const [FirstLogin, setFirstLogin] = useState(true);
   const dispatch = useDispatch();
 

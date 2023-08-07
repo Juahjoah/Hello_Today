@@ -46,23 +46,23 @@ function WidgetDday() {
 
   // 배열
   //axios로 불러오기
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${memberId}`)
-  //     .then((res) => {
-  //       console.log(res);
-  //       SET_DDAY_DATA(res.data);
-  //     })
-  //     .then((err) => {
-  //       console.log(err);
-  //     });
-  // });
-
   useEffect(() => {
-    dispatch(SET_DDAY_DATA(dummyList));
-    console.log(ddaydata);
-    console.log("다시 렌더링");
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${memberId}`)
+      .then((res) => {
+        console.log(res);
+        dispatch(SET_DDAY_DATA(res.data));
+      })
+      .then((err) => {
+        console.log(err);
+      });
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(SET_DDAY_DATA(dummyList));
+  //   console.log(ddaydata);
+  //   console.log("다시 렌더링");
+  // }, [dispatch]);
 
   const handleEditState = (target) => {
     //수정

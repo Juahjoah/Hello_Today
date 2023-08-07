@@ -39,27 +39,28 @@ function WidgetDdayregist() {
     }
 
     //백에 연락 날리기
-    // const data = {
-    //   finalDate : ddayInput.finalDate,
-    //   content : ddayInput.content,
-    //   type : "1"
-    // }
-    // console.log(ddayInput);
-    // axios.post(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`,data)
-    // .then((res) => {
-    //   console.log(res)
-    // })
-    // .then((err) => {
-    //   console.log(err)
-    // })
-    alert("저장 성공");
-    //submit한 데이터 저장하기
-    dispatch(ADD_DDAY_DATA(newDday));
-    //버튼 누르면 초기화하기 위해
-    setNewDday({
-      finalDate: "",
-      content: "",
-    });
+    const data = {
+      finalDate: newDday.finalDate,
+      content: newDday.content,
+      type: "1",
+    };
+    console.log(newDday);
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`, data)
+      .then((res) => {
+        console.log(res);
+        alert("저장 성공");
+        //submit한 데이터 저장하기
+        dispatch(ADD_DDAY_DATA(newDday));
+        //버튼 누르면 초기화하기 위해
+        setNewDday({
+          finalDate: "",
+          content: "",
+        });
+      })
+      .then((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -77,18 +78,18 @@ function WidgetDdayregist() {
       <div>
         <p className={classes.WidgetDday_txt}>이벤트 입력</p>
         <div className={classes.input_btn}>
-        <div className={classes.input}>
-          <input
-            type="text"
-            ref={ddaycontentinput}
-            name="content"
-            value={newDday.content}
-            onChange={handleChangeState}
-          ></input>
-        </div>
-        <div>
-          <button onClick={handleSubmit}>완료</button>
-        </div>
+          <div className={classes.input}>
+            <input
+              type="text"
+              ref={ddaycontentinput}
+              name="content"
+              value={newDday.content}
+              onChange={handleChangeState}
+            ></input>
+          </div>
+          <div>
+            <button onClick={handleSubmit}>완료</button>
+          </div>
         </div>
       </div>
     </div>
