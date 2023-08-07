@@ -4,6 +4,7 @@ import classes from "./MyProfile.module.css";
 
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileMain from "../../components/Profile/ProfileMain";
+import FollowButton from "../../components/Profile/FollowButton";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -110,6 +111,7 @@ function MyProfile() {
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
               <p>팔로잉/팔로워</p>
+              <FollowButton />
             </div>
             <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>
