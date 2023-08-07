@@ -8,8 +8,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function Home() {
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
+  const API_URL = "https://i9b308.p.ssafy.io";
+  // const API_URL = "http://localhost:8080";
   const [AllRoutineList, setAllRoutineList] = useState([]);
 
   useEffect(() => {
