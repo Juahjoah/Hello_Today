@@ -141,8 +141,8 @@ function RoutineSelectMain() {
     drag: "free",
     gap: "20px",
     focus: "center",
-    fixedWidth: "200px",
-    fixedHeight: "200px",
+    fixedWidth: "180px",
+    fixedHeight: "180px",
     arrows: false,
   };
 

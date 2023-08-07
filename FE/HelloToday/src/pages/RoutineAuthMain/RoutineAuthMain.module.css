@@ -28,6 +28,7 @@
   width: 70%;
   height: 3px;
   background-color: rgba(131, 129, 129, 0.2);
+  margin: auto;
 }
 
 .toGroupBanner {
@@ -208,6 +209,7 @@
   border: 1px solid rgba(131, 129, 129, 0.2);
   border-radius: 8px;
   outline: none;
+  font-size: 15px;
 }
 
 .uploadLabel {
@@ -216,7 +218,7 @@
   color: black;
   vertical-align: middle;
   cursor: pointer;
-  height: 20px;
+  height: 30px;
   margin-left: 10px;
   font-size: 15px;
   border-radius: 8px;
