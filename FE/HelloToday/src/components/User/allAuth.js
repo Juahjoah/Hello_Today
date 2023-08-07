@@ -33,15 +33,13 @@ const allAuth = (isAccess, dispatch) => {
     try {
       const res = await getAccessToken(refreshtoken, accessToken); //access 만료 유무
       console.log("성공");
-      console.log("access토큰이 만료되었나? ", res.data.status === 401);
-      if (res.data.status === 401) {
+    } catch (error) {
+      console.log("accessData함수 = ", error);
+      console.log("access토큰이 만료되었나? ", error.response.status === 401);
+      if (error.response.status === 401) {
         //access 만료 error 못 잡음
         await fetchData(refreshtoken);
       }
-    } catch (error) {
-      console.log("어세스 토큰 만료");
-      console.log(error);
-      await fetchData(refreshtoken);
     }
   };
   //함수 실제 실행
