@@ -111,8 +111,7 @@ function MyProfile() {
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
-              <FollowList />
-              <FollowButton />
+              <FollowButton user={user} />
             </div>
             <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>

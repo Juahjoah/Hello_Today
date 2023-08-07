@@ -7,6 +7,7 @@ import classNames from "classnames";
 function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
   // const API_URL = "https://i9b308.p.ssafy.io";
   const API_URL = "http://localhost:8080";
+
   const [userName, setUserName] = useState("");
   // 정규식 통과 검사(닉네임 형식)
   const [isUserName, setIsUserName] = useState(false);
@@ -104,21 +105,21 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "400px",
-      left: "600px",
-      right: "600px",
-      bottom: "400px",
-      border: "5px solid black",
-      borderRadius: "20px",
+      top: "200px",
+      left: "300px",
+      right: "300px",
+      bottom: "200px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
 
   return (
     <Modal style={modalStyle} isOpen={FirstLogin}>
       <div className={classes.nickNamePopup}>
-        <p className={classes.nickNamePopupTitle}>
+        <div className={classes.nickNamePopupTitle}>
           사용할 닉네임을 작성해주세요
-        </p>
+        </div>
         <div className={classes.nickNamePopupDesc}>
           <input
             type="text"
@@ -139,7 +140,7 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
             {checkUserNameMessage}
           </div>
         </div>
-        <div style={{ fontSize: "20px" }}>{userNameMessage}</div>
+        <div style={{ fontSize: "15px" }}>{userNameMessage}</div>
 
         {validUserName ? (
           <button className={validChange} onClick={changeNickName}>

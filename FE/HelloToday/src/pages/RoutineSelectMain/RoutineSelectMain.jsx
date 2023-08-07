@@ -37,8 +37,8 @@ function RoutineSelectMain() {
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  const [nickName, setNickName] = useState(location?.state?.nickName ?? false);
-  // const [FirstLogin, setFirstLogin] = useState(true);
+  const [nickName, setNickName] = useState(location?.state?.nickName ?? "user");
+
   const dispatch = useDispatch();
 
   // 최초 렌더 시 루틴 데이터 받아오기
@@ -127,12 +127,12 @@ function RoutineSelectMain() {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "300px",
-      left: "300px",
-      right: "300px",
-      bottom: "200px",
-      border: "5px solid black",
-      borderRadius: "20px",
+      top: "100px",
+      left: "100px",
+      right: "100px",
+      bottom: "100px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
 
@@ -141,8 +141,8 @@ function RoutineSelectMain() {
     drag: "free",
     gap: "20px",
     focus: "center",
-    fixedWidth: "250px",
-    fixedHeight: "250px",
+    fixedWidth: "180px",
+    fixedHeight: "180px",
     arrows: false,
   };
 
@@ -158,8 +158,8 @@ function RoutineSelectMain() {
           {AllRoutineList.map((bigRoutine, index) => {
             const bigRoutineMent = routineMent[index].content;
             return (
-              <div key={index}>
-                <p className={classes.bigRoutineMent}>{bigRoutineMent}</p>
+              <div key={index} style={{ marginTop: "30px" }}>
+                <div className={classes.bigRoutineMent}>{bigRoutineMent}</div>
                 <SelectRoutineList
                   bigRoutine={bigRoutine}
                   idx={index}
@@ -188,7 +188,9 @@ function RoutineSelectMain() {
             icon={faCircleXmark}
             className={classes.modalClose}
           />
-          <p>{nickName}님이 선택하신 루틴 입니다.</p>
+          <div className={classes.modalDescriptionTitle}>
+            {nickName}님이 선택하신 루틴 입니다.
+          </div>
           <Splide options={option}>
             {selectRoutineState.map((item, index) => {
               return (
@@ -202,10 +204,12 @@ function RoutineSelectMain() {
               );
             })}
           </Splide>
-          <p className={classes.modalDescriptionOne}>
+          <div className={classes.modalDescriptionOne}>
             해당 루틴은 7일간 진행됩니다.
-          </p>{" "}
-          <p>루틴이 제대로 선택되었는지, 확인해주세요!</p>
+          </div>{" "}
+          <div className={classes.modalDescriptionTwo}>
+            루틴이 제대로 선택되었는지, 확인해주세요!
+          </div>
           <div className="modalBtnSection">
             <button
               className={classes.routinSubmitModal}

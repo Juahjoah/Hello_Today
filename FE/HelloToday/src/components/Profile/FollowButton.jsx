@@ -13,7 +13,7 @@ function FollowButton(props) {
   const [Follow, setFollow] = useState([props.Follow]);
 
   const UserFollow = () => {
-    const FollowEndpoint = Follow ? "unfollow" : "follow";
+    const FollowEndpoint = Follow ? "False" : "True";
     axios
       .request({
         method: Follow ? "delete" : "post",
@@ -31,6 +31,25 @@ function FollowButton(props) {
         console.log(error);
       });
   };
+  // const UserFollow = () => {
+  //   const FollowEndpoint = Follow ? "False" : "True";
+  //   axios
+  //     .request({
+  //       method: Follow ? "delete" : "post",
+  //       url: `${baseURL}/api/follow`,
+  //       data: {
+  //         headers: { Authorization: AccsesToken },
+  //         body: { followingId: props.memberId },
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setFollow((Follow) => !Follow);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div className={classes.FollowButton}>

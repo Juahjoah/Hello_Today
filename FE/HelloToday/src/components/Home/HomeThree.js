@@ -17,11 +17,6 @@ function HomeThree({ AllRoutineList }) {
     }
   }, [num]);
 
-  console.log(AllRoutineList);
-
-  // 대분류 3가지
-  const testList = [1, 2, 3];
-
   return (
     <div className={classes.test}>
       <p className={classes.routineNumDescription}>

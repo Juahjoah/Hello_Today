@@ -27,6 +27,7 @@ export const getRefreshToken = async (refreshtoken_) => {
     //   `https://i9b308.p.ssafy.io/api/members/reissue`,
     //   data
     // );
+    console.log("requestAccessToken");
     return res;
   } catch (error) {
     console.log(error);
