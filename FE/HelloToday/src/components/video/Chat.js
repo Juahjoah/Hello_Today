@@ -104,7 +104,7 @@ function Chat({
   // 지금 전부다 홍길동이라 누가 치든 '나' 라고 나옴
   const renderNickname = (nickname) => {
     if (nickname === myUserName) {
-      return "나";
+      return `${nickname} (나)`;
     }
     return nickname;
   };

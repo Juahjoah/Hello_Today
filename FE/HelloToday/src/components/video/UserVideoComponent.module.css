@@ -14,3 +14,16 @@
   display: flex;
   justify-content: space-between;
 }
+
+.followBtn {
+  outline: none;
+  border: none;
+  background: rgba(250, 249, 252, 1);
+}
+
+.unfollowBtn {
+  outline: none;
+  border: none;
+  background: rgba(250, 249, 252, 1);
+  color: #a581cf;
+}

@@ -233,6 +233,9 @@ function JoinRoom() {
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: true, // Whether to mirror your local video or not
           });
+
+          // const videoElement = publisher.videoElement;
+          // videoElement.style.borderRadius = "10px";
           // Publish your stream ---
           session.publish(publisher);
           // Set the main video in the page to display our webcam and store our Publisher

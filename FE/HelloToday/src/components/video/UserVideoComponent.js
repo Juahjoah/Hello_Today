@@ -1,6 +1,9 @@
 import classes from "./UserVideoComponent.module.css";
 import OpenViduVideoComponent from "./OvVideo";
 import axios from "axios";
+import { FaUserPlus, FaUserCheck } from "react-icons/fa";
+import classNames from "classnames";
+import { useEffect, useState } from "react";
 
 function VideoComponent(props) {
   const API_URL = "http://localhost:8080";
@@ -12,6 +15,33 @@ function VideoComponent(props) {
     .clientData.nickName;
 
   const accessToken = props.accessToken;
+
+  // const [clickFollow, setClickFollow] = useState(false);
+  const [isFollow, setIsFollow] = useState(undefined);
+  console.log(isFollow, "===========================");
+
+  const followStyle = classNames({
+    [classes.followBtn]: !isFollow,
+    [classes.unfollowBtn]: isFollow,
+  });
+
+  useEffect(() => {
+    async function followCheckAxios() {
+      try {
+        const response = await axios.get(`${API_URL}/api/follow`, {
+          params: { memberId: memberId },
+          headers: { Authorization: accessToken },
+        });
+        console.log(response.data.data);
+        setIsFollow(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (!props.isMe) {
+      followCheckAxios();
+    }
+  }, []);
 
   // const tempData = props.streamManager.stream.connection.data;
   // console.log(tempData, typeof tempData, "tempdata.....................");
@@ -41,8 +71,21 @@ function VideoComponent(props) {
       data: JSON.stringify(requestData),
     })
       .then((res) => console.log(res.data))
-      .then(console.log("팔로우 성공!!!!!!!!"))
+      .then(setIsFollow(true))
       .catch((err) => console.log(err));
+  };
+
+  const unFollow = async () => {
+    try {
+      const response = await axios.delete(`${API_URL}/api/follow`, {
+        params: { target: memberId },
+        headers: { Authorization: accessToken },
+      });
+      console.log(response);
+      setIsFollow(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -52,7 +95,15 @@ function VideoComponent(props) {
           <OpenViduVideoComponent streamManager={props.streamManager} />
           <div className={classes.streamcomponentBottom}>
             <div>{nickName}</div>
-            {props.isMe ? null : <button onClick={follow}>Follow</button>}
+            {props.isMe ? null : isFollow ? (
+              <button onClick={unFollow} className={followStyle}>
+                <FaUserCheck />
+              </button>
+            ) : (
+              <button onClick={follow} className={followStyle}>
+                <FaUserPlus />
+              </button>
+            )}
           </div>
         </div>
       ) : null}

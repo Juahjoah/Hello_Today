@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function Home() {
+  // const API_URL = process.env.REACT_APP_API_URL;
+
   // const API_URL = "https://i9b308.p.ssafy.io";
   const API_URL = "http://localhost:8080";
   const [AllRoutineList, setAllRoutineList] = useState([]);
