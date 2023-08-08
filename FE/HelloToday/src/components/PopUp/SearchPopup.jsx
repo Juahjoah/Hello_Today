@@ -26,8 +26,8 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
   const [randomHashList, setRandomHashList] = useState([]); 
   const API_URL = "http://localhost:8080";
 
-  useEffect(async () => {
-    await tagAxios()
+  useEffect(() => {
+    tagAxios()
   },[])
 
   const keyPressHandler = (e) => {
@@ -56,7 +56,7 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
         const userListFromAPI = res.data; // API로부터 받아온 사용자 정보 리스트
         setUserList(userListFromAPI); 
 
@@ -64,9 +64,9 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
       .catch(console.log(userName));
   };
 
-  const tagAxios = () => {
+  const tagAxios = async () => {
 
-    axios({
+    await axios({
       url: `${API_URL}/api/routine/tag`,
       method: "get",
     })
@@ -100,8 +100,8 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
       left: "35vh",
       right: "35vh",
       bottom: "8vh",
-      border: "5px solid black",
-      borderRadius: "20px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
 

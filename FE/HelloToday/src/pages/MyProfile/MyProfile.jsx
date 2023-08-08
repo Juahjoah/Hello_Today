@@ -34,8 +34,8 @@ function MyProfile() {
   //-----------------------------------여기까지
 
   // api 요청 후 받아온 user 정보 (모듈화 진행)
-  const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
-  // const baseURL = "http://localhost:8080"; // 개발용
+  // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
+  const baseURL = "http://localhost:8080"; // 개발용
 
   const [user, setUser] = useState([]);
   const memberId = sessionStorage.getItem("memberId");
