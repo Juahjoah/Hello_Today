@@ -36,8 +36,8 @@ function GroupRoutine() {
 
   const [myUserName, setMyUserName] = useState(nickName);
 
-  const videoEnabled = true;
-  const audioEnabled = true;
+  const videoEnabled = false;
+  const audioEnabled = false;
 
   const [groupRoomList, setGroupRoomList] = useState([]);
 
