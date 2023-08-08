@@ -6,7 +6,8 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 
 function VideoComponent(props) {
-  const API_URL = "http://localhost:8080";
+  // const API_URL = "http://localhost:8080";
+  const API_URL = "https://i9b308.p.ssafy.io";
 
   const memberId = parseInt(
     JSON.parse(props.streamManager.stream.connection.data).clientData.memberId
