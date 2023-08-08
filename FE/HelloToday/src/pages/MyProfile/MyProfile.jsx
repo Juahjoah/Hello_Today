@@ -40,8 +40,6 @@ function MyProfile() {
   const params = useParams();
   const [user, setUser] = useState([]);
 
-  console.log(params);
-
   useEffect(() => {
     axios
       .get(`${baseURL}/api/mypage/${params.memberId}`, {
@@ -113,7 +111,7 @@ function MyProfile() {
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
               <FollowButton
-                memberId={user.memberId}
+                memberId={params.memberId}
                 setFollowButtonClick={setFollowButtonClick}
               />
             </div>
