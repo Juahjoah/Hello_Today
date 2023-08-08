@@ -26,8 +26,8 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
   const [randomHashList, setRandomHashList] = useState([]); 
   const API_URL = "http://localhost:8080";
 
-  useEffect(async () => {
-    await tagAxios()
+  useEffect(() => {
+    tagAxios()
   },[])
 
   const keyPressHandler = (e) => {
@@ -64,9 +64,8 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
       .catch(console.log(userName));
   };
 
-  const tagAxios = () => {
-
-    axios({
+  const tagAxios = async() => {
+    await axios({
       url: `${API_URL}/api/routine/tag`,
       method: "get",
     })

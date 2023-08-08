@@ -20,6 +20,7 @@ function Nav() {
   const dispatch = useDispatch();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const memberId = sessionStorage.getItem("memberId");
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -78,7 +79,7 @@ function Nav() {
             단체 루틴
           </button>
         </Link>
-        <Link to="/MyProfile">
+        <Link to={`/MyProfile/${memberId}`}>
           <button
             onClick={() => {
               if (isUserhaveRoutine) {
