@@ -4,9 +4,15 @@ import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 
-function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
-  const API_URL = "https://i9b308.p.ssafy.io";
-  // const API_URL = "http://localhost:8080";
+function NickNamePopup({
+  FirstLogin,
+  setFirstLogin,
+  Token,
+  setNickName,
+  memberId,
+}) {
+  // const API_URL = "https://i9b308.p.ssafy.io";
+  const API_URL = "http://localhost:8080";
 
   const [userName, setUserName] = useState("");
   // 정규식 통과 검사(닉네임 형식)
@@ -85,7 +91,11 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
       },
     })
       .then(setFirstLogin(false))
-      .then((res) => setNickName(res.data.data.nickname));
+      .then((res) => {
+        setNickName(res.data.data.nickname);
+        localStorage.setItem("nickName", res.data.data.nickname);
+        localStorage.setItem("memberId", memberId);
+      });
   };
 
   // modal style
