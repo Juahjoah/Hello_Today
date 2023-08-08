@@ -21,11 +21,3 @@ code {
     monospace;
 }
 
-/*캘린더 css 여기서 오버라이딩하기*/
-/* .fc-prev-button {
-  background-color: #9ec5fe;
-} */
-.btn-primary {
-  background-color: #ccaaff;
-  border: #ccaaff;
-}
