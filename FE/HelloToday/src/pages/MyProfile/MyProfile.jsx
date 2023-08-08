@@ -9,7 +9,7 @@ import FollowList from "../../components/Profile/FollowList";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import { useParams } from "react-router-dom";
 //로그인
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
@@ -34,26 +34,26 @@ function MyProfile() {
   //-----------------------------------여기까지
 
   // api 요청 후 받아온 user 정보 (모듈화 진행)
-  const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
-  // const baseURL = "http://localhost:8080"; // 개발용
+  // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
+  const baseURL = "http://localhost:8080"; // 개발용
 
+  const params = useParams();
   const [user, setUser] = useState([]);
-  const memberId = sessionStorage.getItem("memberId");
+
+  console.log(params);
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/mypage/${memberId}`, {
+      .get(`${baseURL}/api/mypage/${params.memberId}`, {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
         setUser(response.data);
-        sessionStorage.setItem(user, JSON.stringify(response.data));
         // console.log("user");
         // console.log(response.data);
       })
       .catch((error) => {
         // console.log(error);
-        sessionStorage.setItem(user, ["error"]);
       });
   }, []);
 
