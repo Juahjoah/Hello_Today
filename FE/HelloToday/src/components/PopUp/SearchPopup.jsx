@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 import classes from "./SearchPopup.module.css";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import SearchContent from "./SearchContent";
 import SearchHashTag from "./SearchHashTag";
@@ -17,18 +17,17 @@ function getRandomIndexes(totalLength, count) {
   return indexes;
 }
 
-
-function SearchPopup({isOpen,setIsPopupOpen}) {
+function SearchPopup({ isOpen, setIsPopupOpen }) {
   // const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 여부 상태 관리
   const [userName, setUserName] = useState("");
   const [userList, setUserList] = useState([]);
   // const [hashList, setHashList] = useState([]);
-  const [randomHashList, setRandomHashList] = useState([]); 
+  const [randomHashList, setRandomHashList] = useState([]);
   const API_URL = "http://localhost:8080";
 
-  useEffect(async () => {
-    await tagAxios()
-  },[])
+  useEffect(() => {
+    tagAxios();
+  }, []);
 
   const keyPressHandler = (e) => {
     if (e.key === "Enter") {
@@ -37,13 +36,13 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
   };
 
   const closePopup = () => {
-    setUserName("")
-    setUserList([])
+    setUserName("");
+    setUserList([]);
     setIsPopupOpen(false);
   };
 
   const searchAxios = () => {
-    if(userName==""){
+    if (userName == "") {
       alert("닉네임을 입력해주세요");
       return;
     }
@@ -52,31 +51,28 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
       method: "get",
       params: {
         key: "닉네임",
-        word:userName
+        word: userName,
       },
     })
       .then((res) => {
         console.log(res.data);
         const userListFromAPI = res.data; // API로부터 받아온 사용자 정보 리스트
-        setUserList(userListFromAPI); 
-
+        setUserList(userListFromAPI);
       })
       .catch(console.log(userName));
   };
 
-  const tagAxios = () => {
-
-    axios({
+  const tagAxios = async () => {
+    await axios({
       url: `${API_URL}/api/routine/tag`,
       method: "get",
-    })
-      .then((res2) => {
-        const allHashList = res2.data;
-        const randomIndexes = getRandomIndexes(allHashList.length, 8); // 8개의 무작위 인덱스를 얻음
-        const selectedHashList = randomIndexes.map(index => allHashList[index]); // 무작위 아이템 선택
-        setRandomHashList(selectedHashList);
-      })
-      // .catch(console.log(res2));
+    }).then((res2) => {
+      const allHashList = res2.data;
+      const randomIndexes = getRandomIndexes(allHashList.length, 8); // 8개의 무작위 인덱스를 얻음
+      const selectedHashList = randomIndexes.map((index) => allHashList[index]); // 무작위 아이템 선택
+      setRandomHashList(selectedHashList);
+    });
+    // .catch(console.log(res2));
   };
 
   // modal style
@@ -107,68 +103,54 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
 
   return (
     <div>
-      <Modal style={modalStyle} isOpen={isOpen} onRequestClose={() => closePopup()}>
+      <Modal
+        style={modalStyle}
+        isOpen={isOpen}
+        onRequestClose={() => closePopup()}
+      >
         <div className={classes.searchPopupHeader}>
-          <p className={classes.searchPopupTitle}>
-            검색창
-          </p>
+          <p className={classes.searchPopupTitle}>검색창</p>
         </div>
         <div className={classes.searchPopupBody}>
-        <div className={classes.searchPopupDesc}>
+          <div className={classes.searchPopupDesc}>
             <input
-            type="text"
-            className={classes.searchPopupDescInput}
-            placeholder="  닉네임을 입력해주세요"
-            value={userName}
-            onKeyDown={keyPressHandler}
-            onChange={(e) => setUserName(e.target.value)} // 입력 값이 변경될 때마다 상태 업데이트
+              type="text"
+              className={classes.searchPopupDescInput}
+              placeholder="  닉네임을 입력해주세요"
+              value={userName}
+              onKeyDown={keyPressHandler}
+              onChange={(e) => setUserName(e.target.value)} // 입력 값이 변경될 때마다 상태 업데이트
             />
-             <button className={classes.searchButton} onClick={searchAxios}>
+            <button className={classes.searchButton} onClick={searchAxios}>
               검색
             </button>
           </div>
           <div className={classes.searchHashTagForm}>
             {/* <div className={classes.searchHashTagFormTag}> */}
-          {randomHashList.map((tag, index) => (
-            <SearchHashTag
-              key={index}
-              content={tag.content}
-            />
-          ))}
-              <button className={classes.HashTagRe} onClick={tagAxios}>re</button>
-              
-              
-            {/* </div> */}
+            {randomHashList.map((tag, index) => (
+              <SearchHashTag key={index} content={tag.content} />
+            ))}
+            <button className={classes.HashTagRe} onClick={tagAxios}>
+              re
+            </button>
 
+            {/* </div> */}
           </div>
         </div>
         <div className={classes.searchPopupForm}>
-        {userList.map((user, index) => (
-          <SearchContent
-            key={index}
-            memberId={user.memberId}
-            profileImg={user.profile}
-            nickname={user.nickname}
-            tagList={user.tagList}
-          />
-        ))}
+          {userList.map((user, index) => (
+            <SearchContent
+              key={index}
+              memberId={user.memberId}
+              profileImg={user.profile}
+              nickname={user.nickname}
+              tagList={user.tagList}
+            />
+          ))}
         </div>
       </Modal>
     </div>
   );
 }
 
-
 export default SearchPopup;
-
-
-
-
-
-
-
-
-
-
-
-
