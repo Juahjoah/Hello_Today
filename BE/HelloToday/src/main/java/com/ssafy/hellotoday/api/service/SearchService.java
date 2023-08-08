@@ -5,6 +5,7 @@ import com.ssafy.hellotoday.common.exception.validator.SearchValidator;
 import com.ssafy.hellotoday.common.util.constant.SearchKeyEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
+import com.ssafy.hellotoday.db.repository.querydsl.SearchQueryDslRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,30 +16,33 @@ import java.util.stream.Collectors;
 @Service
 public class SearchService {
     private final MemberRepository memberRepository;
+    private final SearchQueryDslRepository searchQueryDslRepository;
     private final SearchValidator searchValidator;
 
     public List<SearchResponseDto> search(String key, String word) {
-        List<Member> results;
+        List<Member> members;
         searchValidator.validKey(key);
-        searchValidator.validateWord(word);
-
+        List<SearchResponseDto> res;
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
-            results = memberRepository.findByNicknameContaining(word);
+            searchValidator.validateWordString(word);
+            members = memberRepository.findByNicknameContaining(word);
+        } else {
+            searchValidator.validateWordNum(word);
+            members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
         }
-        else {
-            results = findByTag(word);
-        }
+        res = searchQueryDslRepository.findMembersWithRoutinTagByMemberIds(members.stream()
+                .map(Member::getMemberId).collect(Collectors.toList()));
+        transferProfilePath(res);
 
-        // 조회 결과가 없을 때 처리 필요
-
-        return results.stream().map(member -> SearchResponseDto.builder()
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .build()).collect(Collectors.toList());
+        return res;
     }
 
-    private List<Member> findByTag(String word) {
-        return null;
+    private void transferProfilePath(List<SearchResponseDto> res) {
+        for (SearchResponseDto searchResponseDto : res) {
+            Member member = memberRepository
+                    .findById(searchResponseDto.getMemberId())
+                    .orElseThrow(() -> new IllegalArgumentException("멤버 조회 에러"));
+            searchResponseDto.setProfile(member.getProfileImagePath());
+        }
     }
-
 }

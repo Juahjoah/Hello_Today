@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class CheerMessageResponseDto {
+    private Integer messageId;
     private Integer writerId;
     private Integer memberId;
     private LocalDateTime createdDate;
@@ -15,7 +16,8 @@ public class CheerMessageResponseDto {
     private String content;
 
     @Builder
-    public CheerMessageResponseDto(Integer writerId, Integer memberId, LocalDateTime createdDate, LocalDateTime modifiedDate, String content) {
+    public CheerMessageResponseDto(Integer messageId, Integer writerId, Integer memberId, LocalDateTime createdDate, LocalDateTime modifiedDate, String content) {
+        this.messageId = messageId;
         this.writerId = writerId;
         this.memberId = memberId;
         this.createdDate = createdDate;
@@ -24,6 +26,7 @@ public class CheerMessageResponseDto {
     }
 
     public CheerMessageResponseDto(CheerMessage cheerMessage) {
+        this.messageId = cheerMessage.getCheerMessageId();
         this.writerId = cheerMessage.getWriter().getMemberId();
         this.memberId = cheerMessage.getMember().getMemberId();
         this.createdDate = cheerMessage.getCreatedDate();

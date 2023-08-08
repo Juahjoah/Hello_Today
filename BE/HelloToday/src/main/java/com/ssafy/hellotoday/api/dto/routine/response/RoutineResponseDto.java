@@ -1,15 +1,10 @@
 package com.ssafy.hellotoday.api.dto.routine.response;
 
-import com.ssafy.hellotoday.api.dto.routine.RoutineDetailCatDto;
-import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
-import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public class RoutineResponseDto {
