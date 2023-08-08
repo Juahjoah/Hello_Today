@@ -9,6 +9,14 @@ const SearchContent = ({ profileImg, nickname, tagList,memberId }) => {
         textDecoration: "none", // 밑줄 없애기
         color: "inherit", // 부모 요소의 글자색 사용
       };
+
+    const taglistSET = []
+
+    for (let i=0; i < tagList.length; i++) {
+      taglistSET.push(tagList[i].content); 
+    }
+
+    const tagContent=[...new Set(taglistSET)];
     
     return (
         <Link to={`/MyProfile/${memberId}`}  style={linkStyle}>
@@ -18,9 +26,9 @@ const SearchContent = ({ profileImg, nickname, tagList,memberId }) => {
           <div className={classes.searchLeftItem}>
             <p className={classes.searchLeftNickname}>{nickname}</p>
             <div className={classes.HashTagItem}>
-            {tagList.map((tag, index) => (
+            {tagContent.map((tag, index) => (
                 <p key={index} className={classes.searchLeftHashTag}>
-                  #{tag.content}
+                  #{tag}
                 </p>
               ))}
             </div>

@@ -26,7 +26,7 @@ public class SearchQueryDslRepository {
     public List<SearchResponseDto> findMembersWithRoutinTagByMemberIds(List<Integer> memberIds) {
         return queryFactory.selectFrom(member)
                 .leftJoin(routine).on(member.memberId.eq(routine.member.memberId))
-                .innerJoin(routineDetailCat).on(routine.routineId.eq(routineDetailCat.routine.routineId))
+                .leftJoin(routineDetailCat).on(routine.routineId.eq(routineDetailCat.routine.routineId))
                 .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
                 .leftJoin(routineTag).on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
                 .where(member.memberId.in(memberIds))

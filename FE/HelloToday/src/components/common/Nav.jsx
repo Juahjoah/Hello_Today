@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classes from "./Nav.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { resetRoutine } from "../../store/SelectRoutineSlice";
@@ -18,9 +18,9 @@ function Nav() {
   const PersonalRoutine = isUserhaveRoutine ? "/selectmain" : "/unselectmain";
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   const memberId = sessionStorage.getItem("memberId");
 
   const openPopup = () => {
@@ -53,6 +53,20 @@ function Nav() {
             개인 루틴
           </button>
         </Link>
+
+        {/* <Link to={PersonalRoutine}>
+          <button
+            onClick={() => {
+              if (isUserhaveRoutine) {
+                return;
+              }
+              dispatch(resetRoutine());
+            }}
+            className={classes.navLeftPersonal}
+          >
+            개인 루틴
+          </button>
+        </Link> */}
         <Link to="/GroupRoutine">
           <button
             onClick={() => {
