@@ -4,6 +4,7 @@ import com.ssafy.hellotoday.api.dto.follow.request.FollowSaveRequestDto;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.follow.response.FollowResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
+import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.exception.validator.FollowValidator;
 import com.ssafy.hellotoday.common.exception.validator.MemberValidator;
 import com.ssafy.hellotoday.common.util.constant.FollowResponseEnum;
@@ -13,6 +14,7 @@ import com.ssafy.hellotoday.db.repository.FollowRepository;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -142,6 +144,11 @@ public class FollowService {
     }
 
     public BaseResponseDto checkFollowStatus(int memberId) {
+        memberRepository.findById(memberId).orElseThrow(() -> CustomException.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .code(5005)
+                .message("memberId " + memberId + "에 해당하는 사용자가 없습니다.")
+                .build());
         Optional<Follow> follow = followRepository.findByFollowing_MemberId(memberId);
 
         if (follow.isPresent()) {
@@ -154,7 +161,7 @@ public class FollowService {
             return BaseResponseDto.builder()
                     .success(true)
                     .message("팔로우 되어있지 않은 상태입니다.")
-                    .data(true)
+                    .data(false)
                     .build();
         }
     }
