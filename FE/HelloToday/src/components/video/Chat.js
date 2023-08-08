@@ -28,10 +28,6 @@ function Chat({
     });
   }, []);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messageList]);
-
   // 아래는 메세지 보내는 것 관련 -----------------------------
   const messageChangeHandler = (e) => {
     setMessage(e.target.value);
@@ -105,23 +101,27 @@ function Chat({
     setMessage("");
   };
 
+  // 지금 전부다 홍길동이라 누가 치든 '나' 라고 나옴
+  const renderNickname = (nickname) => {
+    if (nickname === myUserName) {
+      return `${nickname} (나)`;
+    }
+    return nickname;
+  };
+
   const scrollToBottom = () => {
     if (chatScroll.current) {
-      chatScroll.current.scrollTop = chatScroll.current.scrollHeight;
+      chatScroll.current.scrollToBottom();
     }
   };
 
-  // 지금 전부다 홍길동이라 누가 치든 '나' 라고 나옴
-  // const renderNickname = (nickname) => {
-  //   if (nickname === myUserName) {
-  //     return "나";
-  //   }
-  //   return nickname;
-  // };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList]);
 
   return (
     <div className={classes.chatRoom}>
-      <Scrollbars>
+      <Scrollbars ref={chatScroll} autoHide={false} autoHideTimeout={1000}>
         <div className={classes.chatRoomTop}>
           <div ref={chatScroll} className={classes.chatRoomLog}>
             {messageList.map((data, i) => (
@@ -134,7 +134,10 @@ function Chat({
                 }
               >
                 <div>
-                  <div className={classes.writer}> {data.nickname} : </div>
+                  <div className={classes.writer}>
+                    {" "}
+                    {renderNickname(data.nickname)} :{" "}
+                  </div>
                 </div>
                 <div>
                   <p className={classes.content}>{data.message}</p>
