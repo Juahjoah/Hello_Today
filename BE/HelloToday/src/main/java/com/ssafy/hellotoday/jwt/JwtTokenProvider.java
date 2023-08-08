@@ -1,6 +1,5 @@
 package com.ssafy.hellotoday.jwt;
 
-import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.Social;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
@@ -9,13 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -78,8 +75,7 @@ public class JwtTokenProvider {
     }
 
     public String getUserPk(String token) {
-        String id = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        return id ;
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     public String getUserId(String token) {
@@ -98,7 +94,6 @@ public class JwtTokenProvider {
 
     }
 
-
     public void storeRefreshToken(int id, String refreshToken) {
         Member member = memberRepository.findById(id).orElse(null);
         if (member != null) {
@@ -109,10 +104,9 @@ public class JwtTokenProvider {
                     TimeUnit.MILLISECONDS
 
             );
-        } else {
-
         }
     }
+
     public boolean validateToken(String jwtToken) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);

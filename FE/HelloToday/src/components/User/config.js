@@ -7,7 +7,7 @@ const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKA
 
 const NAVER_CLIENT_ID = "mnX6BbAZD4pm3XzHHq7K";
 const NAVER_REDIRECT_URI =
-  "http://i9b308.p.ssafy.io:3000/login/oauth2/code/naver";
+  "http://localhost:3000/login/oauth2/code/naver";
 const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}`;
 
 export { KAKAO_AUTH_URL, NAVER_AUTH_URL };

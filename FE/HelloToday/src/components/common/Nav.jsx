@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classes from "./Nav.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { resetRoutine } from "../../store/SelectRoutineSlice";
@@ -18,8 +18,11 @@ function Nav() {
   const PersonalRoutine = isUserhaveRoutine ? "/selectmain" : "/unselectmain";
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const memberId = sessionStorage.getItem("memberId");
+
   const memberId = sessionStorage.getItem("memberId");
 
   const openPopup = () => {
@@ -103,7 +106,7 @@ function Nav() {
             onClick={openPopup} // <input> 클릭 시 모달 열기
           />
         </div>
-        {<SearchPopup isOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen}/>}
+        {<SearchPopup isOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />}
         <Link to="/logout">
           <button className={classes.navRightLogout}>로그아웃</button>
         </Link>

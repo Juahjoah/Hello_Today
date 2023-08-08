@@ -15,6 +15,7 @@ import {
 } from "react-icons/bs";
 
 import { MdQuestionAnswer } from "react-icons/md";
+import LeftsideRoomInfoTime from "../../components/video/LeftsideRoomInfoTime";
 
 // 세션 입장
 function JoinRoom() {
@@ -45,6 +46,8 @@ function JoinRoom() {
   // 새로운 OpenVidu 객체 생성
   const [OV, setOV] = useState(<OpenVidu />);
   // const OV = new OpenVidu();
+
+  // roomTitle??
   const roomTitle = location.state.roomTitle;
   const token = location.state.Token;
 
@@ -299,7 +302,10 @@ function JoinRoom() {
                 <div className={classes.leftsideRoomInfoTitle}>
                   {roomTitle ?? "roomTitle"}
                 </div>
-                <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div>
+                {/* <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div> */}
+                <div className={classes.leftsideRoomInfoTime}>
+                  <LeftsideRoomInfoTime />
+                </div>
               </div>
               <div className={classes.divideline}></div>
               <div className={classes.leftsideRoomUsers}>
