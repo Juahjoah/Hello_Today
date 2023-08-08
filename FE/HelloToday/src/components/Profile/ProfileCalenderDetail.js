@@ -14,52 +14,63 @@ function ProfileCalenderDetail() {
   //데이터 불러오기
   //d-day도 달력에 들어가면 기존 불러오는 데이터에 push해서 변화하면 데이터 변경하게 해야함
 
-  const calDetails = [
-    {
-      routineContent: "운동하기",
-      writeDate: "2023-08-07",
-      imgPath: "/images/Delete/강쥐.jpg",
-      content: "여러분의 루틴을 일주일 간 함께해요!",
-    },
-    {
-      routineContent: "책 읽기",
-      writeDate: "2023-08-07",
-      imgPath: "/images/Delete/계란.jpg",
-      content: "매주 월요일의 시작",
-    },
-    {
-      routineContent: "물마시기",
-      writeDate: "2023-08-07",
-      imgPath: "/images/Delete/라이언.jpg",
-      content: "껄껄껄껄",
-    },
-    {
-      routineContent: "물마시기",
-      writeDate: "2023-08-07",
-      imgPath: "",
-      content: "껄껄껄껄",
-    },
-  ];
-  // const [calDetails, setCalDetail] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}/${checkDate}`
-  //     )
-  //     .then((res) => {
-  //       setCalDetail(res.data);
-  //       console.log(res.data);
-  //       console.log("ok");
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-  //이미지 없는 경우도 생각하기
+  // const calDetails = [
+  //   {
+  //     routineContent: "운동하기",
+  //     writeDate: "2023-08-07",
+  //     imgPath: "/images/Delete/강쥐.jpg",
+  //     content: "여러분의 루틴을 일주일 간 함께해요!",
+  //   },
+  //   {
+  //     routineContent: "책 읽기",
+  //     writeDate: "2023-08-07",
+  //     imgPath: "/images/Delete/계란.jpg",
+  //     content: "매주 월요일의 시작",
+  //   },
+  //   {
+  //     routineContent: "물마시기",
+  //     writeDate: "2023-08-07",
+  //     imgPath: "/images/Delete/라이언.jpg",
+  //     content: "껄껄껄껄",
+  //   },
+  //   {
+  //     routineContent: "물마시기",
+  //     writeDate: "2023-08-07",
+  //     imgPath: "",
+  //     content: "껄껄껄껄",
+  //   },
+  // ];
+  const [calDetails, setCalDetail] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}/${checkDate}`
+      )
+      .then((res) => {
+        const formattedData = res.data.map((item) => {
+          const date = new Date(item.writeDate);
+          const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+            .toString()
+            .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+
+          return {
+            ...item,
+            writeDate: formattedDate,
+          };
+        });
+
+        setCalDetail(formattedData);
+        console.log(res.data);
+        console.log("ok");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <div className={classes.calDetailContain}>
       <div className={classes.calDetailContent}>
-        <p>{calDetails[0].writeDate}</p>
+        <p>{calDetails.length > 0 ? calDetails[0].writeDate : ""}</p>
         <hr />
         <div>
           {calDetails.map((item, index) => {

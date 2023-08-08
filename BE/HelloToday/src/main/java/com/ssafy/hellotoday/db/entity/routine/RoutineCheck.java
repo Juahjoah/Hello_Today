@@ -51,18 +51,6 @@ public class RoutineCheck extends BaseEntity {
                 .build();
     }
 
-    @Override
-    public String toString() {
-        return "RoutineCheck{" +
-                "routineCheckId=" + routineCheckId +
-                ", routineDetailCat=" + routineDetailCat.getRoutineDetailCatId() +
-                ", checkDaySeq=" + checkDaySeq +
-                ", content='" + content + '\'' +
-                ", imgPath='" + imgPath + '\'' +
-                ", imgOriginalName='" + imgOriginalName + '\'' +
-                '}';
-    }
-
     public void update(RoutineCheckRequestDto routineCheckRequestDto, FileDto fileDto) {
         this.content = routineCheckRequestDto.getContent();
         this.imgPath = fileDto.getFilePath();

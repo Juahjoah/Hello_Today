@@ -45,7 +45,7 @@ public class MypageController {
     public MemberInfoResponseDto defaultMemberInfo(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token==null) return null;
+        if (token == null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
@@ -61,33 +61,35 @@ public class MypageController {
         return memberService.getDetailMemberInfo(memberId);
 
     }
+
     //마이페이지 편집 모드
     @Operation(summary = "마이페이지 위젯 사용 여부 조회", description = "마이페이지 위젯 사용 여부를 알 수 있다(0:미사용.1:사용)")
     @GetMapping("/widget")
     public ShowInfoFlagsResponseDto myPageWidgetInfo(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token == null) return null;
-
         Member findMember = memberService.findMemberByJwtToken(token);
 
         return memberService.getWidgetInfo(findMember);
     }
+
     @Operation(summary = "위젯 선택", description = "사용할려는 위젯 사용여부 업데이트")
     @PutMapping("/widget")
-    public BaseResponseDto editWidget(@RequestBody ShowInfoEditRequestDto showInfoEditRequestDto, HttpServletRequest httpServletRequest) {
+    public BaseResponseDto editWidget(@RequestBody ShowInfoEditRequestDto showInfoEditRequestDto,
+                                      HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
-        if (token==null) return null;
-
         Member findMember = memberService.findMemberByJwtToken(token);
 
 
-        return memberService.editShowInfo(findMember,showInfoEditRequestDto);
+        return memberService.editShowInfo(findMember, showInfoEditRequestDto);
     }
+
     @Operation(summary = "응원 메시지 조회", description = "마이페이지 내이 있는 전체 응원 메시지 조회<br>" +
-                                                        "page: 조회 페이지 번호(0부터 시작), size: 한 페이지 당 보일 개수")
+            "page: 조회 페이지 번호(0부터 시작), size: 한 페이지 당 보일 개수")
     @GetMapping("/cheermsg/{memberId}")
-    public List<CheerMessageResponseDto> getCheerMessages(@PathVariable Integer memberId, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    public List<CheerMessageResponseDto> getCheerMessages(@PathVariable Integer memberId,
+                                                          @RequestParam("page") Integer page,
+                                                          @RequestParam("size") Integer size) {
 
         PageRequest pageRequest = PageRequest.of(page, size);
         return mypageService.getCheerMessages(memberId, pageRequest);
@@ -95,7 +97,8 @@ public class MypageController {
 
     @Operation(summary = "응원 메시지 작성", description = "마이페이지 안에 있는 응원 메시지 작성 API")
     @PostMapping("/cheermsg")
-    public BaseResponseDto writeCheerMessage(HttpServletRequest httpServletRequest, @RequestBody CheerMessageRequestDto cheerMsgRequestDto) {
+    public BaseResponseDto writeCheerMessage(HttpServletRequest httpServletRequest,
+                                             @RequestBody CheerMessageRequestDto cheerMsgRequestDto) {
 
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
@@ -105,7 +108,8 @@ public class MypageController {
 
     @Operation(summary = "응원 메시지 수정", description = "마이페이지 안에 있는 응원 메시지 수정 API")
     @PutMapping("/cheermsg")
-    public BaseResponseDto modifyCheerMessage(HttpServletRequest httpServletRequest, @RequestBody CheerMessageModifyRequestDto cheerMessageRequestDto) {
+    public BaseResponseDto modifyCheerMessage(HttpServletRequest httpServletRequest,
+                                              @RequestBody CheerMessageModifyRequestDto cheerMessageRequestDto) {
 
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
@@ -115,8 +119,11 @@ public class MypageController {
 
     @Operation(summary = "응원 메시지 삭제", description = "마이페이지 안에 있는 응원 메시지 삭제 API")
     @DeleteMapping("/cheermsg/{cheerMessageId}")
-    public BaseResponseDto deleteCheerMessage(@PathVariable Integer cheerMessageId) {
-        return mypageService.deleteCheerMessage(cheerMessageId);
+    public BaseResponseDto deleteCheerMessage(@PathVariable Integer cheerMessageId,
+                                              HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        return mypageService.deleteCheerMessage(member.getMemberId(), cheerMessageId);
     }
 
     @Operation(summary = "디데이 조회", description = "마이페이지 안에 있는 D-day 조회 API")
@@ -127,7 +134,8 @@ public class MypageController {
 
     @Operation(summary = "디데이 작성", description = "마이페이지 안에 있는 D-day 작성 API")
     @PostMapping("/dday")
-    public BaseResponseDto writeDday(HttpServletRequest httpServletRequest, @RequestBody DdayRequestDto ddayRequestDto) {
+    public BaseResponseDto writeDday(HttpServletRequest httpServletRequest,
+                                     @RequestBody DdayRequestDto ddayRequestDto) {
 
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
@@ -137,7 +145,8 @@ public class MypageController {
 
     @Operation(summary = "디데이 수정", description = "마이페이지 안에 있는 D-day 수정 API")
     @PutMapping("/dday")
-    public BaseResponseDto modifyDday(HttpServletRequest httpServletRequest, @RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
+    public BaseResponseDto modifyDday(HttpServletRequest httpServletRequest,
+                                      @RequestBody DdayModifyRequestDto ddayModifyRequestDto) {
 
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
@@ -147,8 +156,11 @@ public class MypageController {
 
     @Operation(summary = "디데이 삭제", description = "마이페이지 안에 있는 D-day 삭제 API")
     @DeleteMapping("/dday/{ddayId}")
-    public BaseResponseDto deleteDday(@PathVariable Integer ddayId) {
-        return mypageService.deleteDday(ddayId);
+    public BaseResponseDto deleteDday(@PathVariable Integer ddayId,
+                                      HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        return mypageService.deleteDday(member.getMemberId(), ddayId);
     }
 
     @Operation(summary = "버킷리스트 전체 조회", description = "버킷리스트 전체 조회")
@@ -170,7 +182,7 @@ public class MypageController {
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.getWishDiary(findMember,Type.ONEDIARY);
+        return wishDiaryService.getWishDiary(findMember, Type.ONEDIARY);
     }
 
 
@@ -183,7 +195,7 @@ public class MypageController {
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.writeBucketDiary(findMember, wishDiaryUpdateRequestDto,Type.BUCKETLIST);
+        return wishDiaryService.writeBucketDiary(findMember, wishDiaryUpdateRequestDto, Type.BUCKETLIST);
     }
 
     @Operation(summary = "한줄일기 작성", description = "한줄일기 작성")
@@ -195,75 +207,76 @@ public class MypageController {
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.writeBucketDiary(findMember, wishDiaryUpdateRequestDto,Type.ONEDIARY);
+        return wishDiaryService.writeBucketDiary(findMember, wishDiaryUpdateRequestDto, Type.ONEDIARY);
     }
 
     @Operation(summary = "버킷리스트 내용 수정", description = "버킷리스트 내용 수정")
     @PutMapping("/bucketlist/{bucketListId}")
-    public BaseResponseDto updateBucketList(@PathVariable Integer bucketListId, @RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
+    public BaseResponseDto updateBucketList(@PathVariable Integer bucketListId,
+                                            @RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
                                             HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
         if (token == null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.updateBucketDiary(bucketListId, findMember, wishDiaryUpdateRequestDto,Type.BUCKETLIST);
+        return wishDiaryService.updateBucketDiary(bucketListId, findMember, wishDiaryUpdateRequestDto, Type.BUCKETLIST);
     }
 
     @Operation(summary = "한 줄 일기 내용 수정", description = "한 줄 일기 내용 수정")
     @PutMapping("/onediary/{oneDiaryId}")
-    public BaseResponseDto updateOneDairy(@PathVariable Integer oneDiaryId, @RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
+    public BaseResponseDto updateOneDairy(@PathVariable Integer oneDiaryId,
+                                          @RequestBody WishDiaryRequestDto wishDiaryUpdateRequestDto,
                                           HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
-        if (token == null) return null;
-
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.updateBucketDiary(oneDiaryId, findMember, wishDiaryUpdateRequestDto,Type.ONEDIARY);
+        return wishDiaryService.updateBucketDiary(oneDiaryId, findMember, wishDiaryUpdateRequestDto, Type.ONEDIARY);
     }
 
     @Operation(summary = "버킷리스트 내용 삭제", description = "버킷리스트 내용 삭제")
     @DeleteMapping("/bucketlist/{bucketListId}")
-    public BaseResponseDto deleteBucketList(@PathVariable Integer bucketListId, HttpServletRequest httpServletRequest) {
+    public BaseResponseDto deleteBucketList(@PathVariable Integer bucketListId,
+                                            HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token == null) return null;
-
         Member findMember = memberService.findMemberByJwtToken(token);
-        return wishDiaryService.deleteWishDiary(bucketListId,findMember,Type.BUCKETLIST);
+
+        return wishDiaryService.deleteWishDiary(bucketListId, findMember, Type.BUCKETLIST);
 
     }
-    
+
 
     @Operation(summary = "한줄 일기 내용 삭제", description = "한줄 일기 내용 삭제")
     @DeleteMapping("/onediary/{oneDiaryId}")
-    public BaseResponseDto deleteOneDiary(@PathVariable Integer oneDiaryId, HttpServletRequest httpServletRequest) {
+    public BaseResponseDto deleteOneDiary(@PathVariable Integer oneDiaryId,
+                                          HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token == null) return null;
-
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.deleteWishDiary(oneDiaryId,findMember, Type.ONEDIARY);
+        return wishDiaryService.deleteWishDiary(oneDiaryId, findMember, Type.ONEDIARY);
 
     }
-    
+
     @Operation(summary = "캘린더 내 루틴 조회", description = "캘린더 내 루틴의 시작, 종료일자")
     @GetMapping("/calendar/{memberId}")
     public List<RoutineResponseDto> getCalendarRoutine(@PathVariable Integer memberId) {
         return mypageService.getCalendar(memberId);
     }
 
-    @Operation(summary = "캘린더 내 루틴 상세 조회", description = "캘린더에 있는 루틴의 날짜를 눌렀을 때<br>writeDate: 인증을 한 날짜! (루틴이 진행된 날짜와는 별개)")
+    @Operation(summary = "캘린더 내 루틴 상세 조회",
+            description = "캘린더에 있는 루틴의 날짜를 눌렀을 때<br>writeDate: 인증을 한 날짜! (루틴이 진행된 날짜와는 별개)")
     @GetMapping("/calendar/{memberId}/{checkDate}")
     public List<CalendarHistoryDetailResponseDto> getCalendarRoutineDetail(@PathVariable Integer memberId,
-                                                                    @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable LocalDate checkDate) {
+                                                                           @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable LocalDate checkDate) {
         return mypageService.getCalendarRoutineDetail(memberId, checkDate);
     }
 
     @Operation(summary = "루틴 히스토리 조회", description = "마이페이지 안에 있는 루틴 히스토리")
     @GetMapping("/routinehistory/{memberId}")
-    public List<RoutineHistoryResponseDto> getRoutineHistory(@PathVariable Integer memberId, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    public List<RoutineHistoryResponseDto> getRoutineHistory(@PathVariable Integer memberId,
+                                                             @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
 
         PageRequest pageRequest = PageRequest.of(page, size);
         return mypageService.getRoutineHistory(memberId, pageRequest);

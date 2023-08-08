@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Getter
-@ToString
 public class RoutineDetail {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer routineDetailId;
