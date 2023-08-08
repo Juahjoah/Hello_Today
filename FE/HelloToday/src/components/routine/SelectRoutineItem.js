@@ -1,5 +1,5 @@
+import classes from "./SelectRoutineItem.module.css";
 import { SplideSlide } from "@splidejs/react-splide";
-import classes from "../Home/HomeThree.module.css";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { addRoutine, deleteRoutine } from "../../store/SelectRoutineSlice";

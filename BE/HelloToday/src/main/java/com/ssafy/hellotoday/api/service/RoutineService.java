@@ -166,8 +166,6 @@ public class RoutineService {
             throw new IllegalArgumentException("잘못된 접근입니다");
         }
 
-        routineValidator.checkRoutineCheckExist(routineCheckRepository, routineCheckRequestDto);
-
         if (file != null) {
             FileDto fileDto = fileUploadUtil.uploadRoutineFile(file, routineCheck);
             routineCheck.update(routineCheckRequestDto, fileDto);

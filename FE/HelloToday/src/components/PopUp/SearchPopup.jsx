@@ -64,7 +64,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
       .catch(console.log(userName));
   };
 
-  const tagAxios = async () => {
+  const tagAxios = async() => {
     await axios({
       url: `${API_URL}/api/routine/tag`,
       method: "get",

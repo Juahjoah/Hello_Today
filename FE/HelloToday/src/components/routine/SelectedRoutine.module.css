@@ -1,0 +1,214 @@
+@font-face {
+    font-family: "TheJamsil5Bold";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+      format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .toGroupBanner {
+    width: 70%;
+    height: 40vh;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+    display: flex;
+    background: rgb(255, 255, 255);
+    font-family: "TheJamsil5Bold";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(131, 129, 129, 0.2);
+  }
+  
+  .toGroupBannerLeft {
+    flex: 6.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 50px;
+  }
+  
+  .toGroupBannerLeftTitle {
+    font-size: 50px;
+  }
+  
+  .toGroupBannerLeftDesc {
+    font-size: 35px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+  }
+  
+  .toGroupBannerLeftBtn {
+    font-family: "TheJamsil5Bold";
+    font-size: 28px;
+    width: 360px;
+    height: 90px;
+    padding: 16px 32px;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    background: #ffd24c;
+    box-shadow: -4px 4px 0px 0px #ffd24c;
+    color: #fff;
+    transition: all 250ms ease-in;
+  }
+  
+  .toGroupBannerLeftBtn:hover {
+    cursor: pointer;
+    color: black;
+  }
+  
+  .toGroupBannerRight {
+    flex: 3.5;
+  }
+  
+  .toGroupBannerRightImg {
+    animation: jumpAnimation 3s infinite;
+  }
+  
+  
+  
+/* Modal */
+
+.authModal {
+  display: flex;
+  flex-direction: column;
+  font-family: "TheJamsil5Bold";
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.modalClose {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  transition: all 250ms ease-in;
+  width: 40px;
+  height: 40px;
+}
+
+.modalClose:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.authModalTitle {
+  flex: 1;
+  font-size: 35px;
+}
+
+.authModalMain {
+  width: 100%;
+  flex: 7.5;
+  display: flex;
+}
+
+.authModalMainLeft {
+  flex: 5;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.authModalMainRight {
+  flex: 5;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.authModalMainRightText {
+  flex: 6.2;
+}
+
+.authModalMainRightTextArea {
+  width: 90%;
+  height: 70%;
+  resize: none;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 8px;
+  font-size: 25px;
+  font-family: "TheJamsil5Bold";
+  padding: 10px;
+}
+
+.authModalMainRightImg {
+  flex: 2.2;
+}
+
+.authModalMainRightNone {
+  flex: 1.6;
+}
+
+.authModalFooter {
+  flex: 1.5;
+}
+.authModalBtn {
+  font-family: "TheJamsil5Bold";
+  font-size: 28px;
+  width: 360px;
+  height: 90px;
+  padding: 16px 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: #ffd24c;
+  box-shadow: -4px 4px 0px 0px #ffd24c;
+  color: #fff;
+
+  transition: all 250ms ease-in;
+}
+
+.authModalBtn:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.uploadName {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  width: 70%;
+  color: #999999;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 8px;
+}
+
+.uploadLabel {
+  display: inline-block;
+  padding: 10px 20px;
+  color: black;
+  vertical-align: middle;
+  cursor: pointer;
+  height: 20px;
+  margin-left: 10px;
+  font-size: 20px;
+  border-radius: 8px;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  transition: all 250ms ease-in;
+}
+
+.uploadLabel:hover {
+  background-color: #a581cf;
+  color: white;
+}
+
+input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
