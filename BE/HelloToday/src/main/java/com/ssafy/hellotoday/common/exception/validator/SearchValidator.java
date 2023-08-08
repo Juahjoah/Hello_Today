@@ -33,4 +33,23 @@ public class SearchValidator {
         }
     }
 
+    public void validateWordNum(String word) {
+        if (word == null || word.length() < 1) {
+            throw CustomException.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .code(SearchErrorEnum.INVALID_WORD.getCode())
+                    .message(SearchErrorEnum.INVALID_WORD.getMessage())
+                    .build();
+        }
+        try {
+            Integer.parseInt(word);
+        } catch (Exception e) {
+            throw CustomException.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .code(5000)
+                    .message("태그에는 숫자 값이 주어져야 합니다.")
+                    .build();
+        }
+    }
+
 }
