@@ -1,10 +1,6 @@
 package com.ssafy.hellotoday.api.service;
 
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.NumberExpression;
-import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
@@ -13,20 +9,19 @@ import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
 import com.ssafy.hellotoday.api.dto.mypage.response.*;
 import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
+import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
-import com.ssafy.hellotoday.db.entity.routine.QRoutineCheck;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
-import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.querydsl.core.types.dsl.Expressions.stringPath;
 import static com.ssafy.hellotoday.db.entity.QMember.member;
 import static com.ssafy.hellotoday.db.entity.routine.QRoutine.routine;
 import static com.ssafy.hellotoday.db.entity.routine.QRoutineCheck.routineCheck;
@@ -51,7 +45,6 @@ public class MypageService {
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
     private final RoutineRepository routineRepository;
-    private final RoutineCheckRepository routineCheckRepository;
     private final JPAQueryFactory queryFactory;
 
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
@@ -99,13 +92,20 @@ public class MypageService {
 
         List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberId(memberId, pageRequest);
 
-        List<CheerMessageResponseDto> result = cheerMessageList.stream()
+        return cheerMessageList.stream()
                 .map(cheerMessage -> new CheerMessageResponseDto(cheerMessage))
                 .collect(Collectors.toList());
-        return result;
     }
 
-    public BaseResponseDto deleteCheerMessage(Integer cheerMessageId) {
+    public BaseResponseDto deleteCheerMessage(int memberId, int cheerMessageId) {
+        CheerMessage cheerMessage = cheerMessageRepository.findByIdWithMember(cheerMessageId)
+                .orElseThrow(() -> new IllegalArgumentException("응원 메세지 조회 오류"));
+
+        if (cheerMessage.getMember().getMemberId() != memberId) throw CustomException.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .code(9000)
+                .message("삭제 요청자와 응원 메세지 작성자가 일치하지 않습니다.")
+                .build();
         cheerMessageRepository.deleteById(cheerMessageId);
 
         return BaseResponseDto.builder()
@@ -165,7 +165,17 @@ public class MypageService {
                 .build();
     }
 
-    public BaseResponseDto deleteDday(Integer ddayId) {
+    public BaseResponseDto deleteDday(int memberId, int ddayId) {
+        Dday dday = ddayRepository.findByIdWithMember(ddayId).orElseThrow(() -> CustomException.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .code(9002)
+                .message(ddayId + "에 해당하는 디데이를 조회할 수 없습니다.")
+                .build());
+        if (dday.getMember().getMemberId() != memberId) throw CustomException.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .code(9003)
+                .message("삭제 요청자와 디데이 작성자가 일치하지 않습니다.")
+                .build();
         ddayRepository.deleteById(ddayId);
         return BaseResponseDto.builder()
                 .success(true)
