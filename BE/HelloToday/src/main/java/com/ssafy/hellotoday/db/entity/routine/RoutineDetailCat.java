@@ -3,17 +3,13 @@ package com.ssafy.hellotoday.db.entity.routine;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.hellotoday.api.dto.routine.RoutineDetailDto;
 import lombok.*;
-
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Getter
-@ToString
 @NoArgsConstructor
 public class RoutineDetailCat {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
