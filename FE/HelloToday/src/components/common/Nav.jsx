@@ -17,12 +17,12 @@ function Nav() {
 
   const PersonalRoutine = isUserhaveRoutine ? "/selectmain" : "/unselectmain";
 
-  const memberId = localStorage.getItem("memberId");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const memberId = sessionStorage.getItem("memberId");
 
   const openPopup = () => {
     setIsPopupOpen(true);

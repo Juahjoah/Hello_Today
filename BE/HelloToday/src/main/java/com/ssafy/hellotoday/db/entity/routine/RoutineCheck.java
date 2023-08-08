@@ -2,15 +2,12 @@ package com.ssafy.hellotoday.db.entity.routine;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssafy.hellotoday.api.dto.member.FileDto;
-import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
 import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.common.util.property.ApplicationProperties;
 import com.ssafy.hellotoday.db.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

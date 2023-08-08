@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 
+
 function NickNamePopup({
   FirstLogin,
   setFirstLogin,
@@ -13,7 +14,6 @@ function NickNamePopup({
 }) {
   // const API_URL = "https://i9b308.p.ssafy.io";
   const API_URL = "http://localhost:8080";
-
   const [userName, setUserName] = useState("");
   // 정규식 통과 검사(닉네임 형식)
   const [isUserName, setIsUserName] = useState(false);

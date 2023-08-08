@@ -31,28 +31,28 @@ public class SecurityConfig {
         return jwtAuthenticationFilter;
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf().disable()
-                .formLogin().disable()
-                .authorizeRequests()
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/**").permitAll()
+            .csrf().disable()
+            .formLogin().disable()
+            .authorizeRequests()
+            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+            .antMatchers("/api/members/kakao/**", "/api/members/naver/**", "/api/members/reissue").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/routine/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .cors()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint);
+            .and()
+            .cors()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint);
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(jwtExceptionFilter, jwtAuthenticationFilter().getClass());
 
         return http.build();
     }
-    }
+}
