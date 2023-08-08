@@ -79,6 +79,6 @@ public class FollowController {
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
 
-        return followService.checkFollowStatus(memberId);
+        return followService.checkFollowStatus(member, memberId);
     }
 }
