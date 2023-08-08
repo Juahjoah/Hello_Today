@@ -11,10 +11,12 @@ function GroupRoom({
   memberLimit,
   joinCnt,
   myUserName,
+  accessToken,
 }) {
   console.log(joinCnt);
 
-  const API_URL = "http://localhost:8080";
+  const API_URL = "https://i9b308.p.ssafy.io";
+  // const API_URL = "http://localhost:8080";
   const navigate = useNavigate();
 
   const enterRoom = (sessionId, Token, roomId) => {
@@ -23,9 +25,11 @@ function GroupRoom({
         roomId: roomId,
         sessionId: sessionId,
         myUserName: myUserName,
+        roomTitle: title,
         videoEnabled: true,
         audioEnabled: true,
         Token: Token,
+        accessToken: accessToken,
       },
     });
   };
@@ -34,13 +38,12 @@ function GroupRoom({
     axios({
       url: `${API_URL}/api/rooms/${roomId}/connections`,
       method: "get",
+      headers: {
+        Authorization: accessToken,
+      },
     }).then((res) => {
-      console.log(res.data);
       const Token = res.data.data.token;
       const roomId = res.data.data.roomId;
-
-      console.log(roomId);
-
       enterRoom(sessionId, Token, roomId);
     });
   };
@@ -74,7 +77,9 @@ function GroupRoom({
         </div>
         <div className={classes.groupRoomLeftTitle}>{title}</div>
         <div className={classes.groupRoomLeftDesc}>{description}</div>
-        <div className={classes.groupRoomLeftCount}>🙎‍♂️ 1/{memberLimit}</div>
+        <div className={classes.groupRoomLeftCount}>
+          🙎‍♂️ {joinCnt}/{memberLimit}
+        </div>
       </div>
       <div className={classes.groupRoomRight}></div>
     </div>
