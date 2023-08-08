@@ -3,7 +3,6 @@ package com.ssafy.hellotoday.db.entity.routine;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.hellotoday.db.entity.Member;
 import lombok.*;
-import org.hibernate.annotations.Subselect;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -51,16 +50,6 @@ public class Routine {
         this.routineDetailCats.add(routineDetailCat);
     }
 
-    @Override
-    public String toString() {
-        return "Routine{" +
-                "routineId=" + routineId +
-                ", memberId=" + member.getMemberId() +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", activeFlag=" + activeFlag +
-                '}';
-    }
     public void update(int i) {
         this.activeFlag = (byte) i;
     }

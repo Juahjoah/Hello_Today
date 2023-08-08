@@ -15,4 +15,8 @@ public class SearchResponseDto {
     private String nickname;
     private String profile;
     private List<SearchTagResponseDto> tagList;
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 }
