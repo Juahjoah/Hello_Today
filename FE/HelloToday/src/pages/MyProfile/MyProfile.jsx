@@ -37,7 +37,18 @@ function MyProfile() {
   // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
   const baseURL = "http://localhost:8080"; // 개발용
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({
+    memberId: 0,
+    nickname: "",
+    profilePath: "",
+    stMsg: "",
+  });
+  const [oriuser, setoriUser] = useState({
+    memberId: user.memberId,
+    nickname: user.nickname,
+    profilePath: user.profilePath,
+    stMsg: user.stMsg,
+  });
   const memberId = sessionStorage.getItem("memberId");
 
   useEffect(() => {
@@ -46,10 +57,16 @@ function MyProfile() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        setUser(response.data);
+        setUser({
+          memberId: response.data.memberId,
+          nickname: response.data.nickname,
+          profilePath: response.data.profilePath,
+          stMsg: response.data.stMsg,
+        });
         sessionStorage.setItem(user, JSON.stringify(response.data));
         // console.log("user");
         // console.log(response.data);
+        setoriUser(user);
       })
       .catch((error) => {
         // console.log(error);
@@ -106,6 +123,7 @@ function MyProfile() {
   const handleUserEdit = () => {
     setIsUserEdit(true);
   };
+
   const handleChangeState = (e) => {
     setUser({
       ...user,
@@ -127,24 +145,39 @@ function MyProfile() {
     const data = user;
     //백이랑 통신
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}/api/memvers/${memberId}`, data)
+      .put(`${process.env.REACT_APP_BASE_URL}/api/members/${memberId}`, data)
       .then((res) => {
         console.log(res);
+        // session에 덮어쓰기
+        sessionStorage.setItem("user", user);
+        //초기화
+        setUser({
+          memberId: 0,
+          nickname: "",
+          profilePath: "",
+          stMsg: "",
+        });
+        //edit모드 false로 바꾸기
+        setIsUserEdit(false);
       })
       .catch((err) => {
         console.log(err);
       });
-    // session에 덮어쓰기
-    sessionStorage.setItem("user", user);
-
-    //edit모드 false로 바꾸기
-    setIsUserEdit(false);
   };
   const handleCancle = () => {
     /*취소*/
+    setUser(oriuser);
     setIsUserEdit(false);
   };
-
+  const [fileName, setFileName] = useState("");
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFileName(selectedFile.name);
+    } else {
+      setFileName("");
+    }
+  };
   return (
     <div>
       <Nav />
@@ -158,7 +191,21 @@ function MyProfile() {
                 src={user.profilePath}
                 alt={user.Userprofilepic}
               />
-              <button>파일 올리기</button>
+              <div>
+                <input
+                  className={classes.uploadName}
+                  value={fileName}
+                  placeholder="첨부파일"
+                />
+                <button className={classes.uploadLabel} htmlFor="file">
+                  파일찾기
+                </button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => handleFileChange(event)}
+                />
+              </div>
               <div className={classes.ProfilenNickName}>
                 <input
                   type="text"
@@ -166,6 +213,7 @@ function MyProfile() {
                   placeholder="닉네임을 입력하세요"
                   ref={nicknameinput}
                   onChange={handleChangeState}
+                  name="nickname"
                 ></input>
               </div>
               <div className={classes.ProfileMsg}>
@@ -175,6 +223,7 @@ function MyProfile() {
                   placeholder="상태메세지를 입력하세요"
                   ref={stMsginput}
                   onChange={handleChangeState}
+                  name="stMsg"
                 ></input>
               </div>
               <button onClick={handleSubmit}>완료</button>
@@ -204,9 +253,9 @@ function MyProfile() {
               {/* 팔로잉/팔로워 */}
               <div className={classes.UserFollow}>
                 <FollowButton
-                memberId={user.memberId}
-                setFollowButtonClick={setFollowButtonClick}
-              />
+                  memberId={user.memberId}
+                  setFollowButtonClick={setFollowButtonClick}
+                />
               </div>
             </div>
           )}
