@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
-@ToString
 public class RoutineCheck extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,18 +52,6 @@ public class RoutineCheck extends BaseEntity {
                 .routineDetailCat(routineDetailCat)
                 .checkDate(checkDate)
                 .build();
-    }
-
-    @Override
-    public String toString() {
-        return "RoutineCheck{" +
-                "routineCheckId=" + routineCheckId +
-                ", routineDetailCat=" + routineDetailCat.getRoutineDetailCatId() +
-                ", checkDaySeq=" + checkDaySeq +
-                ", content='" + content + '\'' +
-                ", imgPath='" + imgPath + '\'' +
-                ", imgOriginalName='" + imgOriginalName + '\'' +
-                '}';
     }
 
     public void update(RoutineCheckRequestDto routineCheckRequestDto, FileDto fileDto) {
