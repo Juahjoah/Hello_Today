@@ -41,6 +41,7 @@
   padding: 8px 12px;
   outline: none;
   width: 85vh;
+  flex:9;
 }
 
 .nickNamePopupDescInput:focus {
@@ -67,6 +68,22 @@
   margin-bottom: 2vh;
   margin-right: 2vh;
 }
+
+.searchButton {
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 0px 8px 8px 0px;
+  height: 100%;
+  flex:1;
+  background: rgb(255, 255, 255);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: all 250ms ease-in-out;
+}
+
+.searchButton:hover {
+  color: white;
+  background: #a581cf;
+}
+
 .searchLeft {
   display: flex;
   /* flex-direction: row;
@@ -120,29 +137,44 @@
 }
 .searchHashTagContent{
   border: 3px #a581cf solid;
-  border-radius: 8px 8px 8px 8px;
+  border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 10vh;
   height: 4vh;
   margin-left: 1vh;
   margin-top: 2vh;
+  color:#a581cf
 }
 
 .searchHashTagInfo{
   text-align: center;
   font-family: 'TheJamsil5Bold';
   font-size: 10px;
-  color: #a581cf;
+
   margin-top: 5px;
 }
 
-/* .HashTagRe{
-
-} */
+.HashTagRe{
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  background: rgb(255, 255, 255);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: all 250ms ease-in-out;
+  border-radius: 8px;
+  width: 10vh;
+  height: 4vh;
+  margin-left: 1vh;
+  margin-top: 14px;
+}
 
 .HashTagItem{
 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.searchHashTagContent:hover,
+.HashTagRe:hover {
+  color: white;
+  background: #a581cf;
 }

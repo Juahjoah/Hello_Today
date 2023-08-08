@@ -5,6 +5,8 @@ import axios from "axios";
 import SearchContent from "./SearchContent";
 import SearchHashTag from "./SearchHashTag";
 // import classNames from "classnames";
+import {HiSearch} from 'react-icons/hi'
+import {GrFormRefresh} from 'react-icons/gr'
 
 function getRandomIndexes(totalLength, count) {
   const indexes = [];
@@ -43,7 +45,7 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
   };
 
   const searchAxios = () => {
-    if(userName==""){
+    if(userName===""){
       alert("닉네임을 입력해주세요");
       return;
     }
@@ -124,18 +126,23 @@ function SearchPopup({isOpen,setIsPopupOpen}) {
             onChange={(e) => setUserName(e.target.value)} // 입력 값이 변경될 때마다 상태 업데이트
             />
              <button className={classes.searchButton} onClick={searchAxios}>
-              검색
+              <HiSearch/>
             </button>
           </div>
           <div className={classes.searchHashTagForm}>
             {/* <div className={classes.searchHashTagFormTag}> */}
-          {randomHashList.map((tag, index) => (
-            <SearchHashTag
-              key={index}
-              content={tag.content}
-            />
-          ))}
-              <button className={classes.HashTagRe} onClick={tagAxios}>re</button>
+            <div>
+                {randomHashList.map((tag, index) => (
+                <SearchHashTag
+                  key={index}
+                  tagId={tag.tagId}
+                  content={tag.content}
+                  setUserList={setUserList}
+                />
+              ))}
+            </div>
+          
+              <button className={classes.HashTagRe} onClick={tagAxios}><GrFormRefresh/></button>
               
               
             {/* </div> */}
