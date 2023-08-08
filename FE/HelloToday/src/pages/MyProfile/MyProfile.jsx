@@ -128,7 +128,11 @@ function MyProfile() {
         {/* 화면 오른쪽 화면 출력 창 */}
 
         <div className={classes.Profilecontent}>
-          {FollowButtonClick ? <FollowList /> : <ProfileMain Menu={Menu} />}
+          {FollowButtonClick ? (
+            <FollowList memberId={params.memberId} />
+          ) : (
+            <ProfileMain Menu={Menu} />
+          )}
           {/* <ProfileMain Menu={Menu} /> */}
         </div>
       </div>

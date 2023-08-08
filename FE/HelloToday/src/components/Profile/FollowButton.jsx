@@ -12,7 +12,7 @@ function FollowButton(props) {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   // const UserId = sessionStorage.getItem("memberId");
   // 팔로잉 상태를 구분하는 변수
-  const [isFollow, setIsFollow] = useState(false);
+  const [isFollow, setIsFollow] = useState();
   // 접속한 프로필이 나인가, 아닌가 판단해서 값을 주기
   const [isMe, setIsMe] = useState(false);
 
@@ -42,8 +42,8 @@ function FollowButton(props) {
   }, [props.memberId]);
 
   const UserFollowClick = (event) => {
-    if (isFollow) {
-      event.target.innerText = "Follow";
+    if (!isFollow) {
+      // event.target.innerText = "Follow";
       axios
         .post(
           `${baseURL}/api/follow`,
@@ -60,7 +60,7 @@ function FollowButton(props) {
           console.log(error);
         });
     } else {
-      event.target.innerText = "unFollow";
+      // event.target.innerText = "unFollow";
       axios
         .delete(`${baseURL}/api/follow`, {
           params: { target: props.memberId },
@@ -78,7 +78,11 @@ function FollowButton(props) {
 
   return (
     <div className={classes.FollowButton}>
-      {!isMe ? <button onClick={UserFollowClick}>Follow</button> : null}
+      {!isMe ? (
+        <button onClick={UserFollowClick}>
+          {isFollow ? "unFollow" : "Follow"}
+        </button>
+      ) : null}
       <button onClick={() => props.setFollowButtonClick(true)}>
         팔로우하는 사람보기
       </button>
