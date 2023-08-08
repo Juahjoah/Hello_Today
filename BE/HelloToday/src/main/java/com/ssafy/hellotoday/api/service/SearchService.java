@@ -9,7 +9,6 @@ import com.ssafy.hellotoday.db.repository.querydsl.SearchQueryDslRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,23 +22,17 @@ public class SearchService {
     public List<SearchResponseDto> search(String key, String word) {
         List<Member> members;
         searchValidator.validKey(key);
-        searchValidator.validateWord(word);
         List<SearchResponseDto> res;
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
+            searchValidator.validateWordString(word);
             members = memberRepository.findByNicknameContaining(word);
-            res = searchQueryDslRepository.findMembersWithRoutinTagByMemberIds(members.stream()
-                    .map(Member::getMemberId).collect(Collectors.toList()));
-            transferProfilePath(res);
-
         } else {
             searchValidator.validateWordNum(word);
             members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
-            res = searchQueryDslRepository.findMembersWithRoutinTagByMemberIds(members.stream()
-                    .map(Member::getMemberId).collect(Collectors.toList()));
-            transferProfilePath(res);
         }
-
-        // 조회 결과가 없을 때 처리 필요
+        res = searchQueryDslRepository.findMembersWithRoutinTagByMemberIds(members.stream()
+                .map(Member::getMemberId).collect(Collectors.toList()));
+        transferProfilePath(res);
 
         return res;
     }

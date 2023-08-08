@@ -14,7 +14,6 @@ public class SearchValidator {
 
     public void validKey(String key) {
         if (!key.equals(SearchKeyEnum.NICKNAME.getName()) && !key.equals(SearchKeyEnum.TAG.getName())) {
-
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .code(SearchErrorEnum.INVALID_KEY.getCode())
@@ -23,31 +22,25 @@ public class SearchValidator {
         }
     }
 
-    public void validateWord(String word) {
+    public void validateWordString(String word) {
         if (word == null || word.length() < 1) {
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
-                    .code(SearchErrorEnum.INVALID_WORD.getCode())
-                    .message(SearchErrorEnum.INVALID_WORD.getMessage())
+                    .code(SearchErrorEnum.INVALID_WORD_STRING.getCode())
+                    .message(SearchErrorEnum.INVALID_WORD_STRING.getMessage())
                     .build();
         }
     }
 
     public void validateWordNum(String word) {
-        if (word == null || word.length() < 1) {
-            throw CustomException.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .code(SearchErrorEnum.INVALID_WORD.getCode())
-                    .message(SearchErrorEnum.INVALID_WORD.getMessage())
-                    .build();
-        }
+        validateWordString(word);
         try {
             Integer.parseInt(word);
         } catch (Exception e) {
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
-                    .code(5000)
-                    .message("태그에는 숫자 값이 주어져야 합니다.")
+                    .code(SearchErrorEnum.INVALID_WORD_INT.getCode())
+                    .message(SearchErrorEnum.INVALID_WORD_INT.getMessage())
                     .build();
         }
     }
