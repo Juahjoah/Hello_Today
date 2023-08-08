@@ -50,7 +50,7 @@ function MyProfile() {
     stMsg: user.stMsg,
   });
   const memberId = sessionStorage.getItem("memberId");
-
+  const [isUserEdit, setIsUserEdit] = useState(false);
   useEffect(() => {
     axios
       .get(`${baseURL}/api/mypage/${memberId}`, {
@@ -63,16 +63,17 @@ function MyProfile() {
           profilePath: response.data.profilePath,
           stMsg: response.data.stMsg,
         });
-        sessionStorage.setItem(user, JSON.stringify(response.data));
+        sessionStorage.setItem("user", JSON.stringify(response.data));
         // console.log("user");
         // console.log(response.data);
         setoriUser(user);
+        setURLThumbnail(user.profilePath);
       })
       .catch((error) => {
         // console.log(error);
         sessionStorage.setItem(user, ["error"]);
       });
-  }, []);
+  }, [isUserEdit]);
 
   // const NowUser = sessionStorage.getItem("user");
 
@@ -115,15 +116,55 @@ function MyProfile() {
     }
   };
   //회원정보 수정
+  //지울거
   // const [user, setUser] = useState([]);
   // const memberId = sessionStorage.getItem("memberId");
-  const [isUserEdit, setIsUserEdit] = useState(false);
   const nicknameinput = useRef();
   const stMsginput = useRef();
+  const [selectedFile, setSelectedFile] = useState(null);
+  //썸네일 상태 관리
+  const [URLThumbnail, setURLThumbnail] = useState();
+
+  const thumbnailInput = useRef();
+  const handleClick = () => {
+    thumbnailInput.current?.click();
+  };
+  // createObjectURL 방식
+  const createImageURL = (fileBlob) => {
+    //createObjectURL을 사용하여 생성한 URL을 사용한 후에는
+    //revokeObjectURL을 호출하여 메모리 누수를 방지
+    if (URLThumbnail) URL.revokeObjectURL(URLThumbnail);
+
+    const url = URL.createObjectURL(fileBlob);
+
+    setURLThumbnail(url);
+  };
+
+  //edit모드인지 수정
   const handleUserEdit = () => {
     setIsUserEdit(true);
   };
 
+  // 에딧 모드 취소
+  const handleCancle = () => {
+    setUser(oriuser);
+    setIsUserEdit(false);
+  };
+
+  // 변동 사항(파일)
+  const handleFileChange = (e) => {
+    //set preview image
+    const { files } = e.target;
+
+    if (!files || !files[0]) return;
+
+    const uploadImage = files[0];
+
+    createImageURL(uploadImage);
+    setSelectedFile(uploadImage);
+  };
+
+  // 변동 사항(input)
   const handleChangeState = (e) => {
     setUser({
       ...user,
@@ -131,26 +172,51 @@ function MyProfile() {
     });
     console.log(e.target.value);
   };
+
+  //제출
   const handleSubmit = () => {
     if (user.nickname.length < 1) {
-      //focus
+      alert("닉네임 입력");
       nicknameinput.current.focus();
       return;
     }
     if (user.stMsg === null || user.stMsg.length < 1) {
-      //focus
+      alert("상태 입력");
       stMsginput.current.focus();
       return;
     }
-    const data = user;
+    console.log("아니 뭐야");
+    const formData = new FormData();
+    const data = {
+      nickname: user.nickname,
+      stMsg: user.stMsg,
+      file: user.file,
+    };
+    console.log(selectedFile);
+
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(data)], {
+        type: "application/json",
+      })
+    );
+    formData.append("file", selectedFile);
+
     //백이랑 통신
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}/api/members/${memberId}`, data)
+      .put(
+        `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}`,
+        formData,
+        {
+          headers: {
+            Authorization: AccsesToken,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
-        // session에 덮어쓰기
         sessionStorage.setItem("user", user);
-        //초기화
         setUser({
           memberId: 0,
           nickname: "",
@@ -164,20 +230,7 @@ function MyProfile() {
         console.log(err);
       });
   };
-  const handleCancle = () => {
-    /*취소*/
-    setUser(oriuser);
-    setIsUserEdit(false);
-  };
-  const [fileName, setFileName] = useState("");
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setFileName(selectedFile.name);
-    } else {
-      setFileName("");
-    }
-  };
+
   return (
     <div>
       <Nav />
@@ -186,48 +239,53 @@ function MyProfile() {
         <div className={classes.UserProfile}>
           {isUserEdit ? (
             <div className={classes.UserInfo}>
-              <img
-                className={classes.ProfileImg}
-                src={user.profilePath}
-                alt={user.Userprofilepic}
-              />
-              <div>
-                <input
-                  className={classes.uploadName}
-                  value={fileName}
-                  placeholder="첨부파일"
-                />
-                <button className={classes.uploadLabel} htmlFor="file">
-                  파일찾기
+              <form id="form">
+                {URLThumbnail ? (
+                  <img
+                    className={classes.ProfileImg}
+                    src={URLThumbnail}
+                    alt="thumbnail"
+                  />
+                ) : (
+                  "이미지 미리보기"
+                )}
+                <button onClick={handleClick} type="button">
+                  파일
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={thumbnailInput}
+                    onChange={handleFileChange}
+                  />
                 </button>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => handleFileChange(event)}
-                />
-              </div>
-              <div className={classes.ProfilenNickName}>
-                <input
-                  type="text"
-                  value={user.nickname}
-                  placeholder="닉네임을 입력하세요"
-                  ref={nicknameinput}
-                  onChange={handleChangeState}
-                  name="nickname"
-                ></input>
-              </div>
-              <div className={classes.ProfileMsg}>
-                <input
-                  type="text"
-                  value={user.stMsg}
-                  placeholder="상태메세지를 입력하세요"
-                  ref={stMsginput}
-                  onChange={handleChangeState}
-                  name="stMsg"
-                ></input>
-              </div>
-              <button onClick={handleSubmit}>완료</button>
-              <button onClick={handleCancle}>취소</button>
+                <div className={classes.ProfilenNickName}>
+                  <input
+                    type="text"
+                    value={user.nickname}
+                    placeholder="닉네임을 입력하세요"
+                    ref={nicknameinput}
+                    onChange={handleChangeState}
+                    name="nickname"
+                  ></input>
+                </div>
+                <div className={classes.ProfileMsg}>
+                  <input
+                    type="text"
+                    value={user.stMsg}
+                    placeholder="상태메세지를 입력하세요"
+                    ref={stMsginput}
+                    onChange={handleChangeState}
+                    name="stMsg"
+                  ></input>
+                </div>
+                <button onClick={handleSubmit} type="button">
+                  완료
+                </button>
+                <button onClick={handleCancle} type="button">
+                  취소
+                </button>
+                {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
+              </form>
             </div>
           ) : (
             <div className={classes.UserInfo}>
