@@ -1,11 +1,8 @@
 package com.ssafy.hellotoday.api.dto.routine.response;
 
-import com.ssafy.hellotoday.api.dto.routine.RoutineCheckDto;
-import com.ssafy.hellotoday.api.dto.routine.request.RoutineCheckRequestDto;
 import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 

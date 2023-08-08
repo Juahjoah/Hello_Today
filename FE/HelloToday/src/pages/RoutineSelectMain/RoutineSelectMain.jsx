@@ -25,7 +25,8 @@ function RoutineSelectMain() {
   // const API_URL = "https://i9b308.p.ssafy.io";
   const API_URL = "http://localhost:8080";
   const location = useLocation();
-  // const memberId = location.state.memberId;
+  const memberId =
+    location?.state?.memberId ?? localStorage.getItem("memberId");
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const isFirstLogin = location?.state?.isFirstLogin ?? false;
 
@@ -37,7 +38,9 @@ function RoutineSelectMain() {
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  const [nickName, setNickName] = useState(location?.state?.nickName ?? "user");
+  const [nickName, setNickName] = useState(
+    location?.state?.nickName ?? localStorage.getItem("nickName")
+  );
 
   const dispatch = useDispatch();
 
@@ -227,6 +230,7 @@ function RoutineSelectMain() {
         setFirstLogin={setFirstLogin}
         Token={AccsesToken}
         setNickName={setNickName}
+        memberId={memberId}
       />
     </>
   );

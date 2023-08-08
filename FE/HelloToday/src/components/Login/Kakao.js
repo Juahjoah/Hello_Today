@@ -12,7 +12,9 @@ function Kakao() {
   //2. 백에게 인가코드 주고 access Token 요청
   useEffect(() => {
     const REST_URL = `http://localhost:8080`;
-    // const REST_URL = `https://i9b308.p.ssafy.io`;
+
+    // const REST_URL = "https://i9b308.p.ssafy.io";
+
     console.log(code);
 
     axios({
