@@ -4,10 +4,8 @@ import com.ssafy.hellotoday.db.entity.routine.RoutineDetail;
 import com.ssafy.hellotoday.db.entity.routine.RoutineDetailCat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@ToString
 @NoArgsConstructor
 public class RoutineDetailDto {
     private Integer routineDetailId;
