@@ -16,18 +16,18 @@ function FollowList() {
   useEffect(() => {
     axios
       .all([
-        (axios.get(`${baseURL}/api/follow/follower`, {
+        axios.get(`${baseURL}/api/follow/follower`, {
           headers: { Authorization: AccsesToken },
         }),
         axios.get(`${baseURL}/api/follow/following`, {
           headers: { Authorization: AccsesToken },
-        })),
+        }),
       ])
-      .then((response1, response2) => {
+      .then((responses) => {
+        const response1 = responses[0];
+        const response2 = responses[1];
         console.log(response1.data);
         console.log(response2.data);
-        console.log(Followers);
-        console.log(Followings);
         setFollowers(response1.data);
         setFollowings(response2.data);
       })
