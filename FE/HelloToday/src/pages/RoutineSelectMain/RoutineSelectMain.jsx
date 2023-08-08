@@ -22,10 +22,11 @@ import allAuth from "../../components/User/allAuth";
 
 function RoutineSelectMain() {
   // state & data
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
+  const API_URL = "https://i9b308.p.ssafy.io";
+  // const API_URL = "http://localhost:8080";
   const location = useLocation();
-  // const memberId = location.state.memberId;
+  const memberId =
+    location?.state?.memberId ?? localStorage.getItem("memberId");
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const isFirstLogin = location?.state?.isFirstLogin ?? false;
 
@@ -37,9 +38,9 @@ function RoutineSelectMain() {
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  // 아래 부분 변경 필요할 거임
-  const [nickName, setNickName] = useState(location?.state?.nickName ?? "user");
-  const [memberId, setMemberId] = useState(location?.state?.memberId ?? 123123);
+  const [nickName, setNickName] = useState(
+    location?.state?.nickName ?? localStorage.getItem("nickName")
+  );
 
   const dispatch = useDispatch();
 
@@ -61,23 +62,6 @@ function RoutineSelectMain() {
     }
     axiosRoutineData();
   }, []);
-
-  // 최초 렌더 시 memberId와 nickName을 로컬 스토리지에 저장
-  useEffect(() => {
-    // memberId와 nickName이 로컬 스토리지에 이미 저장되어 있다면 가져오기
-    const storedMemberId = localStorage.getItem("memberId");
-    const storedNickName = localStorage.getItem("nickName");
-
-    // 만약 로컬 스토리지에 값이 없다면 현재 값으로 설정
-    const currentMemberId = storedMemberId ?? location.state.memberId;
-    const currentNickName = storedNickName ?? location.state.nickName;
-
-    // 상태 업데이트 및 로컬 스토리지에 저장
-    setMemberId(currentMemberId);
-    setNickName(currentNickName);
-    localStorage.setItem("memberId", currentMemberId);
-    localStorage.setItem("nickName", currentNickName);
-  }, [nickName]);
 
   //------------------------------로그인 시작
   const isAccess = useSelector((state) => state.authToken.accessToken);
@@ -246,6 +230,7 @@ function RoutineSelectMain() {
         setFirstLogin={setFirstLogin}
         Token={AccsesToken}
         setNickName={setNickName}
+        memberId={memberId}
       />
     </>
   );

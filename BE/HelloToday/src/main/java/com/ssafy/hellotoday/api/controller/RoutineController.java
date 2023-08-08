@@ -10,7 +10,6 @@ import com.ssafy.hellotoday.api.dto.routine.response.TagResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.api.service.RoutineService;
 import com.ssafy.hellotoday.common.exception.CustomException;
-import com.ssafy.hellotoday.db.entity.BaseEntity;
 import com.ssafy.hellotoday.db.entity.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
