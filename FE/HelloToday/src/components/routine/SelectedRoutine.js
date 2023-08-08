@@ -8,10 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import Calendar from "react-calendar";
 import dayjs from "dayjs";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function SelectedRoutine(props) {
+    const LOCAL_URL = "http://localhost:8080"
     const routineDetailList = props.routineCheckList;
-    console.log(props);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const routineAuthBannerImg = "main_banner_routineAuth1";
     const routineAuthBannerMents = [
@@ -23,6 +25,7 @@ function SelectedRoutine(props) {
     const [value, onChange] = useState(new Date()); // 루틴 인증 날짜
     const [routineAuthText, setRoutineAuthText] = useState(""); // 루틴 인증 내용
     const [fileName, setFileName] = useState(""); // 루틴 인증 이미지 파일
+    const AccsesToken = useSelector((state) => state.authToken.accessToken);
 
     // Modal style
     const modalStyle = {
@@ -56,8 +59,8 @@ function SelectedRoutine(props) {
     };
 
     const [toAuthRoutine, setToAuthRoutine] = useState({
-        routineId: props,
-        content: "",
+        routineDetailDto: props,
+        // content: "",
     });
 
     const handleTextChange = (event) => {
@@ -85,7 +88,48 @@ function SelectedRoutine(props) {
         // ​        imgOriName: "String" (이미지 이름)
         // ​    }
         // }
-        console.log(`루틴 세분류 ID : ${toAuthRoutine.routineId}`);
+
+        // axios({
+        //     url: `${LOCAL_URL}/api/routine/private/check`,
+        //     method: 'put',
+        //     params: {
+        //         routineCheckId: "219",
+        //         // checkDaySeq
+        //         checkDaySeq: "2", 
+        //         content: `${routineAuthText}`,
+        //         checkDate: "2023-08-06 06:15:37",
+        //         file: "test",
+        //     }, headers: {
+        //         "Content-Type": "multipart/form-data",
+        //         Authorization: AccsesToken,
+        //     }
+        // })
+
+        const formData = new FormData();
+        const routineCheckRequest = {
+            routineCheckId: "219",
+            checkDaySeq: "2",
+            content: "test",
+            checkDate: "2023-08-06 06:15:37"
+        }
+
+        formData.append("request", new Blob([JSON.stringify(routineCheckRequest)], {
+            type: "application/json"
+        }));
+        formData.append("file", "test");
+        
+        axios.put(`${LOCAL_URL}/api/routine/private/check`, formData, {
+            headers: {
+                Authorization: AccsesToken,
+            }
+
+        })
+        .then((res) => {
+            console.log(res.data);
+            console.log("루틴 인증 성공")
+        }).catch((error) => console.log(error));
+
+        console.log(`루틴 세분류 ID : ${toAuthRoutine.routineDetailDto.routineDetailId}`);
         console.log(`달력에 선택한 날짜 : ${value}`);
         console.log(`루틴 인증 내용 : ${routineAuthText}`);
         console.log(`이미지 파일 : ${fileName}`);
@@ -99,7 +143,6 @@ function SelectedRoutine(props) {
             />
             <div className={classes.routineCardSection}>
                 {routineDetailList.map((item) => {
-                    console.log(item)
                     return (
                         <RoutineAuthCard
                             routineDetailDto={item.routineDetailDto}
@@ -157,7 +200,7 @@ function SelectedRoutine(props) {
                     <div className={classes.authModalTitle}>
                         <div>
                             User 님의 "
-                            <span style={{ color: "#a581cf" }}>{toAuthRoutine.content}</span>"
+                            <span style={{ color: "#a581cf" }}>{toAuthRoutine.routineDetailDto.content}</span>"
                             루틴
                         </div>
                     </div>
