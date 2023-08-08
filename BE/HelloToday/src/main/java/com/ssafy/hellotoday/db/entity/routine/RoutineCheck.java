@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
-@ToString
 public class RoutineCheck extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,18 +54,6 @@ public class RoutineCheck extends BaseEntity {
                 .build();
     }
 
-    @Override
-    public String toString() {
-        return "RoutineCheck{" +
-                "routineCheckId=" + routineCheckId +
-                ", routineDetailCat=" + routineDetailCat.getRoutineDetailCatId() +
-                ", checkDaySeq=" + checkDaySeq +
-                ", content='" + content + '\'' +
-                ", imgPath='" + imgPath + '\'' +
-                ", imgOriginalName='" + imgOriginalName + '\'' +
-                '}';
-    }
-
     public void update(RoutineCheckRequestDto routineCheckRequestDto, FileDto fileDto) {
         this.content = routineCheckRequestDto.getContent();
         this.imgPath = fileDto.getFilePath();
@@ -81,8 +68,7 @@ public class RoutineCheck extends BaseEntity {
     }
 
     public String getRoutineImagePath() {
-        if(imgOriginalName == null) return null;
-        else if(imgOriginalName.contains("https://i9b308.p.ssafy.io/")) return imgOriginalName;
+        if(imgPath == null) return null;
 
         return ApplicationProperties.HOST_IMAGE_URL + "routine/" + imgOriginalName;
     }

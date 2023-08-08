@@ -71,4 +71,14 @@ public class FollowController {
 
         return followService.deleteFollow(member, targetId);
     }
+
+    @Operation(summary = "팔로우 상태 확인", description = "팔로우를 상태를 확인하는 API")
+    @GetMapping
+    public BaseResponseDto checkFollowStatus(@RequestParam int memberId,
+                                             HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+
+        return followService.checkFollowStatus(member, memberId);
+    }
 }

@@ -316,6 +316,7 @@ public class MemberService {
                 .build();
     }
 
+    @Transactional
     public BaseResponseDto deleteMember(Member findMember) {
 
         memberRepository.delete(findMember);
@@ -328,6 +329,7 @@ public class MemberService {
 
     }
 
+    @Transactional(readOnly = true)
     public MemberInfoResponseDto getDetailMemberInfo(Integer memberId) {
 
         Member targetMember = memberRepository.findById(memberId)

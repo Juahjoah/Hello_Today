@@ -54,7 +54,7 @@ function SelectRoutineItem({
         src={`images/Routine/${routineImg}`}
         alt="routineImg"
       />
-      <p className={classes.routineName}>{routineContent}</p>
+      <div className={classes.routineName}>{routineContent}</div>
     </SplideSlide>
   );
 }

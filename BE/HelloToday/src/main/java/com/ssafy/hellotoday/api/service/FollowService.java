@@ -123,6 +123,26 @@ public class FollowService {
                 .build();
     }
 
+    /**
+     * 두 사용자가 팔로우 상태인지 확인하는 메소드
+     * @param follower 로그인 된 사용자
+     * @param followeeId 팔로우 상태를 확인하고자 하는 사용자
+     * @return 팔로우 상태를 true, false로 리턴
+     */
+    public BaseResponseDto checkFollowStatus(Member follower, int followeeId) {
+        int followerId = follower.getMemberId();
+        memberValidator.checkDifferentMembers(followerId, followeeId);
+
+        Member followee = getMember(followeeId);
+        Optional<Follow> follow = followRepository.findByFollowing_MemberId(followee.getMemberId());
+
+        if (follow.isPresent()) {
+            return getFollowStatusResponse(FollowResponseEnum.FOLLOW_STATUS_TRUE.getName(), true);
+        } else {
+            return getFollowStatusResponse(FollowResponseEnum.FOLLOW_STATUS_FALSE.getName(), false);
+        }
+    }
+
     @Transactional
     public int saveFollow(Member follower, Member followee) {
         Follow follow = Follow.builder()
@@ -139,5 +159,13 @@ public class FollowService {
         Optional<Member> member = memberRepository.findById(memberId);
         memberValidator.checkMember(member, memberId);
         return member.get();
+    }
+
+    private BaseResponseDto getFollowStatusResponse(String message, boolean success) {
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(message)
+                .data(success)
+                .build();
     }
 }

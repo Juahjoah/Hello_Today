@@ -12,13 +12,9 @@ import com.ssafy.hellotoday.api.dto.routine.response.*;
 import com.ssafy.hellotoday.common.exception.validator.RoutineValidator;
 import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
 import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
-import com.ssafy.hellotoday.db.entity.BaseEntity;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.routine.*;
-import com.ssafy.hellotoday.db.repository.routine.RoutineCheckRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineRecMentRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineDetailRepository;
-import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
+import com.ssafy.hellotoday.db.repository.routine.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -42,15 +38,13 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDe
 @Transactional
 @EnableScheduling
 public class RoutineService {
-//    @Value("${image.path}")
-    private String uploadDir;
     private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
     private final RoutineCheckRepository routineCheckRepository;
     private final FileUploadUtil fileUploadUtil;
-
+    private final RoutineTagRepository routineTagRepository;
     private final RoutineValidator routineValidator;
 
     public List<RoutineDetailResponseDto> detailRoutine() {
@@ -81,13 +75,10 @@ public class RoutineService {
     public RoutineRecMentResponseDto getRecommendMent(Integer categoryId) {
         long qty = routineRecMentRepository.countByRoutineBigCat_RoutineBigCatId(categoryId);
         int idx = (int) (Math.random() * qty);
-        RecommendMent recommendMent = null;
 
         List<RecommendMent> recommendMents = routineRecMentRepository.findByRoutineBigCat_RoutineBigCatId(categoryId, PageRequest.of(idx, 1));
 
-        if (recommendMents != null) {
-            recommendMent = recommendMents.get(0);
-        }
+        RecommendMent recommendMent = recommendMents.get(0);
 
         return new RoutineRecMentResponseDto(recommendMent);
     }
@@ -118,16 +109,11 @@ public class RoutineService {
 
         routineRepository.save(routine);
 
-//        scheduleRoutineId = routine.getRoutineId();
-
-//        routineSchedule();
-
         return BaseResponseDto.builder()
                 .success(true)
                 .message(RoutineEnum.SUCCESS_MAKE_ROTUINE.getName())
                 .data(RoutineResponseDto.builder()
                         .routineId(routine.getRoutineId())
-//                        .routineDetailCatList(routineDetailCatList)
                         .startDate(routine.getStartDate())
                         .endDate(routine.getEndDate())
                         .activeFlag(routine.getActiveFlag())
@@ -135,19 +121,11 @@ public class RoutineService {
                 .build();
     }
 
-    /**
-     * 사용자가 진행중인 루틴이 있는지에 대한 activeFlag와 진행중인 루틴이 있으면 routineDetailCat에 대한 인증 내역들 반환
-     *
-     * @param member
-     * @return
-     */
     public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Member member) {
-        RoutinePrivateCheckResponseDto routinePrivateCheckResponseDto = null;
         List<RoutineCheckResponseDto> resultlist = new ArrayList<>();
-        Routine currentRoutine = null;
 
         try {
-            currentRoutine = queryFactory.selectFrom(routine)
+            Routine currentRoutine = queryFactory.selectFrom(routine)
                     .where(routine.member.memberId.eq(member.getMemberId())
                             .and(routine.activeFlag.eq((byte) 1))).fetchFirst();
 
@@ -173,12 +151,12 @@ public class RoutineService {
                 resultlist.add(new RoutineCheckResponseDto(routineDetailDto, fetch));
             }
 
-            routinePrivateCheckResponseDto = new RoutinePrivateCheckResponseDto((byte) 1, resultlist);
-        } catch (Exception e) {
-            routinePrivateCheckResponseDto = new RoutinePrivateCheckResponseDto((byte) 0, null);
-        }
+            return new RoutinePrivateCheckResponseDto((byte) 1, resultlist);
 
-        return routinePrivateCheckResponseDto;
+
+        } catch (Exception e) {
+            return new RoutinePrivateCheckResponseDto((byte) 0, null);
+        }
     }
 
     public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto, Member findMember, MultipartFile file) {
@@ -204,5 +182,11 @@ public class RoutineService {
                         .routineCheck(routineCheck)
                         .build())
                 .build();
+    }
+
+    public List<TagResponseDto> getTags() {
+        return routineTagRepository.findAll().stream()
+                .map(TagResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

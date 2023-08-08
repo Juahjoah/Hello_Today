@@ -10,21 +10,22 @@ import WidgetHistory from "./Widget/WidgetHistory";
 import WidgetGallery from "./Widget/WidgetGallery";
 import WidgetDday from "./Widget/WidgetDday";
 
-function ProfileMenu({ setMenu }) {
+function ProfileMenu({ setMenu, setFollowButtonClick }) {
   const MenuList = {
-    WidgetComments: <WidgetComments />,
-    WidgetGroupRoutine: <WidgetGroupRoutine />,
-    WidgetBucket: <WidgetBucket />,
-    WidgetGoals: <WidgetGoals />,
-    WidgetDiary: <WidgetDiary />,
-    WidgetHistory: <WidgetHistory />,
-    WidgetGallery: <WidgetGallery />,
-    WidgetDday: <WidgetDday />,
+    "응원 메세지": <WidgetComments />,
+    "단체 루틴을 함께한 사람": <WidgetGroupRoutine />,
+    버킷리스트: <WidgetBucket />,
+    "소중한 목표": <WidgetGoals />,
+    "한 줄 일기": <WidgetDiary />,
+    "나의 루틴들": <WidgetHistory />,
+    갤러리: <WidgetGallery />,
+    "D-Day": <WidgetDday />,
   };
 
   const UserSelectMenu = (event) => {
-    console.log(event.target.innerText);
+    // console.log(event.target.innerText);
     setMenu(MenuList[event.target.innerText]);
+    setFollowButtonClick(false);
   };
 
   useEffect(() => {
@@ -33,37 +34,35 @@ function ProfileMenu({ setMenu }) {
 
   return (
     <div className={classes.ProfileMenu}>
-      <h1>ProfileMenu</h1>
-
       <div>
         <p
           onClick={(event) => {
             UserSelectMenu(event);
           }}
         >
-          WidgetComments
+          응원 메세지
         </p>
         <p
           onClick={(event) => {
             UserSelectMenu(event);
           }}
         >
-          WidgetBucket
+          버킷리스트
         </p>
-        <event
+        <p
           onClick={(event) => {
             UserSelectMenu(event);
           }}
         >
-          WidgetGoals
-        </event>
+          소중한 목표
+        </p>
         {/* 일/월/연 목표 */}
         <p
           onClick={(event) => {
             UserSelectMenu(event);
           }}
         >
-          WidgetDiary
+          한 줄 일기
         </p>
         {/* 한 줄 일기 */}
         <p
@@ -71,7 +70,7 @@ function ProfileMenu({ setMenu }) {
             UserSelectMenu(event);
           }}
         >
-          WidgetHistory
+          나의 루틴들
         </p>
         {/* 루틴 히스토리 */}
         <p
@@ -79,14 +78,14 @@ function ProfileMenu({ setMenu }) {
             UserSelectMenu(event);
           }}
         >
-          WidgetGroupRoutine
+          단체 루틴을 함께한 사람
         </p>
         <p
           onClick={(event) => {
             UserSelectMenu(event);
           }}
         >
-          WidgetDday
+          D-Day
         </p>
         {/* 디데이 */}
         <p
@@ -94,7 +93,7 @@ function ProfileMenu({ setMenu }) {
             UserSelectMenu(event);
           }}
         >
-          WidgetGallery
+          갤러리
         </p>
         {/* 갤러리 */}
       </div>

@@ -43,6 +43,8 @@ function PageRedirectNaver() {
 
         const accessToken = res.headers["authorization"];
         const refreshToken = res.headers["authorization-refresh"];
+        sessionStorage.setItem("memberId", res.data.memberId);
+        console.log(res.data);
         console.log("Access Token:", accessToken);
         console.log("Refresh Token:", refreshToken);
         dispatch(SET_TOKEN(accessToken));

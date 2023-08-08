@@ -4,6 +4,8 @@ import classes from "./MyProfile.module.css";
 
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileMain from "../../components/Profile/ProfileMain";
+import FollowButton from "../../components/Profile/FollowButton";
+import FollowList from "../../components/Profile/FollowList";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -13,37 +15,45 @@ import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
 import allAuth from "../../components/User/allAuth";
 
+//회원탈퇴
+import { useNavigate } from "react-router";
+
+import { removeCookieToken } from "../../components/User/CookieStorage";
+import { DELETE_TOKEN } from "../../store/TokenSlice";
+
+import { Logoutstate } from "../../store/LoginSlice";
+
 function MyProfile() {
   //------------------------------로그인 시작
   const dispatch = useDispatch();
-  const isAccess = useSelector((state) => state.authToken.accessToken);
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
+
   useEffect(() => {
-    allAuth(isAccess, dispatch);
-  }, [dispatch]);
+    allAuth(AccsesToken, dispatch);
+  }, []);
   //-----------------------------------여기까지
 
   // api 요청 후 받아온 user 정보 (모듈화 진행)
-  const AccsesToken = useSelector((state) => state.authToken.accessToken);
-
-  const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
-  // const baseURL = "http://localhost:8080"; // 개발용
+  // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
+  const baseURL = "http://localhost:8080"; // 개발용
 
   const [user, setUser] = useState([]);
+  const memberId = sessionStorage.getItem("memberId");
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/mypage`, {
+      .get(`${baseURL}/api/mypage/${memberId}`, {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
         setUser(response.data);
-        sessionStorage.setItem("user", response.data);
-        // console.log(user);
+        sessionStorage.setItem(user, JSON.stringify(response.data));
+        // console.log("user");
         // console.log(response.data);
       })
       .catch((error) => {
         // console.log(error);
-        sessionStorage.setItem("user", []);
+        sessionStorage.setItem(user, ["error"]);
       });
   }, []);
 
@@ -54,7 +64,36 @@ function MyProfile() {
   //   sessionStorage.setItem("user");
   // };
 
-  const [Menu, setMenu] = useState();
+  const [Menu, setMenu] = useState(0);
+
+  const [FollowButtonClick, setFollowButtonClick] = useState(false);
+
+  const navigate = useNavigate();
+  const handleunregister = async () => {
+    //백에 요청 날리고
+    const data = {
+      headers: {
+        Authorization: AccsesToken,
+      },
+    };
+    if (window.confirm("정말로 탈퇴하시겠습니까?")) {
+      try {
+        await axios.get(`${process.env.REACT_APP_BASE_URL}/api/test`, data);
+        //logoutpage 하기
+        // store에 저장된 Access Token 정보를 삭제
+        dispatch(DELETE_TOKEN());
+        // Cookie에 저장된 Refresh Token 정보를 삭제
+        removeCookieToken();
+        dispatch(Logoutstate());
+        sessionStorage.clear();
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("회원탈퇴를 취소하셨습니다.");
+    }
+  };
 
   return (
     <div>
@@ -69,23 +108,30 @@ function MyProfile() {
               alt={user.Userprofilepic}
             />
             <p className={classes.ProfilenNickName}>{user.nickname}</p>
-            <p className={classes.ProfileNickName}>{user.nickname}</p>
             <p className={classes.ProfileMsg}>{user.stMsg}</p>
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
-              <p></p>
-              <p>팔로잉/팔로워</p>
+              <FollowButton
+                memberId={user.memberId}
+                setFollowButtonClick={setFollowButtonClick}
+              />
             </div>
+            <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>
           <hr />
           <div className={classes.UserProfileMenu}>
-            <ProfileMenu setMenu={setMenu} />
+            <ProfileMenu
+              setMenu={setMenu}
+              setFollowButtonClick={setFollowButtonClick}
+            />
           </div>
         </div>
         {/* 화면 오른쪽 화면 출력 창 */}
+
         <div className={classes.Profilecontent}>
-          <ProfileMain Menu={Menu} />
+          {FollowButtonClick ? <FollowList /> : <ProfileMain Menu={Menu} />}
+          {/* <ProfileMain Menu={Menu} /> */}
         </div>
       </div>
     </div>
