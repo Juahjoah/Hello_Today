@@ -21,6 +21,8 @@ import ProfileCalenderDetail from "./components/Profile/ProfileCalenderDetail";
 // import PublicRoute from "./Router/PublicRoute";
 // import PrivateRoute from "./Router/PrivateRoute";
 
+import LoginHome from "./components/Home/LoginHome";
+
 function App() {
   Modal.setAppElement("#root");
   const islogin = useSelector((state) => state.login.isLogin);
@@ -71,6 +73,7 @@ function App() {
       ></Route>
       {/* <Route path="/roomId" element={<JoinRoom />} /> */}
       {/* <Route path="/roomId" element={<VideoRoomComponent />} /> */}
+      <Route path="/test" element={<LoginHome/>}/>
     </Routes>
   );
 }

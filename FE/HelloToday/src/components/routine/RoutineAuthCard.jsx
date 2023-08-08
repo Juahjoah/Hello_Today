@@ -2,17 +2,13 @@ import classes from "./RoutineAuthCard.module.css";
 
 function RoutineAuthCard({
   routineDetailDto,
-  routineCheckDtoList,
   handleAuthInfo, 
-  content,
-  routineId,
-  // imgPath,
   handleModalOpen,
 }) {
   const selectRoutineImgPath = `images/Routine/${routineDetailDto.imgPath}`;
   
   const handleAuthButtonClick = () => {
-    handleAuthInfo({ routineId, content });
+    handleAuthInfo({ routineDetailDto });
     handleModalOpen(true);
   };
 

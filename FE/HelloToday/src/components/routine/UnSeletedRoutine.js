@@ -72,7 +72,7 @@ function UnSelectedRoutine(props) {
 
   // 루틴 제출 시 redirect
   if (redirectToAuth) {
-    return <Navigate to="/selectmain" />;
+    return <Navigate to="/" />;
   }
 
   // function
@@ -102,9 +102,9 @@ function UnSelectedRoutine(props) {
 
     dispatch(haveRoutine(true));
     closeModal();
-    // setRedirectToAuth(true);
+    setRedirectToAuth(true);
     // 메인으로 돌아가기
-    return <Navigate to="/selectmain" />;
+    // return <Navigate to="/" />;
   };
 
   // modal style
