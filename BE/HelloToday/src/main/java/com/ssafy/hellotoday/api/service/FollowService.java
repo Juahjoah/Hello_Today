@@ -4,7 +4,6 @@ import com.ssafy.hellotoday.api.dto.follow.request.FollowSaveRequestDto;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.follow.response.FollowResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberResponseDto;
-import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.exception.validator.FollowValidator;
 import com.ssafy.hellotoday.common.exception.validator.MemberValidator;
 import com.ssafy.hellotoday.common.util.constant.FollowResponseEnum;
@@ -14,7 +13,6 @@ import com.ssafy.hellotoday.db.repository.FollowRepository;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -125,6 +123,26 @@ public class FollowService {
                 .build();
     }
 
+    /**
+     * 두 사용자가 팔로우 상태인지 확인하는 메소드
+     * @param follower 로그인 된 사용자
+     * @param followeeId 팔로우 상태를 확인하고자 하는 사용자
+     * @return 팔로우 상태를 true, false로 리턴
+     */
+    public BaseResponseDto checkFollowStatus(Member follower, int followeeId) {
+        int followerId = follower.getMemberId();
+        memberValidator.checkDifferentMembers(followerId, followeeId);
+
+        Member followee = getMember(followeeId);
+        Optional<Follow> follow = followRepository.findByFollowing_MemberId(followee.getMemberId());
+
+        if (follow.isPresent()) {
+            return getFollowStatusResponse(FollowResponseEnum.FOLLOW_STATUS_TRUE.getName(), true);
+        } else {
+            return getFollowStatusResponse(FollowResponseEnum.FOLLOW_STATUS_FALSE.getName(), false);
+        }
+    }
+
     @Transactional
     public int saveFollow(Member follower, Member followee) {
         Follow follow = Follow.builder()
@@ -143,26 +161,11 @@ public class FollowService {
         return member.get();
     }
 
-    public BaseResponseDto checkFollowStatus(int memberId) {
-        memberRepository.findById(memberId).orElseThrow(() -> CustomException.builder()
-                .status(HttpStatus.BAD_REQUEST)
-                .code(5005)
-                .message("memberId " + memberId + "에 해당하는 사용자가 없습니다.")
-                .build());
-        Optional<Follow> follow = followRepository.findByFollowing_MemberId(memberId);
-
-        if (follow.isPresent()) {
-            return BaseResponseDto.builder()
-                    .success(true)
-                    .message("팔로우 되어있는 상태입니다.")
-                    .data(true)
-                    .build();
-        } else {
-            return BaseResponseDto.builder()
-                    .success(true)
-                    .message("팔로우 되어있지 않은 상태입니다.")
-                    .data(false)
-                    .build();
-        }
+    private BaseResponseDto getFollowStatusResponse(String message, boolean success) {
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(message)
+                .data(success)
+                .build();
     }
 }
