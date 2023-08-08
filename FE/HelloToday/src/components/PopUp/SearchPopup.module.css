@@ -11,6 +11,7 @@
 
 .searchPopupTitle {
   font-size: 25px;
+  font-family: "TheJamsil5Bold";
 }
 
 
@@ -113,6 +114,7 @@
   font-size: 20px;
   text-align: left;
   margin-left: 18px;
+  font-family: "TheJamsil5Bold";
   /* width: 23vh; */
 }
 .searchLeftHashTag {
@@ -121,6 +123,7 @@
   font-size: 10px;
   margin-left: 17px;
   text-align: left;
+  font-family: "TheJamsil5Bold";
   /* width: 25vh; */
 }
 
