@@ -21,6 +21,7 @@ function Nav() {
   const navigate = useNavigate();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const memberId = sessionStorage.getItem("memberId");
 
   const memberId = sessionStorage.getItem("memberId");
 
@@ -54,6 +55,20 @@ function Nav() {
             개인 루틴
           </button>
         </Link>
+
+        {/* <Link to={PersonalRoutine}>
+          <button
+            onClick={() => {
+              if (isUserhaveRoutine) {
+                return;
+              }
+              dispatch(resetRoutine());
+            }}
+            className={classes.navLeftPersonal}
+          >
+            개인 루틴
+          </button>
+        </Link> */}
         <Link to="/GroupRoutine">
           <button
             onClick={() => {
