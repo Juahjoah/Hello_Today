@@ -1,4 +1,3 @@
-import { flexibleCompare } from "@fullcalendar/core/internal";
 import classes from "./FollowButton.module.css";
 
 import axios from "axios";
@@ -7,9 +6,8 @@ import { useSelector } from "react-redux";
 
 function FollowButton(props) {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  // const UserId = sessionStorage.getItem("memberId");
   // 팔로잉 상태를 구분하는 변수
-  const [isFollow, setIsFollow] = useState();
+  const [isFollow, setIsFollow] = useState(false);
   // 접속한 프로필이 나인가, 아닌가 판단해서 값을 주기
   const [isMe, setIsMe] = useState(false);
 
@@ -18,27 +16,31 @@ function FollowButton(props) {
     setIsMe(
       +props.memberId === +sessionStorage.getItem("memberId") ? true : false
     );
-    if (props.memberId !== undefined) {
+    if (!isMe && props.memberId !== undefined) {
       axios
-        .get(`${process.env.REACT_APP_BASE_URL}/api/follow`, {
+        .get(`${process.env.REACT_APP_BASE_URL}/api/follow/`, {
           params: { memberId: props.memberId },
           headers: { Authorization: AccsesToken },
         })
         .then((response) => {
-          if (response.data.success === true) {
+          if (response.data.data === true) {
             setIsFollow(true);
           } else {
             setIsFollow(false);
           }
-          // console.log(response.data.success);
+
+          // console.log(response.data.data);
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  }, [props.memberId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.memberId, AccsesToken, isFollow, isMe]);
 
-  const UserFollowClick = (event) => {
+  console.log(isFollow);
+
+  const UserFollowClick = () => {
     if (!isFollow) {
       // event.target.innerText = "Follow";
       axios
@@ -52,7 +54,7 @@ function FollowButton(props) {
         .then((response) => {
           console.log(response.data);
           console.log(response.data.data);
-          setIsFollow((isFollow) => !isFollow);
+          setIsFollow(true);
         })
         .catch((error) => {
           console.log(error);
@@ -66,7 +68,7 @@ function FollowButton(props) {
         })
         .then((response) => {
           // console.log(response.data);
-          setIsFollow((isFollow) => !isFollow);
+          setIsFollow(false);
         })
         .catch((error) => {
           console.log(error);
