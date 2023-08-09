@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "@fullcalendar/core";
 import axios from "axios";
@@ -15,6 +15,7 @@ import "./ProfileCalendar.css";
 
 export function ProfileCalender() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // API로 데이터 가져오기
   // nav에서 memberId 고정한 것 고쳐주기

@@ -37,6 +37,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId }) {
       <div>
         <p
           onClick={(event) => {
+            console.log("응원메세지");
             UserSelectMenu(event);
           }}
         >

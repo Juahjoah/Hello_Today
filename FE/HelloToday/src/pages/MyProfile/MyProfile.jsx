@@ -30,6 +30,7 @@ function MyProfile() {
   const dispatch = useDispatch();
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const [isUserEdit, setIsUserEdit] = useState(false);
+  const iscaldetail = useSelector((state) => state.calendarDetail.iscaldetail);
 
   useEffect(() => {
     allAuth(AccsesToken, dispatch);
