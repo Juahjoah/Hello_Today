@@ -15,13 +15,12 @@ import {
 } from "react-icons/bs";
 
 import { MdQuestionAnswer } from "react-icons/md";
+import LeftsideRoomInfoTime from "../../components/video/LeftsideRoomInfoTime";
 
 // 세션 입장
 function JoinRoom() {
   const APPLICATION_SERVER_URL =
     process.env.NODE_ENV === "production" ? "" : "https://demos.openvidu.io/";
-
-  const API_URL = "https://i9b308.p.ssafy.io";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,7 +28,7 @@ function JoinRoom() {
   // session, state 선언
   const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState("");
-  // const [myMemberId, setMyMemberId] = useState(undefined);
+  const [myMemberId, setMyMemberId] = useState(undefined);
   const [session, setSession] = useState(undefined);
   const [myRoomId, setMyRoomId] = useState(undefined);
   const [myAccessToken, setMyAccessToken] = useState(undefined);
@@ -44,6 +43,8 @@ function JoinRoom() {
   // 새로운 OpenVidu 객체 생성
   const [OV, setOV] = useState(<OpenVidu />);
   // const OV = new OpenVidu();
+
+  // roomTitle??
   const roomTitle = location.state.roomTitle;
   const token = location.state.Token;
 
@@ -75,6 +76,9 @@ function JoinRoom() {
       return;
     }
 
+    console.log(location.state.memberId);
+    console.log(location.state.accessToken);
+
     // 이전 페이지에서 받아온 데이터 -> redux로 변경 필요 !
     // setMySessionId(location.state.roomId);
     setMySessionId(location.state.sessionId);
@@ -83,7 +87,7 @@ function JoinRoom() {
     setAudioEnabled(location.state.audioEnabled);
     setMyRoomId(location.state.roomId);
     setMyAccessToken(location.state.accessToken);
-    // setMyMemberId(location.state.memberId);
+    setMyMemberId(location.state.memberId);
 
     // 윈도우 객체에 화면 종료 이벤트 추가
     window.addEventListener("beforeunload", onBeforeUnload);
@@ -104,7 +108,7 @@ function JoinRoom() {
   // 1명이 방안에 남았을 때, 세션 out 요청
   const axiosSessionDelete = () => {
     axios({
-      url: `${API_URL}/api/rooms/${myRoomId}`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${myRoomId}`,
       method: "delete",
       headers: {
         Authorization: myAccessToken,
@@ -133,6 +137,7 @@ function JoinRoom() {
     setSubscribers([]);
     //
     setMyRoomId(undefined);
+    // TODO: 토큰이랑 멤버아이디 초기화 해줘야할지도?
 
     navigate("/GroupRoutine");
   };
@@ -212,7 +217,9 @@ function JoinRoom() {
     if (session && token) {
       // 첫 번째 매개변수는 OpenVidu deployment로 부터 얻은 토큰, 두 번째 매개변수는 이벤트의 모든 사용자가 검색할 수 있음.
       session
-        .connect(token, { clientData: myUserName })
+        .connect(token, {
+          clientData: { nickName: myUserName, memberId: myMemberId },
+        })
         .then(async () => {
           // Get your own camera stream ---
           // publisher 객체 생성
@@ -226,6 +233,9 @@ function JoinRoom() {
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: true, // Whether to mirror your local video or not
           });
+
+          // const videoElement = publisher.videoElement;
+          // videoElement.style.borderRadius = "10px";
           // Publish your stream ---
           session.publish(publisher);
           // Set the main video in the page to display our webcam and store our Publisher
@@ -263,7 +273,7 @@ function JoinRoom() {
   const callQuestion = () => {
     console.log(myRoomId);
     axios({
-      url: `${API_URL}/api/rooms/${myRoomId}/question`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${myRoomId}/question`,
       method: "get",
       headers: {
         Authorization: myAccessToken,
@@ -289,14 +299,20 @@ function JoinRoom() {
                 <div className={classes.leftsideRoomInfoTitle}>
                   {roomTitle ?? "roomTitle"}
                 </div>
-                <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div>
+                {/* <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div> */}
+                <div className={classes.leftsideRoomInfoTime}>
+                  <LeftsideRoomInfoTime />
+                </div>
               </div>
               <div className={classes.divideline}></div>
               <div className={classes.leftsideRoomUsers}>
                 <div className={classes.userCameraZone}>
                   {publisher !== undefined ? (
                     <div className={classes.publisher}>
-                      <UserVideoComponent streamManager={publisher} />
+                      <UserVideoComponent
+                        isMe={true}
+                        streamManager={publisher}
+                      />
                     </div>
                   ) : null}
 
@@ -305,7 +321,11 @@ function JoinRoom() {
                       key={`${i}-subscriber`}
                       className={classes.subscribers}
                     >
-                      <UserVideoComponent streamManager={sub} />
+                      <UserVideoComponent
+                        accessToken={myAccessToken}
+                        streamManager={sub}
+                        isMe={false}
+                      />
                     </div>
                   ))}
                 </div>

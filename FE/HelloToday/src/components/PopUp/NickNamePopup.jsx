@@ -4,10 +4,14 @@ import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 
-function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
 
+function NickNamePopup({
+  FirstLogin,
+  setFirstLogin,
+  Token,
+  setNickName,
+  memberId,
+}) {
   const [userName, setUserName] = useState("");
   // 정규식 통과 검사(닉네임 형식)
   const [isUserName, setIsUserName] = useState(false);
@@ -48,7 +52,7 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
 
   const nickNameCheckAxios = () => {
     axios({
-      url: `${API_URL}/api/members/nickname`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/members/nickname`,
       method: "get",
       params: {
         nickname: userName,
@@ -75,7 +79,7 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
 
   const changeNickName = () => {
     axios({
-      url: `${API_URL}/api/members/nickname`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/members/nickname`,
       method: "put",
       data: {
         nickname: userName,
@@ -85,7 +89,14 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
       },
     })
       .then(setFirstLogin(false))
-      .then((res) => setNickName(res.data.data.nickname));
+      .then((res) => {
+        setNickName(res.data.data.nickname);
+        localStorage.setItem("nickName", res.data.data.nickname);
+        localStorage.setItem("memberId", memberId);
+        localStorage.setItem("isFirstLogin", false);
+        setFirstLogin(false)
+
+      });
   };
 
   // modal style
@@ -113,6 +124,8 @@ function NickNamePopup({ FirstLogin, setFirstLogin, Token, setNickName }) {
       borderRadius: "12px",
     },
   };
+
+  console.log(typeof FirstLogin)
 
   return (
     <Modal style={modalStyle} isOpen={FirstLogin}>

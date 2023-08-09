@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-// const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
-const baseURL = "http://localhost:8080"; // 개발용
-
 function FollowList(props) {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
 
@@ -15,7 +12,7 @@ function FollowList(props) {
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/follow/follower`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/api/follow/follower`, {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
@@ -27,7 +24,7 @@ function FollowList(props) {
       });
 
     axios
-      .get(`${baseURL}/api/follow/following`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/api/follow/following`, {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {

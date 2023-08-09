@@ -7,69 +7,104 @@
 }
 
 .content {
-  padding: 10px 0px 10px 12.87px;
+  display: flex;
+  flex-direction: column;
+  flex: 3.5;
+  width: 90%;
+  background: rgb(244, 241, 250);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding-bottom: 50px;
 }
 
 .login {
-  border: 1px solid black;
-  width: 90%;
-  height: 75vh;
-  margin: 170px auto 0 auto;
+  /* border: 1px solid black; */
+  width: 200vh;
+  height: 87vh;
+  margin: 6vh;
   display: flex;
   /* justify-content: center; */
-  justify-items: center;
+  /* justify-items: center; */
   align-items: center;
+  overflow: hidden;
+  background-color: #a581cf60;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
 }
 
 .LoginText {
-  color: #000;
-  font-family: The Jamsil OTF;
-  font-size: 3rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  padding-left: 300px;
+  margin-top: -30px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
 }
 .MainText {
   color: #000;
-  font-family: The Jamsil OTF;
-  font-size: 3rem;
+  font-family: "TheJamsil5Bold";
+  font-size: 26px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin-left: 78px;
+  text-align: start;
 }
 
 .MainText:nth-child(1) {
-  color: #000;
-  font-family: The Jamsil OTF;
-  font-size: 3rem;
+  /* color: #000;
+  font-family: The Jamsil OTF; */
+  font-size: 5vh;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
 .MainText:nth-child(2) {
-  margin-top: 3rem;
+  margin-top: 1px;
 }
 .MainText:nth-child(3) {
-  margin-top: -3rem;
+  margin-top: -15px;
 }
 
 .logo {
-  width: 13rem;
-  height: 10.75rem;
-  flex-shrink: 0;
+  width: 25vh;
 }
 
 .btn {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.naverSection,
+.kakaoSection {
+  display: flex;
+  justify-content: center;
 }
 
 .kakao {
+  width: 35vh;
+  margin-bottom: 5px;
+  margin-top: 3vh;
 }
 
 .naver {
-  width: 23.125rem;
-  height: 5.2rem;
+  width: 35vh;
+}
+
+.rightContent {
+  display: flex;
+  flex: 5.5;
+  justify-content: center;
+}
+
+.rightImg {
+  width: 100%;
+  height: 100vh;
+}
+.leftlogo {
+  text-align: center;
+}
+
+.none {
+  flex: 0.5;
 }

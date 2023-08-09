@@ -3,8 +3,7 @@ import { Splide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
-import classes from "../Home/HomeThree.module.css";
-import { useSelector } from "react-redux";
+import classes from "./SelectRoutineItem.module.css";
 
 function SelectRoutineList({
   bigRoutine,

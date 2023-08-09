@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class SchedulerService {
-    private final JPAQueryFactory queryFactory;
     private final RoutineRepository routineRepository;
 
     // 매일 오전 0시 0분마다 실행
