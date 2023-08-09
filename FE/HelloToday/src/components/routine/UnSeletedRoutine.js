@@ -15,14 +15,16 @@ import SelectRoutineItem from "./SelectRoutineItem";
 import NickNamePopup from "../PopUp/NickNamePopup";
 import MainBanner from "../common/MainBanner";
 
-function UnSelectedRoutine(props) {
+function UnSelectedRoutine() {
   // state & data
   const API_URL = "https://i9b308.p.ssafy.io";
   const LOCAL_URL = "http://localhost:8080"
   const location = useLocation();
-  // const memberId = location.state.memberId;
+
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-//   const isFirstLogin = location.state.isFirstLogin;
+  const isFirstLogin = JSON.parse(localStorage.getItem("isFirstLogin"))
+  const memberId = localStorage.getItem('memberId')
+
 
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
@@ -31,9 +33,11 @@ function UnSelectedRoutine(props) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
-//   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-//   const [nickName, setNickName] = useState(location.state.nickName);
-  // const [FirstLogin, setFirstLogin] = useState(true);
+  const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
+  const [nickName, setNickName] = useState("");
+
+  console.log(typeof FirstLogin)
+  console.log(typeof false)
   const dispatch = useDispatch();
   const routineSelectBannerImg = "main_banner_routineselect1";
   const routineSelectMainBannerMents = [
@@ -215,12 +219,13 @@ function UnSelectedRoutine(props) {
         </Modal>
   
         {/* NickName Modal */}
-        {/* <NickNamePopup
+        <NickNamePopup
           FirstLogin={FirstLogin}
           setFirstLogin={setFirstLogin}
           Token={AccsesToken}
           setNickName={setNickName}
-        /> */}
+          memberId={memberId}
+        />
       </>
     );
 }

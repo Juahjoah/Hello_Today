@@ -95,6 +95,9 @@ function NickNamePopup({
         setNickName(res.data.data.nickname);
         localStorage.setItem("nickName", res.data.data.nickname);
         localStorage.setItem("memberId", memberId);
+        localStorage.setItem("isFirstLogin", false);
+        setFirstLogin(false)
+
       });
   };
 
@@ -123,6 +126,8 @@ function NickNamePopup({
       borderRadius: "12px",
     },
   };
+
+  console.log(typeof FirstLogin)
 
   return (
     <Modal style={modalStyle} isOpen={FirstLogin}>
