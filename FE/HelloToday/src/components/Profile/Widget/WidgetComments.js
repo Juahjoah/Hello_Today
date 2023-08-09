@@ -29,13 +29,13 @@ function WidgetComments(props) {
         }
       )
       .then((response) => {
-        console.log(response.data);
         setComments(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   useEffect(() => {
     getComments(memberId);
   }, [memberId]);
@@ -59,7 +59,7 @@ function WidgetComments(props) {
         // } else {
         //   alert("응원 메시지가 등록되었습니다.");
         setNewComment("");
-        getComments();
+        getComments(memberId);
         // }
       })
       .catch((error) => {
@@ -70,7 +70,7 @@ function WidgetComments(props) {
   const EditComment = (messageId, editedContent) => {
     axios
       .put(
-        `${baseURL}/api/comments/${messageId}`,
+        `${baseURL}/api/mypage/cheermsg/${messageId}`,
         {
           content: editedContent,
         },
@@ -89,13 +89,21 @@ function WidgetComments(props) {
 
   const DeleteComment = (messageId) => {
     axios
-      .delete(`${baseURL}/api/comments/${messageId}`, {
-        // params: { cheerMessageId: messageId },
-        headers: { Authorization: AccsesToken },
-      })
+      .delete(
+        `${baseURL}/api/mypage/cheermsg/${messageId}`,
+        //     {
+        //     data = { cheerMessageId: messageId },
+        // }
+
+        {
+          // data: { cheerMessageId: messageId },
+          headers: { Authorization: AccsesToken },
+        }
+      )
       .then((response) => {
-        console.log(response.data);
-        // 댓글 삭제 후 필요한 업데이트 로직 구현
+        // console.log(response.data);
+        // console.log(response.data.data);
+        getComments(memberId);
       })
       .catch((error) => {
         console.log(error);

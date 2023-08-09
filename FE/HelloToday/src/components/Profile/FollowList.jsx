@@ -44,13 +44,19 @@ function FollowList(props) {
       <h1>함께하는 모듈러 보기</h1>
       <h3>팔로잉하는 사람</h3>
       {Followings.map((following) => (
-        <div key={following.memberId}>{following.nickname}</div>
+        <div key={following.memberId}>
+          <img src={following.profilePath} alt="followerImg" />
+          {following.nickname}
+        </div>
       ))}
       {Followings && Followings.length === 0 && <div>팔로잉 없음</div>}
 
       <h3>팔로우하는 사람</h3>
       {Followers.map((follower) => (
-        <div key={follower.memberId}>{follower.nickname}</div>
+        <div key={follower.memberId}>
+          <img src={follower.profilePath} alt="followerImg" />
+          {follower.nickname}
+        </div>
       ))}
       {Followers && Followers.length === 0 && <div>팔로워 없음</div>}
     </div>

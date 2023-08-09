@@ -53,7 +53,8 @@ function FollowButton(props) {
           }
         )
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
+          console.log(response.data.data);
           setIsFollow((isFollow) => !isFollow);
         })
         .catch((error) => {
