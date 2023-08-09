@@ -122,6 +122,7 @@ function MyProfile() {
             <ProfileMenu
               setMenu={setMenu}
               setFollowButtonClick={setFollowButtonClick}
+              memberId={params.memberId}
             />
           </div>
         </div>
