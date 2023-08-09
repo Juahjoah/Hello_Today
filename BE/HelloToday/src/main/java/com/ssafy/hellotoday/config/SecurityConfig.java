@@ -38,6 +38,7 @@ public class SecurityConfig {
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .antMatchers("/api/members/kakao/**", "/api/members/naver/**", "/api/members/reissue").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/routine/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/profile/**").permitAll()
                 .anyRequest().authenticated()
             .and()
             .cors()
