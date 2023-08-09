@@ -1,5 +1,5 @@
 // import classes from "./Home.module.css";
-import classes from "../../pages/Home/Home.module.css"
+import classes from "../../pages/Home/Home.module.css";
 import { useNavigate } from "react-router-dom";
 import HomeOne from "../../components/Home/HomeOne";
 import HomeTwo from "../../components/Home/HomeTwo";
@@ -19,7 +19,7 @@ function NoLoginHome() {
   const scroll4Ref = useRef();
 
   const goHomeOne = () => {
-    scroll1Ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    scroll2Ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
   const goHomeTwo = () => {
     // scroll2Ref.current.scrollIntoView({
@@ -143,10 +143,10 @@ function NoLoginHome() {
       <div ref={scroll1Ref}>
         <HomeOne />
       </div>
-      <div ref={ref2}>
+      <div ref={scroll2Ref}>
         <HomeTwo />
       </div>
-      <div ref={scroll2Ref}></div>
+      {/* <div ref={scroll2Ref}></div> */}
       <div ref={ref3}>
         <HomeThree AllRoutineList={AllRoutineList} />
       </div>
