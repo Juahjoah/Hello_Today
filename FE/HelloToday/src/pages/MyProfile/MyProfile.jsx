@@ -6,6 +6,7 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileMain from "../../components/Profile/ProfileMain";
 import FollowButton from "../../components/Profile/FollowButton";
 import FollowList from "../../components/Profile/FollowList";
+import MyProfileEdit from "./MyProfileEdit";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -22,6 +23,8 @@ import { removeCookieToken } from "../../components/User/CookieStorage";
 import { DELETE_TOKEN } from "../../store/TokenSlice";
 
 import { Logoutstate } from "../../store/LoginSlice";
+import { Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function MyProfile() {
   //------------------------------로그인 시작
@@ -108,6 +111,9 @@ function MyProfile() {
             <p className={classes.ProfilenNickName}>{user.nickname}</p>
             <p className={classes.ProfileMsg}>{user.stMsg}</p>
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
+            <Link to="MyProfile/edit">
+              <button>편집모드 이도오옹</button>
+            </Link>
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
               <FollowButton

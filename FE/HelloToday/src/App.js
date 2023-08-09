@@ -17,6 +17,7 @@ import RedirectPageNaver from "./components/User/PageRedirectNaver";
 import LogoutPage from "./components/User/PageLogout";
 import { useSelector } from "react-redux";
 import ProfileCalenderDetail from "./components/Profile/ProfileCalenderDetail";
+import MyProfileEdit from "./pages/MyProfile/MyProfileEdit";
 //직접 경로 url 막기
 // import PublicRoute from "./Router/PublicRoute";
 // import PrivateRoute from "./Router/PrivateRoute";
@@ -58,6 +59,7 @@ function App() {
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
       {/* 남의 memberid 가져오기 */}
       <Route path="/MyProfile/:memberId" element={<MyProfile />} />
+      <Route path="/MyProfile/edit" element={<MyProfileEdit />} />
       <Route path="/:roomId" element={<JoinRoom />} />
 
       <Route

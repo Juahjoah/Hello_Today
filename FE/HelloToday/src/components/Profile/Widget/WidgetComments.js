@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-import WidgetCommentsEdit from "./WidgetCommentsEdit";
+// import WidgetCommentsEdit from "./WidgetCommentsEdit";
 
 // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
 const baseURL = "http://localhost:8080"; // 개발용
