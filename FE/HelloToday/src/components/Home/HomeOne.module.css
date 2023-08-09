@@ -12,10 +12,30 @@
   }
 }
 
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* .HomeMain {
+  padding: 6em 0 1em 0;
+  width: 100%;
+  height: 1000px;
+} */
 .HomeMain {
   padding: 6em 0 1em 0;
   width: 100%;
   height: 1000px;
+  position: relative;
 }
 
 .Homecontainer {
@@ -108,4 +128,18 @@
   word-break: keep-all;
   position: absolute;
   margin-top: 3rem;
+}
+
+.downArrow {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  font-size: 100px;
+  bottom: 350px;
+  right: 120px;
+  border: none;
+  background: transparent;
+  color: #a581cf;
+
+  animation: jumpAnimation 1.2s infinite;
 }

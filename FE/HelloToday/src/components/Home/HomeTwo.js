@@ -1,6 +1,7 @@
 import classes from "./HomeTwo.module.css";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
 
-function HomeTwo() {
+function HomeTwo({ goHomeThree }) {
   return (
     <div
       className={classes.HomeTwo}
@@ -35,6 +36,9 @@ function HomeTwo() {
           </p>
         </div>
       </div>
+      <button onClick={goHomeThree} className={classes.downArrow}>
+        <BsFillArrowDownCircleFill />
+      </button>
     </div>
   );
 }

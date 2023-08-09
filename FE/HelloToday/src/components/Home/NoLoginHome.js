@@ -7,7 +7,6 @@ import HomeThree from "../../components/Home/HomeThree";
 import HomeLast from "../../components/Home/HomeLast";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useInView } from "react-intersection-observer";
 
 function NoLoginHome() {
   const [AllRoutineList, setAllRoutineList] = useState([]);
@@ -19,39 +18,21 @@ function NoLoginHome() {
   const scroll4Ref = useRef();
 
   const goHomeOne = () => {
-    scroll2Ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    scroll1Ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
   const goHomeTwo = () => {
-    // scroll2Ref.current.scrollIntoView({
-    //   behavior: "smooth",
-    //   block: "center",
-    // });
-    window.scrollTo({
-      top: window.scrollY + 950, // 현재 스크롤 위치에서 500px 만큼 아래로 스크롤
-      behavior: "smooth", // 부드러운 스크롤 효과 적용
+    scroll2Ref.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
     });
   };
 
   const goHomeThree = () => {
-    ref3.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    scroll3Ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
   const goHomeLast = () => {
-    ref4.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    scroll4Ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
-
-  const [ref2, inView2] = useInView();
-
-  useEffect(() => {
-    if (inView2) {
-      console.log(inView2);
-      goHomeTwo();
-    } else {
-      console.log(inView2);
-    }
-  }, [inView2]);
-
-  const [ref3, inView3] = useInView();
-  const [ref4, inView4] = useInView();
 
   useEffect(() => {
     async function axiosRoutineData() {
@@ -141,16 +122,15 @@ function NoLoginHome() {
       </div>
 
       <div ref={scroll1Ref}>
-        <HomeOne />
+        <HomeOne goHomeTwo={goHomeTwo} />
       </div>
       <div ref={scroll2Ref}>
-        <HomeTwo />
+        <HomeTwo goHomeThree={goHomeThree} />
       </div>
-      {/* <div ref={scroll2Ref}></div> */}
-      <div ref={ref3}>
+      <div ref={scroll3Ref}>
         <HomeThree AllRoutineList={AllRoutineList} />
       </div>
-      <div ref={ref4}>
+      <div ref={scroll4Ref}>
         <HomeLast />
       </div>
     </div>

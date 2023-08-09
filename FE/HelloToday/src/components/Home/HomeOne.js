@@ -5,10 +5,12 @@ import { useEffect } from "react";
 import TypeIt from "typeit-react";
 import { BsFillArrowDownCircleFill } from "react-icons/bs";
 
-function HomeOne() {
+function HomeOne({ goHomeTwo }) {
   useEffect(() => {
     AOS.init();
   }, []);
+
+  console.log(goHomeTwo);
 
   return (
     <div className={classes.HomeMain}>
@@ -134,6 +136,9 @@ function HomeOne() {
             </div>
           </div>
         </div>
+        <button onClick={goHomeTwo} className={classes.downArrow}>
+          <BsFillArrowDownCircleFill />
+        </button>
       </div>
     </div>
   );

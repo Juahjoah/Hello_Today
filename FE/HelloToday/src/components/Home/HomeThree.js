@@ -1,26 +1,22 @@
 import classes from "./HomeThree.module.css";
 import SelectRoutineList from "../routine/SelectRoutineList";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 function HomeThree({ AllRoutineList }) {
-  const [num, setNum] = useState(1);
+  const count = useMotionValue(0);
+  const num = useTransform(count, Math.round);
 
   useEffect(() => {
-    if (num < 26) {
-      const interval = setInterval(() => {
-        setNum((prevNum) => prevNum + 1);
-      }, 50);
+    const animation = animate(count, 26, { duration: 5 });
 
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [num]);
+    return animation.stop;
+  }, []);
 
   return (
     <div className={classes.test}>
       <p className={classes.routineNumDescription}>
-        <span className={classes.routineNum}>{num}</span>여종의{" "}
+        <motion.span className={classes.routineNum}>{num}</motion.span>여종의{" "}
         <span className={classes.routineNumSelect}>루틴 선택</span> 가능{" "}
       </p>
       {AllRoutineList.map((bigRoutine, index) => {
