@@ -29,15 +29,17 @@ const User = () => {
   return (
     <div
       className={classe.login}
-      style={{
-        background: "url(images/Login/Routine_bannerimg.png)",
-        backgroundRepeat: "no-repeat",
-        // backgroundSize: "100% 100%",
-        backgroundPosition: "right center",
-      }}
+      // style={{
+      //   background: "url(images/Login/Routine_bannerimg.png)",
+      //   backgroundRepeat: "no-repeat",
+      //   // backgroundSize: "100% 100%",
+      //   backgroundPosition: "right center",
+      // }}
     >
       <div className={classe.content}>
+        <div className={classe.leftlogo}>
         <img className={classe.logo} src="/images/logo.png" alt="logo" />
+        </div>
         <div /*이미지 넣기*/></div>
         <div className={classe.LoginText}>
           <p className={classe.MainText}>간편하게 로그인하고</p>
@@ -62,6 +64,10 @@ const User = () => {
             />
           </button>
         </div>
+      </div>
+      <div className={classe.rightContent}>
+          <img className={classe.rightImg}
+          src="../../images/Login/Routine_bannerimg.png"/>
       </div>
     </div>
   );
