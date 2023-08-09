@@ -5,8 +5,8 @@ import axios from "axios";
 import SearchContent from "./SearchContent";
 import SearchHashTag from "./SearchHashTag";
 // import classNames from "classnames";
-import {HiSearch} from 'react-icons/hi'
-import {GrFormRefresh} from 'react-icons/gr'
+import { HiSearch } from "react-icons/hi";
+import { GrFormRefresh } from "react-icons/gr";
 
 function getRandomIndexes(totalLength, count) {
   const indexes = [];
@@ -28,9 +28,8 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
   const API_URL = "http://localhost:8080";
 
   useEffect(() => {
-
-    tagAxios()
-  },[])
+    tagAxios();
+  }, []);
 
   const keyPressHandler = (e) => {
     if (e.key === "Enter") {
@@ -45,9 +44,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
   };
 
   const searchAxios = () => {
-
-    if(userName===""){
-
+    if (userName === "") {
       alert("닉네임을 입력해주세요");
       return;
     }
@@ -67,10 +64,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
       .catch(console.log(userName));
   };
 
-  const tagAxios = async () => {
-
-
-
+  const tagAxios = async() => {
     await axios({
       url: `${API_URL}/api/routine/tag`,
       method: "get",
@@ -130,15 +124,14 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
               onChange={(e) => setUserName(e.target.value)} // 입력 값이 변경될 때마다 상태 업데이트
             />
 
-             <button className={classes.searchButton} onClick={searchAxios}>
-              <HiSearch/>
-
+            <button className={classes.searchButton} onClick={searchAxios}>
+              <HiSearch />
             </button>
           </div>
           <div className={classes.searchHashTagForm}>
             {/* <div className={classes.searchHashTagFormTag}> */}
             <div>
-                {randomHashList.map((tag, index) => (
+              {randomHashList.map((tag, index) => (
                 <SearchHashTag
                   key={index}
                   tagId={tag.tagId}
@@ -147,12 +140,12 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
                 />
               ))}
             </div>
-          
-              <button className={classes.HashTagRe} onClick={tagAxios}><GrFormRefresh/></button>
-              
-              
-            {/* </div> */}
 
+            <button className={classes.HashTagRe} onClick={tagAxios}>
+              <GrFormRefresh />
+            </button>
+
+            {/* </div> */}
 
             {/* </div> */}
           </div>

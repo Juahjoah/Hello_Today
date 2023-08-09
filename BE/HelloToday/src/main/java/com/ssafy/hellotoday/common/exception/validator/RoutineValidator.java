@@ -30,7 +30,6 @@ public class RoutineValidator {
     }
 
     public void checkRoutineCheckExist(RoutineCheckRepository routineCheckRepository, RoutineCheckRequestDto routineCheckRequestDto) {
-
         RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckIdAndCheckDaySeq(routineCheckRequestDto.getRoutineCheckId(),routineCheckRequestDto.getCheckDaySeq());
 
         if(routineCheck.getCheckDate() != null) throw CustomException.builder()
@@ -38,5 +37,6 @@ public class RoutineValidator {
                 .code(RoutineErrorEnum.EXIST_ROUTINE_CHECK_STATUS.getCode())
                 .message(RoutineErrorEnum.EXIST_ROUTINE_CHECK_STATUS.getName())
                 .build();
+
     }
 }

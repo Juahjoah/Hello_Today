@@ -1,16 +1,14 @@
 import classes from "./RoutineAuthCard.module.css";
 
 function RoutineAuthCard({
-  content,
-  routineId,
-  imgPath,
-  handleModalOpen,
+  routineDetailDto,
   handleAuthInfo,
+  handleModalOpen,
 }) {
-  const selectRoutineImgPath = `images/Routine/${imgPath}`;
+  const selectRoutineImgPath = `images/Routine/${routineDetailDto.imgPath}`;
 
   const handleAuthButtonClick = () => {
-    handleAuthInfo({ routineId, content });
+    handleAuthInfo({ routineDetailDto });
     handleModalOpen(true);
   };
 
@@ -23,12 +21,12 @@ function RoutineAuthCard({
             src={selectRoutineImgPath}
             alt=""
           />
-          <div className={classes.routineName}>{content}</div>
+          <div className={classes.routineName}>{routineDetailDto.content}</div>
         </div>
       </div>
       <div className={classes.routuneAuthMid}>
         <div className={classes.routineAuthMidDes}>
-          "<span style={{ color: "#a581cf" }}>{content}</span>
+          "<span style={{ color: "#a581cf" }}>{routineDetailDto.content}</span>
           "루틴을 진행하셨나요?
         </div>
         <div className={classes.routineAuthMidDes}>
@@ -37,7 +35,7 @@ function RoutineAuthCard({
       </div>
       <div className={classes.routineAuthRight}>
         <button className={classes.goToAuth} onClick={handleAuthButtonClick}>
-          인증하러가기
+          인증하러 가기
         </button>
       </div>
     </div>

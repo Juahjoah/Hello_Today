@@ -1,10 +1,12 @@
 .HomeTwo {
   font-family: TheJamsil5Bold;
-  height: 1080px;
+  /* height: 890px; */
+  height: 1000px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 50px;
 }
 
 .HomeTwoText {
@@ -14,7 +16,7 @@
   background-image: url("/public/images/Home/Hometiredman.jpg");
   background-size: cover;
   width: 100%;
-  height: 485px;
+  height: 300px;
   position: relative;
   z-index: 1;
 }
@@ -26,7 +28,7 @@
   content: "";
   background-image: url("/public/images/Home/Hometiredman.jpg");
   width: 100%;
-  height: 485px;
+  height: 300px;
   position: absolute;
   z-index: -1;
   opacity: 0.3;
@@ -38,7 +40,7 @@
 .HomeTwoinnerText {
   color: #fff;
   text-align: center;
-  font-size: 4rem;
+  font-size: 3rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -48,7 +50,7 @@
 .HomeTwoCircle {
   /* background-color: #fff5d9; */
   width: 1920px;
-  height: 595px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,8 +60,8 @@
   border: white solid 1px;
   background-color: white;
   border-radius: 50%;
-  width: 370px;
-  height: 370px;
+  width: 320px;
+  height: 320px;
   text-align: center;
   box-shadow: 5px 5px 5px 0px gray;
   margin: 1rem;
@@ -68,8 +70,8 @@
   border: white solid 1px;
   background-color: white;
   border-radius: 50%;
-  width: 370px;
-  height: 370px;
+  width: 320px;
+  height: 320px;
   text-align: center;
   box-shadow: 5px 5px 5px 0px gray;
   margin: 1rem;
@@ -78,36 +80,36 @@
   border: white solid 1px;
   background-color: white;
   border-radius: 50%;
-  width: 370px;
-  height: 370px;
+  width: 320px;
+  height: 320px;
   text-align: center;
   box-shadow: 5px 5px 5px 0px gray;
   margin: 1rem;
 }
 
 .HomeTwoCircleTextOne {
-  font-size: 54px;
+  font-size: 30px;
   color: #af2bc4;
   -webkit-text-stroke: 1px #737373;
   margin-top: 3rem;
 }
 
 .HomeTwoCircleTextTwo {
-  font-size: 54px;
+  font-size: 30px;
   color: #ccbae1;
   -webkit-text-stroke: 1px #737373;
   margin-top: 3rem;
 }
 
 .HomeTwoCircleTextThree {
-  font-size: 54px;
+  font-size: 30px;
   color: #737373;
   -webkit-text-stroke: 1px #737373;
   margin-top: 3rem;
 }
 
 .HomeTwoCircleinnerText {
-  font-size: 35px;
+  font-size: 25px;
   word-break: keep-all;
   /* white-space: pre-line; */
   width: 315px;

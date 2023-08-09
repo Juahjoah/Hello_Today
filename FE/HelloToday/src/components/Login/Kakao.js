@@ -17,8 +17,6 @@ function Kakao() {
     // const REST_URL = "https://i9b308.p.ssafy.io";
 
 
-    console.log(code);
-
     axios({
       url: `${REST_URL}/api/members/kakao/login`,
       method: "post",
