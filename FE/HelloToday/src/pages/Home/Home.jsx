@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NoLoginHome from "../../components/Home/NoLoginHome";
 import LoginHome from "../../components/Home/LoginHome";
-import Footer from "../../components/common/Footer";
 import allAuth from "../../components/User/allAuth";
 import { useLocation } from "react-router-dom";
 
@@ -30,7 +29,7 @@ function Home() {
       {/* 로그인 여부에 따라서 컴포넌트 렌더링 */}
       { islogin? <LoginHome/> : <NoLoginHome/>}
 
-      <Footer/>
+      
     </div>
   );
 }
