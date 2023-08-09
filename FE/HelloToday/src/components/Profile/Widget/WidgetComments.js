@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import WidgetCommentsEdit from "./WidgetCommentsEdit";
+
 // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
 const baseURL = "http://localhost:8080"; // 개발용
 
@@ -13,7 +15,7 @@ function WidgetComments(props) {
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-
+  const [isEdit, setIsEdit] = useState(false);
   const page = 0;
   const size = 10;
 
@@ -80,7 +82,7 @@ function WidgetComments(props) {
       )
       .then((response) => {
         console.log(response.data);
-        // 댓글 수정 후 필요한 업데이트 로직 구현
+        getComments(memberId);
       })
       .catch((error) => {
         console.log(error);
@@ -91,9 +93,6 @@ function WidgetComments(props) {
     axios
       .delete(
         `${baseURL}/api/mypage/cheermsg/${messageId}`,
-        //     {
-        //     data = { cheerMessageId: messageId },
-        // }
 
         {
           // data: { cheerMessageId: messageId },
@@ -113,7 +112,7 @@ function WidgetComments(props) {
   return (
     <div className={classes.WidgetComments}>
       <div>
-        <p> {memberId}님의 응원 댓글</p>
+        <p> {memberId}님을 향한 응원의 댓글!</p>
         <div className={classes.CommentSection}>
           {comments.map((comment) => (
             // <div key={comment.id}>
@@ -125,9 +124,10 @@ function WidgetComments(props) {
                   className={classes.edit}
                   src="../../images/Widget/edit.png"
                   alt="edit"
-                  onClick={() => EditComment()}
+                  // onClick={> }
                 />
               </button>
+
               <button className={classes.buttonstyle}>
                 <img
                   className={classes.clear}
