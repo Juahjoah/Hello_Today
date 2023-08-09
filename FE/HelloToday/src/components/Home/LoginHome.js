@@ -11,7 +11,6 @@ import SelectedRoutine from "../routine/SelectedRoutine";
 import Footer from "../common/Footer";
 
 function LoginHome() {
-  const LOCAL_URL = "http://localhost:8080";
   const [routinePrivateResponse, setRoutinePrivate] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const [routineDetailCheckList, setRoutineDetailCheckList] = useState();
@@ -20,7 +19,7 @@ function LoginHome() {
     async function axiosRoutinePrivateData() {
       try {
         const routinePrivateResponse = await 
-        axios.get(`${LOCAL_URL}/api/routine/private`, {
+        axios.get(`${process.env.REACT_APP_BASE_URL}/api/routine/private`, {
             headers: {
               Authorization: AccsesToken,
             }}

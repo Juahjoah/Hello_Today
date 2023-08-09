@@ -11,10 +11,8 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function SelectedRoutine(props) {
-    console.log(props);
-    const LOCAL_URL = "http://localhost:8080"
-    const routineDetailList = props.routineCheckList;
+function SelectedRoutine({routineCheckList}) {
+ 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const routineAuthBannerImg = "main_banner_routineAuth1";
     const routineAuthBannerMents = [
@@ -60,8 +58,9 @@ function SelectedRoutine(props) {
     };
 
     const [toAuthRoutine, setToAuthRoutine] = useState({
-        routineDetailDto: props,
+        // routineDetailDto: ,
         // content: "",
+        // content: d/
     });
 
     const handleTextChange = (event) => {
@@ -106,6 +105,9 @@ function SelectedRoutine(props) {
         //     }
         // })
 
+        console.log("오늘 날짜");
+        console.log(new Date());
+
         const formData = new FormData();
         const routineCheckRequest = {
             routineCheckId: "219",
@@ -119,7 +121,7 @@ function SelectedRoutine(props) {
         }));
         formData.append("file", "test");
         
-        axios.put(`${LOCAL_URL}/api/routine/private/check`, formData, {
+        axios.put(`${process.env.REACT_APP_BASE_URL}/api/routine/private/check`, formData, {
             headers: {
                 Authorization: AccsesToken,
             }
@@ -143,11 +145,11 @@ function SelectedRoutine(props) {
                 bannerMent={routineAuthBannerMents}
             />
             <div className={classes.routineCardSection}>
-                {routineDetailList.map((item) => {
+                {routineCheckList.map((item) => {
                     return (
                         <RoutineAuthCard
                             routineDetailDto={item.routineDetailDto}
-                            routineCheckDtoList={item.routine}
+                            routineCheckDtoList={item.routineCheckDtoList}
                             handleModalOpen={setModalIsOpen}
                             key={item.routineDetailDto.routineDetailId}
                             handleAuthInfo={setToAuthRoutine}
@@ -158,7 +160,7 @@ function SelectedRoutine(props) {
                     );
                 })}
             </div>
-
+            <hr className={classes.divideLine} />
             {/* 하단 그룹배너 */}
             <div className={classes.toGroupBanner}>
                 <div className={classes.toGroupBannerLeft}>
@@ -201,7 +203,7 @@ function SelectedRoutine(props) {
           <div className={classes.authModalTitle}>
             <div>
               User 님의 "
-              <span style={{ color: "#a581cf" }}>{toAuthRoutine.routineDetailDto.content}</span>"
+              {/* <span style={{ color: "#a581cf" }}>{toAuthRoutine.routineDetailDto.content}</span>" */}
               루틴
             </div>
           </div>
@@ -213,7 +215,7 @@ function SelectedRoutine(props) {
               </div>
               <Calendar
                 onChange={onChange}
-                value={value}
+                defaultValue={value}
                 formatDay={(locale, date) => dayjs(date).format("DD")}
               />
             </div>
@@ -226,7 +228,7 @@ function SelectedRoutine(props) {
                   className={classes.authModalMainRightTextArea}
                   name="textarea"
                   spellCheck="false"
-                  value={routineAuthText} // 업데이트된 부분
+                  defaultValue={routineAuthText} // 업데이트된 부분
                   onChange={handleTextChange} // 업데이트된 부분
                 ></textarea>
               </div>
@@ -237,7 +239,7 @@ function SelectedRoutine(props) {
                 <div>
                   <input
                     className={classes.uploadName}
-                    value={fileName}
+                    defaultValue={fileName}
                     placeholder="첨부파일"
                   />
                   <label className={classes.uploadLabel} htmlFor="file">

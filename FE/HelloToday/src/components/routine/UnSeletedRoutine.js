@@ -17,8 +17,6 @@ import MainBanner from "../common/MainBanner";
 
 function UnSelectedRoutine() {
   // state & data
-  const API_URL = "https://i9b308.p.ssafy.io";
-  const LOCAL_URL = "http://localhost:8080"
   const location = useLocation();
 
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
@@ -52,10 +50,10 @@ function UnSelectedRoutine() {
     async function axiosRoutineData() {
       try {
         const routineResponse = await axios.get(
-          `${API_URL}/api/routine/detail`
+          `${process.env.REACT_APP_BASE_URL}/api/routine/detail`
         );
         const routineMentResponse = await axios.get(
-          `${API_URL}/api/routine/ment`
+          `${process.env.REACT_APP_BASE_URL}/api/routine/ment`
         );
         setAllRoutineList(routineResponse.data);
         setRoutineMent(routineMentResponse.data);
@@ -94,7 +92,7 @@ function UnSelectedRoutine() {
 
   const submitSelectedRoutine = () => {
     axios({
-      url: `${LOCAL_URL}/api/routine/private`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/routine/private`,
       method: "post",
       data: {
         routineDetailDtoList: selectRoutineState,

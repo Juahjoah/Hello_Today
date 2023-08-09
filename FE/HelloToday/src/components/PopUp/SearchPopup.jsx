@@ -25,7 +25,6 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
   const [userList, setUserList] = useState([]);
   // const [hashList, setHashList] = useState([]);
   const [randomHashList, setRandomHashList] = useState([]);
-  const API_URL = "http://localhost:8080";
 
   useEffect(() => {
     tagAxios();
@@ -49,7 +48,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
       return;
     }
     axios({
-      url: `${API_URL}/api/search`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/search`,
       method: "get",
       params: {
         key: "닉네임",
@@ -66,7 +65,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
 
   const tagAxios = async() => {
     await axios({
-      url: `${API_URL}/api/routine/tag`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/routine/tag`,
       method: "get",
     }).then((res2) => {
       const allHashList = res2.data;
