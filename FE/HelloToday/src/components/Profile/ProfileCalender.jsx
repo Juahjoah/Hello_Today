@@ -22,21 +22,22 @@ export function ProfileCalender() {
   console.log(memberId);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`)
-      .then((res) => {
-        const dbdata = res.data.map((item) => ({
-          id: item.routineId,
-          start: item.startDate,
-          end: item.endDate,
-          title: item.activeFlag,
-        }));
-        setEvents(dbdata);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`)
+    //   .then((res) => {
+    //     const dbdata = res.data.map((item) => ({
+    //       id: item.routineId,
+    //       start: item.startDate,
+    //       end: item.endDate,
+    //       title: item.activeFlag,
+    //     }));
+    //     setEvents(dbdata);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }, []);
+
   //d-day추가하면 캘린더 데이터 수정해주기
 
   return (

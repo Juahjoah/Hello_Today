@@ -28,11 +28,6 @@ function MyProfile() {
   const dispatch = useDispatch();
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
 
-  useEffect(() => {
-    allAuth(AccsesToken, dispatch);
-  }, []);
-  //-----------------------------------여기까지
-
   // api 요청 후 받아온 user 정보 (모듈화 진행)
   // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
   const baseURL = "http://localhost:8080"; // 개발용
@@ -44,36 +39,57 @@ function MyProfile() {
     stMsg: "",
   });
   const [oriuser, setoriUser] = useState({
-    memberId: user.memberId,
-    nickname: user.nickname,
-    profilePath: user.profilePath,
-    stMsg: user.stMsg,
+    // memberId: user.memberId,
+    // nickname: user.nickname,
+    // profilePath: user.profilePath,
+    // stMsg: user.stMsg,
+    memberId: 0,
+    nickname: "",
+    profilePath: "",
+    stMsg: "",
   });
+
   const memberId = sessionStorage.getItem("memberId");
   const [isUserEdit, setIsUserEdit] = useState(false);
+  //썸네일 상태 관리
+  const [URLThumbnail, setURLThumbnail] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
-    axios
-      .get(`${baseURL}/api/mypage/${memberId}`, {
-        headers: { Authorization: AccsesToken },
-      })
-      .then((response) => {
+    const fetchData_ = async () => {
+      try {
+        if (!isAuthenticated) {
+          await allAuth(AccsesToken, dispatch);
+          setIsAuthenticated(true);
+        }
+        console.log("My profile access", AccsesToken);
+        const response = await axios.get(`${baseURL}/api/mypage/${memberId}`, {
+          headers: { Authorization: AccsesToken },
+        });
+
+        console.log("Myprofile res:", response);
         setUser({
           memberId: response.data.memberId,
           nickname: response.data.nickname,
           profilePath: response.data.profilePath,
           stMsg: response.data.stMsg,
         });
+
         sessionStorage.setItem("user", JSON.stringify(response.data));
-        // console.log("user");
-        // console.log(response.data);
-        setoriUser(user);
-        setURLThumbnail(user.profilePath);
-      })
-      .catch((error) => {
-        // console.log(error);
-        sessionStorage.setItem(user, ["error"]);
-      });
-  }, [isUserEdit]);
+        setURLThumbnail(response.data.profilePath);
+        setoriUser({
+          memberId: response.data.memberId,
+          nickname: response.data.nickname,
+          profilePath: response.data.profilePath,
+          stMsg: response.data.stMsg,
+        });
+      } catch (error) {
+        console.log(error);
+        sessionStorage.setItem("user", ["error"]);
+      }
+    };
+
+    fetchData_();
+  }, [isAuthenticated]);
 
   // const NowUser = sessionStorage.getItem("user");
 
@@ -116,14 +132,9 @@ function MyProfile() {
     }
   };
   //회원정보 수정
-  //지울거
-  // const [user, setUser] = useState([]);
-  // const memberId = sessionStorage.getItem("memberId");
   const nicknameinput = useRef();
   const stMsginput = useRef();
   const [selectedFile, setSelectedFile] = useState(null);
-  //썸네일 상태 관리
-  const [URLThumbnail, setURLThumbnail] = useState();
 
   const thumbnailInput = useRef();
   const handleClick = () => {
@@ -185,7 +196,6 @@ function MyProfile() {
       stMsginput.current.focus();
       return;
     }
-    console.log("아니 뭐야");
     const formData = new FormData();
     const data = {
       nickname: user.nickname,
@@ -216,13 +226,6 @@ function MyProfile() {
       )
       .then((res) => {
         console.log(res);
-        sessionStorage.setItem("user", user);
-        setUser({
-          memberId: 0,
-          nickname: "",
-          profilePath: "",
-          stMsg: "",
-        });
         //edit모드 false로 바꾸기
         setIsUserEdit(false);
       })
@@ -291,7 +294,7 @@ function MyProfile() {
             <div className={classes.UserInfo}>
               <img
                 className={classes.ProfileImg}
-                src={user.profilePath}
+                src={URLThumbnail}
                 alt={user.Userprofilepic}
               />
               <button className={classes.editbtn}>
