@@ -25,8 +25,8 @@ function PageRedirectNaver() {
   const dispatch = useDispatch();
   useEffect(() => {
     //useEffect에 빈 배열을 전달하게 되면, 콜백함수가 mount된 시점에만 작동
-    const REST_URL = `https://i9b308.p.ssafy.io`;
-    // const REST_URL = `http://localhost:8080`;
+    // const REST_URL = `https://i9b308.p.ssafy.io`;
+    const REST_URL = `http://localhost:8080`;
     console.log(code);
 
     axios({
@@ -40,11 +40,14 @@ function PageRedirectNaver() {
       },
     })
       .then((res) => {
-        console.log(res.headers);
-
+        const isFirstLogin = res.data.firstLogin;
+        const memberId = res.data.memberId;
+        const nickName = res.data.nickname;
         const accessToken = res.headers["authorization"];
         const refreshToken = res.headers["authorization-refresh"];
         sessionStorage.setItem("memberId", res.data.memberId);
+        localStorage.setItem("isFirstLogin", isFirstLogin);
+        localStorage.setItem("memberId", memberId);
         console.log(res.data);
         console.log("Access Token:", accessToken);
         console.log("Refresh Token:", refreshToken);
@@ -53,7 +56,13 @@ function PageRedirectNaver() {
         dispatch(Loginstate());
         //회원정보 저장하는 거 구현하기
 
-        navigate("/unselectmain");
+        navigate("/", {
+          state: {
+            isFirstLogin: isFirstLogin,
+            memberId: memberId,
+            nickName: nickName,
+          },
+        });
       })
       .catch((error) => {
         console.log(error.data);
