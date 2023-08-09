@@ -2,7 +2,7 @@
 import classes from "./SearchPopup.module.css";
 import axios from 'axios'
 
-const SearchHashTag = ({ content,tagId,setUserList }) => {
+const SearchHashTag = ({ content,tagId,setUserList,Token }) => {
   const tagSearchAxios = async () => {
     await axios({
       url: `${process.env.REACT_APP_BASE_URL}/api/search`,
@@ -10,6 +10,9 @@ const SearchHashTag = ({ content,tagId,setUserList }) => {
       params: {
         key: "태그",
         word:tagId
+      },
+      headers: {
+        Authorization: Token,
       },
     }).then((res) => {
       // console.log(res);
