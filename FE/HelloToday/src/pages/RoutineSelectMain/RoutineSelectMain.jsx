@@ -22,8 +22,6 @@ import allAuth from "../../components/User/allAuth";
 
 function RoutineSelectMain() {
   // state & data
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
   const location = useLocation();
   const memberId =
     location?.state?.memberId ?? localStorage.getItem("memberId");
@@ -49,10 +47,10 @@ function RoutineSelectMain() {
     async function axiosRoutineData() {
       try {
         const routineResponse = await axios.get(
-          `${API_URL}/api/routine/detail`
+          `${process.env.REACT_APP_BASE_URL}/api/routine/detail`
         );
         const routineMentResponse = await axios.get(
-          `${API_URL}/api/routine/ment`
+          `${process.env.REACT_APP_BASE_URL}/api/routine/ment`
         );
         setAllRoutineList(routineResponse.data);
         setRoutineMent(routineMentResponse.data);
@@ -98,7 +96,7 @@ function RoutineSelectMain() {
 
   const submitSelectedRoutine = () => {
     axios({
-      url: `${API_URL}/api/routine/private`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/routine/private`,
       method: "post",
       data: {
         routineDetailDtoList: selectRoutineState,

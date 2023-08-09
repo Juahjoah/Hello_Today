@@ -1,7 +1,7 @@
 function WidgetGoals() {
   return (
     <div className="WidgetGoals">
-      <p>한 줄 일기</p>
+      <p>소중한 목표</p>
     </div>
   );
 }

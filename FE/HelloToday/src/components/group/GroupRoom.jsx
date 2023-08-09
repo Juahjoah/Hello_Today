@@ -14,8 +14,7 @@ function GroupRoom({
   accessToken,
   memberId,
 }) {
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
+
   const navigate = useNavigate();
 
   const enterRoom = (sessionId, Token, roomId) => {
@@ -36,7 +35,7 @@ function GroupRoom({
 
   const join = () => {
     axios({
-      url: `${API_URL}/api/rooms/${roomId}/connections`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${roomId}/connections`,
       method: "get",
       headers: {
         Authorization: accessToken,
