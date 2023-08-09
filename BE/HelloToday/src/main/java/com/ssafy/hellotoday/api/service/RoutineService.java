@@ -151,11 +151,11 @@ public class RoutineService {
                 resultlist.add(new RoutineCheckResponseDto(routineDetailDto, fetch));
             }
 
-            return new RoutinePrivateCheckResponseDto((byte) 1, resultlist);
+            return new RoutinePrivateCheckResponseDto((byte) 1, currentRoutine.getRoutineId(), resultlist);
 
 
         } catch (Exception e) {
-            return new RoutinePrivateCheckResponseDto((byte) 0, null);
+            return new RoutinePrivateCheckResponseDto((byte) 0, 0, null);
         }
     }
 
