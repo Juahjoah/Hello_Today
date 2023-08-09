@@ -10,16 +10,16 @@ import WidgetHistory from "./Widget/WidgetHistory";
 import WidgetGallery from "./Widget/WidgetGallery";
 import WidgetDday from "./Widget/WidgetDday";
 
-function ProfileMenu({ setMenu, setFollowButtonClick }) {
+function ProfileMenu({ setMenu, setFollowButtonClick, memberId }) {
   const MenuList = {
-    "응원 메세지": <WidgetComments />,
-    "단체 루틴을 함께한 사람": <WidgetGroupRoutine />,
-    버킷리스트: <WidgetBucket />,
-    "소중한 목표": <WidgetGoals />,
-    "한 줄 일기": <WidgetDiary />,
-    "나의 루틴들": <WidgetHistory />,
-    갤러리: <WidgetGallery />,
-    "D-Day": <WidgetDday />,
+    "응원 메세지": <WidgetComments memberId={memberId} />,
+    "단체 루틴을 함께한 사람": <WidgetGroupRoutine memberId={memberId} />,
+    버킷리스트: <WidgetBucket memberId={memberId} />,
+    "소중한 목표": <WidgetGoals memberId={memberId} />,
+    "한 줄 일기": <WidgetDiary memberId={memberId} />,
+    "나의 루틴들": <WidgetHistory memberId={memberId} />,
+    갤러리: <WidgetGallery memberId={memberId} />,
+    "D-Day": <WidgetDday memberId={memberId} />,
   };
 
   const UserSelectMenu = (event) => {
@@ -29,7 +29,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick }) {
   };
 
   useEffect(() => {
-    setMenu(<WidgetComments />);
+    setMenu(<WidgetComments memberId={memberId} />);
   }, []);
 
   return (

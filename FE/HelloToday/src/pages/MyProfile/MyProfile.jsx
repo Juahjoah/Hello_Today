@@ -8,8 +8,8 @@ import FollowButton from "../../components/Profile/FollowButton";
 import FollowList from "../../components/Profile/FollowList";
 
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
-
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 //로그인
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
@@ -32,64 +32,23 @@ function MyProfile() {
   // const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
   const baseURL = "http://localhost:8080"; // 개발용
 
-  const [user, setUser] = useState({
-    memberId: 0,
-    nickname: "",
-    profilePath: "",
-    stMsg: "",
-  });
-  const [oriuser, setoriUser] = useState({
-    // memberId: user.memberId,
-    // nickname: user.nickname,
-    // profilePath: user.profilePath,
-    // stMsg: user.stMsg,
-    memberId: 0,
-    nickname: "",
-    profilePath: "",
-    stMsg: "",
-  });
+  const params = useParams();
+  const [user, setUser] = useState([]);
 
-  const memberId = sessionStorage.getItem("memberId");
-  const [isUserEdit, setIsUserEdit] = useState(false);
-  //썸네일 상태 관리
-  const [URLThumbnail, setURLThumbnail] = useState();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
-    const fetchData_ = async () => {
-      try {
-        if (!isAuthenticated) {
-          await allAuth(AccsesToken, dispatch);
-          setIsAuthenticated(true);
-        }
-        console.log("My profile access", AccsesToken);
-        const response = await axios.get(`${baseURL}/api/mypage/${memberId}`, {
-          headers: { Authorization: AccsesToken },
-        });
-
-        console.log("Myprofile res:", response);
-        setUser({
-          memberId: response.data.memberId,
-          nickname: response.data.nickname,
-          profilePath: response.data.profilePath,
-          stMsg: response.data.stMsg,
-        });
-
-        sessionStorage.setItem("user", JSON.stringify(response.data));
-        setURLThumbnail(response.data.profilePath);
-        setoriUser({
-          memberId: response.data.memberId,
-          nickname: response.data.nickname,
-          profilePath: response.data.profilePath,
-          stMsg: response.data.stMsg,
-        });
-      } catch (error) {
-        console.log(error);
-        sessionStorage.setItem("user", ["error"]);
-      }
-    };
-
-    fetchData_();
-  }, [isAuthenticated]);
+    axios
+      .get(`${baseURL}/api/mypage/${params.memberId}`, {
+        headers: { Authorization: AccsesToken },
+      })
+      .then((response) => {
+        setUser(response.data);
+        // console.log("user");
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        // console.log(error);
+      });
+  }, []);
 
   // const NowUser = sessionStorage.getItem("user");
 
@@ -240,99 +199,41 @@ function MyProfile() {
       <div className={classes.MyProfile}>
         {/* 화면 왼쪽 개인 정보 */}
         <div className={classes.UserProfile}>
-          {isUserEdit ? (
-            <div className={classes.UserInfo}>
-              <form id="form">
-                {URLThumbnail ? (
-                  <img
-                    className={classes.ProfileImg}
-                    src={URLThumbnail}
-                    alt="thumbnail"
-                  />
-                ) : (
-                  "이미지 미리보기"
-                )}
-                <button onClick={handleClick} type="button">
-                  파일
-                  <input
-                    type="file"
-                    accept="image/*"
-                    ref={thumbnailInput}
-                    onChange={handleFileChange}
-                  />
-                </button>
-                <div className={classes.ProfilenNickName}>
-                  <input
-                    type="text"
-                    value={user.nickname}
-                    placeholder="닉네임을 입력하세요"
-                    ref={nicknameinput}
-                    onChange={handleChangeState}
-                    name="nickname"
-                  ></input>
-                </div>
-                <div className={classes.ProfileMsg}>
-                  <input
-                    type="text"
-                    value={user.stMsg}
-                    placeholder="상태메세지를 입력하세요"
-                    ref={stMsginput}
-                    onChange={handleChangeState}
-                    name="stMsg"
-                  ></input>
-                </div>
-                <button onClick={handleSubmit} type="button">
-                  완료
-                </button>
-                <button onClick={handleCancle} type="button">
-                  취소
-                </button>
-                {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
-              </form>
-            </div>
-          ) : (
-            <div className={classes.UserInfo}>
-              <img
-                className={classes.ProfileImg}
-                src={URLThumbnail}
-                alt={user.Userprofilepic}
+          <div className={classes.UserInfo}>
+            <img
+              className={classes.ProfileImg}
+              src={user.profilePath}
+              alt={user.Userprofilepic}
+            />
+            <p className={classes.ProfilenNickName}>{user.nickname}</p>
+            <p className={classes.ProfileMsg}>{user.stMsg}</p>
+            {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
+            {/* 팔로잉/팔로워 */}
+            <div className={classes.UserFollow}>
+              <FollowButton
+                memberId={params.memberId}
+                setFollowButtonClick={setFollowButtonClick}
               />
-              <button className={classes.editbtn}>
-                <img
-                  src="../../images/Widget/gear.png"
-                  alt="useredit"
-                  onClick={handleUserEdit}
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                  }}
-                />
-              </button>
-              <p className={classes.ProfilenNickName}>{user.nickname}</p>
-              <p className={classes.ProfileMsg}>{user.stMsg}</p>
-              {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
-              {/* 팔로잉/팔로워 */}
-              <div className={classes.UserFollow}>
-                <FollowButton
-                  memberId={user.memberId}
-                  setFollowButtonClick={setFollowButtonClick}
-                />
-              </div>
             </div>
-          )}
-          <button onClick={() => handleunregister()}>회원 탈퇴</button>
+            <button onClick={() => handleunregister()}>회원 탈퇴</button>
+          </div>
           <hr />
           <div className={classes.UserProfileMenu}>
             <ProfileMenu
               setMenu={setMenu}
               setFollowButtonClick={setFollowButtonClick}
+              memberId={params.memberId}
             />
           </div>
         </div>
         {/* 화면 오른쪽 화면 출력 창 */}
 
         <div className={classes.Profilecontent}>
-          {FollowButtonClick ? <FollowList /> : <ProfileMain Menu={Menu} />}
+          {FollowButtonClick ? (
+            <FollowList memberId={params.memberId} />
+          ) : (
+            <ProfileMain Menu={Menu} />
+          )}
           {/* <ProfileMain Menu={Menu} /> */}
         </div>
       </div>
