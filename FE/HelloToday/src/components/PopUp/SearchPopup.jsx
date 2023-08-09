@@ -60,7 +60,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const userListFromAPI = res.data; // API로부터 받아온 사용자 정보 리스트
         setUserList(userListFromAPI);
       })
