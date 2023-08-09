@@ -128,12 +128,12 @@ function UnSelectedRoutine() {
       backgroundColor: "rgba(255,255,255,0.95)",
       overflow: "auto",
       zIndex: 10,
-      top: "300px",
-      left: "300px",
-      right: "300px",
-      bottom: "200px",
-      border: "5px solid black",
-      borderRadius: "20px",
+      top: "100px",
+      left: "100px",
+      right: "100px",
+      bottom: "100px",
+      border: "3px solid black",
+      borderRadius: "12px",
     },
   };
 
@@ -142,92 +142,94 @@ function UnSelectedRoutine() {
     drag: "free",
     gap: "20px",
     focus: "center",
-    fixedWidth: "250px",
-    fixedHeight: "250px",
+    fixedWidth: "180px",
+    fixedHeight: "180px",
     arrows: false,
   };
 
-    return (
-        <>
-        <MainBanner
-          bannerImg={routineSelectBannerImg}
-          bannerMent={routineSelectMainBannerMents}
-        />
-        <div className={classes.routineSelectMain}>
-          <div className={classes.test}>
-            {AllRoutineList.map((bigRoutine, index) => {
-              const bigRoutineMent = routineMent[index].content;
+  return (
+    <>
+      <MainBanner
+        bannerImg={routineSelectBannerImg}
+        bannerMent={routineSelectMainBannerMents}
+      />
+      <div className={classes.routineSelectMain}>
+        <div className={classes.test}>
+          {AllRoutineList.map((bigRoutine, index) => {
+            const bigRoutineMent = routineMent[index].content;
+            return (
+              <div key={index} style={{ marginTop: "30px" }}>
+                <p className={classes.bigRoutineMent}>{bigRoutineMent}</p>
+                <SelectRoutineList
+                  bigRoutine={bigRoutine}
+                  idx={index}
+                  updateSelectedCount={setSelectedCount}
+                  selectedCount={selectedCount}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <button onClick={openModal} className={classes.routineSubmit}>
+          루틴을 선택하셨나요?
+        </button>
+      </div>
+
+      {/* Modal */}
+      <Modal
+        style={modalStyle}
+        isOpen={modalIsOpen}
+        onRequestClose={() => closeModal(false)}
+      >
+        <div className={classes.selectedRoutineModal}>
+          <FontAwesomeIcon
+            onClick={closeModal}
+            icon={faCircleXmark}
+            className={classes.modalClose}
+          />
+          <div className={classes.modalDescriptionTitle}>
+            {nickName}님이 선택하신 루틴 입니다.
+          </div>
+          <Splide options={option}>
+            {selectRoutineState.map((item, index) => {
               return (
-                <div key={index}>
-                  <p className={classes.bigRoutineMent}>{bigRoutineMent}</p>
-                  <SelectRoutineList
-                    bigRoutine={bigRoutine}
-                    idx={index}
-                    updateSelectedCount={setSelectedCount}
-                    selectedCount={selectedCount}
-                  />
-                </div>
+                <SelectRoutineItem
+                  key={index}
+                  routineId={item.routineDetailId}
+                  routineContent={item.content}
+                  routineImg={item.imgPath}
+                  isModalOpen={modalIsOpen}
+                />
               );
             })}
+          </Splide>
+          <div className={classes.modalDescriptionOne}>
+            해당 루틴은 7일간 진행됩니다.
+          </div>{" "}
+          <div className={classes.modalDescriptionTwo}>
+            루틴이 제대로 선택되었는지, 확인해주세요!
           </div>
-          <button onClick={openModal} className={classes.routineSubmit}>
-            루틴을 선택하셨나요?
-          </button>
+          <div className="modalBtnSection">
+            <button
+              className={classes.routinSubmitModal}
+              onClick={submitSelectedRoutine}
+            >
+              루틴 확정하기
+            </button>
+          </div>
         </div>
-  
-        {/* Modal */}
-  
-        <Modal
-          style={modalStyle}
-          isOpen={modalIsOpen}
-          onRequestClose={() => closeModal(false)}
-        >
-          <div className={classes.selectedRoutineModal}>
-            <FontAwesomeIcon
-              onClick={closeModal}
-              icon={faCircleXmark}
-              className={classes.modalClose}
-            />
-            {/* <p>{nickName}님이 선택하신 루틴 입니다.</p> */}
-            <p>{}님이 선택하신 루틴 입니다.</p>
-            <Splide options={option}>
-              {selectRoutineState.map((item, index) => {
-                return (
-                  <SelectRoutineItem
-                    key={index}
-                    routineId={item.routineDetailId}
-                    routineContent={item.content}
-                    routineImg={item.imgPath}
-                    isModalOpen={modalIsOpen}
-                  />
-                );
-              })}
-            </Splide>
-            <p className={classes.modalDescriptionOne}>
-              해당 루틴은 7일간 진행됩니다.
-            </p>{" "}
-            <p>루틴이 제대로 선택되었는지, 확인해주세요!</p>
-            <div className="modalBtnSection">
-              <button
-                className={classes.routinSubmitModal}
-                onClick={submitSelectedRoutine}
-              >
-                루틴 확정하기
-              </button>
-            </div>
-          </div>
-        </Modal>
-  
-        {/* NickName Modal */}
-        <NickNamePopup
-          FirstLogin={FirstLogin}
-          setFirstLogin={setFirstLogin}
-          Token={AccsesToken}
-          setNickName={setNickName}
-          memberId={memberId}
-        />
-      </>
-    );
+      </Modal>
+
+      {/* NickName Modal */}
+      <NickNamePopup
+        FirstLogin={FirstLogin}
+        setFirstLogin={setFirstLogin}
+        Token={AccsesToken}
+        setNickName={setNickName}
+        memberId={memberId}
+      />
+    </>
+  );
 }
 
 export default UnSelectedRoutine;

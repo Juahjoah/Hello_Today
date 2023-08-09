@@ -21,6 +21,7 @@ function Nav() {
   const navigate = useNavigate();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const memberId = sessionStorage.getItem("memberId");
 
   const openPopup = () => {
@@ -40,7 +41,7 @@ function Nav() {
         />
       </Link>
       <div className={classes.navLeft}>
-        <Link to={PersonalRoutine}>
+        <Link to="/">
           <button
             onClick={() => {
               if (isUserhaveRoutine) {
@@ -53,20 +54,6 @@ function Nav() {
             개인 루틴
           </button>
         </Link>
-
-        {/* <Link to={PersonalRoutine}>
-          <button
-            onClick={() => {
-              if (isUserhaveRoutine) {
-                return;
-              }
-              dispatch(resetRoutine());
-            }}
-            className={classes.navLeftPersonal}
-          >
-            개인 루틴
-          </button>
-        </Link> */}
         <Link to="/GroupRoutine">
           <button
             onClick={() => {
