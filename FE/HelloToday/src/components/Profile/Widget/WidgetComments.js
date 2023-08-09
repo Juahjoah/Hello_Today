@@ -89,14 +89,11 @@ function WidgetComments(props) {
         }
       )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         getComments(memberId);
       })
       .catch((error) => {
-        console.log(editedCommentId + " " + memberId + " " + editedComment);
         console.log(error);
-        console.log(error.response);
-        console.log(error.response.data);
       });
   };
 
