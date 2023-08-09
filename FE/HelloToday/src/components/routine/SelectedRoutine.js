@@ -188,82 +188,82 @@ function SelectedRoutine(props) {
 
             {/* 인증 모달 */}
             <Modal
-                style={modalStyle}
-                isOpen={modalIsOpen}
-                onRequestClose={() => closeModal(false)}
-            >
-                <div className={classes.authModal}>
-                    <FontAwesomeIcon
-                        onClick={closeModal}
-                        icon={faCircleXmark}
-                        className={classes.modalClose}
-                    />
-                    <div className={classes.authModalTitle}>
-                        <div>
-                            User 님의 "
-                            <span style={{ color: "#a581cf" }}>{toAuthRoutine.routineDetailDto.content}</span>"
-                            루틴
-                        </div>
-                    </div>
+        style={modalStyle}
+        isOpen={modalIsOpen}
+        onRequestClose={() => closeModal(false)}
+      >
+        <div className={classes.authModal}>
+          <FontAwesomeIcon
+            onClick={closeModal}
+            icon={faCircleXmark}
+            className={classes.modalClose}
+          />
+          <div className={classes.authModalTitle}>
+            <div>
+              User 님의 "
+              <span style={{ color: "#a581cf" }}>{toAuthRoutine.routineDetailDto.content}</span>"
+              루틴
+            </div>
+          </div>
 
-                    <div className={classes.authModalMain}>
-                        <div className={classes.authModalMainLeft}>
-                            <div className={classes.authModalMainLeftTitle}>
-                                루틴 인증 날짜를 선택해주세요
-                            </div>
-                            <Calendar
-                                onChange={onChange}
-                                defaultValue={value}
-                                formatDay={(locale, date) => dayjs(date).format("DD")}
-                            />
-                        </div>
-                        <div className={classes.authModalMainRight}>
-                            <div className={classes.authModalMainRightText}>
-                                <div className={classes.authModalMainRightDescOne}>
-                                    이번 루틴은 어떠셨나요?
-                                </div>
-                                <textarea
-                                    className={classes.authModalMainRightTextArea}
-                                    name="textarea"
-                                    spellCheck="false"
-                                    defaultValue={routineAuthText} // 업데이트된 부분
-                                    onChange={handleTextChange} // 업데이트된 부분
-                                ></textarea>
-                            </div>
-                            <div className={classes.authModalMainRightImg}>
-                                <div className={classes.authModalMainRightDescTwo}>
-                                    이미지 업로드
-                                </div>
-                                <div>
-                                    <input
-                                        className={classes.uploadName}
-                                        defaultValue={fileName}
-                                        placeholder="첨부파일"
-                                    />
-                                    <label className={classes.uploadLabel} htmlFor="file">
-                                        파일찾기
-                                    </label>
-                                    <input
-                                        type="file"
-                                        id="file"
-                                        onChange={handleFileChange}
-                                        accept="image/*"
-                                    />
-                                </div>
-                            </div>
-                            <div className={classes.authModalMainRightNone}></div>
-                        </div>
-                    </div>
-                    <div className={classes.authModalFooter}>
-                        <button
-                            className={classes.authModalBtn}
-                            onClick={submitAuthModalData}
-                        >
-                            루틴 인증하기
-                        </button>
-                    </div>
+          <div className={classes.authModalMain}>
+            <div className={classes.authModalMainLeft}>
+              <div className={classes.authModalMainLeftTitle}>
+                루틴 인증 날짜를 선택해주세요
+              </div>
+              <Calendar
+                onChange={onChange}
+                value={value}
+                formatDay={(locale, date) => dayjs(date).format("DD")}
+              />
+            </div>
+            <div className={classes.authModalMainRight}>
+              <div className={classes.authModalMainRightText}>
+                <div className={classes.authModalMainRightDescOne}>
+                  이번 루틴은 어떠셨나요?
                 </div>
-            </Modal>
+                <textarea
+                  className={classes.authModalMainRightTextArea}
+                  name="textarea"
+                  spellCheck="false"
+                  value={routineAuthText} // 업데이트된 부분
+                  onChange={handleTextChange} // 업데이트된 부분
+                ></textarea>
+              </div>
+              <div className={classes.authModalMainRightImg}>
+                <div className={classes.authModalMainRightDescTwo}>
+                  이미지 업로드
+                </div>
+                <div>
+                  <input
+                    className={classes.uploadName}
+                    value={fileName}
+                    placeholder="첨부파일"
+                  />
+                  <label className={classes.uploadLabel} htmlFor="file">
+                    파일찾기
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    onChange={handleFileChange}
+                    accept="image/*"
+                  />
+                </div>
+              </div>
+              <div className={classes.authModalMainRightNone}></div>
+            </div>
+          </div>
+          <div className={classes.authModalFooter}>
+            <button
+              className={classes.authModalBtn}
+              onClick={submitAuthModalData}
+            >
+              루틴 인증하기
+            </button>
+          </div>
+        </div>
+      </Modal>
         </div>
 
     );
