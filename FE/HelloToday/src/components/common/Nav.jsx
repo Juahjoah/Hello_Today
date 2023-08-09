@@ -1,9 +1,10 @@
-// import { useState } from "react";
+import { useState } from "react";
 import classes from "./Nav.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { resetRoutine } from "../../store/SelectRoutineSlice";
+import SearchPopup from "../PopUp/SearchPopup";
 
 function Nav() {
   // const [nowRouting, setNowRouting] = useState("");
@@ -17,9 +18,19 @@ function Nav() {
   const PersonalRoutine = isUserhaveRoutine ? "/selectmain" : "/unselectmain";
 
   const dispatch = useDispatch();
-  //일단 고정
+  const navigate = useNavigate();
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const memberId = sessionStorage.getItem("memberId");
 
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
   return (
     <nav className={classes.nav}>
       <Link to="/">
@@ -30,7 +41,7 @@ function Nav() {
         />
       </Link>
       <div className={classes.navLeft}>
-        <Link to={PersonalRoutine}>
+        <Link to="/">
           <button
             onClick={() => {
               if (isUserhaveRoutine) {
@@ -56,7 +67,6 @@ function Nav() {
             단체 루틴
           </button>
         </Link>
-        {/*멤버 아이디*/}
         <Link to={`/MyProfile/${memberId}`}>
           <button
             onClick={() => {
@@ -78,8 +88,10 @@ function Nav() {
             type="text"
             size="5"
             className={classes.navRightSearchbarInput}
+            onClick={openPopup} // <input> 클릭 시 모달 열기
           />
         </div>
+        {<SearchPopup isOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />}
         <Link to="/logout">
           <button className={classes.navRightLogout}>로그아웃</button>
         </Link>

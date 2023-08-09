@@ -5,9 +5,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-// const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
-const baseURL = "http://localhost:8080"; // 개발용
-
 function FollowButton(props) {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   // const UserId = sessionStorage.getItem("memberId");
@@ -23,7 +20,7 @@ function FollowButton(props) {
     );
     if (props.memberId !== undefined) {
       axios
-        .get(`${baseURL}/api/follow`, {
+        .get(`${process.env.REACT_APP_BASE_URL}/api/follow`, {
           params: { memberId: props.memberId },
           headers: { Authorization: AccsesToken },
         })
@@ -46,7 +43,7 @@ function FollowButton(props) {
       // event.target.innerText = "Follow";
       axios
         .post(
-          `${baseURL}/api/follow`,
+          `${process.env.REACT_APP_BASE_URL}/api/follow`,
           { followingId: props.memberId },
           {
             headers: { Authorization: AccsesToken },
@@ -63,7 +60,7 @@ function FollowButton(props) {
     } else {
       // event.target.innerText = "unFollow";
       axios
-        .delete(`${baseURL}/api/follow`, {
+        .delete(`${process.env.REACT_APP_BASE_URL}/api/follow`, {
           params: { target: props.memberId },
           headers: { Authorization: AccsesToken },
         })

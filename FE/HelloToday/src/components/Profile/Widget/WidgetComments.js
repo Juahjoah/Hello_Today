@@ -6,9 +6,6 @@ import axios from "axios";
 
 // import WidgetCommentsEdit from "./WidgetCommentsEdit";
 
-// const baseURL = "https://i9b308.p.ssafy.io"; // 배포용으로 보내면, 아직 확인불가(develop에서만 확인가능)
-const baseURL = "http://localhost:8080"; // 개발용
-
 function WidgetComments(props) {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const memberId = props.memberId;
@@ -22,7 +19,7 @@ function WidgetComments(props) {
   const getComments = (memberId) => {
     axios
       .get(
-        `${baseURL}/api/mypage/cheermsg/${memberId}`,
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
         {
           params: { memberId: memberId, page: page, size: size },
         },
@@ -45,7 +42,7 @@ function WidgetComments(props) {
   const CreateComment = () => {
     axios
       .post(
-        `${baseURL}/api/mypage/cheermsg`,
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg`,
         {
           memberId,
           content: newComment,
@@ -72,7 +69,7 @@ function WidgetComments(props) {
   const EditComment = (messageId, editedContent) => {
     axios
       .put(
-        `${baseURL}/api/mypage/cheermsg/${messageId}`,
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${messageId}`,
         {
           content: editedContent,
         },
@@ -92,7 +89,7 @@ function WidgetComments(props) {
   const DeleteComment = (messageId) => {
     axios
       .delete(
-        `${baseURL}/api/mypage/cheermsg/${messageId}`,
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${messageId}`,
 
         {
           // data: { cheerMessageId: messageId },
@@ -113,7 +110,7 @@ function WidgetComments(props) {
     <div className={classes.WidgetComments}>
       <div>
         <p> {memberId}님을 향한 응원의 댓글!</p>
-        <div className={classes.CommentSection}>
+        {/* <div className={classes.CommentSection}>
           {comments.map((comment) => (
             // <div key={comment.id}>
             <div key={comment.messageId}>
@@ -139,9 +136,8 @@ function WidgetComments(props) {
             </div>
           ))}
           <div className={classes.btn_edit_delete}>
-            {/* 해당 이미지 부분 CSS는 DDay 위젯에서 총괄 관리 */}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div>

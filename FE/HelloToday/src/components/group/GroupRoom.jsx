@@ -12,11 +12,9 @@ function GroupRoom({
   joinCnt,
   myUserName,
   accessToken,
+  memberId,
 }) {
-  console.log(joinCnt);
 
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
   const navigate = useNavigate();
 
   const enterRoom = (sessionId, Token, roomId) => {
@@ -26,17 +24,18 @@ function GroupRoom({
         sessionId: sessionId,
         myUserName: myUserName,
         roomTitle: title,
-        videoEnabled: true,
-        audioEnabled: true,
+        videoEnabled: false,
+        audioEnabled: false,
         Token: Token,
         accessToken: accessToken,
+        memberId: memberId,
       },
     });
   };
 
   const join = () => {
     axios({
-      url: `${API_URL}/api/rooms/${roomId}/connections`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${roomId}/connections`,
       method: "get",
       headers: {
         Authorization: accessToken,

@@ -75,13 +75,10 @@ public class RoutineService {
     public RoutineRecMentResponseDto getRecommendMent(Integer categoryId) {
         long qty = routineRecMentRepository.countByRoutineBigCat_RoutineBigCatId(categoryId);
         int idx = (int) (Math.random() * qty);
-        RecommendMent recommendMent = null;
 
         List<RecommendMent> recommendMents = routineRecMentRepository.findByRoutineBigCat_RoutineBigCatId(categoryId, PageRequest.of(idx, 1));
 
-        if (recommendMents != null) {
-            recommendMent = recommendMents.get(0);
-        }
+        RecommendMent recommendMent = recommendMents.get(0);
 
         return new RoutineRecMentResponseDto(recommendMent);
     }
@@ -117,7 +114,6 @@ public class RoutineService {
                 .message(RoutineEnum.SUCCESS_MAKE_ROTUINE.getName())
                 .data(RoutineResponseDto.builder()
                         .routineId(routine.getRoutineId())
-//                        .routineDetailCatList(routineDetailCatList)
                         .startDate(routine.getStartDate())
                         .endDate(routine.getEndDate())
                         .activeFlag(routine.getActiveFlag())
@@ -125,19 +121,11 @@ public class RoutineService {
                 .build();
     }
 
-    /**
-     * 사용자가 진행중인 루틴이 있는지에 대한 activeFlag와 진행중인 루틴이 있으면 routineDetailCat에 대한 인증 내역들 반환
-     *
-     * @param member
-     * @return
-     */
     public RoutinePrivateCheckResponseDto getPrivateRoutineCheck(Member member) {
-        RoutinePrivateCheckResponseDto routinePrivateCheckResponseDto = null;
         List<RoutineCheckResponseDto> resultlist = new ArrayList<>();
-        Routine currentRoutine = null;
 
         try {
-            currentRoutine = queryFactory.selectFrom(routine)
+            Routine currentRoutine = queryFactory.selectFrom(routine)
                     .where(routine.member.memberId.eq(member.getMemberId())
                             .and(routine.activeFlag.eq((byte) 1))).fetchFirst();
 
@@ -163,12 +151,12 @@ public class RoutineService {
                 resultlist.add(new RoutineCheckResponseDto(routineDetailDto, fetch));
             }
 
-            routinePrivateCheckResponseDto = new RoutinePrivateCheckResponseDto((byte) 1, resultlist);
-        } catch (Exception e) {
-            routinePrivateCheckResponseDto = new RoutinePrivateCheckResponseDto((byte) 0, null);
-        }
+            return new RoutinePrivateCheckResponseDto((byte) 1, currentRoutine.getRoutineId(), resultlist);
 
-        return routinePrivateCheckResponseDto;
+
+        } catch (Exception e) {
+            return new RoutinePrivateCheckResponseDto((byte) 0, 0, null);
+        }
     }
 
     public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto, Member findMember, MultipartFile file) {
@@ -177,6 +165,8 @@ public class RoutineService {
         if (findMember.getMemberId() != routineCheck.getRoutineDetailCat().getRoutine().getMember().getMemberId()) {
             throw new IllegalArgumentException("잘못된 접근입니다");
         }
+
+        routineValidator.checkRoutineCheckExist(routineCheckRepository, routineCheckRequestDto);
 
         if (file != null) {
             FileDto fileDto = fileUploadUtil.uploadRoutineFile(file, routineCheck);

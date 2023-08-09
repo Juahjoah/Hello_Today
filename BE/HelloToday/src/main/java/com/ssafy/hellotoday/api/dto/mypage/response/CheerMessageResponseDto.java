@@ -9,16 +9,16 @@ import java.time.LocalDateTime;
 @Getter
 public class CheerMessageResponseDto {
     private Integer messageId;
-    private Integer writerId;
+    private String writerNickName;
     private Integer memberId;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private String content;
 
     @Builder
-    public CheerMessageResponseDto(Integer messageId, Integer writerId, Integer memberId, LocalDateTime createdDate, LocalDateTime modifiedDate, String content) {
+    public CheerMessageResponseDto(Integer messageId, String writerNickName, Integer memberId, LocalDateTime createdDate, LocalDateTime modifiedDate, String content) {
         this.messageId = messageId;
-        this.writerId = writerId;
+        this.writerNickName = writerNickName;
         this.memberId = memberId;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
@@ -27,7 +27,7 @@ public class CheerMessageResponseDto {
 
     public CheerMessageResponseDto(CheerMessage cheerMessage) {
         this.messageId = cheerMessage.getCheerMessageId();
-        this.writerId = cheerMessage.getWriter().getMemberId();
+        this.writerNickName = cheerMessage.getWriter().getNickname();
         this.memberId = cheerMessage.getMember().getMemberId();
         this.createdDate = cheerMessage.getCreatedDate();
         this.modifiedDate = cheerMessage.getModifiedDate();

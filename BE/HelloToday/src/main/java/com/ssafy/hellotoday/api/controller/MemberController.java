@@ -42,7 +42,6 @@ public class MemberController {
     public ResponseEntity<LoginResponseDto> loginKakao(@RequestBody LoginRequestDto codeRequest) {
         LoginDto member = memberService.findKakaoMemberByAuthorizedCode(codeRequest.getCode(), RedirectUrlProperties.KAKAO_REDIRECT_URL);
 
-
         String accessToken = jwtTokenProvider.createAccessToken(member.getMemberId(), member.getSocialId(), member.getSocialType());
         String refreshToken = jwtTokenProvider.createRefreshToken(member.getMemberId());
         jwtTokenProvider.storeRefreshToken(member.getMemberId(), refreshToken);

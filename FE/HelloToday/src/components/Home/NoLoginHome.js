@@ -1,22 +1,63 @@
-import classes from "./Home.module.css";
-import { Link } from "react-router-dom";
+// import classes from "./Home.module.css";
+import classes from "../../pages/Home/Home.module.css";
+import { useNavigate } from "react-router-dom";
 import HomeOne from "../../components/Home/HomeOne";
 import HomeTwo from "../../components/Home/HomeTwo";
 import HomeThree from "../../components/Home/HomeThree";
 import HomeLast from "../../components/Home/HomeLast";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { useInView } from "react-intersection-observer";
 
-function Home() {
-  const API_URL = "https://i9b308.p.ssafy.io";
-  // const API_URL = "http://localhost:8080";
+function NoLoginHome() {
   const [AllRoutineList, setAllRoutineList] = useState([]);
+
+  const navigate = useNavigate();
+  const scroll1Ref = useRef();
+  const scroll2Ref = useRef();
+  const scroll3Ref = useRef();
+  const scroll4Ref = useRef();
+
+  const goHomeOne = () => {
+    scroll2Ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  const goHomeTwo = () => {
+    // scroll2Ref.current.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "center",
+    // });
+    window.scrollTo({
+      top: window.scrollY + 950, // 현재 스크롤 위치에서 500px 만큼 아래로 스크롤
+      behavior: "smooth", // 부드러운 스크롤 효과 적용
+    });
+  };
+
+  const goHomeThree = () => {
+    ref3.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  const goHomeLast = () => {
+    ref4.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const [ref2, inView2] = useInView();
+
+  useEffect(() => {
+    if (inView2) {
+      console.log(inView2);
+      goHomeTwo();
+    } else {
+      console.log(inView2);
+    }
+  }, [inView2]);
+
+  const [ref3, inView3] = useInView();
+  const [ref4, inView4] = useInView();
 
   useEffect(() => {
     async function axiosRoutineData() {
       try {
         const routineResponse = await axios.get(
-          `${API_URL}/api/routine/detail`
+          `${process.env.REACT_APP_BASE_URL}/api/routine/detail`
         );
         console.log(routineResponse);
         setAllRoutineList(routineResponse.data);
@@ -26,7 +67,6 @@ function Home() {
     }
     axiosRoutineData();
   }, []);
-  console.log(AllRoutineList);
 
   return (
     <div className={classes.HomeMain}>
@@ -34,7 +74,7 @@ function Home() {
         style={{
           background: "url(/images/Home/Homebackground.png)",
           backgroundRepeat: "no-repeat",
-          backgroundSize: "100% 100%",
+          backgroundSize: "100% 90%",
         }}
       >
         <div className={classes.HomeText}>
@@ -86,22 +126,34 @@ function Home() {
             <div className={classes.HomeOneEllipse}></div>
           </div>
           <div className={classes.HomeBtn}>
-            <Link to="/login" className={classes.HomebtnloginLink}>
-              <button className={classes.HomeBtnlog}>오안녕과 함께하기</button>
-            </Link>
-            <Link to="#" className={classes.HomebtnMoveLink}>
-              <button className={classes.HomeBtnMove}>한 번 둘러볼까요?</button>
-            </Link>
+            <button
+              onClick={() => navigate("/login")}
+              className={classes.HomeBtnlog}
+            >
+              오안녕과 함께하기
+            </button>
+
+            <button onClick={goHomeOne} className={classes.HomeBtnMove}>
+              한 번 둘러볼까요?
+            </button>
           </div>
         </div>
       </div>
 
-      <HomeOne />
-      <HomeTwo />
-      {/* <HomeThree /> */}
-      <HomeThree AllRoutineList={AllRoutineList} />
-      <HomeLast />
+      <div ref={scroll1Ref}>
+        <HomeOne />
+      </div>
+      <div ref={scroll2Ref}>
+        <HomeTwo />
+      </div>
+      {/* <div ref={scroll2Ref}></div> */}
+      <div ref={ref3}>
+        <HomeThree AllRoutineList={AllRoutineList} />
+      </div>
+      <div ref={ref4}>
+        <HomeLast />
+      </div>
     </div>
   );
 }
-export default Home;
+export default NoLoginHome;
