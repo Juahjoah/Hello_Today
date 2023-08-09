@@ -1,6 +1,15 @@
 import classes from "../Home/HomeOne.module.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
+import TypeIt from "typeit-react";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
 
 function HomeOne() {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <div className={classes.HomeMain}>
       <div
@@ -13,7 +22,13 @@ function HomeOne() {
       >
         {/* 문자 */}
         <div className={classes.Homecontainer}>
-          <div className={classes.HomeOneText}>
+          <div
+            className={classes.HomeOneText}
+            // data-aos="zoom-in"
+            data-aos="fade-up"
+            data-aos-easing="linear"
+            data-aos-delay="1500"
+          >
             <p>걱정말고, 다시 시작해보아요</p>
             <p>오늘도, 안녕</p>
             <p>오늘은 어떤 하루를 보낼 계획인가요?</p>
@@ -40,7 +55,26 @@ function HomeOne() {
                 alt="Homespeechbubble"
               />
               <p className={classes.Homesbubbletext}>
-                계획은 있었지만, 지키지 못했어요.
+                <TypeIt
+                  options={{
+                    waitUntilVisible: true,
+                  }}
+                  getBeforeInit={(instance) => {
+                    instance
+                      .pause(2100)
+                      .type("계획은 있었지만")
+                      .pause(200)
+                      .type(",")
+                      .pause(200)
+                      .type(",")
+                      .pause(200)
+                      .type(",")
+                      .pause(200)
+                      .type("지키지 못했어요.");
+
+                    return instance;
+                  }}
+                />
               </p>
               <img
                 className={classes.Homeconfusedface}
@@ -55,7 +89,16 @@ function HomeOne() {
                 alt="Homespeechbubble"
               />
               <p className={classes.Homesbubbletext}>
-                딱히 하루 계획을 세우지 못했어요.
+                <TypeIt
+                  options={{ waitUntilVisible: true }}
+                  getBeforeInit={(instance) => {
+                    instance
+                      .pause(5000)
+                      .type("딱히 하루 계획을 세우지 못했어요.");
+
+                    return instance;
+                  }}
+                />
               </p>
               <img
                 className={classes.Homefacewithsteamfromnose}
@@ -70,7 +113,18 @@ function HomeOne() {
                 alt="Homespeechbubble"
               />
               <p className={classes.Homesbubbletext}>
-                흠, 꼭 계획을 세워야 할까요?
+                <TypeIt
+                  options={{ waitUntilVisible: true }}
+                  getBeforeInit={(instance) => {
+                    instance
+                      .pause(7000)
+                      .type("흠,,")
+                      .pause(300)
+                      .type("꼭 계획을 세워야 할까요?");
+
+                    return instance;
+                  }}
+                />
               </p>
               <img
                 className={classes.Homegrinningfacewithsweat}

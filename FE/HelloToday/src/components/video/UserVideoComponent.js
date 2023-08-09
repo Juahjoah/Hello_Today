@@ -28,6 +28,7 @@ function VideoComponent(props) {
 
   useEffect(() => {
     async function followCheckAxios() {
+      console.log(memberId);
       try {
         const response = await axios.get(`${API_URL}/api/follow`, {
           params: { memberId: memberId },
