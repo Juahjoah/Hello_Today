@@ -12,6 +12,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 function SelectedRoutine(props) {
+    console.log(props);
     const LOCAL_URL = "http://localhost:8080"
     const routineDetailList = props.routineCheckList;
     const [modalIsOpen, setModalIsOpen] = useState(false);
