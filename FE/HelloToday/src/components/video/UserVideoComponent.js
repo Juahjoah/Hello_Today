@@ -6,8 +6,6 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 
 function VideoComponent(props) {
-  const API_URL = "http://localhost:8080";
-  // const API_URL = "https://i9b308.p.ssafy.io";
 
   const memberId = parseInt(
     JSON.parse(props.streamManager.stream.connection.data).clientData.memberId
@@ -29,7 +27,7 @@ function VideoComponent(props) {
   useEffect(() => {
     async function followCheckAxios() {
       try {
-        const response = await axios.get(`${API_URL}/api/follow`, {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/follow`, {
           params: { memberId: memberId },
           headers: { Authorization: accessToken },
         });
@@ -63,7 +61,7 @@ function VideoComponent(props) {
     };
 
     axios({
-      url: `${API_URL}/api/follow`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/follow`,
       method: "post",
       headers: {
         Authorization: accessToken,
@@ -78,7 +76,7 @@ function VideoComponent(props) {
 
   const unFollow = async () => {
     try {
-      const response = await axios.delete(`${API_URL}/api/follow`, {
+      const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/follow`, {
         params: { target: memberId },
         headers: { Authorization: accessToken },
       });

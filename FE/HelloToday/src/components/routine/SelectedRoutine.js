@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 
 function SelectedRoutine({routineCheckList}) {
  
-    const LOCAL_URL = "http://localhost:8080"
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const routineAuthBannerImg = "main_banner_routineAuth1";
     const routineAuthBannerMents = [
@@ -122,7 +121,7 @@ function SelectedRoutine({routineCheckList}) {
         }));
         formData.append("file", "test");
         
-        axios.put(`${LOCAL_URL}/api/routine/private/check`, formData, {
+        axios.put(`${process.env.REACT_APP_BASE_URL}/api/routine/private/check`, formData, {
             headers: {
                 Authorization: AccsesToken,
             }

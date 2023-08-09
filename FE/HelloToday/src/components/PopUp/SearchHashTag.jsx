@@ -3,10 +3,9 @@ import classes from "./SearchPopup.module.css";
 import axios from 'axios'
 
 const SearchHashTag = ({ content,tagId,setUserList }) => {
-  const API_URL = "http://localhost:8080";
   const tagSearchAxios = async () => {
     await axios({
-      url: `${API_URL}/api/search`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/search`,
       method: "get",
       params: {
         key: "태그",

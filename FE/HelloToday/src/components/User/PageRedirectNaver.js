@@ -25,12 +25,10 @@ function PageRedirectNaver() {
   const dispatch = useDispatch();
   useEffect(() => {
     //useEffect에 빈 배열을 전달하게 되면, 콜백함수가 mount된 시점에만 작동
-    const REST_URL = `https://i9b308.p.ssafy.io`;
-    // const REST_URL = `http://localhost:8080`;
     console.log(code);
 
     axios({
-      url: `${REST_URL}/api/members/naver/login`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/members/naver/login`,
       method: "post",
       data: {
         code: code,

@@ -1,5 +1,5 @@
 const KAKAO_CLIENT_ID = "342e7bf27eba10f4f52f213866d7146d";
-const KAKAO_REDIRECT_URI = "https://i9b308.p.ssafy.io/login/oauth2/code/kakao";
+// const KAKAO_REDIRECT_URI = 'https://i9b308.p.ssafy.io/login/oauth2/code/kakao';
 // const KAKAO_REDIRECT_URI =
 // "http://i9b308.p.ssafy.io:3000/login/oauth2/code/kakao";
 const KAKAO_REDIRECT_URI = "http://localhost:3000/login/oauth2/code/kakao";

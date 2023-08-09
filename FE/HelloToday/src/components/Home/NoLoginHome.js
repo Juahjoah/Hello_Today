@@ -10,10 +10,6 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer";
 
 function NoLoginHome() {
-  // const API_URL = process.env.REACT_APP_API_URL;
-
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
   const [AllRoutineList, setAllRoutineList] = useState([]);
 
   const navigate = useNavigate();
@@ -61,7 +57,7 @@ function NoLoginHome() {
     async function axiosRoutineData() {
       try {
         const routineResponse = await axios.get(
-          `${API_URL}/api/routine/detail`
+          `${process.env.REACT_APP_BASE_URL}/api/routine/detail`
         );
         console.log(routineResponse);
         setAllRoutineList(routineResponse.data);
