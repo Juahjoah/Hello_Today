@@ -8,6 +8,7 @@ import Nav from "../../components/common/Nav";
 import { useSelector } from "react-redux";
 import UnSelectedRoutine from "../../components/routine/UnSeletedRoutine";
 import SelectedRoutine from "../routine/SelectedRoutine";
+import Footer from "../common/Footer";
 
 function LoginHome() {
   const LOCAL_URL = "http://localhost:8080";
@@ -50,6 +51,7 @@ function LoginHome() {
         // 진행 중인 루틴이 없는 경우
         <UnSelectedRoutine />
       )}
+      <Footer/>
     </div>
   );
 }
