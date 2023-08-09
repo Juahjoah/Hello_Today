@@ -74,7 +74,7 @@
 
 .HomeText {
   color: #353535;
-  font-size: 6rem;
+  font-size: 40px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -84,10 +84,10 @@
 
 .logo {
   position: absolute;
-  right: 20px;
+  right: 50px;
   top: 22px;
-  width: 407px;
-  height: 361px;
+  width: 250px;
+  height: 210px;
   flex-shrink: 0;
 }
 
@@ -100,7 +100,7 @@
 .threedays {
   font-family: "TheJamsil5Bold";
   color: #a581cf;
-  font-size: 6rem;
+  font-size: 60px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -109,10 +109,13 @@
 .calendersml {
   position: absolute;
   left: 73px;
-  top: 436.01px;
+  /* top: 436.01px; */
+  top: 250px;
   display: flex;
-  width: 7.79244rem;
-  height: 6.43369rem;
+  /* width: 7.79244rem; */
+  /* height: 6.43369rem; */
+  width: 100px;
+  height: 80px;
   transform: rotate(-11.573deg);
   justify-content: center;
   align-items: center;
@@ -123,55 +126,55 @@
 .spr {
   position: absolute;
   left: 395px;
-  top: 537px;
+  top: 300px;
   width: 12.1875rem;
   height: 12.75rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  animation: jumpAnimation 2s infinite;
+  animation: jumpAnimation 5s infinite;
 }
 
 .music {
   position: absolute;
   left: 677px;
-  top: 392.76px;
+  top: 200px;
   width: 4.46063rem;
   height: 5.23644rem;
   transform: rotate(-20.295deg);
   flex-shrink: 0;
-  animation: jumpAnimation 2s infinite;
+  animation: jumpAnimation 3s infinite;
 }
 
 .jumpchar {
   position: absolute;
   left: 698px;
-  top: 458px;
+  top: 280px;
   width: 22.89944rem;
   height: 25.2655rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  animation: jumpAnimation 2s infinite; /* 2초 간격으로 애니메이션 반복 */
+  animation: jumpAnimation 4s infinite; /* 2초 간격으로 애니메이션 반복 */
 }
 
 /*그림자*/
 .HomeOneEllipse {
   position: absolute;
   left: 768px;
-  top: 802px;
+  top: 600px;
   width: 100px;
   height: 50px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
-  animation: scaleAnimation 2s infinite;
+  animation: scaleAnimation 4s infinite;
 }
 
 .calenderlag {
   position: absolute;
-  left: 1138.75px;
+  left: 900px;
   top: 31px;
   width: 250.975px;
   height: 207.213px;
@@ -191,9 +194,9 @@
 .memopad {
   position: absolute;
   right: 100px;
-  top: 300px;
-  width: 34.75rem;
-  height: 43rem;
+  top: 250px;
+  width: 400px;
+  height: 500px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -202,17 +205,19 @@
 
 .HomeImg {
   display: flex;
+  height: 400px;
 }
 
 .Homecirclebold {
   position: absolute;
-  right: 300px;
+  right: 30px;
   top: 830px;
   width: 34.68744rem;
   height: 36.15456rem;
   transform: rotate(-41.112deg);
   flex-shrink: 0;
   z-index: 0;
+  animation: jumpAnimation 5s infinite;
 }
 
 .HomeBtn {
@@ -222,6 +227,7 @@
   width: 50rem;
   justify-content: space-around;
   z-index: 5;
+  margin-left: 100px;
 }
 .HomeBtnlog {
   display: flex;
@@ -243,6 +249,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: 2rem; /* 100% */
+  transition: all 250ms ease-in-out;
 }
 
 .HomeBtnMove {
@@ -267,6 +274,14 @@
   font-style: normal;
   font-weight: 700;
   line-height: 2rem; /* 100% */
+  transition: all 250ms ease-in-out;
+}
+
+.HomeBtnlog:hover {
+  color: black;
+}
+.HomeBtnMove:hover {
+  color: black;
 }
 
 .HomebtnloginLink {
