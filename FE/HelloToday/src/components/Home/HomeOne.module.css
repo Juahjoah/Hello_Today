@@ -1,8 +1,21 @@
 /* HomeOne*/
+
+@keyframes jumpAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px); /* 이미지가 위로 20px 이동 */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .HomeMain {
-  padding: 6em 0 4em 0;
+  padding: 6em 0 1em 0;
   width: 100%;
-  height: 1080px;
+  height: 1000px;
 }
 
 .Homecontainer {
@@ -13,7 +26,7 @@
 .HomeOneText {
   color: #343434;
   text-align: center;
-  font-size: 3.125rem;
+  font-size: 2.5rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -21,7 +34,7 @@
 
 .HomeOneText :nth-child(2) {
   color: #a581cf;
-  font-size: 6rem;
+  font-size: 4rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -33,7 +46,8 @@
   flex-shrink: 0;
   position: absolute;
   top: -400px;
-  left: 200px;
+  left: 150px;
+  animation: jumpAnimation 3s infinite;
 }
 
 .Homecirclesemibold {
@@ -41,15 +55,16 @@
   height: 381.146px;
   flex-shrink: 0;
   position: absolute;
-  top: -200px;
+  top: -500px;
   right: 100px;
   z-index: -1;
+  animation: jumpAnimation 4s infinite;
 }
 
 /* 말풍선 이미지*/
 .Homespeechbubble {
-  width: 382px;
-  height: 214px;
+  width: 350px;
+  height: 210px;
   flex-shrink: 0;
   position: relative;
 }
@@ -58,8 +73,10 @@
 .Homeconfusedface,
 .Homefacewithsteamfromnose,
 .Homegrinningfacewithsweat {
-  width: 185.333px;
-  height: 164.64px;
+  /* width: 185.333px; */
+  /* height: 164.64px; */
+  width: 160px;
+  height: 140px;
   flex-shrink: 0;
 }
 
@@ -82,7 +99,7 @@
 .Homesbubbletext {
   color: #000;
   text-align: center;
-  font-size: 2rem;
+  font-size: 28px;
   font-style: normal;
   /* font-weight: 400; */
   /* line-height: normal; */

@@ -1,32 +1,28 @@
+import classes from "../../pages/RoutineSelectMain/RoutineSelectMain.module.css"
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import SelectRoutineList from "./SelectRoutineList";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "react-modal";
-import Nav from "../../components/common/Nav";
-import MainBanner from "../../components/common/MainBanner";
-import SelectRoutineItem from "../../components/routine/SelectRoutineItem";
-import SelectRoutineList from "../../components/routine/SelectRoutineList";
-import { haveRoutine } from "../../store/haveActiveRoutine";
-import { Splide } from "@splidejs/react-splide";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
-import classes from "./RoutineSelectMain.module.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import NickNamePopup from "../../components/PopUp/NickNamePopup";
+import allAuth from "../User/allAuth";
+import { Navigate } from "react-router-dom";
+import { haveRoutine } from "../../store/haveActiveRoutine";
+import Modal from "react-modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import { Splide } from "@splidejs/react-splide";
+import SelectRoutineItem from "./SelectRoutineItem";
+import NickNamePopup from "../PopUp/NickNamePopup";
+import MainBanner from "../common/MainBanner";
 
-//로그인
-
-// 로그인 시 필요한 함수
-import allAuth from "../../components/User/allAuth";
-
-function RoutineSelectMain() {
+function UnSelectedRoutine() {
   // state & data
   const location = useLocation();
-  const memberId =
-    location?.state?.memberId ?? localStorage.getItem("memberId");
+
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const isFirstLogin = location?.state?.isFirstLogin ?? false;
+  const isFirstLogin = JSON.parse(localStorage.getItem("isFirstLogin"))
+  const memberId = localStorage.getItem('memberId')
+
 
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
@@ -36,11 +32,18 @@ function RoutineSelectMain() {
   const [redirectToAuth, setRedirectToAuth] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
-  const [nickName, setNickName] = useState(
-    location?.state?.nickName ?? localStorage.getItem("nickName")
-  );
+  const [nickName, setNickName] = useState("");
 
+  console.log(typeof FirstLogin)
+  console.log(typeof false)
   const dispatch = useDispatch();
+  const routineSelectBannerImg = "main_banner_routineselect1";
+  const routineSelectMainBannerMents = [
+    "쉽지 않은 생활 습관 만들기",
+    "계획을 떠나 아예 뭘 해야할지 모르겠다구요?",
+    "결심했다는 마음이 중요한거예요 :)",
+  ];
+
 
   // 최초 렌더 시 루틴 데이터 받아오기
   useEffect(() => {
@@ -69,16 +72,9 @@ function RoutineSelectMain() {
   }, [dispatch]);
   //-----------------------------------여기까지
 
-  const routineSelectBannerImg = "main_banner_routineselect1";
-  const routineSelectMainBannerMents = [
-    "쉽지 않은 생활 습관 만들기",
-    "계획을 떠나 아예 뭘 해야할지 모르겠다구요?",
-    "결심했다는 마음이 중요한거예요 :)",
-  ];
-
   // 루틴 제출 시 redirect
   if (redirectToAuth) {
-    return <Navigate to="/selectmain" />;
+    return <Navigate to="/" />;
   }
 
   // function
@@ -109,6 +105,8 @@ function RoutineSelectMain() {
     dispatch(haveRoutine(true));
     closeModal();
     setRedirectToAuth(true);
+    // 메인으로 돌아가기
+    // return <Navigate to="/" />;
   };
 
   // modal style
@@ -149,7 +147,6 @@ function RoutineSelectMain() {
 
   return (
     <>
-      <Nav />
       <MainBanner
         bannerImg={routineSelectBannerImg}
         bannerMent={routineSelectMainBannerMents}
@@ -160,7 +157,7 @@ function RoutineSelectMain() {
             const bigRoutineMent = routineMent[index].content;
             return (
               <div key={index} style={{ marginTop: "30px" }}>
-                <div className={classes.bigRoutineMent}>{bigRoutineMent}</div>
+                <p className={classes.bigRoutineMent}>{bigRoutineMent}</p>
                 <SelectRoutineList
                   bigRoutine={bigRoutine}
                   idx={index}
@@ -177,7 +174,6 @@ function RoutineSelectMain() {
       </div>
 
       {/* Modal */}
-
       <Modal
         style={modalStyle}
         isOpen={modalIsOpen}
@@ -234,4 +230,4 @@ function RoutineSelectMain() {
   );
 }
 
-export default RoutineSelectMain;
+export default UnSelectedRoutine;
