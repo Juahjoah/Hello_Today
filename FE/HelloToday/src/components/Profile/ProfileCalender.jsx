@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "@fullcalendar/core";
 import axios from "axios";
@@ -19,24 +20,32 @@ export function ProfileCalender() {
   // nav에서 memberId 고정한 것 고쳐주기
   const [events, setEvents] = useState([]);
   const memberId = useParams().memberId;
-  console.log(memberId);
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`)
-      .then((res) => {
-        const dbdata = res.data.map((item) => ({
-          id: item.routineId,
-          start: item.startDate,
-          end: item.endDate,
-          title: item.activeFlag,
-        }));
-        setEvents(dbdata);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    if (AccsesToken) {
+      axios
+        .get(
+          `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`,
+          {
+            headers: { Authorization: AccsesToken },
+          }
+        )
+        .then((res) => {
+          const dbdata = res.data.map((item) => ({
+            id: item.routineId,
+            start: item.startDate,
+            end: item.endDate,
+            title: item.activeFlag,
+          }));
+          setEvents(dbdata);
+        })
+        .catch((error) => {
+          console.log("-------ProfileCalendar error----------");
+          console.log(error);
+        });
+    }
+  }, [AccsesToken]);
   //d-day추가하면 캘린더 데이터 수정해주기
 
   return (
@@ -58,28 +67,49 @@ export function ProfileCalender() {
         weekends={true}
         //Date Nav Links
         navLinks={true} //일과 주를 누르면 해당 페이지로 이동
+        //일(숫자)을 누르면 상세 페이지로 이동
         navLinkDayClick={(date) => {
-          //일(숫자)을 누르면 상세 페이지로 이동
-          console.log("navLink");
           if (events.length > 0) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, "0");
-            const day = String(date.getDate()).padStart(2, "0");
-            const formatdate = `${year}-${month}-${day}`;
-            navigate(`/MyProfile/${memberId}/calen/${formatdate}`);
+            const selectedDate = new Date(date);
+            selectedDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
+            const clickedDate = selectedDate.toISOString().split("T")[0];
+
+            const isClickable = events.some((event) => {
+              const eventStartDate = new Date(event.start);
+              eventStartDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
+              const eventEndDate = new Date(event.end);
+              eventEndDate.setHours(23, 59, 59, 999); // 시간을 23:59:59로 조정
+              return (
+                eventStartDate <= selectedDate && selectedDate <= eventEndDate
+              );
+            });
+
+            if (isClickable) {
+              navigate(`/MyProfile/${memberId}/calen/${clickedDate}`);
+            }
           }
         }}
         //dateClick : 달력에서 해당 날자(네모칸)를 클릭했을 때 발생하는 이벤트 함수
         dateClick={(info) => {
-          // <Link to={`/calen/${info.dateStr}`} />;
-          console.log("dateLink");
-          console.log(info.dateStr);
-          console.log(typeof info.dateStr);
           if (events.length > 0) {
-            navigate(`/MyProfile/${memberId}/calen/${info.dateStr}`);
-          }
+            const clickedDate = info.dateStr;
+            const selectedDate = new Date(clickedDate);
+            selectedDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
 
-          //해당 날짜가 alert에 뜬다.
+            const isClickable = events.some((event) => {
+              const eventStartDate = new Date(event.start);
+              eventStartDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
+              const eventEndDate = new Date(event.end);
+              eventEndDate.setHours(23, 59, 59, 999); // 시간을 23:59:59로 조정
+              return (
+                eventStartDate <= selectedDate && selectedDate <= eventEndDate
+              );
+            });
+
+            if (isClickable) {
+              navigate(`/MyProfile/${memberId}/calen/${clickedDate}`);
+            }
+          }
         }}
         events={events} //달력에 표시할 값
         locale="ko" // 한국어 설정
