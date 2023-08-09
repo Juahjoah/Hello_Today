@@ -15,6 +15,7 @@ function WidgetComments(props) {
   const [isEdit, setIsEdit] = useState(false);
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
+  const [isMe, setIsMe] = useState(false);
   const page = 0;
   const size = 10;
 
@@ -38,9 +39,14 @@ function WidgetComments(props) {
   };
 
   useEffect(() => {
+    const loggedInUserId = sessionStorage.getItem("memberId");
+    setIsMe(
+      loggedInUserId === props.memberId ||
+        comments.some((comment) => comment.writerId === loggedInUserId)
+    );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId]);
+  }, [memberId, comments, props.memberId]);
 
   const CreateComment = () => {
     axios
@@ -146,34 +152,38 @@ function WidgetComments(props) {
               ) : (
                 <div>
                   {comment.content}
-                  <button
-                    className={classes.buttonstyle}
-                    onClick={() => {
-                      setIsEdit(comment.messageId);
-                      setEditedComment(comment.content);
-                    }}
-                  >
-                    <img
-                      className={classes.edit}
-                      src="../../images/Widget/edit.png"
-                      alt="edit"
-                    />
-                  </button>
-                  <button
-                    className={classes.buttonstyle}
-                    onClick={() => DeleteComment(comment.messageId)}
-                  >
-                    <img
-                      className={classes.clear}
-                      src="../../images/Widget/clear.png"
-                      alt="clear"
-                    />
-                  </button>
+                  {comment.writerNickName}
+                  {isMe && (
+                    <button
+                      className={classes.buttonstyle}
+                      onClick={() => {
+                        setIsEdit(comment.messageId);
+                        setEditedComment(comment.content);
+                      }}
+                    >
+                      <img
+                        className={classes.edit}
+                        src="../../images/Widget/edit.png"
+                        alt="edit"
+                      />
+                    </button>
+                  )}
+                  {isMe && (
+                    <button
+                      className={classes.buttonstyle}
+                      onClick={() => DeleteComment(comment.messageId)}
+                    >
+                      <img
+                        className={classes.clear}
+                        src="../../images/Widget/clear.png"
+                        alt="clear"
+                      />
+                    </button>
+                  )}
                 </div>
               )}
             </div>
           ))}
-          <div className={classes.btn_edit_delete}></div>
         </div>
       </div>
 
