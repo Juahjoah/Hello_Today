@@ -225,7 +225,7 @@ public class MypageService {
 
         // calendarHistory + 대표 이미지 사진
         // 이미지가 있으면 우선으로 보이게 하도록 설정하는 Case문
-        List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
+        List<Routine> routineList = routineRepository.findByMember_MemberId(memberId, pageRequest);
         List<RoutineHistoryResponseDto> result = new ArrayList<>();
 
         for (Routine routineItem : routineList) {
@@ -236,9 +236,11 @@ public class MypageService {
                     .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(routineCheck.imgPath.desc()).fetch().get(0);
 
             result.add(RoutineHistoryResponseDto.builder()
+                            .routineId(routineItem.getRoutineId())
                             .startDate(routineItem.getStartDate())
                             .endDate(routineItem.getEndDate())
                             .imgPath(imgPath)
+                            .size(routineRepository.findByMember_MemberId(memberId).size())
                     .build());
         }
 
