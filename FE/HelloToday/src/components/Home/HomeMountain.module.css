@@ -1,40 +1,116 @@
+@keyframes jumpAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px); /* 이미지가 위로 20px 이동 */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes opacityAnimation {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .HomeLast {
-    font-family: TheJamsil5Bold;
-    display: flex;
-  
-    justify-content: center;
-  }
-  
-  .HomeLastText {
-    color: #181818;
-    font-size: 64px;
-    z-index: 1;
-    /* align-self: center; */
-    position: absolute;
-    margin-top: 20rem;
-    margin-right: 20rem;
-    line-height: 6rem;
-  }
-  
-  .mountain {
-    position: relative;
-    margin-top: 20rem;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .mountainman {
-    width: 569px;
-    position: absolute;
-    padding-top: 10rem;
-    left: 80rem;
-  }
-  
-  .footer {
-    display: flex;
-    flex-direction: column;
-    /* align-items: flex-end; */
-    text-align: center;
-    background-color: rgba(255, 242, 204, 0.3);
-  }
-  
+  font-family: TheJamsil5Bold;
+  display: flex;
+
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+}
+
+.HomeLastText {
+  color: #181818;
+  font-size: 64px;
+  z-index: 1;
+  /* align-self: center; */
+  position: absolute;
+  /* margin-top: 20rem; */
+  margin-top: 10rem;
+  margin-left: 15rem;
+  line-height: 6rem;
+}
+
+.mountain {
+  position: relative;
+  /* margin-top: 20rem; */
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+}
+
+.mountainman {
+  width: 569px;
+  position: absolute;
+  /* padding-top: 10rem; */
+  left: 50rem;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-end; */
+  text-align: center;
+  background-color: rgba(255, 242, 204, 0.3);
+}
+
+/* .downArrow {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  font-size: 100px;
+  bottom: 200px;
+  right: 120px;
+  border: none;
+  background: transparent;
+  color: #a581cf;
+  animation: jumpAnimation 1.2s infinite;
+} */
+
+.noneVisible {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  font-size: 100px;
+  bottom: 200px;
+  right: 120px;
+  border: none;
+  background: transparent;
+  color: #a581cf;
+  opacity: 0;
+}
+
+.visible {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  font-size: 100px;
+  bottom: 200px;
+  right: 120px;
+  border: none;
+  background: transparent;
+  color: #a581cf;
+  animation: jumpAnimation 1.2s infinite, opacityAnimation 1s;
+}

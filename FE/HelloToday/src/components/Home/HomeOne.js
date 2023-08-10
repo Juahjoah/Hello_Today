@@ -1,14 +1,33 @@
 import classes from "../Home/HomeOne.module.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import TypeIt from "typeit-react";
 import { BsFillArrowDownCircleFill } from "react-icons/bs";
 
-function HomeOne() {
+//
+import classNames from "classnames";
+//
+
+function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     AOS.init();
   }, []);
+
+  useEffect(() => {
+    if (HomeOneWantVisible) {
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 10000);
+    }
+  }, [HomeOneWantVisible]);
+
+  const visibleStyle = classNames({
+    [classes.noneVisible]: !isVisible,
+    [classes.visible]: isVisible,
+  });
 
   return (
     <div className={classes.HomeMain}>
@@ -134,6 +153,9 @@ function HomeOne() {
             </div>
           </div>
         </div>
+        <button onClick={goHomeTwo} className={visibleStyle}>
+          <BsFillArrowDownCircleFill />
+        </button>
       </div>
     </div>
   );
