@@ -98,8 +98,6 @@ public class OpenviduService {
         try {
             openvidu.fetch();
             List<Session> activeSessions = openvidu.getActiveSessions();
-            System.out.println("=========================================");
-            System.out.println(activeSessions.size());
 
             List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
             List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
