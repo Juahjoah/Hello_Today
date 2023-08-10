@@ -3,8 +3,10 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-//
+//pagination
 import WidgetPaging from "./WidgetPaging";
+//modal
+import WidgetHistoryPopup from "../../PopUp/WidgetHistoryPopup";
 
 function WidgetHistory() {
   const memberId = useParams().memberId; //url에서 param가져오기
@@ -15,10 +17,6 @@ function WidgetHistory() {
   const [count, setCount] = useState(0); //아이템 총 개수
   const [currentpage, setCurrentpage] = useState(1); //현재페이지
   const [postPerPage] = useState(3); //페이지당 아이템 개수
-
-  const [indexOfLastPost, setIndexOfLastPost] = useState(0);
-  const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
-  const [currentPosts, setCurrentPosts] = useState(0);
 
   const setPage = (e) => {
     // 페이지가 바뀔 때 핸들링해줄 함수
@@ -46,14 +44,25 @@ function WidgetHistory() {
         console.log("뿌리는 데이터", items);
         setCount(res.data[0].size); //총 아이템의 개수
         console.log(count);
-        // setIndexOfLastPost(currentpage * postPerPage);
-        // setIndexOfFirstPost(indexOfLastPost - postPerPage);
-        // setCurrentPosts(items.slice(indexOfFirstPost, indexOfLastPost, items));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [currentpage, memberId, indexOfFirstPost, indexOfLastPost]);
+  }, [currentpage, memberId]);
+
+  //모달 관리
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [routineId, setRoutineId] = useState(0);
+  const openPopup = (routineid) => {
+    setIsPopupOpen(true);
+    setRoutineId(routineid);
+    console.log("routineId찍어", routineid);
+  };
+
+  // const closePopup = () => {
+  //   setIsPopupOpen(false);
+  // };
+
   return (
     <div className="widget-history">
       <div className={classes.WidgetHistory}>
@@ -63,7 +72,10 @@ function WidgetHistory() {
           <div className={classes.WidgetHistory_content}>
             {items && items.length > 0 ? (
               items.map((item) => (
-                <div className={classes.WidgetHistory_one}>
+                <div
+                  className={classes.WidgetHistory_one}
+                  onClick={() => openPopup(item.routineId)}
+                >
                   {!item.imgPath ||
                   item.imgPath === "" ||
                   item.imgPath === undefined ? (
@@ -97,6 +109,13 @@ function WidgetHistory() {
 
         {/* 여기 끝 */}
       </div>
+      {
+        <WidgetHistoryPopup
+          isOpen={isPopupOpen}
+          setIsPopupOpen={setIsPopupOpen}
+          routineId = {routineId}
+        />
+      }
     </div>
   );
 }
