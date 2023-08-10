@@ -33,7 +33,7 @@ public class MeetingRoomController {
     private final MemberService memberService;
 
     /**
-     * 방을 생성하고 참여하기 위한 세션 아이디, 토큰을 반환
+     * 미팅룸을 생성하고 참여하기 위한 세션 아이디, 토큰을 반환
      *
      * @return 미팅룸 아이디, 세션 아이디, 토큰 리턴
      */
@@ -58,10 +58,10 @@ public class MeetingRoomController {
     }
 
     /**
-     * 방에 참여하기 위한 토큰을 반환
+     * 미팅룸에 참여하기 위한 토큰을 반환
      *
-     * @param roomId 세션 아이디
-     * @return 방에 연결을 할 수 있는 토큰 리턴
+     * @param roomId 미팅룸 아이디
+     * @return 미팅룸에 연결을 할 수 있는 토큰 리턴
      */
     @Operation(
             summary = "미팅룸 참여",
@@ -77,7 +77,7 @@ public class MeetingRoomController {
     }
 
     @Operation(
-            summary = "방 목록 조회",
+            summary = "미팅룸 목록 조회",
             description = "현재 개설되어 있는 미팅룸 목록을 조회하는 API")
     @GetMapping("/list")
     public List<MeetingRoomDto> roomList(HttpServletRequest httpServletRequest) {
@@ -86,19 +86,6 @@ public class MeetingRoomController {
         if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
 
         return openviduService.roomList();
-    }
-
-    @Operation(
-            summary = "미팅룸에서 루틴 진행 도움 질문 조회",
-            description = "미티룸에서 루틴 진행에 도움이 되는 멘트를 조회하는 API")
-    @GetMapping("/{roomId}/question")
-    public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId,
-                                       HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        Member member = memberService.findMemberByJwtToken(token);
-        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
-
-        return meetingRoomService.getQuestion(roomId);
     }
 
     @Operation(
@@ -112,5 +99,18 @@ public class MeetingRoomController {
         if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
 
         return openviduService.deleteConnection(roomId);
+    }
+
+    @Operation(
+            summary = "미팅룸에서 루틴 진행 도움 질문 조회",
+            description = "미티룸에서 루틴 진행에 도움이 되는 멘트를 조회하는 API")
+    @GetMapping("/{roomId}/question")
+    public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId,
+                                       HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
+
+        return meetingRoomService.getQuestion(roomId);
     }
 }
