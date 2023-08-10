@@ -236,9 +236,11 @@ public class MypageService {
                     .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(routineCheck.imgPath.desc()).fetch().get(0);
 
             result.add(RoutineHistoryResponseDto.builder()
+                            .routineId(routineItem.getRoutineId())
                             .startDate(routineItem.getStartDate())
                             .endDate(routineItem.getEndDate())
                             .imgPath(imgPath)
+                            .pageNum(routineList.size() / pageRequest.getPageSize() + 1)
                     .build());
         }
 
