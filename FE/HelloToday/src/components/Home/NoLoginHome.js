@@ -1,4 +1,3 @@
-// import classes from "./Home.module.css";
 import classes from "../../pages/Home/Home.module.css";
 import { useNavigate } from "react-router-dom";
 import HomeOne from "../../components/Home/HomeOne";

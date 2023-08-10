@@ -130,6 +130,7 @@ function SelectedRoutine({routinePrivate}) {
                 {routinePrivate.routineDetailCatCheck.map((item) => {
                     return (
                         <RoutineAuthCard 
+                            routineStartDate={routinePrivate.routineStartDate}
                             routineDetailDto={item.routineDetailDto}
                             routineCheckDtoList={item.routineCheckDtoList}
                             handleModalOpen={setModalIsOpen}
