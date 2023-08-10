@@ -53,7 +53,6 @@ function WidgetComments(props) {
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg`,
         {
-          memberId,
           content: newComment,
         },
         {
@@ -66,8 +65,8 @@ function WidgetComments(props) {
         //   alert("내용을 입력해주세요.");
         // } else {
         //   alert("응원 메시지가 등록되었습니다.");
-        setNewComment("");
         getComments(memberId);
+        setNewComment("");
         // }
       })
       .catch((error) => {
