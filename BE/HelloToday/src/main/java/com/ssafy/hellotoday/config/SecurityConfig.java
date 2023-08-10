@@ -7,14 +7,12 @@ import com.ssafy.hellotoday.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsUtils;
 
 @Configuration
@@ -27,8 +25,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider);
-        return jwtAuthenticationFilter;
+        return new JwtAuthenticationFilter(jwtTokenProvider);
     }
 
     @Bean
@@ -39,9 +36,17 @@ public class SecurityConfig {
             .formLogin().disable()
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers("/api/members/kakao/**", "/api/members/naver/**", "/api/members/reissue").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/routine/**").permitAll()
-                .anyRequest().authenticated()
+            .antMatchers(
+                    "/api/members/kakao/**",
+                    "/api/members/naver/**",
+                    "/api/members/reissue").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/routine/**").permitAll()
+            .antMatchers(
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html").permitAll()
+            .antMatchers("/profile/**", "/routine/**").permitAll()
+            .anyRequest().authenticated()
             .and()
             .cors()
             .and()

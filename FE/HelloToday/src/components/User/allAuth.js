@@ -9,7 +9,7 @@ import {
 } from "../../components/User/AuthToken";
 import { Cookies } from "react-cookie";
 
-const allAuth = (isAccess, dispatch) => {
+const allAuth = async (isAccess, dispatch) => {
   //함수 정의
   const cookies = new Cookies();
   const refreshtoken_ = cookies.get("refresh_token");
@@ -45,12 +45,14 @@ const allAuth = (isAccess, dispatch) => {
   //함수 실제 실행
   if (!isAccess) {
     console.log("access토큰 없음");
-    fetchData(refreshtoken_);
+
+    await fetchData(refreshtoken_);
   } else {
     console.log("access토큰 있음");
     //토큰
     console.log(isAccess);
-    accessData(refreshtoken_, isAccess);
+
+    await accessData(refreshtoken_, isAccess);
   }
 };
 

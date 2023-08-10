@@ -20,9 +20,6 @@ function GroupRoutine() {
   // useEffect(() => {...},[])
 
   const navigate = useNavigate();
-
-  const API_URL = "http://localhost:8080";
-  // const API_URL = "https://i9b308.p.ssafy.io";
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [memberCount, setMemberCount] = useState(2);
   const [roomName, setRoomName] = useState("");
@@ -52,7 +49,7 @@ function GroupRoutine() {
     async function axiosGroupRoomList() {
       try {
         const groupRoomResponse = await axios({
-          url: `${API_URL}/api/rooms/list`,
+          url: `${process.env.REACT_APP_BASE_URL}/api/rooms/list`,
           method: "get",
           headers: {
             Authorization: accessToken,
@@ -126,7 +123,7 @@ function GroupRoutine() {
       };
 
       axios({
-        url: `${API_URL}/api/rooms`,
+        url: `${process.env.REACT_APP_BASE_URL}/api/rooms`,
         method: "post",
         headers: {
           Authorization: accessToken,

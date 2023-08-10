@@ -31,23 +31,15 @@ public class FollowController {
     @Operation(summary = "사용자의 팔로워 목록 조회",
             description = "요청한 회원을 팔로우하고 있는 사용자들을 조회하는 API")
     @GetMapping("/follower")
-    public List<MemberResponseDto> getFollowers(HttpServletRequest httpServletRequest) {
-
-        String token = httpServletRequest.getHeader("Authorization");
-        Member member = memberService.findMemberByJwtToken(token);
-
-        return followService.getFollowers(member);
+    public List<MemberResponseDto> getFollowers(@RequestParam int memberId) {
+        return followService.getFollowers(memberId);
     }
 
     @Operation(summary = "사용자의 팔로잉 목록 조회",
             description = "요청한 회원이 팔로우하고 있는 사용자들을 조회하는 API")
     @GetMapping("/following")
-    public List<MemberResponseDto> getFollowings(HttpServletRequest httpServletRequest) {
-
-        String token = httpServletRequest.getHeader("Authorization");
-        Member member = memberService.findMemberByJwtToken(token);
-
-        return followService.getFollowings(member);
+    public List<MemberResponseDto> getFollowings(@RequestParam int memberId) {
+        return followService.getFollowings(memberId);
     }
 
     @Operation(summary = "팔로우 등록", description = "로그인 한 회원이 팔로우를 신청하는 API")

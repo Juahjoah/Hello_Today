@@ -45,7 +45,7 @@
 .routuneAuthMid {
   flex: 5.5;
   font-size: 25px;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   margin: 10px;
 }
@@ -77,4 +77,9 @@
 
 .routineAuthRight {
   flex: 2.5;
+}
+
+
+.test {
+  display: flex;
 }
