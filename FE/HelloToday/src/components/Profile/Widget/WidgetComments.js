@@ -46,7 +46,7 @@ function WidgetComments(props) {
     );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId, comments, props.memberId]);
+  }, [memberId, props.memberId]);
 
   const CreateComment = () => {
     axios
