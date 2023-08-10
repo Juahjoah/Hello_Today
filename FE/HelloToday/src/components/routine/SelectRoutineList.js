@@ -4,6 +4,7 @@ import "@splidejs/react-splide/css";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 import classes from "./SelectRoutineItem.module.css";
+import { useSelector } from "react-redux";
 
 function SelectRoutineList({
   bigRoutine,
@@ -11,8 +12,8 @@ function SelectRoutineList({
   updateSelectedCount,
   selectedCount,
 }) {
-  // const isLogin = useSelector((state) => state.login.isLogin);
-  const isLogin = true;
+  const isLogin = useSelector((state) => state.login.isLogin);
+  // const isLogin = true;
   const testList = bigRoutine.routineDetail;
 
   const option = {

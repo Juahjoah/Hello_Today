@@ -14,7 +14,9 @@ import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
+import com.ssafy.hellotoday.db.entity.routine.QRoutineCheck;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
+import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
@@ -229,17 +231,17 @@ public class MypageService {
         List<RoutineHistoryResponseDto> result = new ArrayList<>();
 
         for (Routine routineItem : routineList) {
-            String imgPath = queryFactory.select(routineCheck.imgPath).from(routineCheck)
-                    .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+            RoutineCheck routineCheck = queryFactory.selectFrom(QRoutineCheck.routineCheck)
+                    .leftJoin(routineDetailCat).on(QRoutineCheck.routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
                     .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
                     .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
-                    .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(routineCheck.imgPath.desc()).fetch().get(0);
+                    .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(QRoutineCheck.routineCheck.imgPath.desc()).fetch().get(0);
 
             result.add(RoutineHistoryResponseDto.builder()
                             .routineId(routineItem.getRoutineId())
                             .startDate(routineItem.getStartDate())
                             .endDate(routineItem.getEndDate())
-                            .imgPath(imgPath)
+                            .imgPath(routineCheck.getRoutineImagePath())
                             .size(routineRepository.findByMember_MemberId(memberId).size())
                     .build());
         }
@@ -256,7 +258,7 @@ public class MypageService {
             List<CalendarHistoryDetailResponseDto> routineDetailList = queryFactory.select(Projections.constructor(CalendarHistoryDetailResponseDto.class
                             , routineDetail.content
                             , routineCheck.modifiedDate
-                            , routineCheck.imgPath
+                            , routineCheck.imgOriginalName
                             , routineCheck.content))
                     .from(routineCheck)
                     .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))

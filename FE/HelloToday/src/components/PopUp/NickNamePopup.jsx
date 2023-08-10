@@ -4,7 +4,6 @@ import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 
-
 function NickNamePopup({
   FirstLogin,
   setFirstLogin,
@@ -94,8 +93,7 @@ function NickNamePopup({
         localStorage.setItem("nickName", res.data.data.nickname);
         localStorage.setItem("memberId", memberId);
         localStorage.setItem("isFirstLogin", false);
-        setFirstLogin(false)
-
+        setFirstLogin(false);
       });
   };
 
@@ -125,7 +123,7 @@ function NickNamePopup({
     },
   };
 
-  console.log(typeof FirstLogin)
+  console.log(typeof FirstLogin);
 
   return (
     <Modal style={modalStyle} isOpen={FirstLogin}>
@@ -153,7 +151,9 @@ function NickNamePopup({
             {checkUserNameMessage}
           </div>
         </div>
-        <div style={{ fontSize: "15px" }}>{userNameMessage}</div>
+        <div className={classes.userNameMessage} style={{ fontSize: "15px" }}>
+          {userNameMessage}
+        </div>
 
         {validUserName ? (
           <button className={validChange} onClick={changeNickName}>
