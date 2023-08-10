@@ -44,7 +44,7 @@ function WidgetComments(props) {
     //   loggedInUserId === props.memberId ||
     //     comments.some((comment) => comment.writerId === loggedInUserId)
     // );
-    getComments(memberId);
+    // getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, comments, props.memberId]);
 

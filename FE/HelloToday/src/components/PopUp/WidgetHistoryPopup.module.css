@@ -17,13 +17,13 @@
   margin-top: 0px;
   font-size: 30px;
 }
-.routinehistory {
+/* .routinehistory {
   /*루틴 인증*/
-  /* border: 4px solid #be1616; */
-}
-.routinehistoryContent {
-  /*루틴 이름*/
-}
+/* border: 4px solid #be1616; 
+} */
+/* .routinehistoryContent {
+  /*루틴 이름
+}*/
 .routinehistory_bottom {
   display: flex;
 }
