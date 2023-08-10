@@ -7,7 +7,7 @@ import SearchHashTag from "./SearchHashTag";
 // import classNames from "classnames";
 import { HiSearch } from "react-icons/hi";
 import { GrFormRefresh } from "react-icons/gr";
-
+import { useSelector } from "react-redux";
 function getRandomIndexes(totalLength, count) {
   const indexes = [];
   while (indexes.length < count) {
@@ -25,7 +25,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
   const [userList, setUserList] = useState([]);
   // const [hashList, setHashList] = useState([]);
   const [randomHashList, setRandomHashList] = useState([]);
-
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
   useEffect(() => {
     tagAxios();
   }, []);
@@ -53,6 +53,9 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
       params: {
         key: "닉네임",
         word: userName,
+      },
+      headers: {
+        Authorization: AccsesToken,
       },
     })
       .then((res) => {
@@ -136,6 +139,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
                   tagId={tag.tagId}
                   content={tag.content}
                   setUserList={setUserList}
+                  Token={AccsesToken}
                 />
               ))}
             </div>

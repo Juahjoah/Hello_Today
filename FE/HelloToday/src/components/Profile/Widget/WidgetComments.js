@@ -13,6 +13,9 @@ function WidgetComments(props) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [isEdit, setIsEdit] = useState(false);
+  const [editedComment, setEditedComment] = useState("");
+  const [editedCommentId, setEditedCommentId] = useState(null);
+  const [isMe, setIsMe] = useState(false);
   const page = 0;
   const size = 10;
 
@@ -36,8 +39,14 @@ function WidgetComments(props) {
   };
 
   useEffect(() => {
+    const loggedInUserId = sessionStorage.getItem("memberId");
+    setIsMe(
+      loggedInUserId === props.memberId ||
+        comments.some((comment) => comment.writerId === loggedInUserId)
+    );
     getComments(memberId);
-  }, [memberId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memberId, comments, props.memberId]);
 
   const CreateComment = () => {
     axios
@@ -66,19 +75,27 @@ function WidgetComments(props) {
       });
   };
 
-  const EditComment = (messageId, editedContent) => {
+  const SaveEditedComment = () => {
+    EditComment(editedCommentId, editedComment);
+    setIsEdit(false);
+    setEditedComment("");
+  };
+
+  const EditComment = () => {
     axios
       .put(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${messageId}`,
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg`,
         {
-          content: editedContent,
+          cheerMessageId: editedCommentId,
+          memberId,
+          content: editedComment,
         },
         {
           headers: { Authorization: AccsesToken },
         }
       )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         getComments(memberId);
       })
       .catch((error) => {
@@ -110,34 +127,64 @@ function WidgetComments(props) {
     <div className={classes.WidgetComments}>
       <div>
         <p> {memberId}님을 향한 응원의 댓글!</p>
-        {/* <div className={classes.CommentSection}>
+        <div className={classes.CommentSection}>
           {comments.map((comment) => (
             // <div key={comment.id}>
             <div key={comment.messageId}>
-              {comment.content}
-
-              <button className={classes.buttonstyle}>
-                <img
-                  className={classes.edit}
-                  src="../../images/Widget/edit.png"
-                  alt="edit"
-                  // onClick={> }
-                />
-              </button>
-
-              <button className={classes.buttonstyle}>
-                <img
-                  className={classes.clear}
-                  src="../../images/Widget/clear.png"
-                  alt="clear"
-                  onClick={() => DeleteComment(comment.messageId)}
-                />
-              </button>
+              {isEdit === comment.messageId ? (
+                <div>
+                  <input
+                    type="text"
+                    value={editedComment}
+                    onChange={(event) => {
+                      setEditedComment(event.target.value);
+                      setEditedCommentId(comment.messageId);
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      SaveEditedComment();
+                    }}
+                  >
+                    저장
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  {comment.content}
+                  {comment.writerNickName}
+                  {isMe && (
+                    <button
+                      className={classes.buttonstyle}
+                      onClick={() => {
+                        setIsEdit(comment.messageId);
+                        setEditedComment(comment.content);
+                      }}
+                    >
+                      <img
+                        className={classes.edit}
+                        src="../../images/Widget/edit.png"
+                        alt="edit"
+                      />
+                    </button>
+                  )}
+                  {isMe && (
+                    <button
+                      className={classes.buttonstyle}
+                      onClick={() => DeleteComment(comment.messageId)}
+                    >
+                      <img
+                        className={classes.clear}
+                        src="../../images/Widget/clear.png"
+                        alt="clear"
+                      />
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           ))}
-          <div className={classes.btn_edit_delete}>
-          </div>
-        </div> */}
+        </div>
       </div>
 
       <div>
