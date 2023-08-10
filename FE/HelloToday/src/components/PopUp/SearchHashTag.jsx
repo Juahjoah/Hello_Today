@@ -2,18 +2,20 @@
 import classes from "./SearchPopup.module.css";
 import axios from 'axios'
 
-const SearchHashTag = ({ content,tagId,setUserList }) => {
-  const API_URL = "http://localhost:8080";
+const SearchHashTag = ({ content,tagId,setUserList,Token }) => {
   const tagSearchAxios = async () => {
     await axios({
-      url: `${API_URL}/api/search`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/search`,
       method: "get",
       params: {
         key: "태그",
         word:tagId
       },
+      headers: {
+        Authorization: Token,
+      },
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
       const userListFromAPI = res.data; // API로부터 받아온 사용자 정보 리스트
       setUserList(userListFromAPI); 
 

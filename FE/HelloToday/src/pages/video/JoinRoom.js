@@ -15,14 +15,12 @@ import {
 } from "react-icons/bs";
 
 import { MdQuestionAnswer } from "react-icons/md";
+import LeftsideRoomInfoTime from "../../components/video/LeftsideRoomInfoTime";
 
 // 세션 입장
 function JoinRoom() {
   const APPLICATION_SERVER_URL =
     process.env.NODE_ENV === "production" ? "" : "https://demos.openvidu.io/";
-
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,6 +43,8 @@ function JoinRoom() {
   // 새로운 OpenVidu 객체 생성
   const [OV, setOV] = useState(<OpenVidu />);
   // const OV = new OpenVidu();
+
+  // roomTitle??
   const roomTitle = location.state.roomTitle;
   const token = location.state.Token;
 
@@ -108,7 +108,7 @@ function JoinRoom() {
   // 1명이 방안에 남았을 때, 세션 out 요청
   const axiosSessionDelete = () => {
     axios({
-      url: `${API_URL}/api/rooms/${myRoomId}`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${myRoomId}`,
       method: "delete",
       headers: {
         Authorization: myAccessToken,
@@ -273,7 +273,7 @@ function JoinRoom() {
   const callQuestion = () => {
     console.log(myRoomId);
     axios({
-      url: `${API_URL}/api/rooms/${myRoomId}/question`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${myRoomId}/question`,
       method: "get",
       headers: {
         Authorization: myAccessToken,
@@ -299,7 +299,10 @@ function JoinRoom() {
                 <div className={classes.leftsideRoomInfoTitle}>
                   {roomTitle ?? "roomTitle"}
                 </div>
-                <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div>
+                {/* <div className={classes.leftsideRoomInfoTime}>⏱ 15:57</div> */}
+                <div className={classes.leftsideRoomInfoTime}>
+                  <LeftsideRoomInfoTime />
+                </div>
               </div>
               <div className={classes.divideline}></div>
               <div className={classes.leftsideRoomUsers}>

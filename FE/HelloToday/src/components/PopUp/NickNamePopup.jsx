@@ -4,7 +4,6 @@ import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 
-
 function NickNamePopup({
   FirstLogin,
   setFirstLogin,
@@ -12,8 +11,6 @@ function NickNamePopup({
   setNickName,
   memberId,
 }) {
-  // const API_URL = "https://i9b308.p.ssafy.io";
-  const API_URL = "http://localhost:8080";
   const [userName, setUserName] = useState("");
   // 정규식 통과 검사(닉네임 형식)
   const [isUserName, setIsUserName] = useState(false);
@@ -54,7 +51,7 @@ function NickNamePopup({
 
   const nickNameCheckAxios = () => {
     axios({
-      url: `${API_URL}/api/members/nickname`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/members/nickname`,
       method: "get",
       params: {
         nickname: userName,
@@ -81,7 +78,7 @@ function NickNamePopup({
 
   const changeNickName = () => {
     axios({
-      url: `${API_URL}/api/members/nickname`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/members/nickname`,
       method: "put",
       data: {
         nickname: userName,
@@ -95,6 +92,8 @@ function NickNamePopup({
         setNickName(res.data.data.nickname);
         localStorage.setItem("nickName", res.data.data.nickname);
         localStorage.setItem("memberId", memberId);
+        localStorage.setItem("isFirstLogin", false);
+        setFirstLogin(false);
       });
   };
 
@@ -124,6 +123,8 @@ function NickNamePopup({
     },
   };
 
+  console.log(typeof FirstLogin);
+
   return (
     <Modal style={modalStyle} isOpen={FirstLogin}>
       <div className={classes.nickNamePopup}>
@@ -150,7 +151,9 @@ function NickNamePopup({
             {checkUserNameMessage}
           </div>
         </div>
-        <div style={{ fontSize: "15px" }}>{userNameMessage}</div>
+        <div className={classes.userNameMessage} style={{ fontSize: "15px" }}>
+          {userNameMessage}
+        </div>
 
         {validUserName ? (
           <button className={validChange} onClick={changeNickName}>

@@ -48,11 +48,14 @@ function WidgetDday() {
   const isedit = useSelector((state) => state.dday.isEdit);
   const isRegist = useSelector((state) => state.dday.isRegist);
   const iseditf = useSelector((state) => state.dday.isEditF);
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
   // 배열
   //axios로 불러오기
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${memberId}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${memberId}`, {
+        headers: { Authorization: AccsesToken },
+      })
       .then((res) => {
         console.log(res);
         dispatch(SET_DDAY_DATA(res.data));

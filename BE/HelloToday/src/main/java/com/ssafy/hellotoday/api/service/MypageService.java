@@ -14,7 +14,9 @@ import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
+import com.ssafy.hellotoday.db.entity.routine.QRoutineCheck;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
+import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
@@ -62,7 +64,7 @@ public class MypageService {
                 .success(true)
                 .message(MypageEnum.SUCCESS_WRITE_CHEER_MESSAGE.getName())
                 .data(CheerMessageResponseDto.builder()
-                        .writerId(writer.getMemberId())
+                        .writerNickName(writer.getNickname())
                         .memberId(member.getMemberId())
                         .createdDate(cheerMessage.getCreatedDate())
                         .modifiedDate(cheerMessage.getModifiedDate())
@@ -79,7 +81,7 @@ public class MypageService {
                 .success(true)
                 .message(MypageEnum.SUCCESS_MODIFY_CHEER_MESSAGE.getName())
                 .data(CheerMessageResponseDto.builder()
-                        .writerId(writer.getMemberId())
+                        .writerNickName(writer.getNickname())
                         .memberId(cheerMessage.getMember().getMemberId())
                         .createdDate(cheerMessage.getMember().getCreatedDate())
                         .modifiedDate(cheerMessage.getModifiedDate())
@@ -225,20 +227,22 @@ public class MypageService {
 
         // calendarHistory + 대표 이미지 사진
         // 이미지가 있으면 우선으로 보이게 하도록 설정하는 Case문
-        List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
+        List<Routine> routineList = routineRepository.findByMember_MemberId(memberId, pageRequest);
         List<RoutineHistoryResponseDto> result = new ArrayList<>();
 
         for (Routine routineItem : routineList) {
-            String imgPath = queryFactory.select(routineCheck.imgPath).from(routineCheck)
-                    .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+            RoutineCheck routineCheck = queryFactory.selectFrom(QRoutineCheck.routineCheck)
+                    .leftJoin(routineDetailCat).on(QRoutineCheck.routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
                     .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
                     .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
-                    .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(routineCheck.imgPath.desc()).fetch().get(0);
+                    .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(QRoutineCheck.routineCheck.imgPath.desc()).fetch().get(0);
 
             result.add(RoutineHistoryResponseDto.builder()
+                            .routineId(routineItem.getRoutineId())
                             .startDate(routineItem.getStartDate())
                             .endDate(routineItem.getEndDate())
-                            .imgPath(imgPath)
+                            .imgPath(routineCheck.getRoutineImagePath())
+                            .size(routineRepository.findByMember_MemberId(memberId).size())
                     .build());
         }
 
@@ -254,7 +258,7 @@ public class MypageService {
             List<CalendarHistoryDetailResponseDto> routineDetailList = queryFactory.select(Projections.constructor(CalendarHistoryDetailResponseDto.class
                             , routineDetail.content
                             , routineCheck.modifiedDate
-                            , routineCheck.imgPath
+                            , routineCheck.imgOriginalName
                             , routineCheck.content))
                     .from(routineCheck)
                     .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
