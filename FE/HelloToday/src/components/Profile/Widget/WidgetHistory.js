@@ -3,17 +3,33 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+//
+import WidgetPaging from "./WidgetPaging";
 
 function WidgetHistory() {
   const memberId = useParams().memberId; //url에서 param가져오기
-  const [data, setData] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const [curpage, setCurPage] = useState(1);
+
+  //
+  const [items, setItems] = useState([]); //리스트에 나타낼 아이템
+  const [count, setCount] = useState(0); //아이템 총 개수
+  const [currentpage, setCurrentpage] = useState(0); //현재페이지
+  const [postPerPage] = useState(3); //페이지당 아이템 개수
+
+  const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+  const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+  const [currentPosts, setCurrentPosts] = useState(0);
+
+  const setPage = (e) => {
+    // 페이지가 바뀔 때 핸들링해줄 함수
+    setCurrentpage(e - 1); //현재 페이지
+    console.log("현재 페이지 : ", e - 1);
+  };
 
   useEffect(() => {
     const params = {
       memberId: memberId,
-      page: curpage,
+      page: currentpage,
       size: 3,
     };
     const headers = {
@@ -26,29 +42,56 @@ function WidgetHistory() {
       )
       .then((res) => {
         console.log(res);
-        setData(res.data);
+        setItems(res.data);
+        console.log(items);
+        setCount(res.data[0].size); //총 아이템의 개수
+        console.log(count);
+        // setIndexOfLastPost(currentpage * postPerPage);
+        // setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        // setCurrentPosts(items.slice(indexOfFirstPost, indexOfLastPost, items));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [memberId, curpage]);
+  }, [currentpage, memberId, indexOfFirstPost, indexOfLastPost]);
   return (
     <div className="widget-history">
       <div className={classes.WidgetHistory}>
-        <span className={classes.WidgetHistory_name}>루틴 히스토리</span>
-        <div className={classes.WidgetHistory_content}>
-          <div>
-            {data.map((item) => (
-              <div key={item.startDate}>
-                <img src={item.imgPath} alt="Item" />
-                <p>Start Date: {item.startDate}</p>
-                <p>End Date: {item.endDate}</p>
-              </div>
-            ))}
-
-            <button onClick={() => setCurPage(curpage - 1)}>Previous</button>
-            <button onClick={() => setCurPage(curpage + 1)}>Next</button>
+        <span className={classes.WidgetHistory_title}>루틴 히스토리</span>
+        <div className={classes.WidgetHistory_body}>
+          {/* 여기 시작 */}
+          <div className={classes.WidgetHistory_content}>
+            {items && items.length > 0 ? (
+              items.map((item) => (
+                <div>
+                  {!item.imgPath ||
+                  item.imgPath === "" ||
+                  item.imgPath === undefined ? (
+                    <img
+                      className={classes.img}
+                      src="/images/logo.png"
+                      alt="Default"
+                    />
+                  ) : (
+                    <img
+                      className={classes.img}
+                      src={item.imgPath}
+                      alt={item.imgPath}
+                    />
+                  )}
+                  <hr />
+                  <p>
+                    {new Date(item.startDate).toISOString().split("T")[0]} ~{" "}
+                    {new Date(item.endDate).toISOString().split("T")[0]}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>게시물이 없습니다.</p>
+            )}
           </div>
+          <WidgetPaging page={currentpage} count={count} setPage={setPage} />
+          {/* 여기 끝 */}
         </div>
       </div>
     </div>
