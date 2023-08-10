@@ -69,22 +69,39 @@ public class OpenviduService {
     public BaseResponseDto joinRoom(int roomId) {
         MeetingRoom room = meetingRoomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalStateException("미팅룸 조회 실패"));
-        Session session = openvidu.getActiveSession(room.getSessionId());
-        openviduValidator.checkSession(session, room.getSessionId());
+        try {
+            openvidu.fetch();
+            Session session = openvidu.getActiveSession(room.getSessionId());
+            if (session.getActiveConnections().size() >= room.getMemberLimit()) {
+                throw CustomException.builder()
+                        .status(HttpStatus.BAD_REQUEST)
+                        .code(8006)
+                        .message("방 입장 제한 수를 초과하여 입장할 수 없습니다.")
+                        .build();
+            }
+            openviduValidator.checkSession(session, room.getSessionId());
 
-        Connection connection = createConnection(session);
+            Connection connection = createConnection(session);
 
-        RoomCreateResponseDto response = RoomCreateResponseDto.builder()
-                .sessionId(room.getSessionId())
-                .token(connection.getToken())
-                .build();
-        response.setRoomId(roomId);
+            RoomCreateResponseDto response = RoomCreateResponseDto.builder()
+                    .sessionId(room.getSessionId())
+                    .token(connection.getToken())
+                    .build();
+            response.setRoomId(roomId);
 
-        return BaseResponseDto.builder()
-                .success(true)
-                .message(OpenviduResponseEnum.SUCCESS_GET_TOKEN.getName())
-                .data(response)
-                .build();
+            return BaseResponseDto.builder()
+                    .success(true)
+                    .message(OpenviduResponseEnum.SUCCESS_GET_TOKEN.getName())
+                    .data(response)
+                    .build();
+        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
+            throw CustomException.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .code(8005)
+                    .message("openvidu 미팅룸 정보 fetch 실패")
+                    .build();
+        }
+
     }
 
     public List<MeetingRoomDto> roomList() {
