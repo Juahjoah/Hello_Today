@@ -13,9 +13,9 @@ import Footer from "../common/Footer";
 function LoginHome() {
   const [routinePrivateResponse, setRoutinePrivate] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const [routineDetailCheckList, setRoutineDetailCheckList] = useState();
-
+  
   useEffect(() => {
+
     async function axiosRoutinePrivateData() {
       try {
         const routinePrivateResponse = await 
@@ -24,14 +24,9 @@ function LoginHome() {
               Authorization: AccsesToken,
             }}
         );
-
+        
         setRoutinePrivate(routinePrivateResponse.data);
 
-        // 현재 진행하고 있는 루틴 리스트(인증 내역)
-        // const routineDetailCheckList = routinePrivateResponse.data.routineDetailCatCheck;
-        setRoutineDetailCheckList(routinePrivateResponse.data.routineDetailCatCheck)
-        console.log(">>")
-        console.log(routineDetailCheckList)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -45,7 +40,7 @@ function LoginHome() {
       <Nav />
       {routinePrivateResponse.activeFlag === 1 ? (
         // 진행 중인 루틴이 있는 경우
-        <SelectedRoutine routineCheckList={routineDetailCheckList}/>
+        <SelectedRoutine routinePrivate={routinePrivateResponse}/>
       ) : (
         // 진행 중인 루틴이 없는 경우
         <UnSelectedRoutine />
