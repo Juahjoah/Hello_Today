@@ -151,22 +151,25 @@ public class RoutineService {
                 resultlist.add(new RoutineCheckResponseDto(routineDetailDto, fetch));
             }
 
-            return new RoutinePrivateCheckResponseDto((byte) 1, currentRoutine.getRoutineId(), resultlist);
+            return new RoutinePrivateCheckResponseDto((byte) 1, currentRoutine.getRoutineId(), currentRoutine.getStartDate(), resultlist);
 
 
         } catch (Exception e) {
-            return new RoutinePrivateCheckResponseDto((byte) 0, 0, null);
+            return new RoutinePrivateCheckResponseDto((byte) 0, 0, null,  null);
         }
     }
 
     public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto, Member findMember, MultipartFile file) {
-        RoutineCheck routineCheck = routineCheckRepository.findByRoutineCheckIdAndCheckDaySeq(routineCheckRequestDto.getRoutineCheckId(),routineCheckRequestDto.getCheckDaySeq());
+        RoutineCheck routineCheck =
+                queryFactory.selectFrom(QRoutineCheck.routineCheck)
+                        .leftJoin(routineDetailCat).on(QRoutineCheck.routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+                        .where(routineDetailCat.routine.routineId.eq(routineCheckRequestDto.getRoutineId()).and(QRoutineCheck.routineCheck.checkDaySeq.eq(routineCheckRequestDto.getCheckDaySeq()).and(routineDetailCat.routineDetail.routineDetailId.eq(routineCheckRequestDto.getRoutineDetailId())))).fetchFirst();
 
         if (findMember.getMemberId() != routineCheck.getRoutineDetailCat().getRoutine().getMember().getMemberId()) {
             throw new IllegalArgumentException("잘못된 접근입니다");
         }
 
-        routineValidator.checkRoutineCheckExist(routineCheckRepository, routineCheckRequestDto);
+        routineValidator.checkRoutineCheckExist(routineCheck);
 
         if (file != null) {
             FileDto fileDto = fileUploadUtil.uploadRoutineFile(file, routineCheck);
