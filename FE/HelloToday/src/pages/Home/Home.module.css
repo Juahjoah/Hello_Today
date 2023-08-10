@@ -29,6 +29,18 @@
   }
 }
 
+@keyframes fontColorAnimation {
+  0% {
+    color: rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    color: black;
+  }
+  100% {
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
 /*-----Home-----*/
 /* 컴포넌트에 폰트 적용 */
 
@@ -252,16 +264,36 @@
   transition: all 250ms ease-in-out;
 }
 
+.firstHomeBtnLog {
+  display: flex;
+  width: 22.5rem;
+  height: 5.625rem;
+  /* padding: 1rem 2rem; */
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  border: 2px solid #fff;
+  background: #ffd24c;
+  box-shadow: -4px 4px 0px 0px #ffd24c;
+  /*글자*/
+  color: #fff;
+  font-family: "TheJamsil5Bold";
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2rem; /* 100% */
+  transition: all 250ms ease-in-out;
+  animation: fontColorAnimation 1.5s infinite;
+}
+
 .HomeBtnMove {
   display: flex;
   width: 22.5rem;
   height: 5.625rem;
   align-items: center;
   justify-content: center;
-  /* padding: 1rem 2rem; */
-  /* flex-direction: column; */
-  /* align-items: flex-start; */
-  /* flex-shrink: 0; */
   border-radius: 0.5rem;
   border: 2px solid #fff;
   background: #ffe69a;
@@ -275,6 +307,32 @@
   font-weight: 700;
   line-height: 2rem; /* 100% */
   transition: all 250ms ease-in-out;
+}
+
+.firstHomeBtnMove {
+  display: flex;
+  width: 22.5rem;
+  height: 5.625rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 2px solid #fff;
+  background: #ffe69a;
+  box-shadow: -4px 4px 0px 0px #ffe69a;
+  z-index: 1;
+  /*글자*/
+  color: #fff;
+  font-family: "TheJamsil5Bold";
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2rem; /* 100% */
+  /* transition: all 250ms ease-in-out; */
+  animation: fontColorAnimation 1.5s infinite;
+}
+
+.firstHomeBtnMove {
+  color: black;
 }
 
 .HomeBtnlog:hover {
@@ -292,16 +350,13 @@
   text-decoration: none;
 }
 
-/* .downArrow {
-  width: 50px;
-  height: 50px;
+.progressBar {
   position: fixed;
-  font-size: 100px;
-  bottom: 100px;
-  right: 100px;
-  border: none;
-  background: transparent;
-  color: #a581cf;
-
-  animation: jumpAnimation 1.2s infinite;
-} */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: #a581cf;
+  transform-origin: 0%;
+  z-index: 10;
+}

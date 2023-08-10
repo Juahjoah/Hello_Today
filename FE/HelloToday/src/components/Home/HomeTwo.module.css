@@ -10,6 +10,26 @@
   }
 }
 
+@keyframes opacityAnimation {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .HomeTwo {
   font-family: TheJamsil5Bold;
   height: 880px;
@@ -62,7 +82,7 @@
 
 .HomeTwoCircle {
   /* background-color: #fff5d9; */
-  width: 1920px;
+  width: 1520px;
   height: 400px;
   display: flex;
   justify-content: center;
@@ -129,7 +149,7 @@
   margin: 3rem auto;
 }
 
-.downArrow {
+.noneVisible {
   width: 50px;
   height: 50px;
   position: absolute;
@@ -139,6 +159,19 @@
   border: none;
   background: transparent;
   color: #a581cf;
+  opacity: 0;
+  /* animation: jumpAnimation 1.2s infinite; */
+}
 
-  animation: jumpAnimation 1.2s infinite;
+.visible {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  font-size: 100px;
+  bottom: 200px;
+  right: 120px;
+  border: none;
+  background: transparent;
+  color: #a581cf;
+  animation: jumpAnimation 1.2s infinite, opacityAnimation 1s;
 }

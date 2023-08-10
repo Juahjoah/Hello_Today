@@ -1,17 +1,35 @@
 import classes from "./HomeThree.module.css";
 import SelectRoutineList from "../routine/SelectRoutineList";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
+import classNames from "classnames";
 
-function HomeThree({ AllRoutineList }) {
+function HomeThree({ AllRoutineList, goHomeMountain, HomeThreeWantVisible }) {
   const count = useMotionValue(0);
   const num = useTransform(count, Math.round);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const animation = animate(count, 26, { duration: 5 });
+    if (HomeThreeWantVisible) {
+      const animation = animate(count, 26, { duration: 5 });
 
-    return animation.stop;
-  }, []);
+      return animation.stop;
+    }
+  }, [HomeThreeWantVisible]);
+
+  useEffect(() => {
+    if (HomeThreeWantVisible) {
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 4000);
+    }
+  }, [HomeThreeWantVisible]);
+
+  const visibleStyle = classNames({
+    [classes.noneVisible]: !isVisible,
+    [classes.visible]: isVisible,
+  });
 
   return (
     <div className={classes.test}>
@@ -24,6 +42,9 @@ function HomeThree({ AllRoutineList }) {
           <SelectRoutineList key={index} idx={index} bigRoutine={bigRoutine} />
         );
       })}
+      <button onClick={goHomeMountain} className={visibleStyle}>
+        <BsFillArrowDownCircleFill />
+      </button>
     </div>
   );
 }

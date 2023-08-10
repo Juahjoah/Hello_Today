@@ -1,7 +1,26 @@
 import classes from "./HomeTwo.module.css";
 import { BsFillArrowDownCircleFill } from "react-icons/bs";
+//
+import classNames from "classnames";
+import { useState, useEffect } from "react";
+//
 
-function HomeTwo({ goHomeThree }) {
+function HomeTwo({ goHomeThree, HomeTwoWantVisible }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (HomeTwoWantVisible) {
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 3000);
+    }
+  }, [HomeTwoWantVisible]);
+
+  const visibleStyle = classNames({
+    [classes.noneVisible]: !isVisible,
+    [classes.visible]: isVisible,
+  });
+
   return (
     <div
       className={classes.HomeTwo}
@@ -36,7 +55,7 @@ function HomeTwo({ goHomeThree }) {
           </p>
         </div>
       </div>
-      <button onClick={goHomeThree} className={classes.downArrow}>
+      <button onClick={goHomeThree} className={visibleStyle}>
         <BsFillArrowDownCircleFill />
       </button>
     </div>
