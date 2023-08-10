@@ -31,46 +31,55 @@ public class FollowService {
     private final MemberValidator memberValidator;
 
     /**
-     * 요청자를 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
-     * @param member 팔로워 목록 조회를 요청하는 사용자
+     * 특정 사용자를 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
+     *
+     * @param memberId 팔로워 목록 조회를 요청하는 사용자 아이디
      * @return 요청자를 팔로우하고 있는 사용자 정보 목록
      */
-    public List<MemberResponseDto> getFollowers(Member member) {
+    public List<MemberResponseDto> getFollowers(int memberId) {
+        Member member = getMember(memberId);
 
         List<Follow> followers = followRepository.findAllByFollowing(member.getMemberId());
+
         return followers.stream()
-                .map(follow -> MemberResponseDto.builder()
-                        .memberId(follow.getFollower().getMemberId())
-                        .email(follow.getFollower().getEmail())
-                        .nickname(follow.getFollower().getNickname())
-                        .stMsg(follow.getFollower().getStMsg())
-                        .profilePath(follow.getFollower().getProfilePath())
-                        .build())
+                .map(follow ->
+                        MemberResponseDto.builder()
+                                .memberId(follow.getFollower().getMemberId())
+                                .email(follow.getFollower().getEmail())
+                                .nickname(follow.getFollower().getNickname())
+                                .stMsg(follow.getFollower().getStMsg())
+                                .profilePath(follow.getFollower().getProfilePath())
+                                .build())
                 .collect(Collectors.toList());
     }
 
     /**
-     * 요청자가 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
-     * @param member 팔로잉 목록 조회를 요청하는 사용자
+     * 특정 사용자가 팔로우하고 있는 사용자 정보 목록을 반환하는 메서드
+     *
+     * @param memberId 팔로잉 목록 조회를 요청하는 사용자 아이디
      * @return 요청자가 팔로우하고 있는 사용자 정보 목록
      */
-    public List<MemberResponseDto> getFollowings(Member member) {
+    public List<MemberResponseDto> getFollowings(int memberId) {
+        Member member = getMember(memberId);
 
         List<Follow> followings = followRepository.findAllByFollower(member.getMemberId());
+
         return followings.stream()
-                .map(follow -> MemberResponseDto.builder()
-                        .memberId(follow.getFollowing().getMemberId())
-                        .email(follow.getFollowing().getEmail())
-                        .nickname(follow.getFollowing().getNickname())
-                        .stMsg(follow.getFollowing().getStMsg())
-                        .profilePath(follow.getFollowing().getProfilePath())
-                        .build())
+                .map(follow ->
+                        MemberResponseDto.builder()
+                                .memberId(follow.getFollowing().getMemberId())
+                                .email(follow.getFollowing().getEmail())
+                                .nickname(follow.getFollowing().getNickname())
+                                .stMsg(follow.getFollowing().getStMsg())
+                                .profilePath(follow.getFollowing().getProfilePath())
+                                .build())
                 .collect(Collectors.toList());
     }
 
     /**
      * 팔로우를 등록하는 메서드
-     * @param follower 팔로우 신청자
+     *
+     * @param follower             팔로우 신청자
      * @param followSaveRequestDto 팔로우 할 대상의 memberId를 담는 Dto
      * @return 팔로우 정상 등록 시 followId, followerId, followingId를 리턴, 에러 시 에러코드와 메세지 리턴
      */
@@ -98,7 +107,8 @@ public class FollowService {
 
     /**
      * 팔로우를 취소하는 메서드
-     * @param follower 팔로우 취소를 요청하는 사용자
+     *
+     * @param follower   팔로우 취소를 요청하는 사용자
      * @param followeeId 팔로우 취소 대상의 memberId
      * @return 팔로우 정상 취소 시 취소된 followId, followerId, followingId를 리턴, 에러 시 에러코드와 메세지 리턴
      */
@@ -125,7 +135,8 @@ public class FollowService {
 
     /**
      * 두 사용자가 팔로우 상태인지 확인하는 메소드
-     * @param follower 로그인 된 사용자
+     *
+     * @param follower   로그인 된 사용자
      * @param followeeId 팔로우 상태를 확인하고자 하는 사용자
      * @return 팔로우 상태를 true, false로 리턴
      */
