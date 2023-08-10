@@ -89,19 +89,6 @@ public class MeetingRoomController {
     }
 
     @Operation(
-            summary = "미팅룸에서 루틴 진행 도움 질문 조회",
-            description = "미티룸에서 루틴 진행에 도움이 되는 멘트를 조회하는 API")
-    @GetMapping("/{roomId}/question")
-    public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId,
-                                       HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        Member member = memberService.findMemberByJwtToken(token);
-        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
-
-        return meetingRoomService.getQuestion(roomId);
-    }
-
-    @Operation(
             summary = "미팅룸 퇴장",
             description = "미팅룸을 퇴장하고, 마지막 사람이 퇴장했을 때 미팅룸 세션을 닫는 API")
     @DeleteMapping("/{roomId}")
@@ -112,5 +99,18 @@ public class MeetingRoomController {
         if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
 
         return openviduService.deleteConnection(roomId);
+    }
+
+    @Operation(
+            summary = "미팅룸에서 루틴 진행 도움 질문 조회",
+            description = "미티룸에서 루틴 진행에 도움이 되는 멘트를 조회하는 API")
+    @GetMapping("/{roomId}/question")
+    public BaseResponseDto getQuestion(@PathVariable("roomId") int roomId,
+                                       HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        Member member = memberService.findMemberByJwtToken(token);
+        if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
+
+        return meetingRoomService.getQuestion(roomId);
     }
 }
