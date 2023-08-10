@@ -87,13 +87,6 @@ public class OpenviduService {
                 .build();
     }
 
-    private RecordingProperties createRecordingProperties(RoomCreateRequestDto requestDto) {
-        return new RecordingProperties.Builder()
-                .hasAudio(requestDto.isAudio())
-                .hasVideo(requestDto.isVideo())
-                .build();
-    }
-
     public List<MeetingRoomDto> roomList() {
         try {
             openvidu.fetch();
@@ -158,6 +151,13 @@ public class OpenviduService {
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private RecordingProperties createRecordingProperties(RoomCreateRequestDto requestDto) {
+        return new RecordingProperties.Builder()
+                .hasAudio(requestDto.isAudio())
+                .hasVideo(requestDto.isVideo())
+                .build();
     }
 
     private Session createSession(RecordingProperties recordingProperties) {
