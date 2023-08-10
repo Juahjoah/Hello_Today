@@ -1,0 +1,36 @@
+.routuneAuthMid {
+    flex: 5.5;
+    font-size: 25px;
+    flex-direction: column;
+    margin: 10px;
+  }
+  
+  .routineAuthMidDes {
+    margin: 20px;
+  }
+  
+  .imgStyle {
+    width: 43px;
+  }
+  
+  
+.goToAuth {
+  font-family: "TheJamsil5Bold";
+  font-size: 15px;
+  width: 240px;
+  height: 60px;
+  padding: 16px 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: #ffd24c;
+  box-shadow: -4px 4px 0px 0px #ffd24c;
+  color: #fff;
+  margin-top: 50px;
+  transition: all 250ms ease-in;
+  margin-right: 50px;
+}
+
+.goToAuth:hover {
+  cursor: pointer;
+  color: black;
+}

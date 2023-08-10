@@ -67,14 +67,6 @@
   /* text-align: center; */
 }
 
-.UserProfileMenu {
-  font-family: "TheJamsil5Bold";
-  margin: 2rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 .Profilecontent {
   font-family: "TheJamsil5Bold";
   width: 70%;
@@ -91,4 +83,166 @@
   background: white;
   border-radius: 100px;
   cursor: pointer;
+}
+
+.editForm {
+  width: 67%;
+  height: 104vh;
+  border-radius: 15px;
+  background: rgb(255, 255, 255);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-left: 5vh;
+  font-family: "TheJamsil5Bold";
+}
+.editFormHeader {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* justify-content: center; */
+  align-items: start;
+  margin-top: 10vh;
+  margin-left: 10vh;
+}
+.editFormTitle {
+  font-size: 25px;
+}
+.widgetBody {
+  display: flex;
+  flex-direction: row;
+}
+.widgetLeft {
+  display: flex;
+  flex: 4.5;
+  margin-left: 10vh;
+  margin-top: 5vh;
+  flex-direction: column;
+}
+
+.widgetLeftTitle {
+  font-size: 15px;
+}
+.widgetRightTitle {
+  font-size: 15px;
+}
+.widgetLeftTitleItem {
+}
+
+.widgetLeftForm {
+  border-radius: 15px;
+  height: 62vh;
+  border: 1px solid;
+  margin-top: 1vh;
+  padding: 4vh;
+}
+.widgetMid {
+  display: flex;
+  flex: 1;
+  margin-top: 38vh;
+  margin-left: 4vh;
+}
+
+.widgetMidButton {
+}
+.widgetMidButtonForm {
+  width: 8vh;
+  height: 5vh;
+  border: 3px #a581cf solid;
+  border-radius: 8px;
+  color: #a581cf;
+  background: rgb(255, 255, 255);
+}
+
+.widgetMidButtonForm:hover {
+  color: white;
+  background: #a581cf;
+}
+.widgetRight {
+  display: flex;
+  flex: 4.5;
+  /* margin-left: 10vh; */
+  margin-top: 5vh;
+  flex-direction: column;
+}
+.widgetRightTopForm {
+  border-bottom: 1px solid;
+  margin-right: 6vh;
+
+  /* opacity: 0.5; */
+}
+.widgetRightTop {
+  margin-top: 11vh;
+
+  margin-left: 4vh;
+
+  margin-bottom: 2vh;
+
+  font-size: 2vh;
+}
+.widgetRightBody {
+  font-size: 15px;
+  margin-top: 2vh;
+  margin-left: 1vh;
+}
+.widgetRightContent {
+  font-size: 2vh;
+  margin-left: 4vh;
+}
+.widgetRightItem {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 3vh;
+  margin-top: 2px;
+  text-align: center;
+}
+
+.widgetRightButoon {
+  width: auto;
+  /* height: 27px; */
+  border: 3px #a581cf solid;
+  border-radius: 8px;
+  color: #a581cf;
+  background: rgb(255, 255, 255);
+}
+.widgetRightButoon:hover {
+  color: white;
+  background: red;
+  border: 3px white solid;
+}
+
+.widgetLeftFormItem {
+  font-size: 2vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.widgetLeftFormButton {
+  text-align: start;
+  border: none;
+  background: none;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+  background-color: transparent;
+  /* color: white; */
+}
+.selectedButton {
+  /* Styling for selected buttons */
+  background-color: #a581cf;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.widgetFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2vh;
+  margin-right: 15vh;
+}
+.widgetFooterButton {
+  width: 10vh;
+  height: 5vh;
+  margin-left: 1vh;
+  border: 3px #a581cf solid;
+  border-radius: 8px;
+  color: #a581cf;
+  background: rgb(255, 255, 255);
 }
