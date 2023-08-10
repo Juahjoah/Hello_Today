@@ -275,7 +275,7 @@ function MyProfile() {
             )}
 
             <hr />
-            <Link to="MyProfile/edit">
+            <Link to="/MyProfile/edit">
               <button>편집모드 이도오옹</button>
             </Link>
             {/* 팔로잉/팔로워 */}
@@ -288,14 +288,15 @@ function MyProfile() {
             <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>
           <hr />
-          <div className={classes.UserProfileMenu}>
-            <ProfileMenu
-              setMenu={setMenu}
-              setFollowButtonClick={setFollowButtonClick}
-              memberId={params.memberId}
-            />
-          </div>
+
+          <ProfileMenu
+            setMenu={setMenu}
+            setFollowButtonClick={setFollowButtonClick}
+            memberId={params.memberId}
+            Token={AccsesToken}
+          />
         </div>
+
         {/* 화면 오른쪽 화면 출력 창 */}
 
         <div className={classes.Profilecontent}>
