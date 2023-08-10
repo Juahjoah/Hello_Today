@@ -240,7 +240,7 @@ public class MypageService {
                             .startDate(routineItem.getStartDate())
                             .endDate(routineItem.getEndDate())
                             .imgPath(imgPath)
-                            .size(routineList.size())
+                            .size(routineRepository.findByMember_MemberId(memberId).size())
                     .build());
         }
 
