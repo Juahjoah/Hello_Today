@@ -1,5 +1,6 @@
 package com.ssafy.hellotoday.api.dto.mypage.response;
 
+import com.ssafy.hellotoday.common.util.property.ApplicationProperties;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -13,10 +14,16 @@ public class CalendarHistoryDetailResponseDto {
     private String imgPath;
     private String content;
 
-    public CalendarHistoryDetailResponseDto(String routineContent, LocalDateTime checkDate, String imgPath, String content) {
+    public CalendarHistoryDetailResponseDto(String routineContent, LocalDateTime checkDate, String imgOriginalName, String content) {
         this.routineContent = routineContent;
         this.writeDate = checkDate;
-        this.imgPath = imgPath;
+        this.imgPath = getRoutineCheckImagePath(imgOriginalName);
         this.content = content;
+    }
+
+    public String getRoutineCheckImagePath(String imgOriginalName) {
+        if(imgOriginalName == null) return null;
+
+        return ApplicationProperties.HOST_IMAGE_URL + "routine/" + imgOriginalName;
     }
 }
