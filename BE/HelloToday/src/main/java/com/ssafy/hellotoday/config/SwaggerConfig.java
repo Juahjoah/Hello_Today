@@ -22,7 +22,7 @@ public class SwaggerConfig {
     public GroupedOpenApi memberApi() {
         return GroupedOpenApi.builder()
                 .group("member")
-                .pathsToMatch("/members/**")
+                .pathsToMatch("/api/members/**")
                 .build();
     }
 
@@ -30,7 +30,7 @@ public class SwaggerConfig {
     public GroupedOpenApi searchApi() {
         return GroupedOpenApi.builder()
                 .group("search")
-                .pathsToMatch("/search/**")
+                .pathsToMatch("/api/search/**")
                 .build();
     }
 
@@ -38,7 +38,7 @@ public class SwaggerConfig {
     public GroupedOpenApi routineApi() {
         return GroupedOpenApi.builder()
                 .group("routine")
-                .pathsToMatch("/routine/**")
+                .pathsToMatch("/api/routine/**")
                 .build();
     }
 
@@ -46,7 +46,7 @@ public class SwaggerConfig {
     public GroupedOpenApi mypageApi() {
         return GroupedOpenApi.builder()
                 .group("mypage")
-                .pathsToMatch("/mypage/**")
+                .pathsToMatch("/api/mypage/**")
                 .build();
     }
 
@@ -54,7 +54,15 @@ public class SwaggerConfig {
     public GroupedOpenApi followApi() {
         return GroupedOpenApi.builder()
                 .group("follow")
-                .pathsToMatch("/follow/**")
+                .pathsToMatch("/api/follow/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi meetingRoomApi() {
+        return GroupedOpenApi.builder()
+                .group("meeting room")
+                .pathsToMatch("/api/rooms/**")
                 .build();
     }
 
