@@ -29,6 +29,7 @@ function PageRedirectNaver() {
 
     axios({
       url: `${process.env.REACT_APP_BASE_URL}/api/members/naver/login`,
+      // url: `http://localhost:8080/api/members/naver/login`,
       method: "post",
       data: {
         code: code,

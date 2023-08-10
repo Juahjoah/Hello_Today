@@ -74,7 +74,6 @@ public class RoutineController {
     public BaseResponseDto checkPrivateRoutine(@RequestPart(name = "request") Optional<RoutineCheckRequestDto> routineCheckRequestDto,
                                           @RequestParam(value = "file",required = false) MultipartFile file,
                                           HttpServletRequest httpServletRequest) {
-
         RoutineCheckRequestDto routineCheckRequest = routineCheckRequestDto.orElse(null);
 
         if (routineCheckRequest != null) {
@@ -85,7 +84,6 @@ public class RoutineController {
 
         String token = httpServletRequest.getHeader("Authorization");
         Member findMember = memberService.findMemberByJwtToken(token);
-
 
         return routineService.checkPrivateRoutine(routineCheckRequest,findMember,file);
     }
