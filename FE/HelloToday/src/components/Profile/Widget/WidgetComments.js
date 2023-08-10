@@ -40,10 +40,10 @@ function WidgetComments(props) {
 
   useEffect(() => {
     const loggedInUserId = sessionStorage.getItem("memberId");
-    setIsMe(
-      loggedInUserId === props.memberId ||
-        comments.some((comment) => comment.writerId === loggedInUserId)
-    );
+    // setIsMe(
+    //   loggedInUserId === props.memberId ||
+    //     comments.some((comment) => comment.writerId === loggedInUserId)
+    // );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, comments, props.memberId]);
@@ -128,7 +128,7 @@ function WidgetComments(props) {
       <div>
         <p> {memberId}님을 향한 응원의 댓글!</p>
         <div className={classes.CommentSection}>
-          {comments.map((comment) => (
+          {/* {comments.map((comment) => (
             // <div key={comment.id}>
             <div key={comment.messageId}>
               {isEdit === comment.messageId ? (
@@ -183,7 +183,7 @@ function WidgetComments(props) {
                 </div>
               )}
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
 

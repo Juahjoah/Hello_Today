@@ -1,6 +1,6 @@
 import classes from "./RoutineAuthCard.module.css";
-import UnCheckRoutine from "./UnCheckRoutine";
-import CheckRoutine from "./CheckRoutine";
+// import UnCheckRoutine from "./UnCheckRoutine";
+// import CheckRoutine from "./CheckRoutine";
 
 function RoutineAuthCard({
   routineStartDate,
@@ -34,7 +34,6 @@ function RoutineAuthCard({
           <div className={classes.routineName}>{routineDetailDto.content}</div>
         </div>
       </div>
-      
 
       {/* 오늘 날짜랑 비교해서 오늘 날짜의 checkDate가 있으면 */}
       {/* checkDate가 오늘날짜인 것의 데이터가 null이면 UnCheckRoutine
@@ -45,7 +44,6 @@ function RoutineAuthCard({
       {/* <CheckRoutine
         routineCheckDtoList={routineCheckDtoList}
         routineDetailDto={routineDetailDto} /> */}
-
 
       {/* <div className={classes.routuneAuthMid}>
         <div className={classes.routineAuthMidDes}>
@@ -76,8 +74,6 @@ function RoutineAuthCard({
           루틴에 대한 기록을 남겨주세요!
         </div> */}
       {/* </div> */}
-
-
 
       {/* <div className={classes.routineAuthRight}>
         <button className={classes.goToAuth} onClick={handleAuthButtonClick}>

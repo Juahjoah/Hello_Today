@@ -24,7 +24,22 @@
   font-family: "TheJamsil5Bold";
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);
+  display: flex; /* 가운데 정렬을 위해 추가 */
+  flex-direction: column;
+  align-items: center; /* 세로 가운데 정렬을 위해 추가 */
+  justify-content: center; /* 가로 가운데 정렬을 위해 추가 */
 }
 .WidgetHistory_content {
+  display: flex; /* 요소들을 가로로 배치 */
+}
+.img {
+  height: 150px;
+  width: 150px;
+}
+.WidgetHistory_one {
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  margin: 0px 20px 0px 20px;
+}
+.btn {
   display: flex;
 }

@@ -13,7 +13,7 @@ function WidgetHistory() {
   //
   const [items, setItems] = useState([]); //리스트에 나타낼 아이템
   const [count, setCount] = useState(0); //아이템 총 개수
-  const [currentpage, setCurrentpage] = useState(0); //현재페이지
+  const [currentpage, setCurrentpage] = useState(1); //현재페이지
   const [postPerPage] = useState(3); //페이지당 아이템 개수
 
   const [indexOfLastPost, setIndexOfLastPost] = useState(0);
@@ -22,14 +22,14 @@ function WidgetHistory() {
 
   const setPage = (e) => {
     // 페이지가 바뀔 때 핸들링해줄 함수
-    setCurrentpage(e - 1); //현재 페이지
-    console.log("현재 페이지 : ", e - 1);
+    setCurrentpage(e); //현재 페이지
+    console.log("현재 페이지 : ", e);
   };
 
   useEffect(() => {
     const params = {
       memberId: memberId,
-      page: currentpage,
+      page: currentpage - 1,
       size: 3,
     };
     const headers = {
@@ -41,9 +41,9 @@ function WidgetHistory() {
         { params, headers }
       )
       .then((res) => {
-        console.log(res);
+        console.log("받아온 데이터", res);
         setItems(res.data);
-        console.log(items);
+        console.log("뿌리는 데이터", items);
         setCount(res.data[0].size); //총 아이템의 개수
         console.log(count);
         // setIndexOfLastPost(currentpage * postPerPage);
@@ -63,7 +63,7 @@ function WidgetHistory() {
           <div className={classes.WidgetHistory_content}>
             {items && items.length > 0 ? (
               items.map((item) => (
-                <div>
+                <div className={classes.WidgetHistory_one}>
                   {!item.imgPath ||
                   item.imgPath === "" ||
                   item.imgPath === undefined ? (
@@ -81,8 +81,8 @@ function WidgetHistory() {
                   )}
                   <hr />
                   <p>
-                    {new Date(item.startDate).toISOString().split("T")[0]} ~{" "}
-                    {new Date(item.endDate).toISOString().split("T")[0]}
+                    {new Date(item.startDate).toLocaleDateString()} ~
+                    {new Date(item.endDate).toLocaleDateString()}
                   </p>
                 </div>
               ))
@@ -90,9 +90,12 @@ function WidgetHistory() {
               <p>게시물이 없습니다.</p>
             )}
           </div>
-          <WidgetPaging page={currentpage} count={count} setPage={setPage} />
-          {/* 여기 끝 */}
+          <div className={classes.btn}>
+            <WidgetPaging page={currentpage} count={count} setPage={setPage} />
+          </div>
         </div>
+
+        {/* 여기 끝 */}
       </div>
     </div>
   );
