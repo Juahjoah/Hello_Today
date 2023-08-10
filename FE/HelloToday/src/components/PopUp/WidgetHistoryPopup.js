@@ -79,37 +79,53 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
               return (
                 <div className={classes.routinehistory} key={index}>
                   <div className={classes.routinehistoryContent}>
-                    <p>{item.checkDaySeq}일차</p>
-                    {item.routineDetail.map((detail, detailIndex) => (
-                      <div
-                        className={classes.routineHisotry_box}
-                        key={detailIndex}
-                      >
-                        <p> 루틴 종류 : {detail.routineContent}</p>
-                        <p>
-                          인증일 :{" "}
-                          {new Date(detail.writeDate).toLocaleDateString()}
-                        </p>
-                        <p>내용: {detail.content}</p>
-                        {!detail.imgPath ||
-                        detail.imgPath === "" ||
-                        detail.imgPath === undefined ? (
-                          <img
-                            className={classes.routineHisotry_img}
-                            src="/images/logo.png"
-                            alt="Default"
-                          />
-                        ) : (
-                          <img
-                            className={classes.routineHisotry_img}
-                            src={detail.imgPath}
-                            alt={`Image ${detailIndex}`}
-                          />
-                        )}
-                        <div className={classes.v_line}></div>
-                        <p>{detail.content}</p>
+                    <p className={classes.routinehistory_day}>
+                      {item.checkDaySeq}일차
+                    </p>
+                    {item.routineDetail.length > 0 ? (
+                      <div>
+                        {item.routineDetail.map((detail, detailIndex) => (
+                          <div
+                            className={classes.routineHisotry_box}
+                            key={detailIndex}
+                          >
+                            <p> 루틴 종류 : {detail.routineContent}</p>
+                            <p>
+                              인증일 :
+                              {new Date(detail.writeDate).toLocaleDateString()}
+                            </p>
+                            <hr />
+                            <div className={classes.routinehistory_bottom}>
+                              {!detail.imgPath ||
+                              detail.imgPath === "" ||
+                              detail.imgPath === undefined ? (
+                                <img
+                                  className={classes.routineHisotry_img}
+                                  src="/images/logo.png"
+                                  alt="Default"
+                                />
+                              ) : (
+                                <img
+                                  className={classes.routineHisotry_img}
+                                  src={detail.imgPath}
+                                  alt={`Image ${detailIndex}`}
+                                />
+                              )}
+                              <div
+                                className={classes.routinehistory_vline}
+                              ></div>
+                              <div className={classes.routinehistory_text}>
+                                <p className={classes.routinehistory_text_p}>
+                                  내용: {detail.content}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    ) : (
+                      <div>다음 번에는 인증 해주세요~~ (뭐라고 하지...)</div>
+                    )}
                   </div>
                 </div>
               );

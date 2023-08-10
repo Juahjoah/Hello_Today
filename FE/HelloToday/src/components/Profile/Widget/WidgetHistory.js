@@ -113,7 +113,7 @@ function WidgetHistory() {
         <WidgetHistoryPopup
           isOpen={isPopupOpen}
           setIsPopupOpen={setIsPopupOpen}
-          routineId = {routineId}
+          routineId={routineId}
         />
       }
     </div>

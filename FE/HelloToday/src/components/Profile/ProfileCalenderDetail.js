@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import classes from "./ProfileCalenderDetail.module.css";
 // import { SET_CALENDAR_DATA } from "../../store/calendarDetailSlice";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "react-bootstrap/Button";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 

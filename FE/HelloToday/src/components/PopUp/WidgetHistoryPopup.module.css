@@ -13,15 +13,9 @@
   align-items: center;
   padding: 30px;
 }
-.calDetailDay {
-  font-size: 1.75em;
-}
-
-.calDetailContent {
-  /*버튼 빼고 content만*/
-  /* border: 4px solid #000000; */
-  justify-content: center;
-  align-items: center;
+.routinehistory_day {
+  margin-top: 0px;
+  font-size: 30px;
 }
 .routinehistory {
   /*루틴 인증*/
@@ -30,18 +24,8 @@
 .routinehistoryContent {
   /*루틴 이름*/
 }
-.img_txt {
-  /*이미지 글 한 박스*/
-  box-shadow: 0 0 5px #333;
+.routinehistory_bottom {
   display: flex;
-  padding-top: 40px;
-  line-height: 20px;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  box-sizing: border-box;
-  margin-left: 15px;
-  margin-right: 15px;
-  text-align: center;
 }
 .routineHisotry_img {
   /*이미지 크기*/
@@ -49,14 +33,16 @@
   height: auto;
   margin: 0px 10px 10px 10px;
 }
-.v_line {
-  border-left: 4px solid rgba(0, 0, 0, 0.5);
-  height: 200px;
+.routinehistory_vline {
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  height: auto;
   margin-right: 10px;
 }
-.content {
-  /*루틴 인증 글*/
+.routinehistory_text {
+  width: 1000px;
+  background-color: rgba(254, 250, 237, 1);
+  border-radius: 50px;
 }
-.btn_back {
-  justify-content: flex-end;
+.routinehistory_text_p {
+  margin: 30px;
 }
