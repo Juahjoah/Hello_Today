@@ -117,7 +117,10 @@ function SelectedRoutine({routinePrivate}) {
         .then((res) => {
             console.log(res.data);
             console.log("루틴 인증 성공")
-        }).catch((error) => console.log(error));
+        })
+        .then(setModalIsOpen(false))
+        
+        .catch((error) => console.log(error));
     };
 
     return (
