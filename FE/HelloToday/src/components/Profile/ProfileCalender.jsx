@@ -40,6 +40,7 @@ export function ProfileCalender() {
             title: item.activeFlag,
           }));
           setEvents(dbdata);
+          console.log(res);
         })
         .catch((error) => {
           console.log("-------ProfileCalendar error----------");
@@ -73,7 +74,11 @@ export function ProfileCalender() {
           if (events.length > 0) {
             const selectedDate = new Date(date);
             selectedDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
-            const clickedDate = selectedDate.toISOString().split("T")[0];
+            const clickedDate = new Date(date);
+            const year = clickedDate.getFullYear();
+            const month = String(clickedDate.getMonth() + 1).padStart(2, "0");
+            const day = String(clickedDate.getDate()).padStart(2, "0");
+            const formattedDate = `${year}-${month}-${day}`;
 
             const isClickable = events.some((event) => {
               const eventStartDate = new Date(event.start);
@@ -86,7 +91,7 @@ export function ProfileCalender() {
             });
 
             if (isClickable) {
-              navigate(`/MyProfile/${memberId}/calen/${clickedDate}`);
+              navigate(`/MyProfile/${memberId}/calen/${formattedDate}`);
             }
           }
         }}
@@ -94,6 +99,7 @@ export function ProfileCalender() {
         dateClick={(info) => {
           if (events.length > 0) {
             const clickedDate = info.dateStr;
+
             const selectedDate = new Date(clickedDate);
             selectedDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
 
