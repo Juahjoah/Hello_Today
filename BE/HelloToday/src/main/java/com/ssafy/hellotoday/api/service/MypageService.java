@@ -377,4 +377,18 @@ public class MypageService {
         }
         return resType;
     }
+
+    public List<GalleryResponseDto> getGallery(Integer memberId) {
+        List<String> imgOriginalNames = queryFactory.select(routineCheck.imgOriginalName)
+                .from(routineCheck)
+                .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
+                .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
+                .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
+                .where(member.memberId.eq(memberId).and(routineCheck.imgOriginalName.isNotNull()))
+                .orderBy(routineCheck.checkDate.desc()).fetch();
+
+        List<GalleryResponseDto> result = imgOriginalNames.stream().map(imgOriginalName -> new GalleryResponseDto(imgOriginalName)).collect(Collectors.toList());
+
+        return result;
+    }
 }
