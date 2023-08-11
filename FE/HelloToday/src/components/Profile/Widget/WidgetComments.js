@@ -119,6 +119,7 @@ function WidgetComments() {
       <div>
         <p> {memberId}님을 향한 응원의 댓글!</p>
         <div className={classes.CommentSection}>
+          {comments.length === 0 && <p>댓글이 없습니다.</p>}
           {comments.length > 0 &&
             comments.map((comment) => (
               <div key={comment.messageId}>
