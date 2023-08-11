@@ -6,6 +6,29 @@
   font-style: normal;
 }
 
+@keyframes YAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px); /* 이미지가 위로 20px 이동 */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes XAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-2px); /* 이미지가 위로 20px 이동 */
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .MyProfile {
   font-family: "TheJamsil5Bold";
   font-size: 0.7rem;
@@ -195,6 +218,11 @@
   text-align: center;
 }
 
+.widgetRightItemFlag {
+  /* animation */
+  animation: XAnimation 0.15s infinite;
+}
+
 .widgetRightButoon {
   width: auto;
   /* height: 27px; */
@@ -222,6 +250,8 @@
   margin-top: 1vh;
   margin-bottom: 2vh;
   background-color: transparent;
+  font-family: "TheJamsil5Bold" !important;
+  padding: 8px 12px;
   /* color: white; */
 }
 .selectedButton {
