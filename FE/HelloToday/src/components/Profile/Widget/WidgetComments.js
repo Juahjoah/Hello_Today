@@ -122,67 +122,69 @@ function WidgetComments(props) {
       });
   };
 
+  console.log(comments);
+
   return (
     <div className={classes.WidgetComments}>
       <div>
         <p> {memberId}님을 향한 응원의 댓글!</p>
         <div className={classes.CommentSection}>
-          {comments.map((comment) => (
-            // <div key={comment.id}>
-            <div key={comment.messageId}>
-              {isEdit === comment.messageId ? (
-                <div>
-                  <input
-                    type="text"
-                    value={editedComment}
-                    onChange={(event) => {
-                      setEditedComment(event.target.value);
-                      setEditedCommentId(comment.messageId);
-                    }}
-                  />
-                  <button
-                    onClick={() => {
-                      SaveEditedComment();
-                    }}
-                  >
-                    저장
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  {comment.content}
-                  {comment.writerNickName}
-                  {isMe && (
+          {comments.length > 0 &&
+            comments.map((comment) => (
+              <div key={comment.messageId}>
+                {isEdit === comment.messageId ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={editedComment}
+                      onChange={(event) => {
+                        setEditedComment(event.target.value);
+                        setEditedCommentId(comment.messageId);
+                      }}
+                    />
                     <button
-                      className={classes.buttonstyle}
                       onClick={() => {
-                        setIsEdit(comment.messageId);
-                        setEditedComment(comment.content);
+                        SaveEditedComment();
                       }}
                     >
-                      <img
-                        className={classes.edit}
-                        src="../../images/Widget/edit.png"
-                        alt="edit"
-                      />
+                      저장
                     </button>
-                  )}
-                  {isMe && (
-                    <button
-                      className={classes.buttonstyle}
-                      onClick={() => DeleteComment(comment.messageId)}
-                    >
-                      <img
-                        className={classes.clear}
-                        src="../../images/Widget/clear.png"
-                        alt="clear"
-                      />
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
+                  </div>
+                ) : (
+                  <div>
+                    {comment.content}
+                    {comment.writerNickName}
+                    {isMe && (
+                      <button
+                        className={classes.buttonstyle}
+                        onClick={() => {
+                          setIsEdit(comment.messageId);
+                          setEditedComment(comment.content);
+                        }}
+                      >
+                        <img
+                          className={classes.edit}
+                          src="../../images/Widget/edit.png"
+                          alt="edit"
+                        />
+                      </button>
+                    )}
+                    {isMe && (
+                      <button
+                        className={classes.buttonstyle}
+                        onClick={() => DeleteComment(comment.messageId)}
+                      >
+                        <img
+                          className={classes.clear}
+                          src="../../images/Widget/clear.png"
+                          alt="clear"
+                        />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
         </div>
       </div>
 
