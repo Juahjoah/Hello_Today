@@ -30,7 +30,7 @@ public class SearchService {
             searchValidator.validateWordNum(word);
             members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
         }
-        res = searchQueryDslRepository.findMembersWithRoutinTagByMemberIds(members.stream()
+        res = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(members.stream()
                 .map(Member::getMemberId).collect(Collectors.toList()));
         transferProfilePath(res);
 

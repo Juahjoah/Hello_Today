@@ -23,7 +23,7 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineTag.routineTag;
 public class SearchQueryDslRepository {
     private final JPAQueryFactory queryFactory;
 
-    public List<SearchResponseDto> findMembersWithRoutinTagByMemberIds(List<Integer> memberIds) {
+    public List<SearchResponseDto> findMembersWithRoutineTagByMemberIds(List<Integer> memberIds) {
         return queryFactory.selectFrom(member)
                 .leftJoin(routine).on(member.memberId.eq(routine.member.memberId))
                 .leftJoin(routineDetailCat).on(routine.routineId.eq(routineDetailCat.routine.routineId))
