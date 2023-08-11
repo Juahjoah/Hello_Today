@@ -106,56 +106,58 @@ function WidgetDiary(props) {
     <div className="WidgetDiary">
       <p> {memberId}님의 한 줄 일기 </p>
       <div>
-        {diary.map((diaryItem) => {
-          return (
-            <div key={diaryItem.wishDiaryId}>
-              {isEdit && editedDiaryId === diaryItem.wishDiaryId ? (
-                <div>
-                  <input
-                    type="text"
-                    value={editedDiary}
-                    onChange={(event) => {
-                      setEditedDiary(event.target.value);
-                      setEditedDiaryId(diaryItem.wishDiaryId);
-                    }}
-                  />
-                  <button onClick={() => saveEditedDiary()}>저장</button>
-                  <button onClick={() => setIsEdit(false)}>취소</button>
-                </div>
-              ) : (
-                <div>
-                  {diaryItem.content}
-                  {isMe && (
-                    <div>
-                      <button
-                        onClick={() => {
-                          setIsEdit(true);
-                          setEditedDiaryId(diaryItem.wishDiaryId);
-                          setEditedDiary(diaryItem.content);
-                        }}
-                      >
-                        <img
-                          // className={classes.edit}
-                          src="../../images/Widget/edit.png"
-                          alt="edit"
-                        />
-                      </button>
-                      <button
-                        onClick={() => deleteDiary(diaryItem.wishDiaryId)}
-                      >
-                        <img
-                          // className={classes.clear}
-                          src="../../images/Widget/clear.png"
-                          alt="clear"
-                        />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
+        {diary.length === 0 && <div>일기가 없습니다.</div>}
+        {diary.length > 0 &&
+          diary.map((diaryItem) => {
+            return (
+              <div key={diaryItem.wishDiaryId}>
+                {isEdit && editedDiaryId === diaryItem.wishDiaryId ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={editedDiary}
+                      onChange={(event) => {
+                        setEditedDiary(event.target.value);
+                        setEditedDiaryId(diaryItem.wishDiaryId);
+                      }}
+                    />
+                    <button onClick={() => saveEditedDiary()}>저장</button>
+                    <button onClick={() => setIsEdit(false)}>취소</button>
+                  </div>
+                ) : (
+                  <div>
+                    {diaryItem.content}
+                    {isMe && (
+                      <div>
+                        <button
+                          onClick={() => {
+                            setIsEdit(true);
+                            setEditedDiaryId(diaryItem.wishDiaryId);
+                            setEditedDiary(diaryItem.content);
+                          }}
+                        >
+                          <img
+                            // className={classes.edit}
+                            src="../../images/Widget/edit.png"
+                            alt="edit"
+                          />
+                        </button>
+                        <button
+                          onClick={() => deleteDiary(diaryItem.wishDiaryId)}
+                        >
+                          <img
+                            // className={classes.clear}
+                            src="../../images/Widget/clear.png"
+                            alt="clear"
+                          />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         <div>
           {isMe && (
             <div>
