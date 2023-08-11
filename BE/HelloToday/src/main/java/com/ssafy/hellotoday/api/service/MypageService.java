@@ -208,7 +208,7 @@ public class MypageService {
                 .select(Projections.constructor(CalendarHistoryDetailResponseDto.class
                         , routineDetail.content
                         , routineCheck.modifiedDate
-                        , routineCheck.imgPath
+                        , routineCheck.imgOriginalName
                         , routineCheck.content))
                 .from(routineCheck)
                 .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
