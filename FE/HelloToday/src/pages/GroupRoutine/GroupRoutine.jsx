@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import classNames from "classnames";
 
 //로그인
 import React, { useEffect } from "react";
@@ -16,9 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import allAuth from "../../components/User/allAuth";
 
 function GroupRoutine() {
-  // TODO: DB에서 생성된 방들 데이터 받아와서 컴포넌트로 뿌려줄 것
-  // useEffect(() => {...},[])
-
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [memberCount, setMemberCount] = useState(2);
@@ -44,6 +42,11 @@ function GroupRoutine() {
     "너무 자책하지 말아요!",
     "다른 오늘러들과 얘기나누며 다시 시작해봐요.",
   ];
+
+  const makeRoomBtn = classNames({
+    [classes.cantMake]: !roomName || !roomDesc,
+    [classes.canMake]: roomName && roomDesc,
+  });
 
   useEffect(() => {
     async function axiosGroupRoomList() {
@@ -314,12 +317,16 @@ function GroupRoutine() {
               <div className={classes.makeRoomModalMainRoomCountNone}></div>
             </div>
           </div>
-          <button
-            onClick={handleMakeRoomInfo}
-            className={classes.makeRoomModalBtn}
-          >
-            방 생성하기
-          </button>
+
+          {roomName && roomDesc ? (
+            <button onClick={handleMakeRoomInfo} className={makeRoomBtn}>
+              방 생성하기
+            </button>
+          ) : (
+            <button disabled className={makeRoomBtn}>
+              방 생성하기
+            </button>
+          )}
         </div>
       </Modal>
     </div>
