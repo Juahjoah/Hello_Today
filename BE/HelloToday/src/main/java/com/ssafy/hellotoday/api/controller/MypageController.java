@@ -288,7 +288,11 @@ public class MypageController {
 
     @Operation(summary = "갤러리 조회", description = "마이페이지 안에 있는 갤러리 조회")
     @GetMapping("/gallery/{memberId}")
-    public void getGallery(@PathVariable Integer memberId) {
+    public List<GalleryResponseDto> getGallery(HttpServletRequest httpServletRequest, @PathVariable Integer memberId) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if(token == null) return null;
+
+        return mypageService.getGallery(memberId);
     }
 
     @Operation(summary = "목표 전체 조회", description = "목표 전체 조회 type(0:매일,1:매주,2:매년) header에 accessToken 필요")
