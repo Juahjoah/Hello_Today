@@ -25,7 +25,7 @@ public class SearchService {
         List<SearchResponseDto> res;
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
             searchValidator.validateWordString(word);
-            members = memberRepository.findByNicknameContaining(word);
+            members = memberRepository.findByNicknameStartingWith(word);
         } else {
             searchValidator.validateWordNum(word);
             members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
