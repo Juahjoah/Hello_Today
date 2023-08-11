@@ -22,7 +22,6 @@ import MyProfileEdit from "./pages/MyProfile/MyProfileEdit";
 // import PublicRoute from "./Router/PublicRoute";
 // import PrivateRoute from "./Router/PrivateRoute";
 
-
 function App() {
   Modal.setAppElement("#root");
   const islogin = useSelector((state) => state.login.isLogin);
