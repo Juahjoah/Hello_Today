@@ -37,7 +37,7 @@ export function ProfileCalender() {
             id: item.routineId,
             start: item.startDate,
             end: item.endDate,
-            title: item.activeFlag,
+            title: "오늘의 routine",
           }));
           setEvents(dbdata);
           console.log(res);
