@@ -16,36 +16,38 @@ function WidgetComments() {
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [isMe, setIsMe] = useState(false);
   const page = 0;
-  const size = 10;
-
-  const getComments = (memberId) => {
-    axios
-      .get(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
-        {
-          params: { memberId, page: page, size: size },
-        },
-        {
-          headers: { Authorization: AccsesToken },
-        }
-      )
-      .then((response) => {
-        setComments(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const size = 5;
 
   useEffect(() => {
     const loggedInUserId = sessionStorage.getItem("memberId");
     setIsMe(
       loggedInUserId === memberId ||
         comments.some((comment) => comment.writerId === loggedInUserId)
+      // memberId === +sessionStorage.getItem("memberId") ? true : false
     );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId]);
+  }, [memberId, AccsesToken]);
+
+  const getComments = async (memberId) => {
+    await axios
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
+        {
+          params: { memberId, page: page, size: size },
+          headers: {
+            Authorization: AccsesToken,
+          },
+        }
+      )
+      .then((response) => {
+        // console.log(response.data);
+        setComments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const CreateComment = () => {
     axios
@@ -60,9 +62,9 @@ function WidgetComments() {
         }
       )
       .then((response) => {
-        getComments(memberId);
+        // console.log(response);
+        getComments();
         setNewComment("");
-        // }
       })
       .catch((error) => {
         console.log(error);
@@ -89,6 +91,7 @@ function WidgetComments() {
         }
       )
       .then((response) => {
+        // console.log(response);
         getComments(memberId);
       })
       .catch((error) => {
@@ -100,12 +103,10 @@ function WidgetComments() {
     axios
       .delete(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${messageId}`,
-
-        {
-          headers: { Authorization: AccsesToken },
-        }
+        { headers: { Authorization: AccsesToken } }
       )
       .then((response) => {
+        // console.log(response);
         getComments(memberId);
       })
       .catch((error) => {
@@ -121,7 +122,7 @@ function WidgetComments() {
           {comments.length > 0 &&
             comments.map((comment) => (
               <div key={comment.messageId}>
-                {isEdit === comment.messageId ? (
+                {isEdit && editedCommentId === comment.messageId ? (
                   <div>
                     <input
                       type="text"
@@ -149,6 +150,7 @@ function WidgetComments() {
                         onClick={() => {
                           setIsEdit(comment.messageId);
                           setEditedComment(comment.content);
+                          setEditedCommentId(comment.messageId);
                         }}
                       >
                         <img
