@@ -16,7 +16,7 @@ function WidgetComments() {
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [isMe, setIsMe] = useState(false);
   const page = 0;
-  const size = 5;
+  const size = 20;
 
   useEffect(() => {
     const loggedInUserId = sessionStorage.getItem("memberId");
@@ -34,7 +34,7 @@ function WidgetComments() {
       .get(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
         {
-          params: { memberId, page: page, size: size },
+          params: { memberId, page, size },
           headers: {
             Authorization: AccsesToken,
           },
@@ -49,8 +49,8 @@ function WidgetComments() {
       });
   };
 
-  const CreateComment = () => {
-    axios
+  const CreateComment = async () => {
+    await axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg`,
         {
@@ -63,7 +63,7 @@ function WidgetComments() {
       )
       .then((response) => {
         // console.log(response);
-        getComments();
+        getComments(memberId);
         setNewComment("");
       })
       .catch((error) => {
