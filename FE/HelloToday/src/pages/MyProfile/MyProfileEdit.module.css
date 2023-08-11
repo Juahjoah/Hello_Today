@@ -35,7 +35,7 @@
   border: 1px solid gray;
   border-radius: 1rem;
   width: 95%;
-  height: auto;
+  height: 108vh;
   margin: 70px auto 20px auto;
   display: flex;
   /* justify-content: center; */
@@ -53,6 +53,7 @@
   flex-direction: column;
   justify-content: center;
   justify-items: center;
+  height: 88vh;
   /* margin-top: 170px; */
 }
 
@@ -110,7 +111,7 @@
 
 .editForm {
   width: 67%;
-  height: 104vh;
+  height: 85vh;
   border-radius: 15px;
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -123,11 +124,11 @@
   width: 100%;
   /* justify-content: center; */
   align-items: start;
-  margin-top: 10vh;
+  margin-top: 1vh;
   margin-left: 10vh;
 }
 .editFormTitle {
-  font-size: 25px;
+  font-size: 3vh;
 }
 .widgetBody {
   display: flex;
@@ -137,22 +138,22 @@
   display: flex;
   flex: 4.5;
   margin-left: 10vh;
-  margin-top: 5vh;
+  margin-top: 4vh;
   flex-direction: column;
 }
 
 .widgetLeftTitle {
-  font-size: 15px;
+  font-size: 2vh;
 }
 .widgetRightTitle {
-  font-size: 15px;
+  font-size: 2vh;
 }
 .widgetLeftTitleItem {
 }
 
 .widgetLeftForm {
   border-radius: 15px;
-  height: 62vh;
+  height: 45vh;
   border: 1px solid;
   margin-top: 1vh;
   padding: 4vh;
@@ -160,7 +161,7 @@
 .widgetMid {
   display: flex;
   flex: 1;
-  margin-top: 38vh;
+  margin-top: 28vh;
   margin-left: 4vh;
 }
 
@@ -173,6 +174,7 @@
   border-radius: 8px;
   color: #a581cf;
   background: rgb(255, 255, 255);
+  font-family: "TheJamsil5Bold";
 }
 
 .widgetMidButtonForm:hover {
@@ -183,7 +185,7 @@
   display: flex;
   flex: 4.5;
   /* margin-left: 10vh; */
-  margin-top: 5vh;
+  margin-top: 4vh;
   flex-direction: column;
 }
 .widgetRightTopForm {
@@ -193,21 +195,21 @@
   /* opacity: 0.5; */
 }
 .widgetRightTop {
-  margin-top: 11vh;
+  margin-top: 8vh;
 
   margin-left: 4vh;
 
-  margin-bottom: 2vh;
+  margin-bottom: 4vh;
 
-  font-size: 2vh;
+  font-size: 15px;
 }
 .widgetRightBody {
-  font-size: 15px;
+  font-size: 18px;
   margin-top: 2vh;
   margin-left: 1vh;
 }
 .widgetRightContent {
-  font-size: 2vh;
+  font-size: 15px;
   margin-left: 4vh;
 }
 .widgetRightItem {
@@ -268,11 +270,17 @@
   margin-right: 15vh;
 }
 .widgetFooterButton {
-  width: 10vh;
+  width: 11vh;
   height: 5vh;
   margin-left: 1vh;
   border: 3px #a581cf solid;
   border-radius: 8px;
   color: #a581cf;
   background: rgb(255, 255, 255);
+  font-family: "TheJamsil5Bold";
+}
+
+.widgetFooterButton:hover {
+  color: white;
+  background: #a581cf;
 }

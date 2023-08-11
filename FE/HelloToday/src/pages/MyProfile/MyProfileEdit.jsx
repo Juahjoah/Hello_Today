@@ -1,15 +1,10 @@
 import Nav from "../../components/common/Nav";
-import classes from "./MyProfile.module.css";
+import classes from "./MyProfileEdit.module.css";
 
 import ProfileMenu from "../../components/Profile/ProfileMenu";
-import ProfileMain from "../../components/Profile/ProfileMain";
-import FollowButton from "../../components/Profile/FollowButton";
-import FollowList from "../../components/Profile/FollowList";
-
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
-import { Route, Link, useParams } from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 //로그인
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
@@ -27,7 +22,6 @@ function MyProfileEdit() {
   //------------------------------로그인 시작
   const dispatch = useDispatch();
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const memberId = localStorage.getItem("memberId");
   useEffect(() => {
     allAuth(AccsesToken, dispatch);
   }, []);
@@ -262,15 +256,6 @@ function MyProfileEdit() {
             <p className={classes.ProfilenNickName}>{user.nickname}</p>
             <p className={classes.ProfileMsg}>{user.stMsg}</p>
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
-
-            {/* 팔로잉/팔로워 */}
-            <div className={classes.UserFollow}>
-              <FollowButton
-                memberId={params.memberId}
-                setFollowButtonClick={setFollowButtonClick}
-              />
-            </div>
-            <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>
           <hr />
           <ProfileMenu

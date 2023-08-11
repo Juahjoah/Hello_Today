@@ -6,14 +6,12 @@
   align-items: center;
   justify-content: space-evenly;
   border-bottom: solid 1px rgb(188, 185, 185);
-  
 }
 
 .searchPopupTitle {
   font-size: 25px;
   font-family: "TheJamsil5Bold";
 }
-
 
 .searchPopupBody {
   display: flex;
@@ -23,13 +21,11 @@
   align-items: center;
   justify-content: space-evenly;
   margin-top: 50px;
-  
 }
 
 .searchPopupDesc {
   display: flex;
   align-items: center;
-  
 }
 
 .searchPopupDescInput {
@@ -42,13 +38,13 @@
   padding: 8px 12px;
   outline: none;
   width: 85vh;
-  flex:9;
+  flex: 9;
 }
 
 .nickNamePopupDescInput:focus {
   border: none;
 }
-.searchPopupForm{
+.searchPopupForm {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -56,7 +52,7 @@
   padding: 5vh;
   /* overflow-y: scroll; */
 }
-.searchPopupFind{
+.searchPopupFind {
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(131, 129, 129, 0.2);
@@ -64,7 +60,7 @@
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 39vh;
-  height: 113px;
+  height: 15vh;
   margin-top: 3vh;
   margin-bottom: 2vh;
   margin-right: 2vh;
@@ -74,7 +70,7 @@
   border: 1px solid rgba(131, 129, 129, 0.2);
   border-radius: 0px 8px 8px 0px;
   height: 100%;
-  flex:1;
+  flex: 1;
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   transition: all 250ms ease-in-out;
@@ -91,7 +87,7 @@
   justify-content: center;
   align-items: flex-start; */
 }
-.profileImg{
+.profileImg {
   width: 9vh;
   height: 9vh;
   margin-left: 4vh;
@@ -100,13 +96,12 @@
   border: 1px solid black;
 }
 
-.searchLeftItem{
+.searchLeftItem {
   display: flex;
   flex-direction: column;
   margin: auto;
   margin-left: 2vh;
 }
-
 
 .searchLeftNickname {
   margin-bottom: 5px;
@@ -127,18 +122,16 @@
   /* width: 25vh; */
 }
 
-.searchHashTagForm{
-    display:flex;
-    flex-direction: row;
-    
+.searchHashTagForm {
+  display: flex;
+  flex-direction: row;
 }
 
-.searchHashTagFormTag{
+.searchHashTagFormTag {
   display: flex;
   /* flex-direction: column; */
-
 }
-.searchHashTagContent{
+.searchHashTagContent {
   border: 3px #a581cf solid;
   border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -146,18 +139,18 @@
   height: 4vh;
   margin-left: 1vh;
   margin-top: 2vh;
-  color:#a581cf
+  color: #a581cf;
 }
 
-.searchHashTagInfo{
+.searchHashTagInfo {
   text-align: center;
-  font-family: 'TheJamsil5Bold';
+  font-family: "TheJamsil5Bold";
   font-size: 10px;
 
   margin-top: 5px;
 }
 
-.HashTagRe{
+.HashTagRe {
   border: 1px solid rgba(131, 129, 129, 0.2);
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -169,8 +162,7 @@
   margin-top: 14px;
 }
 
-.HashTagItem{
-
+.HashTagItem {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

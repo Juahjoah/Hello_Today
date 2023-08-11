@@ -1,5 +1,6 @@
 import classes from "./ProfileMenu.module.css";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import WidgetComments from "./Widget/WidgetComments";
@@ -22,6 +23,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
     "나의 루틴들": <WidgetHistory memberId={memberId} />,
     갤러리: <WidgetGallery memberId={memberId} />,
     "D-Day": <WidgetDday memberId={memberId} />,
+    "편집 모드": <Link to="/MyProfile/edit"></Link>,
   };
 
   const location = useLocation();
@@ -60,6 +62,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
       if (data.wishListFlag === 1) {
         newData.push("버킷리스트");
       }
+      newData.push("편집 모드");
       setSelectedFlags(newData);
     });
     // .catch(console.log(userName));
@@ -82,16 +85,21 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
   return (
     <div className={classes.UserProfileMenu}>
       {selectedFlags.map((flag) => (
-        <div className={classes.ProfileMenu}>
-          <button
-            key={flag}
-            className={classes.ProfileItem}
-            onClick={(event) => {
-              UserSelectMenu(event);
-            }}
-          >
-            {flag}
-          </button>
+        <div className={classes.ProfileMenu} key={flag}>
+          {flag === "편집 모드" ? (
+            <Link to="/MyProfile/edit">
+              <button className={classes.ProfileItem}>{flag}</button>
+            </Link>
+          ) : (
+            <button
+              className={classes.ProfileItem}
+              onClick={(event) => {
+                UserSelectMenu(event);
+              }}
+            >
+              {flag}
+            </button>
+          )}
         </div>
       ))}
     </div>
