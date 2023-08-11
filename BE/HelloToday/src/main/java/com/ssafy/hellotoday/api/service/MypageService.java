@@ -3,23 +3,22 @@ package com.ssafy.hellotoday.api.service;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.request.*;
 import com.ssafy.hellotoday.api.dto.mypage.response.*;
-import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
 import com.ssafy.hellotoday.common.util.constant.MypageEnum;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
+import com.ssafy.hellotoday.db.entity.mypage.Goal;
 import com.ssafy.hellotoday.db.entity.routine.QRoutineCheck;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
+import com.ssafy.hellotoday.db.repository.mypage.GoalRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +46,7 @@ public class MypageService {
     private final MemberRepository memberRepository;
     private final DdayRepository ddayRepository;
     private final RoutineRepository routineRepository;
+    private final GoalRepository goalRepository;
     private final JPAQueryFactory queryFactory;
 
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
@@ -274,5 +274,107 @@ public class MypageService {
         }
 
         return result;
+    }
+
+    public BaseResponseDto writeGoal(Member findMember, GoalRequestDto goalRequestDto) {
+
+        Goal newGoal = Goal.builder()
+                .member(findMember)
+                .type(goalRequestDto.getType())
+                .content(goalRequestDto.getContent())
+                .build();
+        goalRepository.save(newGoal);
+        String resType = checkGoalType(newGoal.getType());
+
+
+        GoalResponseDto save = GoalResponseDto.builder()
+                .goalId(newGoal.getGoalId())
+                .memberId(newGoal.getMember().getMemberId())
+                .content(newGoal.getContent())
+                .type(resType)
+                .build();
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(resType + " 목표를 작성하셨습니다")
+                .data(save)
+                .build();
+    }
+
+    public BaseResponseDto updateGoal(Integer goalId, Member findMember, GoalRequestDto goalRequestDto) {
+
+        Goal goal = goalRepository.findById(goalId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 유저의 Goal 정보가 없습니다"));
+
+        if (!findMember.equals(goal.getMember())) {
+            throw new IllegalArgumentException("잘못된 접근입니다");
+        }
+
+        String resType = checkGoalType(goal.getType());
+
+        goal.updateGoal(goalRequestDto);
+        GoalResponseDto save = GoalResponseDto.builder()
+                .goalId(goal.getGoalId())
+                .memberId(goal.getMember().getMemberId())
+                .content(goal.getContent())
+                .type(resType)
+                .build();
+
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(resType + " 목표를 수정하셨습니다")
+                .data(save)
+                .build();
+    }
+
+    public BaseResponseDto deleteGoal(Integer goalId, Member findMember) {
+
+        Goal goal = goalRepository.findById(goalId)
+                .orElseThrow(() -> new IllegalArgumentException("goal_id " + goalId + "해당하는 회원이 없습니다"));
+
+        if (!findMember.equals(goal.getMember())) {
+            throw new IllegalArgumentException("잘못된 접근입니다");
+        }
+
+        String resType = checkGoalType(goal.getType());
+
+        goalRepository.delete(goal);
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(resType + " 목표를 삭제하셨습니다")
+                .data(goalId)
+                .build();
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<GoalResponseDto> getGoal(Member findMember) {
+
+        List<Goal> allByMemberId = goalRepository.findAllByMemberId(findMember.getMemberId());
+
+        return allByMemberId.stream()
+                .map(goal->GoalResponseDto.builder()
+                        .goalId(goal.getGoalId())
+                        .memberId(goal.getMember().getMemberId())
+                        .type(goal.getType())
+                        .content(goal.getContent())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private String checkGoalType(String type) {
+
+        String resType = "";
+        if (type.equals("0")) {
+            resType = "매일";
+        } else if (type.equals("1")) {
+            resType = "매주";
+        } else if (type.equals("2")) {
+            resType = "매년";
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, -1, "type 형태가 잘못되었습니다");
+        }
+        return resType;
     }
 }

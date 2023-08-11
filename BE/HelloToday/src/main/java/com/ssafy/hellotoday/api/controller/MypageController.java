@@ -4,10 +4,7 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.MemberInfoResponseDto;
 import com.ssafy.hellotoday.api.dto.member.response.ShowInfoFlagsResponseDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageModifyRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.CheerMessageRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.DdayModifyRequestDto;
-import com.ssafy.hellotoday.api.dto.mypage.request.DdayRequestDto;
+import com.ssafy.hellotoday.api.dto.mypage.request.*;
 import com.ssafy.hellotoday.api.dto.mypage.response.*;
 import com.ssafy.hellotoday.api.dto.routine.response.RoutineResponseDto;
 import com.ssafy.hellotoday.api.dto.wishdiary.request.WishDiaryRequestDto;
@@ -292,5 +289,53 @@ public class MypageController {
     @Operation(summary = "갤러리 조회", description = "마이페이지 안에 있는 갤러리 조회")
     @GetMapping("/gallery/{memberId}")
     public void getGallery(@PathVariable Integer memberId) {
+    }
+
+    @Operation(summary = "목표 전체 조회", description = "목표 전체 조회 type(0:매일,1:매주,2:매년) header에 accessToken 필요")
+    @GetMapping("/goal")
+    public List<GoalResponseDto> getGoal(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return mypageService.getGoal(findMember);
+    }
+
+
+    @Operation(summary = "목표 작성", description = "목표 작성 type(0:매일,1:매주,2:매년) header에 accessToken 필요")
+    @PostMapping("/goal")
+    public BaseResponseDto writeGoal(@RequestBody GoalRequestDto goalRequestDto,
+                                           HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return mypageService.writeGoal(findMember, goalRequestDto);
+    }
+
+    @Operation(summary = "목표 수정", description = "목표 수정 type(0:매일,1:매주,2:매년) header에 accessToken 필요")
+    @PutMapping("/goal/{goalId}")
+    public BaseResponseDto updateGoal(@PathVariable Integer goalId,@RequestBody GoalRequestDto goalRequestDto,
+                                     HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return mypageService.updateGoal(goalId,findMember, goalRequestDto);
+    }
+
+    @Operation(summary = "목표 삭제", description = "목표 삭제 type(0:매일,1:매주,2:매년) header에 accessToken 필요")
+    @DeleteMapping("/goal/{goalId}")
+    public BaseResponseDto deleteGoal(@PathVariable Integer goalId,
+                                      HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token == null) return null;
+
+        Member findMember = memberService.findMemberByJwtToken(token);
+
+        return mypageService.deleteGoal(goalId,findMember);
     }
 }
