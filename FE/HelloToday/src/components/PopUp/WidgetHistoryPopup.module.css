@@ -1,0 +1,48 @@
+.routinehistory {
+  /*전체 detail*/
+  /* box-shadow: 0 0 5px #333; */
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  width: 95%;
+  height: auto;
+  margin: 70px auto 20px auto;
+  /* justify-content: center; */
+  justify-items: center;
+  align-items: center;
+  padding: 30px;
+}
+.routinehistory_day {
+  margin-top: 0px;
+  font-size: 30px;
+}
+/* .routinehistory {
+  /*루틴 인증*/
+/* border: 4px solid #be1616; 
+} */
+/* .routinehistoryContent {
+  /*루틴 이름
+}*/
+.routinehistory_bottom {
+  display: flex;
+}
+.routineHisotryp_img {
+  /*이미지 크기*/
+  width: 300px;
+  height: auto;
+  margin: 0px 10px 10px 10px;
+}
+.routinehistory_vline {
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  height: auto;
+  margin-right: 10px;
+}
+.routinehistory_text {
+  width: 1000px;
+  background-color: rgba(254, 250, 237, 1);
+  border-radius: 50px;
+}
+.routinehistory_text_p {
+  margin: 30px;
+}
