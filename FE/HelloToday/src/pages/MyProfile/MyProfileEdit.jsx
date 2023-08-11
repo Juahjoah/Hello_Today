@@ -345,7 +345,9 @@ function MyProfileEdit() {
                 <div className={classes.widgetRightContent}>
                   {unselectedFlags.map((flag) => (
                     <div className={classes.widgetRightItem}>
-                      <div key={flag}>{flag}</div>
+                      <div className={classes.widgetRightItemFlag} key={flag}>
+                        {flag}
+                      </div>
                       <button
                         className={classes.widgetRightButoon}
                         onClick={() => handleCancelFlag(flag)}

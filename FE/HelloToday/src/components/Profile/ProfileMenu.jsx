@@ -39,7 +39,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
       // console.log(res);
       const newData = [];
       const data = res.data;
-      newData.push("응원 메시지");
+      newData.push("응원 메세지");
 
       if (data.ddayFlag === 1) {
         newData.push("D-Day");
@@ -97,54 +97,5 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
     </div>
   );
 }
-
-//   <div className={classes.ProfileItem}
-//     onClick={(event) => {
-//       UserSelectMenu(event);
-//     }}
-//   >
-//     소중한 목표
-//   </div>
-//   {/* 일/월/연 목표 */}
-//   <div className={classes.ProfileItem}
-//     onClick={(event) => {
-//       UserSelectMenu(event);
-//     }}
-//   >
-//     한 줄 일기
-//   </div>
-//   {/* 한 줄 일기 */}
-//   <div className={classes.ProfileItem}
-//     onClick={(event) => {
-//       UserSelectMenu(event);
-//     }}
-//   >
-//     나의 루틴들
-//   </div>
-//   {/* 루틴 히스토리 */}
-//   <div className={classes.ProfileItem}
-//     onClick={(event) => {
-//       UserSelectMenu(event);
-//     }}
-//   >
-//     단체 루틴을 함께한 사람
-//   </div>
-//   <div className={classes.ProfileItem}
-//     onClick={(event) => {
-//       UserSelectMenu(event);
-//     }}
-//   >
-//     D-Day
-//   </div>
-//   {/* 디데이 */}
-//   <div className={classes.ProfileItem}
-//     onClick={(event) => {
-//       UserSelectMenu(event);
-//     }}
-//   >
-//     갤러리
-//   </div>
-//   {/* 갤러리 */}
-// {/* </div> */}
 
 export default ProfileMenu;
