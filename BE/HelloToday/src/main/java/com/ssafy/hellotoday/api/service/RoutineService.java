@@ -91,7 +91,7 @@ public class RoutineService {
         Routine routine = Routine.createRoutine(
                 member.getMemberId()
                 , LocalDateTime.now()
-                , LocalDateTime.now().plusDays(7)
+                , LocalDateTime.now().plusDays(6)
                 , (byte) 1
         );
 
