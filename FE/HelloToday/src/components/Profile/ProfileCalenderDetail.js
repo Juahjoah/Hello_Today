@@ -6,13 +6,14 @@ import classes from "./ProfileCalenderDetail.module.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProfileCalenderDetail() {
   const navigate = useNavigate();
   const memberId = useParams().memberId;
   const checkDate = useParams().checkDate;
 
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
   //데이터 불러오기
   //d-day도 달력에 들어가면 기존 불러오는 데이터에 push해서 변화하면 데이터 변경하게 해야함
 
@@ -47,7 +48,10 @@ function ProfileCalenderDetail() {
   useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}/${checkDate}`
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}/${checkDate}`,
+        {
+          headers: { Authorization: AccsesToken },
+        }
       )
       .then((res) => {
         const formattedData = res.data.map((item) => {
