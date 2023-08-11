@@ -120,12 +120,12 @@ function JoinRoom() {
 
   // 세션 나가기
   const leaveSession = () => {
+    axiosSessionDelete();
+
     if (session) {
       session.disconnect();
     }
     // 위 함수 호출
-
-    axiosSessionDelete();
 
     // session, state 초기화
     setOV(null);
