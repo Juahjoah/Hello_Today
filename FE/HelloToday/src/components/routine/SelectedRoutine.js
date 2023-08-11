@@ -1,4 +1,4 @@
-import classes from "./SelectedRoutine.module.css"
+import classes from "./SelectedRoutine.module.css";
 import { useState } from "react";
 import RoutineAuthCard from "./RoutineAuthCard";
 import { Link } from "react-router-dom";
@@ -10,169 +10,187 @@ import Calendar from "react-calendar";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import classNames from "classnames";
 
-function SelectedRoutine({routinePrivate}) {
+function SelectedRoutine({ routinePrivate }) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const routineAuthBannerImg = "main_banner_routineAuth1";
+  const routineAuthBannerMents = [
+    "루틴은 일주일 단위로 진행됩니다.",
+    "일주일 간 열심히 노력하며 진행한 루틴!",
+    "잊지말고, 기록으로 남겨두세요",
+  ];
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const routineAuthBannerImg = "main_banner_routineAuth1";
-    const routineAuthBannerMents = [
-        "루틴은 일주일 단위로 진행됩니다.",
-        "일주일 간 열심히 노력하며 진행한 루틴!",
-        "잊지말고, 기록으로 남겨두세요",
-    ];
+  const [value, onChange] = useState(new Date()); // 루틴 인증 날짜
+  const [routineAuthText, setRoutineAuthText] = useState(""); // 루틴 인증 내용
+  const [fileName, setFileName] = useState(""); // 루틴 인증 이미지 파일
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
+  const nickName = localStorage.getItem("nickName");
 
-    const [value, onChange] = useState(new Date()); // 루틴 인증 날짜
-    const [routineAuthText, setRoutineAuthText] = useState(""); // 루틴 인증 내용
-    const [fileName, setFileName] = useState(""); // 루틴 인증 이미지 파일
-    const AccsesToken = useSelector((state) => state.authToken.accessToken);
+  // Modal style
+  const modalStyle = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0,0,0,0.6)",
+      zIndex: 10,
+    },
+    content: {
+      display: "flex",
+      flexDirextion: "column",
+      justifyContent: "center",
+      backgroundColor: "rgba(255,255,255,0.95)",
+      overflow: "auto",
+      zIndex: 10,
+      top: "60px",
+      left: "100px",
+      right: "100px",
+      bottom: "60px",
+      border: "3px solid black",
+      borderRadius: "12px",
+    },
+  };
 
-    // Modal style
-    const modalStyle = {
-        overlay: {
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0,0,0,0.6)",
-            zIndex: 10,
-        },
-        content: {
-            display: "flex",
-            flexDirextion: "column",
-            justifyContent: "center",
-            backgroundColor: "rgba(255,255,255,0.95)",
-            overflow: "auto",
-            zIndex: 10,
-            top: "60px",
-            left: "100px",
-            right: "100px",
-            bottom: "60px",
-            border: "3px solid black",
-            borderRadius: "12px",
-        },
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const [toAuthRoutine, setToAuthRoutine] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null); // 선택한 파일을 상태로 관리
+
+  const AuthSubmitBtn = classNames({
+    [classes.cantAuth]: !routineAuthText,
+    [classes.canAuth]: routineAuthText,
+  });
+
+  const handleTextChange = (event) => {
+    const text = event.target.value;
+    setRoutineAuthText(text);
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setFileName(file.name);
+    } else {
+      setSelectedFile(null);
+      setFileName("");
+    }
+  };
+
+  const submitAuthModalData = () => {
+    const routineCheckDt = new Date(new Date(`${value}`).toLocaleDateString());
+    const routineStartDt = new Date(
+      new Date(routinePrivate.routineStartDate).toLocaleDateString()
+    );
+
+    const calCheckSeq =
+      Math.ceil(
+        Math.abs(routineCheckDt.getTime() - routineStartDt.getTime()) /
+          (1000 * 60 * 60 * 24)
+      ) + 1;
+
+    let offset = new Date().getTimezoneOffset() * 60000;
+    const checkDate = new Date(new Date(`${value}`).getTime() - offset);
+
+    const formData = new FormData();
+    const routineCheckRequest = {
+      // routineCheckId: "219",
+      // checkDaySeq
+      // checkDate(선택한 날짜) - 루틴 시작 날짜 + 1
+      // 1부터 시작하니까
+      // routineId와 checkDaySeq인 routineCheck데이터 찾고
+      // update하는 걸로 API  수정하기
+      checkDaySeq: calCheckSeq,
+      routineDetailId: `${toAuthRoutine.routineDetailDto.routineDetailId}`,
+      routineId: routinePrivate.routineId,
+      content: `${routineAuthText}`,
+      checkDate: checkDate,
     };
 
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
+    console.log(routineCheckRequest);
 
-    const [toAuthRoutine, setToAuthRoutine] = useState(null);
-    const [selectedFile, setSelectedFile] = useState(null); // 선택한 파일을 상태로 관리
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(routineCheckRequest)], {
+        type: "application/json",
+      })
+    );
+    formData.append("file", selectedFile);
 
-    const handleTextChange = (event) => {
-        const text = event.target.value;
-        setRoutineAuthText(text);
-    };
-
-    const handleFileChange = (event) => {
-         const file = event.target.files[0];
-        if (file) {
-            setSelectedFile(file);
-            setFileName(file.name);
-        } else {
-            setSelectedFile(null);
-            setFileName("");
+    axios
+      .put(
+        `${process.env.REACT_APP_BASE_URL}/api/routine/private/check`,
+        formData,
+        {
+          headers: {
+            Authorization: AccsesToken,
+          },
         }
-    };
+      )
+      .then((res) => {
+        console.log(res.data);
+        console.log("루틴 인증 성공");
+      })
+      .then(setModalIsOpen(false))
 
-    const submitAuthModalData = () => {
+      .catch((error) => console.log(error));
+  };
 
-        const routineCheckDt = new Date(new Date(`${value}`).toLocaleDateString());
-        const routineStartDt = new Date(new Date(routinePrivate.routineStartDate).toLocaleDateString());
-
-        const calCheckSeq = Math.ceil((Math.abs(routineCheckDt.getTime() - routineStartDt.getTime())) / (1000 * 60 * 60 * 24)) + 1;
-
-        let offset = new Date().getTimezoneOffset() * 60000;
-        const checkDate = new Date(new Date(`${value}`).getTime() - offset);
-        
-        const formData = new FormData();
-        const routineCheckRequest = {
-            // routineCheckId: "219",
-            // checkDaySeq
-            // checkDate(선택한 날짜) - 루틴 시작 날짜 + 1
-            // 1부터 시작하니까
-            // routineId와 checkDaySeq인 routineCheck데이터 찾고
-            // update하는 걸로 API  수정하기
-            checkDaySeq: calCheckSeq,
-            routineDetailId: `${toAuthRoutine.routineDetailDto.routineDetailId}`,
-            routineId: routinePrivate.routineId,
-            content: `${routineAuthText}`,
-            checkDate: checkDate,
-        }
-
-        console.log(routineCheckRequest);
-
-        formData.append("request", new Blob([JSON.stringify(routineCheckRequest)], {
-            type: "application/json"
-        }));
-        formData.append("file", selectedFile);
-        
-        axios.put(`${process.env.REACT_APP_BASE_URL}/api/routine/private/check`, formData, {
-            headers: {
-                Authorization: AccsesToken,
-            }
-
-        })
-        .then((res) => {
-            console.log(res.data);
-            console.log("루틴 인증 성공")
-        })
-        .then(setModalIsOpen(false))
-        
-        .catch((error) => console.log(error));
-    };
-
-    return (
-        <div>
-            <MainBanner
-                bannerImg={routineAuthBannerImg}
-                bannerMent={routineAuthBannerMents}
+  return (
+    <div>
+      <MainBanner
+        bannerImg={routineAuthBannerImg}
+        bannerMent={routineAuthBannerMents}
+      />
+      <div className={classes.routineCardSection}>
+        {routinePrivate.routineDetailCatCheck.map((item) => {
+          return (
+            <RoutineAuthCard
+              routineStartDate={routinePrivate.routineStartDate}
+              routineDetailDto={item.routineDetailDto}
+              routineCheckDtoList={item.routineCheckDtoList}
+              handleModalOpen={setModalIsOpen}
+              key={item.routineDetailDto.routineDetailId}
+              handleAuthInfo={setToAuthRoutine}
             />
-            <div className={classes.routineCardSection}>
-                {routinePrivate.routineDetailCatCheck.map((item) => {
-                    return (
-                        <RoutineAuthCard 
-                            routineStartDate={routinePrivate.routineStartDate}
-                            routineDetailDto={item.routineDetailDto}
-                            routineCheckDtoList={item.routineCheckDtoList}
-                            handleModalOpen={setModalIsOpen}
-                            key={item.routineDetailDto.routineDetailId}
-                            handleAuthInfo={setToAuthRoutine}
-                        />
-                    );
-                })}
-            </div>
-            <hr className={classes.divideLine} />
-            {/* 하단 그룹배너 */}
-            <div className={classes.toGroupBanner}>
-                <div className={classes.toGroupBannerLeft}>
-                    <p className={classes.toGroupBannerLeftTitle}>
-                        혼자 루틴을 진행하기 어려우신가요?
-                    </p>
-                    <p className={classes.toGroupBannerLeftDesc}>
-                        단체 루틴을 통해 다른 오늘러와 공유해보세요!
-                    </p>
-                    <p className={classes.toGroupBannerLeftDesc}>
-                        오늘의 루틴을 진행할 힘을 얻을 수 있을거랍니다!
-                    </p>
-                    <Link to="/GroupRoutine">
-                        <button className={classes.toGroupBannerLeftBtn}>
-                            단체루틴 바로가기
-                        </button>
-                    </Link>
-                </div>
-                <div className={classes.toGroupBannerRight}>
-                    <img
-                        className={classes.toGroupBannerRightImg}
-                        src="images/BannerImage/toGroupBanner.png"
-                        alt="toGroupBanner"
-                    />
-                </div>
-            </div>
+          );
+        })}
+      </div>
+      <hr className={classes.divideLine} />
+      {/* 하단 그룹배너 */}
+      <div className={classes.toGroupBanner}>
+        <div className={classes.toGroupBannerLeft}>
+          <p className={classes.toGroupBannerLeftTitle}>
+            혼자 루틴을 진행하기 어려우신가요?
+          </p>
+          <p className={classes.toGroupBannerLeftDesc}>
+            단체 루틴을 통해 다른 오늘러와 공유해보세요!
+          </p>
+          <p className={classes.toGroupBannerLeftDesc}>
+            오늘의 루틴을 진행할 힘을 얻을 수 있을거랍니다!
+          </p>
+          <Link to="/GroupRoutine">
+            <button className={classes.toGroupBannerLeftBtn}>
+              단체루틴 바로가기
+            </button>
+          </Link>
+        </div>
+        <div className={classes.toGroupBannerRight}>
+          <img
+            className={classes.toGroupBannerRightImg}
+            src="images/BannerImage/toGroupBanner.png"
+            alt="toGroupBanner"
+          />
+        </div>
+      </div>
 
-            {/* 인증 모달 */}
-            <Modal
+      {/* 인증 모달 */}
+      <Modal
         style={modalStyle}
         isOpen={modalIsOpen}
         onRequestClose={() => closeModal(false)}
@@ -185,8 +203,11 @@ function SelectedRoutine({routinePrivate}) {
           />
           <div className={classes.authModalTitle}>
             <div>
-              User 님의 "
-              <span style={{ color: "#a581cf" }}>{toAuthRoutine?.routineDetailDto?.content}</span>"
+              {nickName} 님의 "
+              <span style={{ color: "#a581cf" }}>
+                {toAuthRoutine?.routineDetailDto?.content}
+              </span>
+              "
               {/* <span style={{ color: "#a581cf" }}>{toAuthRoutine.routineDetailDto.content}</span>" */}
               루틴
             </div>
@@ -241,17 +262,19 @@ function SelectedRoutine({routinePrivate}) {
             </div>
           </div>
           <div className={classes.authModalFooter}>
-            <button
-              className={classes.authModalBtn}
-              onClick={submitAuthModalData}
-            >
-              루틴 인증하기
-            </button>
+            {routineAuthText ? (
+              <button className={AuthSubmitBtn} onClick={submitAuthModalData}>
+                루틴 인증하기
+              </button>
+            ) : (
+              <button className={AuthSubmitBtn} disabled>
+                루틴 인증하기
+              </button>
+            )}
           </div>
         </div>
       </Modal>
-        </div>
-
-    );
+    </div>
+  );
 }
 export default SelectedRoutine;
