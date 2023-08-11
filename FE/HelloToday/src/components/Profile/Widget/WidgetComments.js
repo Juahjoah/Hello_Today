@@ -2,13 +2,12 @@ import classes from "./WidgetComments.module.css";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-// import WidgetCommentsEdit from "./WidgetCommentsEdit";
-
-function WidgetComments(props) {
+function WidgetComments() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const memberId = props.memberId;
+  const memberId = useParams().memberId;
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -24,7 +23,7 @@ function WidgetComments(props) {
       .get(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
         {
-          params: { memberId: memberId, page: page, size: size },
+          params: { memberId, page: page, size: size },
         },
         {
           headers: { Authorization: AccsesToken },
@@ -41,18 +40,19 @@ function WidgetComments(props) {
   useEffect(() => {
     const loggedInUserId = sessionStorage.getItem("memberId");
     setIsMe(
-      loggedInUserId === props.memberId ||
+      loggedInUserId === memberId ||
         comments.some((comment) => comment.writerId === loggedInUserId)
     );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId, props.memberId]);
+  }, [memberId]);
 
   const CreateComment = () => {
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg`,
         {
+          memberId,
           content: newComment,
         },
         {
@@ -60,11 +60,6 @@ function WidgetComments(props) {
         }
       )
       .then((response) => {
-        // console.log(response.data);
-        // if (response.data.length === 0) {
-        //   alert("내용을 입력해주세요.");
-        // } else {
-        //   alert("응원 메시지가 등록되었습니다.");
         getComments(memberId);
         setNewComment("");
         // }
@@ -94,7 +89,6 @@ function WidgetComments(props) {
         }
       )
       .then((response) => {
-        // console.log(response.data);
         getComments(memberId);
       })
       .catch((error) => {
@@ -108,21 +102,16 @@ function WidgetComments(props) {
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${messageId}`,
 
         {
-          // data: { cheerMessageId: messageId },
           headers: { Authorization: AccsesToken },
         }
       )
       .then((response) => {
-        // console.log(response.data);
-        // console.log(response.data.data);
         getComments(memberId);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  console.log(comments);
 
   return (
     <div className={classes.WidgetComments}>
