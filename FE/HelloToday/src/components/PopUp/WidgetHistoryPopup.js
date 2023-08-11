@@ -100,13 +100,13 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
                               detail.imgPath === "" ||
                               detail.imgPath === undefined ? (
                                 <img
-                                  className={classes.routineHisotry_img}
+                                  className={classes.routineHisotryp_img}
                                   src="/images/logo.png"
                                   alt="Default"
                                 />
                               ) : (
                                 <img
-                                  className={classes.routineHisotry_img}
+                                  className={classes.routineHisotryp_img}
                                   src={detail.imgPath}
                                   alt={`Image ${detailIndex}`}
                                 />

@@ -80,13 +80,13 @@ function WidgetHistory() {
                   item.imgPath === "" ||
                   item.imgPath === undefined ? (
                     <img
-                      className={classes.img}
+                      className={classes.WidgetHistory_img}
                       src="/images/logo.png"
                       alt="Default"
                     />
                   ) : (
                     <img
-                      className={classes.img}
+                      className={classes.WidgetHistory_img}
                       src={item.imgPath}
                       alt={item.imgPath}
                     />
