@@ -12,6 +12,13 @@ import WidgetHistory from "./Widget/WidgetHistory";
 import WidgetGallery from "./Widget/WidgetGallery";
 import WidgetDday from "./Widget/WidgetDday";
 import { useLocation } from "react-router-dom";
+import { AiOutlineMessage, AiOutlinePicture } from "react-icons/ai"; //응원 메세지, 갤러리
+import { SlCalender } from "react-icons/sl"; // 디데이
+import { GoGoal } from "react-icons/go"; // 목표
+import { RiListSettingsLine } from "react-icons/ri"; //편집모드
+import { PiPencilLine } from "react-icons/pi"; // 한줄 일기
+import { RxCounterClockwiseClock } from "react-icons/rx"; //루틴
+import { TbList } from "react-icons/tb"; //버킷
 
 function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
   const MenuList = {
@@ -88,7 +95,12 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
         <div className={classes.ProfileMenu} key={flag}>
           {flag === "편집 모드" ? (
             <Link to="/MyProfile/edit">
-              <button className={classes.ProfileItem}>{flag}</button>
+              <button className={classes.ProfileItem}>
+                <RiListSettingsLine
+                  className={classes.WidgetFlagImg}
+                ></RiListSettingsLine>
+                <div className={classes.WidgetFlag}>{flag}</div>
+              </button>
             </Link>
           ) : (
             <button
@@ -97,7 +109,41 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
                 UserSelectMenu(event);
               }}
             >
-              {flag}
+              <div className={classes.WidgetForm}>
+                <div className={classes.WidgetFormFlag}>
+                  {flag === "응원 메세지" && (
+                    <AiOutlineMessage
+                      className={classes.WidgetFlagImg}
+                    ></AiOutlineMessage>
+                  )}
+                  {flag === "D-Day" && (
+                    <SlCalender className={classes.WidgetFlagImg}></SlCalender>
+                  )}
+                  {flag === "갤러리" && (
+                    <AiOutlinePicture
+                      className={classes.WidgetFlagImg}
+                    ></AiOutlinePicture>
+                  )}
+                  {flag === "소중한 목표" && (
+                    <GoGoal className={classes.WidgetFlagImg}></GoGoal>
+                  )}
+                  {flag === "한 줄 일기" && (
+                    <PiPencilLine
+                      className={classes.WidgetFlagImg}
+                    ></PiPencilLine>
+                  )}
+                  {flag === "나의 루틴들" && (
+                    <RxCounterClockwiseClock
+                      className={classes.WidgetFlagImg}
+                    ></RxCounterClockwiseClock>
+                  )}
+                  {flag === "버킷리스트" && (
+                    <TbList className={classes.WidgetFlagImg}></TbList>
+                  )}
+
+                  <div className={classes.WidgetFlag}>{flag}</div>
+                </div>
+              </div>
             </button>
           )}
         </div>

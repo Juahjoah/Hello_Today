@@ -281,9 +281,9 @@ function MyProfile() {
             )}
 
             <hr />
-            <Link to="/MyProfile/edit">
+            {/* <Link to="/MyProfile/edit">
               <button>편집모드 이도오옹</button>
-            </Link>
+            </Link> */}
             {/* 팔로잉/팔로워 */}
             <div className={classes.UserFollow}>
               <FollowButton

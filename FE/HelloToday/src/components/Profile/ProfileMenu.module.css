@@ -54,3 +54,21 @@
   color: white;
   background: #a581cf;
 }
+
+.WidgetForm {
+  display: flex;
+
+  justify-content: center;
+}
+.WidgetFormFlag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.WidgetFlagImg {
+  width: 4vh;
+  height: 4vh;
+}
+.WidgetFlag {
+  margin-top: 3vh;
+}
