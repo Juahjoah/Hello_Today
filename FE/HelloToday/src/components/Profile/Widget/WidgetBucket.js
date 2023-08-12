@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-function WidgetBucket(props) {
+function WidgetBucket() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const memberId = props.memberId;
+  const memberId = useParams().memberId;
 
   const [isMe, setIsMe] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
