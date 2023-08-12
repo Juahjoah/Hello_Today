@@ -68,6 +68,7 @@
 .WidgetFlagImg {
   width: 4vh;
   height: 4vh;
+  opacity: 0.5;
 }
 .WidgetFlag {
   margin-top: 3vh;

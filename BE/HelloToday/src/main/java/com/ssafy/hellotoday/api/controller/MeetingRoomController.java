@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,12 +85,13 @@ public class MeetingRoomController {
             description = "현재 개설되어 있는 미팅룸 목록을 조회하는 API")
     @GetMapping("/list")
     public MeetingRoomPageDto roomList(HttpServletRequest httpServletRequest,
-                                       @PageableDefault(page = 1, size = 6) Pageable pageable) {
+                                       @RequestParam(required = false, defaultValue = "1", value = "page")int page,
+                                       @RequestParam(required = false, defaultValue = "6", value = "size")int size) {
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
         if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
 
-        return openviduService.roomList(pageable);
+        return openviduService.roomList(page - 1, size);
     }
 
     @Operation(

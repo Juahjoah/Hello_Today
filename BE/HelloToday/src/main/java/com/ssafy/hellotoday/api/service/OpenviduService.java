@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -107,7 +108,13 @@ public class OpenviduService {
 
     }
 
-    public MeetingRoomPageDto roomList(Pageable pageable) {
+    public MeetingRoomPageDto roomList(int page, int size) {
+        if (page < 0) throw CustomException.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .code(1003)
+                .message("페이지는 1 이상이어야 합니다.")
+                .build();
+
         try {
             openvidu.fetch();
             List<Session> activeSessions = openvidu.getActiveSessions();
@@ -115,6 +122,7 @@ public class OpenviduService {
             List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
             List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
 
+            Pageable pageable = PageRequest.of(page, size);
             Page<MeetingRoom> rooms = meetingRoomRepository
                     .findBySessionIdInOrderByCreatedDateDesc(sessionIds, pageable);
 
@@ -136,8 +144,8 @@ public class OpenviduService {
                         .build());
             }
             return MeetingRoomPageDto.builder()
-                    .totalPages(rooms.getTotalPages() - 1)
-                    .totalRooms(rooms.getTotalElements() - pageable.getPageSize())
+                    .totalPages(rooms.getTotalPages())
+                    .totalRooms(rooms.getTotalElements())
                     .rooms(response)
                     .build();
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {

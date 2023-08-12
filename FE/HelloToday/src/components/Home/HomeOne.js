@@ -48,9 +48,9 @@ function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
             data-aos-easing="linear"
             data-aos-delay="1500"
           >
-            <p>걱정말고, 다시 시작해보아요</p>
-            <p>오늘도, 안녕</p>
-            <p>오늘은 어떤 하루를 보낼 계획인가요?</p>
+            <div>걱정말고, 다시 시작해보아요</div>
+            <div className={classes.HomeOneTextTitle}>오늘도, 안녕</div>
+            <div>오늘은 어떤 하루를 보낼 계획인가요?</div>
           </div>
           {/* 이미지 */}
           <div className={classes.HomeOneImg}>
