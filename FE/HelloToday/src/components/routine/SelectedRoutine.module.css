@@ -5,6 +5,38 @@
   font-weight: 700;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'TheJamsil4Bold';
+  font-weight: 400;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf') format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TheJamsil3Bold';
+  font-weight: 300;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf') format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
 .toGroupBanner {
   width: 70%;
   height: 40vh;
@@ -133,10 +165,11 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);
   border-radius: 8px;
-  font-size: 18px;
-  font-family: "TheJamsil5Bold";
+  font-size: 15px;
+  font-family: "TheJamsil3Bold";
   padding: 10px;
   outline: none;
+  line-height: 1.6em;
 }
 
 .authModalMainRightImg {
@@ -254,4 +287,8 @@ input[type="file"] {
   height: 3px;
   background-color: rgba(131, 129, 129, 0.2);
   margin: auto;
+}
+
+.authModalMainRightTextArea::placeholder {
+  color: rgba(100, 100, 100, 0.3) !important;
 }
