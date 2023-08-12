@@ -20,6 +20,7 @@ import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import "tippy.js/themes/light.css";
+import "tippy.js/dist/border.css";
 
 export function ProfileCalender() {
   const navigate = useNavigate();

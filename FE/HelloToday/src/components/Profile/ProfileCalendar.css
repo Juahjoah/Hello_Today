@@ -8,15 +8,15 @@
 }
 /*디데이*/
 .fc-event {
-  color: #c792ea !important;
+  color: #a581cf !important;
 }
 .fc-daygrid-event-dot {
-  border: calc(var(--fc-daygrid-event-dot-width) / 2) solid #c792ea !important;
+  border: calc(var(--fc-daygrid-event-dot-width) / 2) solid #a581cf !important;
 }
 
 .fc-button-primary {
-  background-color: #c792ea !important;
-  border: #c792ea !important;
+  background-color: #a581cf !important;
+  border: #a581cf !important;
 }
 /* .scrollbar {
   width: 250px;
@@ -32,8 +32,8 @@
 }
 .fc-toolbar-title {
   /*제목*/
-  background-color: #c792ea !important;
-  border: #c792ea !important;
+  background-color: #a581cf !important;
+  border: #a581cf !important;
   padding: 5px 20px 5px 20px;
   border-radius: 15px;
 }
@@ -52,6 +52,9 @@
   border: 3px solid #ffffff;
 }
 .tippy-box {
-  background-color: #c792ea !important;
+  background-color: #a581cf !important;
   color: white !important;
+}
+.tippy-box[data-placement^="top"] > .tippy-arrow:before {
+  border-top-color: #a581cf !important;
 }
