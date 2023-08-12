@@ -122,10 +122,11 @@ function JoinRoom() {
   const leaveSession = () => {
     axiosSessionDelete();
 
+    //
     if (session) {
       session.disconnect();
     }
-    // 위 함수 호출
+    //
 
     // session, state 초기화
     setOV(null);
@@ -137,7 +138,9 @@ function JoinRoom() {
     setSubscribers([]);
     //
     setMyRoomId(undefined);
-    // TODO: 토큰이랑 멤버아이디 초기화 해줘야할지도?
+    // TODO: 토큰이랑 멤버아이디 초기화 해줘야할지도? ==> 이것때문에 팔로우 이슈 생기나???!?!?
+    setMyMemberId(undefined);
+    setMyAccessToken(undefined);
 
     navigate("/GroupRoutine");
   };

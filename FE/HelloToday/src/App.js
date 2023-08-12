@@ -75,7 +75,7 @@ function App() {
         element={<ProfileCalenderDetail />}
       ></Route>
       {/* <Route path="/roomId" element={<JoinRoom />} /> */}
-      {/* <Route path="/roomId" element={<VideoRoomComponent />} /> */}
+      {/* <Routes path="/roomId" element={<VideoRoomComponent />} /> */}
     </Routes>
   );
 }
