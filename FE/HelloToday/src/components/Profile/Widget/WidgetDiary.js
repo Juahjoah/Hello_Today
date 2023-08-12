@@ -30,7 +30,11 @@ function WidgetDiary() {
   };
 
   useEffect(() => {
-    setIsMe(memberId === +sessionStorage.getItem("memberId") ? true : false);
+    const loggedInUserId = sessionStorage.getItem("memberId");
+    setIsMe(
+      loggedInUserId === memberId ||
+        diary.some((diaryItem) => diaryItem.memberId === loggedInUserId)
+    );
     getDiary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
