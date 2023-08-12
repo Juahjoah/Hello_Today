@@ -11,8 +11,9 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
-
+import { useNavigate } from 'react-router-dom';
 function SelectedRoutine({ routinePrivate }) {
+  const navigate = useNavigate(); 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const routineAuthBannerImg = "main_banner_routineAuth1";
   const routineAuthBannerMents = [
@@ -135,6 +136,7 @@ function SelectedRoutine({ routinePrivate }) {
       .then((res) => {
         console.log(res.data);
         console.log("루틴 인증 성공");
+        navigate('/');
       })
       .then(setModalIsOpen(false))
 
@@ -250,7 +252,7 @@ function SelectedRoutine({ routinePrivate }) {
                     className={classes.uploadName}
                     defaultValue={fileName}
                     placeholder="첨부파일"
-                    readonly="true"
+                    readOnly={true}
                   />
                   <label className={classes.uploadLabel} htmlFor="file">
                     파일찾기

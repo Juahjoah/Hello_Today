@@ -3,6 +3,7 @@ package com.ssafy.hellotoday.api.controller;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomPageDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.service.MeetingRoomService;
 import com.ssafy.hellotoday.api.service.MemberService;
@@ -12,6 +13,8 @@ import com.ssafy.hellotoday.db.entity.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,12 +83,13 @@ public class MeetingRoomController {
             summary = "미팅룸 목록 조회",
             description = "현재 개설되어 있는 미팅룸 목록을 조회하는 API")
     @GetMapping("/list")
-    public List<MeetingRoomDto> roomList(HttpServletRequest httpServletRequest) {
+    public MeetingRoomPageDto roomList(HttpServletRequest httpServletRequest,
+                                       @PageableDefault(page = 1, size = 6) Pageable pageable) {
         String token = httpServletRequest.getHeader("Authorization");
         Member member = memberService.findMemberByJwtToken(token);
         if (member == null) throw CustomException.builder().code(1000).message("사용자를 찾을 수 없음").build();
 
-        return openviduService.roomList();
+        return openviduService.roomList(pageable);
     }
 
     @Operation(

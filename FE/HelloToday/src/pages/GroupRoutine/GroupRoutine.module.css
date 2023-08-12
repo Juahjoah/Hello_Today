@@ -23,10 +23,11 @@
   margin: auto;
   font-family: "TheJamsil5Bold";
   margin-top: 30px;
-  /* margin-bottom: 30px; */
-  display: flex;
+
+  /* 일단 지우는 부분 */
+  /* display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-between; */
 }
 
 .divideLine {
