@@ -154,7 +154,7 @@
 .widgetLeftForm {
   border-radius: 15px;
   height: 45vh;
-  border: 1px solid;
+  border: 1px solid rgba(200, 200, 200, 5);
   margin-top: 1vh;
   padding: 4vh;
 }
@@ -189,7 +189,7 @@
   flex-direction: column;
 }
 .widgetRightTopForm {
-  border-bottom: 1px solid;
+  border-bottom: 1px solid rgba(200, 200, 200, 5);
   margin-right: 6vh;
 
   /* opacity: 0.5; */
