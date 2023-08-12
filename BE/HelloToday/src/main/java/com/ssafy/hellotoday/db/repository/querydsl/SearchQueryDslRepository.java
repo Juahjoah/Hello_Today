@@ -25,17 +25,24 @@ public class SearchQueryDslRepository {
 
     public List<SearchResponseDto> findMembersWithRoutineTagByMemberIds(List<Integer> memberIds) {
         return queryFactory.selectFrom(member)
-                .leftJoin(routine).on(member.memberId.eq(routine.member.memberId))
-                .leftJoin(routineDetailCat).on(routine.routineId.eq(routineDetailCat.routine.routineId))
-                .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
-                .leftJoin(routineTag).on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
+                .leftJoin(routine)
+                .on(member.memberId.eq(routine.member.memberId))
+                .leftJoin(routineDetailCat)
+                .on(routine.routineId.eq(routineDetailCat.routine.routineId))
+                .leftJoin(routineDetail)
+                .on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                .leftJoin(routineTag)
+                .on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
                 .where(member.memberId.in(memberIds))
                 .transform(groupBy(member.memberId)
-                        .list(Projections.constructor(SearchResponseDto.class,
+                        .list(Projections.constructor(
+                                SearchResponseDto.class,
                                 member.memberId, member.nickname,
                                 member.profileOriginalName,
-                                list(Projections.constructor(SearchTagResponseDto.class,
-                                        routineTag.routineTagId, routineTag.content)))));
+                                list(Projections.constructor(
+                                        SearchTagResponseDto.class,
+                                        routineTag.routineTagId,
+                                        routineTag.content)))));
     }
 
     public List<Member> findMembersByTag(int tagId) {
