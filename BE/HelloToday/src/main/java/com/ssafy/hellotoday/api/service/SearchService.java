@@ -43,6 +43,7 @@ public class SearchService {
 
         return SearchResponsePageDto.builder()
                 .totalPages(res.getTotalPages())
+                .totalMembers(res.getTotalElements())
                 .members(res.getContent())
                 .build();
     }
