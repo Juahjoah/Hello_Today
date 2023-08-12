@@ -10,13 +10,13 @@ function WidgetGallery() {
 
   const [gallery, setGallery] = useState([]);
 
-  const getGallery = () => {
+  const getGallery = (memberId) => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/gallery/${memberId}`, {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setGallery(response.data);
       })
       .catch((error) => {
@@ -25,7 +25,7 @@ function WidgetGallery() {
   };
 
   useEffect(() => {
-    getGallery();
+    getGallery(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
