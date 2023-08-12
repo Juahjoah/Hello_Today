@@ -4,6 +4,7 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.MeetingRoomDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.SessionInfo;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
+import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomPageDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomOutResponse;
 import com.ssafy.hellotoday.common.exception.CustomException;
@@ -23,6 +24,7 @@ import io.openvidu.java.client.SessionProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -105,7 +107,7 @@ public class OpenviduService {
 
     }
 
-    public List<MeetingRoomDto> roomList(Pageable pageable) {
+    public MeetingRoomPageDto roomList(Pageable pageable) {
         try {
             openvidu.fetch();
             List<Session> activeSessions = openvidu.getActiveSessions();
@@ -113,13 +115,13 @@ public class OpenviduService {
             List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
             List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
 
-            List<MeetingRoom> rooms = meetingRoomRepository
+            Page<MeetingRoom> rooms = meetingRoomRepository
                     .findBySessionIdInOrderByCreatedDateDesc(sessionIds, pageable);
 
             List<MeetingRoomDto> response = new ArrayList<>();
 
-            for (int i = 0; i < rooms.size(); i++) {
-                MeetingRoom meetingRoom = rooms.get(i);
+            for (int i = 0; i < rooms.getContent().size(); i++) {
+                MeetingRoom meetingRoom = rooms.getContent().get(i);
                 int joinCnt = sessionInfos.get(i).getJoinCnt();
                 response.add(MeetingRoomDto.builder()
                         .roomId(meetingRoom.getMeetingRoomId())
@@ -133,7 +135,10 @@ public class OpenviduService {
                         .modifiedDate(meetingRoom.getModifiedDate())
                         .build());
             }
-            return response;
+            return MeetingRoomPageDto.builder()
+                    .totalPage(rooms.getTotalPages())
+                    .rooms(response)
+                    .build();
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
