@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class MeetingRoomPageDto {
-    private int totalPage;
+    private int totalPages;
+    private long totalRooms;
     private List<MeetingRoomDto> rooms;
 }
