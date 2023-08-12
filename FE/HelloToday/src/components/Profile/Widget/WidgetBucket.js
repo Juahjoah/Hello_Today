@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
 import axios from "axios";
 
-function WidgetBucket(props) {
+function WidgetBucket() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const memberId = props.memberId;
+  const memberId = useParams().memberId;
 
   const [isMe, setIsMe] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -28,9 +30,7 @@ function WidgetBucket(props) {
   };
 
   useEffect(() => {
-    setIsMe(
-      +props.memberId === +sessionStorage.getItem("memberId") ? true : false
-    );
+    setIsMe(memberId === +sessionStorage.getItem("memberId") ? true : false);
     getBucket();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);

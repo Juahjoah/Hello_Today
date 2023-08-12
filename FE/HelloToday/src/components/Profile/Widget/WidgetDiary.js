@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
 import axios from "axios";
 
-function WidgetDiary(props) {
+function WidgetDiary() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const memberId = props.memberId;
+  const memberId = useParams().memberId;
 
   const [isMe, setIsMe] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -28,9 +30,7 @@ function WidgetDiary(props) {
   };
 
   useEffect(() => {
-    setIsMe(
-      +props.memberId === +sessionStorage.getItem("memberId") ? true : false
-    );
+    setIsMe(memberId === +sessionStorage.getItem("memberId") ? true : false);
     getDiary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
