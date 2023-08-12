@@ -9,6 +9,7 @@ import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.querydsl.SearchQueryDslRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class SearchService {
     private final SearchQueryDslRepository searchQueryDslRepository;
     private final SearchValidator searchValidator;
 
-    public SearchResponsePageDto search(String key, String word, Pageable pageable) {
+    public SearchResponsePageDto search(String key, String word, int page, int size) {
         List<Member> members;
         searchValidator.validKey(key);
         Page<SearchResponseDto> res;
@@ -33,6 +34,8 @@ public class SearchService {
             searchValidator.validateWordNum(word);
             members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
         }
+
+        Pageable pageable = PageRequest.of(page, size);
         res = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(
                 members.stream().map(Member::getMemberId).collect(Collectors.toList()),
                 pageable);

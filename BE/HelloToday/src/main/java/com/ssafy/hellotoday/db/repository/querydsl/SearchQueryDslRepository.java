@@ -27,26 +27,15 @@ public class SearchQueryDslRepository {
     private final JPAQueryFactory queryFactory;
 
     private long countMembersWithRoutineTagByMemberIds(List<Integer> memberIds) {
-        return queryFactory.select(member.count())
+        return queryFactory.selectDistinct(member.count())
                 .from(member)
-                .leftJoin(routine)
-                .on(member.memberId.eq(routine.member.memberId))
-                .leftJoin(routineDetailCat)
-                .on(routine.routineId.eq(routineDetailCat.routine.routineId))
-                .leftJoin(routineDetail)
-                .on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
-                .leftJoin(routineTag)
-                .on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
                 .where(member.memberId.in(memberIds))
                 .fetchFirst();
     }
 
     public Page<SearchResponseDto> findMembersWithRoutineTagByMemberIds(List<Integer> memberIds, Pageable pageable) {
         long count = countMembersWithRoutineTagByMemberIds(memberIds);
-        System.out.println("=================================");
-        System.out.println(count);
-        System.out.println(pageable.getOffset() - pageable.getPageSize() + " " + pageable.getPageSize());
-        System.out.println("=================================");
+
         List<SearchResponseDto> results = queryFactory.selectFrom(member)
                 .leftJoin(routine)
                 .on(member.memberId.eq(routine.member.memberId))
@@ -57,7 +46,7 @@ public class SearchQueryDslRepository {
                 .leftJoin(routineTag)
                 .on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
                 .where(member.memberId.in(memberIds))
-//                .offset(pageable.getOffset() - pageable.getPageSize())
+                .offset(pageable.getOffset())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .transform(groupBy(member.memberId)

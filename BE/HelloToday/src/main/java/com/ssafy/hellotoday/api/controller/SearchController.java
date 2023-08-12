@@ -1,6 +1,5 @@
 package com.ssafy.hellotoday.api.controller;
 
-import com.ssafy.hellotoday.api.dto.search.response.SearchResponseDto;
 import com.ssafy.hellotoday.api.dto.search.response.SearchResponsePageDto;
 import com.ssafy.hellotoday.api.service.SearchService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @Slf4j
 @Tag(name = "Search", description = "검색 관련 API")
 @RequiredArgsConstructor
@@ -28,8 +25,14 @@ public class SearchController {
     @GetMapping
     public SearchResponsePageDto searchByNickname(@RequestParam String key,
                                                   @RequestParam String word,
-                                                  @PageableDefault Pageable pageable) {
-        return searchService.search(key, word, pageable);
+                                                  @RequestParam(
+                                                          required = false,
+                                                          defaultValue = "1",
+                                                          value = "page") int page,
+                                                  @RequestParam(required = false,
+                                                          defaultValue = "10",
+                                                          value = "size") int size) {
+        return searchService.search(key, word, page - 1, size);
     }
 
 }
