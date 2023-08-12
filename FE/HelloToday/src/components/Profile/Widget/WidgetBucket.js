@@ -30,7 +30,11 @@ function WidgetBucket() {
   };
 
   useEffect(() => {
-    setIsMe(memberId === +sessionStorage.getItem("memberId") ? true : false);
+    const loggedInUserId = sessionStorage.getItem("memberId");
+    setIsMe(
+      loggedInUserId === memberId ||
+        bucket.some((bucketItem) => bucketItem.memberId === loggedInUserId)
+    );
     getBucket();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
