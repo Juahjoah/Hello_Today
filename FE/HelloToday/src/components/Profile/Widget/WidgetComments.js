@@ -22,7 +22,7 @@ function WidgetComments() {
     const loggedInUserId = sessionStorage.getItem("memberId");
     setIsMe(
       loggedInUserId === memberId ||
-        comments.some((comment) => comment.writerId === loggedInUserId)
+        comments.some((comment) => comment.writerNickName === loggedInUserId)
       // memberId === +sessionStorage.getItem("memberId") ? true : false
     );
     getComments(memberId);
