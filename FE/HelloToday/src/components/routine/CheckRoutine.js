@@ -1,3 +1,4 @@
+import { color } from "framer-motion";
 import classes from "./CheckRoutine.module.css";
 
 function CheckRoutine({routineCheckDtoList, routineDetailDto, handleAuthButtonClick}) {
@@ -17,7 +18,7 @@ function CheckRoutine({routineCheckDtoList, routineDetailDto, handleAuthButtonCl
                                 {checkDto.checkDate ? <img className={classes.imgStyle} src="/images/Routine/routineCheck.png" /> : <img className={classes.imgStyle} src="/images/Routine/routineUnCheck.png" />}
                             </div>
                             <div>
-                                <span style={{ fontSize: '13px' }}>{` ${index + 1}일차`}</span>
+                                <span className = {classes.dateSeqItem}>{` ${index + 1} 일차`}</span>
                             </div>
                         </div>
                     </div>

@@ -212,7 +212,6 @@ function SelectedRoutine({ routinePrivate }) {
               루틴
             </div>
           </div>
-
           <div className={classes.authModalMain}>
             <div className={classes.authModalMainLeft}>
               <div className={classes.authModalMainLeftTitle}>
@@ -222,6 +221,10 @@ function SelectedRoutine({ routinePrivate }) {
                 onChange={onChange}
                 defaultValue={value}
                 formatDay={(locale, date) => dayjs(date).format("DD")}
+                // 루틴 시작 날짜
+                minDate={(new Date(routinePrivate.routineStartDate))}
+                // 오늘 날짜 
+                maxDate={(new Date())}
               />
             </div>
             <div className={classes.authModalMainRight}>
@@ -229,12 +232,13 @@ function SelectedRoutine({ routinePrivate }) {
                 <div className={classes.authModalMainRightDescOne}>
                   이번 루틴은 어떠셨나요?
                 </div>
-                <textarea
+                <textarea 
                   className={classes.authModalMainRightTextArea}
                   name="textarea"
                   spellCheck="false"
                   defaultValue={routineAuthText} // 업데이트된 부분
                   onChange={handleTextChange} // 업데이트된 부분
+                  placeholder="오늘 진행한 루틴은 어땠는지 한 이야기를 들려주세요."
                 ></textarea>
               </div>
               <div className={classes.authModalMainRightImg}>
@@ -246,6 +250,7 @@ function SelectedRoutine({ routinePrivate }) {
                     className={classes.uploadName}
                     defaultValue={fileName}
                     placeholder="첨부파일"
+                    readonly="true"
                   />
                   <label className={classes.uploadLabel} htmlFor="file">
                     파일찾기
