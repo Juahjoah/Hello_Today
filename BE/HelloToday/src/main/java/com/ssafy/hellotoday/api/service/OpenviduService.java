@@ -23,6 +23,7 @@ import io.openvidu.java.client.SessionProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -104,14 +105,16 @@ public class OpenviduService {
 
     }
 
-    public List<MeetingRoomDto> roomList() {
+    public List<MeetingRoomDto> roomList(Pageable pageable) {
         try {
             openvidu.fetch();
             List<Session> activeSessions = openvidu.getActiveSessions();
 
             List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
             List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
-            List<MeetingRoom> rooms = meetingRoomRepository.findBySessionIdIn(sessionIds);
+
+            List<MeetingRoom> rooms = meetingRoomRepository
+                    .findBySessionIdInOrderByCreatedDateDesc(sessionIds, pageable);
 
             List<MeetingRoomDto> response = new ArrayList<>();
 
