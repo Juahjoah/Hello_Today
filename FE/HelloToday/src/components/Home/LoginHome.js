@@ -13,8 +13,8 @@ import Footer from "../common/Footer";
 function LoginHome() {
   const [routinePrivateResponse, setRoutinePrivate] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  
-  useEffect(() => {
+  console.log("여기는?")
+  console.log(AccsesToken);
 
     async function axiosRoutinePrivateData() {
       try {
@@ -26,13 +26,12 @@ function LoginHome() {
         );
         
         setRoutinePrivate(routinePrivateResponse.data);
-
+        console.log(routinePrivateResponse);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
     axiosRoutinePrivateData();
-  }, []);
 
   return (
 
