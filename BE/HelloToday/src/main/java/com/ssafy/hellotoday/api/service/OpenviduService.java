@@ -29,6 +29,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -157,6 +158,7 @@ public class OpenviduService {
         }
     }
 
+    @Transactional
     public BaseResponseDto deleteConnection(int roomId) {
         MeetingRoom room = meetingRoomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalArgumentException("미팅룸 정보 조회에 실패했습니다."));
@@ -167,6 +169,7 @@ public class OpenviduService {
             // 인원 수가 1이라면 세션까지 닫기
             if (session.getActiveConnections().size() <= 1) {
                 session.close();
+                room.updateActiveFlag(false);
                 return BaseResponseDto.builder()
                         .success(true)
                         .message("미팅룸이 종료되었습니다.")
