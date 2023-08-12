@@ -16,7 +16,10 @@ function WidgetComments() {
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [isMe, setIsMe] = useState(false);
   const page = 0;
-  const size = 20;
+  const size = 100;
+
+  const [nowPage, setNowPage] = useState(1);
+  const itemsIncludePage = 5;
 
   useEffect(() => {
     const loggedInUserId = sessionStorage.getItem("memberId");
@@ -114,14 +117,22 @@ function WidgetComments() {
       });
   };
 
+  const indexOfLastItem = nowPage * itemsIncludePage;
+  const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
+  const nowComments = comments.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setNowPage(pageNumber);
+  };
+
   return (
     <div className={classes.WidgetComments}>
       <div>
         <p> {memberId}님을 향한 응원의 댓글!</p>
         <div className={classes.CommentSection}>
-          {comments.length === 0 && <p>댓글이 없습니다.</p>}
-          {comments.length > 0 &&
-            comments.map((comment) => (
+          {nowComments.length === 0 && <p>댓글이 없습니다.</p>}
+          {nowComments.length > 0 &&
+            nowComments.map((comment) => (
               <div key={comment.messageId}>
                 {isEdit && editedCommentId === comment.messageId ? (
                   <div>
@@ -177,6 +188,25 @@ function WidgetComments() {
                 )}
               </div>
             ))}
+          {comments.length > itemsIncludePage && (
+            <div>
+              <button
+                onClick={() => paginate(nowPage - 1)}
+                disabled={nowPage === 1}
+              >
+                이전
+              </button>
+              <button
+                onClick={() => paginate(nowPage + 1)}
+                disabled={
+                  nowComments.length < itemsIncludePage ||
+                  nowComments.length === 0
+                }
+              >
+                다음
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
