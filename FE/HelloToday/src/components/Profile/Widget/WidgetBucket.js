@@ -29,9 +29,7 @@ function WidgetBucket() {
   };
 
   useEffect(() => {
-    setIsMe(
-      +props.memberId === +sessionStorage.getItem("memberId") ? true : false
-    );
+    setIsMe(memberId === +sessionStorage.getItem("memberId") ? true : false);
     getBucket();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
