@@ -20,7 +20,7 @@ import allAuth from "../../components/User/allAuth";
 function GroupRoutine() {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [memberCount, setMemberCount] = useState(2);
+  const [memberCount, setMemberCount] = useState(1);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
   // user Info
@@ -290,7 +290,7 @@ function GroupRoutine() {
                   type="number"
                   required
                   value={memberCount}
-                  min={2}
+                  min={1}
                   max={6}
                   className={classes.makeRoomModalMainRoomCountInput}
                 />
