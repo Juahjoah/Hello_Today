@@ -36,12 +36,11 @@ public class Routine {
     }
 
     public static Routine createRoutine(Integer memberId, LocalDateTime startDate,
-                                        LocalDateTime endDate,
                                         byte activeFlag) {
         return Routine.builder()
                 .member(new Member(memberId))
                 .startDate(LocalDateTime.now())
-                .endDate(LocalDateTime.now().plusDays(7))
+                .endDate(LocalDateTime.now().plusDays(6))
                 .activeFlag((byte) 1)
                 .build();
     }
