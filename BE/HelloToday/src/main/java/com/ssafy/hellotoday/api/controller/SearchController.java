@@ -1,11 +1,14 @@
 package com.ssafy.hellotoday.api.controller;
 
 import com.ssafy.hellotoday.api.dto.search.response.SearchResponseDto;
+import com.ssafy.hellotoday.api.dto.search.response.SearchResponsePageDto;
 import com.ssafy.hellotoday.api.service.SearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +26,10 @@ public class SearchController {
 
     @Operation(summary = "검색", description = "닉네임, 아이디, 루틴 태그로 사용자를 검색하는 API")
     @GetMapping
-    public List<SearchResponseDto> searchByNickname(@RequestParam String key, @RequestParam String word) {
-        return searchService.search(key, word);
+    public SearchResponsePageDto searchByNickname(@RequestParam String key,
+                                                  @RequestParam String word,
+                                                  @PageableDefault Pageable pageable) {
+        return searchService.search(key, word, pageable);
     }
 
 }
