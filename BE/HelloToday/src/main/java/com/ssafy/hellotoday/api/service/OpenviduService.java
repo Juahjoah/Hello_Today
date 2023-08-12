@@ -130,7 +130,7 @@ public class OpenviduService {
 
             for (int i = 0; i < rooms.getContent().size(); i++) {
                 MeetingRoom meetingRoom = rooms.getContent().get(i);
-                int joinCnt = sessionInfos.get(i).getJoinCnt();
+                int joinCnt = openvidu.getActiveSession(meetingRoom.getSessionId()).getActiveConnections().size();
                 response.add(MeetingRoomDto.builder()
                         .roomId(meetingRoom.getMeetingRoomId())
                         .memberId(meetingRoom.getMember().getMemberId())
