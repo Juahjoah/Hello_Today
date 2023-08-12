@@ -34,3 +34,8 @@
   cursor: pointer;
   color: black;
 }
+
+.dateSeqItem {
+  font-size: 13px;
+  color: gray;
+}
