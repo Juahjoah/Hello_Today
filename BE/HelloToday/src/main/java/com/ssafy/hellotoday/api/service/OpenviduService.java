@@ -136,8 +136,8 @@ public class OpenviduService {
                         .build());
             }
             return MeetingRoomPageDto.builder()
-                    .totalPages(rooms.getTotalPages())
-                    .totalRooms(rooms.getTotalElements())
+                    .totalPages(rooms.getTotalPages() - 1)
+                    .totalRooms(rooms.getTotalElements() - pageable.getPageSize())
                     .rooms(response)
                     .build();
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
