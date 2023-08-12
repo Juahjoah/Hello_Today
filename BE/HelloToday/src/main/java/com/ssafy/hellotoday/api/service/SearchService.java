@@ -25,12 +25,12 @@ public class SearchService {
         List<SearchResponseDto> res;
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
             searchValidator.validateWordString(word);
-            members = memberRepository.findByNicknameContaining(word);
+            members = memberRepository.findByNicknameStartingWith(word);
         } else {
             searchValidator.validateWordNum(word);
             members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
         }
-        res = searchQueryDslRepository.findMembersWithRoutinTagByMemberIds(members.stream()
+        res = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(members.stream()
                 .map(Member::getMemberId).collect(Collectors.toList()));
         transferProfilePath(res);
 
