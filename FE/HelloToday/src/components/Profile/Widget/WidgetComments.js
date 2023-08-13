@@ -203,7 +203,7 @@ function WidgetComments() {
                   nowComments.length === 0
                 }
               >
-                <img src="../../images/Widget/next.png" alt="before" />
+                <img src="../../images/Widget/next.png" alt="next" />
               </button>
             </div>
           )}
