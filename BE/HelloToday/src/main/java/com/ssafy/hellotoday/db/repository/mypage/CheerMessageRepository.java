@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CheerMessageRepository extends JpaRepository<CheerMessage, Integer> {
-    List<CheerMessage> findByMember_MemberId(Integer memberId, PageRequest pageable);
+    List<CheerMessage> findByMember_MemberId(Integer memberId);
     @Query("select c from CheerMessage c join fetch c.member where c.cheerMessageId = :cheerMessageId")
     Optional<CheerMessage> findByIdWithMember(int cheerMessageId);
 }

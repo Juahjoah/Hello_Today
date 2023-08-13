@@ -71,12 +71,9 @@ public class MypageController {
     @Operation(summary = "응원 메시지 조회", description = "마이페이지 내이 있는 전체 응원 메시지 조회<br>" +
             "page: 조회 페이지 번호(0부터 시작), size: 한 페이지 당 보일 개수")
     @GetMapping("/cheermsg/{memberId}")
-    public List<CheerMessageResponseDto> getCheerMessages(@PathVariable Integer memberId,
-                                                          @RequestParam("page") Integer page,
-                                                          @RequestParam("size") Integer size) {
+    public List<CheerMessageResponseDto> getCheerMessages(@PathVariable Integer memberId) {
 
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return mypageService.getCheerMessages(memberId, pageRequest);
+        return mypageService.getCheerMessages(memberId);
     }
 
     @Operation(summary = "응원 메시지 작성", description = "마이페이지 안에 있는 응원 메시지 작성 API")
