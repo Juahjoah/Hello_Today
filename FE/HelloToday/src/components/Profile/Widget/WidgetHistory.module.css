@@ -1,25 +1,24 @@
 .WidgetHistory {
   /* border: 4px solid; */
-  width: 850px;
-  height: 200px;
+  width: auto;
+  height: auto;
   margin-top: 3px;
 }
 .WidgetHistory_title {
   position: relative;
-  top: 10px;
-  background-color: #ccbbff;
-  color: #222222;
+  top: 15px;
+  /*font*/
   font-family: The Jamsil OTF;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.25rem; /* 62.5% */
-  padding: 3px 30px 3px 30px;
-  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1.75em;
+  font-weight: bold;
+  /*상자*/
+  background-color: #a581cf;
+  padding: 4px 30px 4px 30px;
+  border-radius: 15px;
 }
 .WidgetHistory_body {
-  width: 100%;
-  height: 40vh;
+  height: 45vh;
   border-radius: 12px;
   font-family: "TheJamsil5Bold";
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -37,9 +36,16 @@
   width: 150px;
 }
 .WidgetHistory_one {
-  border: 1px solid rgba(131, 129, 129, 0.2);
+  /*사진+날짜*/
+  border: 1px solid #a581cf;
   margin: 0px 20px 0px 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  text-align: center;
 }
 .btn {
   display: flex;
+}
+.WidgetHistory_nothing {
+  font-size: 1.5rem;
 }
