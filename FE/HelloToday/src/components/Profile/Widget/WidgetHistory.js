@@ -91,7 +91,6 @@ function WidgetHistory() {
                       alt={item.imgPath}
                     />
                   )}
-                  <hr />
                   <p>
                     {new Date(item.startDate).toLocaleDateString()} ~
                     {new Date(item.endDate).toLocaleDateString()}

@@ -36,8 +36,12 @@
   width: 150px;
 }
 .WidgetHistory_one {
-  border: 1px solid rgba(131, 129, 129, 0.2);
+  /*사진+날짜*/
+  border: 1px solid #a581cf;
   margin: 0px 20px 0px 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  text-align: center;
 }
 .btn {
   display: flex;
