@@ -13,6 +13,7 @@ import classNames from "classnames";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { routineCheck } from "../../store/routineCheckModalSlice"
+import Swal from "sweetalert2";
 
 function SelectedRoutine({ routinePrivate }) {
   const dispatch = useDispatch();
@@ -152,7 +153,16 @@ function SelectedRoutine({ routinePrivate }) {
         dispatch(routineCheck(true));
       })
 
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if(error.response.data.code === 4001) {
+          Swal.fire({
+            icon: "warning",
+            title: "루틴 인증",
+            text: "해당 날짜에 이미 인증한 내역이 존재합니다.",
+            confirmButtonText: "확인"
+          })
+        }
+      });
   };
 
   return (
