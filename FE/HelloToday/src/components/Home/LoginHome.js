@@ -6,17 +6,21 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Nav from "../../components/common/Nav";
 import { useSelector } from "react-redux";
-import UnSelectedRoutine from "../../components/routine/UnSeletedRoutine";
+import UnSelectedRoutine from "../routine/UnSelectedRoutine";
 import SelectedRoutine from "../routine/SelectedRoutine";
 import Footer from "../common/Footer";
 
 function LoginHome() {
   const [routinePrivateResponse, setRoutinePrivate] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  console.log("여기는?")
-  console.log(AccsesToken);
-
+  console.log("LoginHome")
+  // console.log(AccsesToken);
+  const haveActiveRoutine = useSelector((state) => state.haveActiveRoutine); // 추가
+  console.log("haveActiveRoutine: " + haveActiveRoutine);
+  
+  useEffect(() => {
     async function axiosRoutinePrivateData() {
+      console.log("useEffect 실행")
       try {
         const routinePrivateResponse = await 
         axios.get(`${process.env.REACT_APP_BASE_URL}/api/routine/private`, {
@@ -32,6 +36,7 @@ function LoginHome() {
       }
     }
     axiosRoutinePrivateData();
+  }, [haveActiveRoutine]);
 
   return (
 

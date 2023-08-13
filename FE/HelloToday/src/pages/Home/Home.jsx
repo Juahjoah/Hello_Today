@@ -9,11 +9,9 @@ import { useLocation } from "react-router-dom";
 function Home() {
   // const [FirstLogin, setFirstLogin] = useState(isFirstLogin)/;
   
-  const location = useLocation();
-
   const islogin = useSelector((state) => state.login.isLogin);
   console.log("로그인 상태 >: " + islogin)
-
+  
 
     //------------------------------로그인 시작
     const dispatch = useDispatch();
