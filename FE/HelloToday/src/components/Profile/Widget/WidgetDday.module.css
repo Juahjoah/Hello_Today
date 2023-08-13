@@ -8,7 +8,7 @@
   position: relative;
   top: 15px;
   /*font*/
-  font-family: The Jamsil OTF;
+  font-family: "The Jamsil OTF";
   font-weight: bold;
   color: #ffffff;
   font-size: 1.75em;
@@ -25,7 +25,7 @@
   border-radius: 10px;
   /* align-items: center; */
   padding: 3vh 0vh 0vh 3vh;
-  height: 45vh;
+  height: 42vh;
   /* border: 4px solid; */
 }
 .WidgetDday_text {
@@ -72,7 +72,7 @@
   margin-right: 10px;
 }
 .WidgetDday_input_btn button {
-  font-family: The Jamsil OTF !important;
+  font-family: "The Jamsil OTF" !important;
   font-weight: bold !important;
   background-color: white; /* 파란색 */
   color: #a581cf;
@@ -114,8 +114,7 @@
 
 .WidgetDday_btn {
   /*모든 버튼 글자 통일*/
-  font-family: The Jamsil OTF;
-  font-weight: bold;
+  font-family: "TheJamsil5Bold";
 }
 .WidgetDday_nothing {
   /*아무것도 없을 때 */
