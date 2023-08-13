@@ -1,4 +1,3 @@
-// import classes from "../../pages/RoutineSelectMain/RoutineSelectMain.module.css"
 import classes from "./UnSelectedRoutine.module.css";
 import { useState, useEffect } from "react";
 import SelectRoutineList from "./SelectRoutineList";
@@ -158,7 +157,13 @@ function UnSelectedRoutine() {
             const bigRoutineMent = routineMent[index].content;
             return (
               <div key={index} style={{ marginTop: "30px" }}>
-                <p className={classes.bigRoutineMent}>{bigRoutineMent}</p>
+                <div style={{marginBottom: "10px"}}>
+                  {index === 0 && <span className={classes.bigRoutineMent}>기본 진행 루틴</span>}
+                  {index === 1 && <span className={classes.bigRoutineMent}>생각하기, 기록하기</span>}
+                  {index === 2 && <span className={classes.bigRoutineMent}>몸을 움직이는 활동</span>}
+                  <span className={classes.mediumRoutineMent}>{bigRoutineMent}</span>
+                </div>
+
                 <SelectRoutineList
                   bigRoutine={bigRoutine}
                   idx={index}
@@ -187,7 +192,7 @@ function UnSelectedRoutine() {
             className={classes.modalClose}
           />
           <div className={classes.modalDescriptionTitle}>
-            {localStorage.getItem('nickName')}님이 선택하신 루틴 입니다.
+            "{localStorage.getItem('nickName')}"님이 선택하신 루틴 입니다.
           </div>
           <Splide options={option}>
             {selectRoutineState.map((item, index) => {

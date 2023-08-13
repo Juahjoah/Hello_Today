@@ -14,35 +14,6 @@ function ProfileCalenderDetail() {
   const checkDate = useParams().checkDate;
 
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  //데이터 불러오기
-  //d-day도 달력에 들어가면 기존 불러오는 데이터에 push해서 변화하면 데이터 변경하게 해야함
-
-  // const calDetails = [
-  //   {
-  //     routineContent: "운동하기",
-  //     writeDate: "2023-08-07",
-  //     imgPath: "/images/Delete/강쥐.jpg",
-  //     content: "여러분의 루틴을 일주일 간 함께해요!",
-  //   },
-  //   {
-  //     routineContent: "책 읽기",
-  //     writeDate: "2023-08-07",
-  //     imgPath: "/images/Delete/계란.jpg",
-  //     content: "매주 월요일의 시작",
-  //   },
-  //   {
-  //     routineContent: "물마시기",
-  //     writeDate: "2023-08-07",
-  //     imgPath: "/images/Delete/라이언.jpg",
-  //     content: "껄껄껄껄",
-  //   },
-  //   {
-  //     routineContent: "물마시기",
-  //     writeDate: "2023-08-07",
-  //     imgPath: "",
-  //     content: "껄껄껄껄",
-  //   },
-  // ];
   const dispatch = useDispatch();
   const [calDetails, setCalDetail] = useState([]);
   useEffect(() => {

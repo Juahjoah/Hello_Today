@@ -69,8 +69,11 @@
 
 .toGroupBannerLeftDesc {
   font-size: 20px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  font-family: "TheJamsil4Bold";
+  color: #707070;
 }
 
 .toGroupBannerLeftBtn {

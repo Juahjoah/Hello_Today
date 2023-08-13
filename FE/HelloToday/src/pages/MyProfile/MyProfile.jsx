@@ -211,14 +211,18 @@ function MyProfile() {
           <div className={classes.UserInfo}>
             {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             {isUserEdit ? (
-              <div className={classes.수정가능}>
+              <div className={classes.editable}>
                 <form id="form">
                   <img
                     className={classes.ProfileImg}
                     src={URLThumbnail}
                     alt="thumbnail"
                   />
-                  <button onClick={handleClick} type="button">
+                  <button
+                    className={`${classes.Profile_edit_btn} ${classes.Profile_file_btn}`}
+                    onClick={handleClick}
+                    type="button"
+                  >
                     파일
                     <input
                       type="file"
@@ -229,6 +233,7 @@ function MyProfile() {
                   </button>
                   <div className={classes.ProfilenNickName}>
                     <input
+                      className={classes.Profile_edit_input}
                       type="text"
                       value={user.nickname}
                       placeholder="닉네임을 입력하세요"
@@ -239,6 +244,7 @@ function MyProfile() {
                   </div>
                   <div className={classes.ProfileMsg}>
                     <input
+                      className={classes.Profile_edit_input}
                       type="text"
                       value={user.stMsg}
                       placeholder="상태메세지를 입력하세요"
@@ -247,12 +253,22 @@ function MyProfile() {
                       name="stMsg"
                     ></input>
                   </div>
-                  <button onClick={handleSubmit} type="button">
-                    완료
-                  </button>
-                  <button onClick={handleCancle} type="button">
-                    취소
-                  </button>
+                  <div className={classes.Profile_btns}>
+                    <button
+                      className={classes.Profile_edit_btn}
+                      onClick={handleSubmit}
+                      type="button"
+                    >
+                      완료
+                    </button>
+                    <button
+                      className={`${classes.Profile_edit_btn} ${classes.Profile_cancle_btn}`}
+                      onClick={handleCancle}
+                      type="button"
+                    >
+                      취소
+                    </button>
+                  </div>
                   {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
                 </form>
               </div>
@@ -278,8 +294,6 @@ function MyProfile() {
                 </button>
               </div>
             )}
-
-            <hr />
             {/* <Link to="/MyProfile/edit">
               <button>편집모드 이도오옹</button>
             </Link> */}
@@ -290,7 +304,6 @@ function MyProfile() {
                 setFollowButtonClick={setFollowButtonClick}
               />
             </div>
-            <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>
           <hr />
 
@@ -312,6 +325,14 @@ function MyProfile() {
           )}
           {/* <ProfileMain Menu={Menu} /> */}
         </div>
+      </div>
+      <div className={classes.profile_unregist}>
+        <button
+          className={classes.profile_unregist_btn}
+          onClick={() => handleunregister()}
+        >
+          회원 탈퇴
+        </button>
       </div>
     </div>
   );

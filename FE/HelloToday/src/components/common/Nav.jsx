@@ -22,7 +22,8 @@ function Nav() {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const memberId = sessionStorage.getItem("memberId");
+  // const memberId = sessionStorage.getItem("memberId");
+  const memberId = localStorage.getItem("memeberId");
 
   const openPopup = () => {
     setIsPopupOpen(true);
