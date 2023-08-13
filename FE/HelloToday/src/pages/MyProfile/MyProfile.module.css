@@ -94,8 +94,8 @@
 }
 .editbtn {
   position: relative;
-  left: 200px;
-  bottom: 50px;
+  left: 190px;
+  bottom: 120px;
   border: none;
   background: white;
   border-radius: 100px;
@@ -283,4 +283,41 @@
   background-color: white;
   font-family: "TheJamsil5Bold";
   color: rgb(98, 98, 98);
+}
+
+/*회원 정보 수정*/
+.Profile_edit_btn {
+  font-family: "TheJamsil5Bold";
+  background-color: white; /* 파란색 */
+  color: #a581cf;
+  border: #a581cf solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
+}
+.Profile_edit_btn:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
+}
+.Profile_edit_input {
+  /*수정 input창*/
+  background-color: rgba(0, 0, 0, 0);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #a581cf;
+}
+.Profile_btns {
+  /*완료, 취소 버튼*/
+  margin-left: 80px;
+}
+.Profile_cancle_btn {
+  margin-left: 10px;
+}
+.Profile_file_btn {
+  /*파일 버튼*/
+  position: relative;
+  top: -20px;
+  margin-left: 180px;
 }

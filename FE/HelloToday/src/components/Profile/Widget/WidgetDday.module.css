@@ -114,8 +114,7 @@
 
 .WidgetDday_btn {
   /*모든 버튼 글자 통일*/
-  font-family: "The Jamsil OTF" !important;
-  font-weight: bold;
+  font-family: "TheJamsil5Bold";
 }
 .WidgetDday_nothing {
   /*아무것도 없을 때 */
