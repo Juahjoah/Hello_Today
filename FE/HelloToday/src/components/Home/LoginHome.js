@@ -23,13 +23,15 @@ function LoginHome() {
     async function axiosRoutinePrivateData() {
 
       try {
-        const routinePrivateResponse = await 
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/routine/private`, {
+        const routinePrivateResponse = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/routine/private`,
+          {
             headers: {
               Authorization: AccsesToken,
-            }}
+            },
+          }
         );
-        
+
         setRoutinePrivate(routinePrivateResponse.data);
 
       } catch (error) {
@@ -44,18 +46,23 @@ function LoginHome() {
     return () => clearTimeout(timerId);
   }, [haveActiveRoutine, routineCheckFlag]);
 
-  return (
+    const delay = 200;
+    const timerId = setTimeout(axiosRoutinePrivateData, delay);
 
+    return () => clearTimeout(timerId);
+  }, [haveActiveRoutine]);
+
+  return (
     <div>
       <Nav />
       {routinePrivateResponse.activeFlag === 1 ? (
         // 진행 중인 루틴이 있는 경우
-        <SelectedRoutine routinePrivate={routinePrivateResponse}/>
+        <SelectedRoutine routinePrivate={routinePrivateResponse} />
       ) : (
         // 진행 중인 루틴이 없는 경우
         <UnSelectedRoutine />
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 }
