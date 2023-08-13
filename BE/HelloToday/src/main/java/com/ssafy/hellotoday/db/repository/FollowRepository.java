@@ -16,6 +16,4 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
 
     @Query("select f from Follow f join fetch f.following where f.follower.memberId = :memberId")
     List<Follow> findAllByFollower(int memberId);
-
-    Optional<Follow> findByFollowerAndFollowerAndFollowing(Member follower, Member following);
 }
