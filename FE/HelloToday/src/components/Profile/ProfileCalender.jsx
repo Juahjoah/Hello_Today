@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { formatDate } from "@fullcalendar/core";
 import axios from "axios";
-import { DateTime } from "luxon";
 import { format } from "date-fns";
 
 import FullCalendar from "@fullcalendar/react"; //풀캘린더 import
@@ -12,7 +10,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; //필요없는 것 같기도?
 import { SET_ISDELETE } from "../../store/ddaySlice";
 
-// import { events, setEvents } from "./event-utils"; //달력에 일정 데이터 import함
 import "./ProfileCalendar.css";
 
 //tooltip
@@ -20,6 +17,7 @@ import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import "tippy.js/themes/light.css";
+import "tippy.js/dist/border.css";
 
 export function ProfileCalender() {
   const navigate = useNavigate();
@@ -62,8 +60,10 @@ export function ProfileCalender() {
               start: format(new Date(item.startDate), "yyyy-MM-dd"),
               end: format(new Date(item.endDate), "yyyy-MM-dd"),
               title: "오늘의 routine",
+              color: "#ffcb6b",
             }));
             const dbdata2 = res2.data.map((item) => ({
+              //디데이 데이터
               calDate: item.calDate,
               title: item.content,
               description: `${item.content} D${item.calDate}`,
@@ -99,7 +99,7 @@ export function ProfileCalender() {
           right: "today", // 오늘
         }}
         //Sizing
-        height={"300px"}
+        height={"430px"}
         //Month
         fixedWeekCount={false} //true면 기본이 6줄
         initialView="dayGridMonth" //처음 보이는 부분은 달

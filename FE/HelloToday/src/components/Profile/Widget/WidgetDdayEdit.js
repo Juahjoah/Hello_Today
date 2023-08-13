@@ -113,11 +113,15 @@ function WidgetDdayEdit() {
             value={newDday.content}
             onChange={handleChangeState}
           ></input>
-          <div>
-            <button onClick={handleSubmit}>완료</button>
+          <div className={classes.WidgetDday_submit_btn}>
+            <button className={classes.WidgetDday_btn} onClick={handleSubmit}>
+              완료
+            </button>
           </div>
           <div>
-            <button onClick={handleCancle}>취소</button>
+            <button className={classes.WidgetDday_btn} onClick={handleCancle}>
+              취소
+            </button>
           </div>
         </div>
       </div>

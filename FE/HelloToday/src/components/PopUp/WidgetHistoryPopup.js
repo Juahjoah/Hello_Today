@@ -79,9 +79,9 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
               return (
                 <div className={classes.routinehistory} key={index}>
                   <div className={classes.routinehistoryContent}>
-                    <p className={classes.routinehistory_day}>
+                    <span className={classes.routinehistory_day}>
                       {item.checkDaySeq}일차
-                    </p>
+                    </span>
                     {item.routineDetail.length > 0 ? (
                       <div>
                         {item.routineDetail.map((detail, detailIndex) => (
@@ -89,8 +89,10 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
                             className={classes.routineHisotry_box}
                             key={detailIndex}
                           >
-                            <p> 루틴 종류 : {detail.routineContent}</p>
-                            <p>
+                            <p className={classes.routineHisotry_tt}>
+                              루틴 종류 : {detail.routineContent}
+                            </p>
+                            <p className={classes.routineHisotry_tt}>
                               인증일 :
                               {new Date(detail.writeDate).toLocaleDateString()}
                             </p>
@@ -115,16 +117,29 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
                                 className={classes.routinehistory_vline}
                               ></div>
                               <div className={classes.routinehistory_text}>
-                                <p className={classes.routinehistory_text_p}>
-                                  내용: {detail.content}
-                                </p>
+                                <div className={classes.routinehistory_text_p}>
+                                  <span
+                                    className={classes.routinehistory_p_content}
+                                  >
+                                    내용
+                                  </span>
+                                  <p
+                                    className={
+                                      classes.routinehistory_p_content_body
+                                    }
+                                  >
+                                    {detail.content}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <div>다음 번에는 인증 해주세요~~ (뭐라고 하지...)</div>
+                      <div className={classes.routinehistory_nothing}>
+                        인증을 남겨주세요😊
+                      </div>
                     )}
                   </div>
                 </div>
