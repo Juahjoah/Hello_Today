@@ -279,8 +279,6 @@ function MyProfile() {
                 </button>
               </div>
             )}
-
-            <hr />
             {/* <Link to="/MyProfile/edit">
               <button>편집모드 이도오옹</button>
             </Link> */}
@@ -291,7 +289,6 @@ function MyProfile() {
                 setFollowButtonClick={setFollowButtonClick}
               />
             </div>
-            <button onClick={() => handleunregister()}>회원 탈퇴</button>
           </div>
           <hr />
 
@@ -313,6 +310,14 @@ function MyProfile() {
           )}
           {/* <ProfileMain Menu={Menu} /> */}
         </div>
+      </div>
+      <div    className={classes.profile_unregist}>
+        <button
+          className={classes.profile_unregist_btn}
+          onClick={() => handleunregister()}
+        >
+          회원 탈퇴
+        </button>
       </div>
     </div>
   );
