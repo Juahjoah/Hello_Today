@@ -27,7 +27,7 @@ function CheckRoutine({routineCheckDtoList, routineDetailDto, handleAuthButtonCl
 
             <div className={classes.routineAuthRight}>
                 <button className={classes.goToAuth} onClick={handleAuthButtonClick}>
-                    추가 인증하러 가기
+                    추가 인증하기
                 </button>
             </div>
         </>

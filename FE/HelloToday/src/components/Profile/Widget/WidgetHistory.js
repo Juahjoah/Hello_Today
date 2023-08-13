@@ -91,7 +91,6 @@ function WidgetHistory() {
                       alt={item.imgPath}
                     />
                   )}
-                  <hr />
                   <p>
                     {new Date(item.startDate).toLocaleDateString()} ~
                     {new Date(item.endDate).toLocaleDateString()}
@@ -99,7 +98,9 @@ function WidgetHistory() {
                 </div>
               ))
             ) : (
-              <p>게시물이 없습니다.</p>
+              <p className={classes.WidgetHistory_nothing}>
+                게시물이 없습니다.
+              </p>
             )}
           </div>
           <div className={classes.btn}>
