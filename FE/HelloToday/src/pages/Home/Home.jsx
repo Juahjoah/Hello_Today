@@ -11,7 +11,8 @@ function Home() {
   
   const islogin = useSelector((state) => state.login.isLogin);
   console.log("로그인 상태 >: " + islogin)
-  
+  const routineCheckFlag = useSelector((state) => state.routineCheck);
+  console.log(routineCheckFlag)
 
     //------------------------------로그인 시작
     const dispatch = useDispatch();

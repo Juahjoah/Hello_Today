@@ -5,19 +5,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Nav from "../../components/common/Nav";
-import { useSelector } from "react-redux";
 import UnSelectedRoutine from "../routine/UnSelectedRoutine";
 import SelectedRoutine from "../routine/SelectedRoutine";
 import Footer from "../common/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { routineCheck } from "../../store/routineCheckModalSlice"
 
 function LoginHome() {
+  const dispatch = useDispatch();
   const [routinePrivateResponse, setRoutinePrivate] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   console.log("LoginHome")
   // console.log(AccsesToken);
   const haveActiveRoutine = useSelector((state) => state.haveActiveRoutine); // 추가
-  console.log("haveActiveRoutine: " + haveActiveRoutine);
+  const routineCheckFlag = useSelector((state) => state.routineCheck);
   
+  console.log("haveActiveRoutine: " + haveActiveRoutine);
+  console.log("routineCheckFlag >>>>>>>>>>" + routineCheckFlag);
   useEffect(() => {
     async function axiosRoutinePrivateData() {
       console.log("useEffect 실행")
@@ -35,8 +39,13 @@ function LoginHome() {
         console.error("Error fetching data:", error);
       }
     }
-    axiosRoutinePrivateData();
-  }, [haveActiveRoutine]);
+
+    const delay = 200;
+    const timerId = setTimeout(axiosRoutinePrivateData, delay);
+    dispatch(routineCheck(false));
+    
+    return () => clearTimeout(timerId);
+  }, [haveActiveRoutine, routineCheckFlag]);
 
   return (
 
