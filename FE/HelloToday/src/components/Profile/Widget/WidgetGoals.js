@@ -1,8 +1,11 @@
+import classes from "./WidgetGoals.module.css";
+
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
+import { Calendar } from "react-calendar";
 
 function WidgetGoals() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
@@ -128,8 +131,8 @@ function WidgetGoals() {
   };
 
   return (
-    <div className="WidgetGoals">
-      <p> {memberId} 소중한 목표</p>
+    <div className={classes.WidgetGoals}>
+      <p className={classes.goalTitle}> 작고 소중한 목표를 세웠어요! </p>
       <div>
         {nowgoal.length === 0 && <div>아직 목표가 없어요!</div>}
         {nowgoal.length > 0 &&
@@ -168,6 +171,7 @@ function WidgetGoals() {
                     {isMe && (
                       <div>
                         <button
+                          className={classes.editButtonStyle}
                           onClick={() => {
                             setIsEdit(true);
                             setEditedGoalId(goalItem.goalId);
