@@ -46,6 +46,7 @@
     "react-spinners": "^0.13.8",
     "react-tooltip": "^5.20.0",
     "redux": "^4.2.1",
+    "sweetalert2": "^11.7.22",
     "tippy.js": "^6.3.7",
     "typeit-react": "^2.6.4",
     "web-vitals": "^2.1.4"
