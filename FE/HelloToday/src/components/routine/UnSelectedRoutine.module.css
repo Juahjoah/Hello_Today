@@ -6,6 +6,18 @@
     font-style: normal;
   }
   
+  @font-face {
+    font-family: 'TheJamsil4Bold';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf') format("truetype");
+    font-display: swap;
+  }
+
   .test {
     height: 100vh;
     width: 75%;
@@ -24,8 +36,13 @@
   }
   
   .bigRoutineMent {
-    font-size: 32px;
-    margin: 15px 0px;
+    font-size: 35px;
+    margin-right: 20px;
+  }
+
+  .mediumRoutineMent {
+    font-family: 'TheJamsil4Bold';
+    color: #989898;
   }
   
   .routinSubmitModal,
@@ -66,6 +83,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 25px;
   }
   
   .modalDescriptionTitle {
@@ -75,11 +93,14 @@
   .modalDescriptionOne {
     font-size: 20px;
     margin: 30px 0px 20px 0px;
+    font-family: "TheJamsil4Bold";
   }
   
   .modalDescriptionTwo {
     font-size: 20px;
     margin-bottom: 20px;
+    font-family: "TheJamsil4Bold";
+
   }
   
   .modalClose {
@@ -97,6 +118,10 @@
   .bigRoutineMent {
     font-family: "TheJamsil5Bold";
     font-size: 25px;
+  }
+
+  .routineAuthDetail {
+    
   }
   
   

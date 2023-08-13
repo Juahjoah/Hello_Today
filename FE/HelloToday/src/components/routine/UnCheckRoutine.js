@@ -9,7 +9,7 @@ function UnCheckRoutine({ routineCheckDtoList, routineDetailDto,handleAuthButton
                     "루틴을 진행하셨나요?
                 </div>
                 <div style={{marginLeft: "25px"}}>
-                    <span>루틴에 대한 기록을 남겨주세요!</span>
+                    <span className={classes.routineDetailDes}>루틴에 대한 기록을 남겨주세요!</span>
                 </div>
             </div>
 

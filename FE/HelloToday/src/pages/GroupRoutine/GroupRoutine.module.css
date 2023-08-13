@@ -72,8 +72,11 @@
 
 .makeRoomLeftDesc {
   font-size: 20px;
-  margin-bottom: 20px;
-  margin-top: 0px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  font-family: "TheJamsil4Bold";
+  color: #707070;
+  margin-left: 15px;
 }
 
 .makeRoomLeftBtn {
