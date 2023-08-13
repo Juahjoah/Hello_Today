@@ -261,7 +261,7 @@ function MyProfileEdit() {
           <ProfileMenu
             setMenu={setMenu}
             setFollowButtonClick={setFollowButtonClick}
-            memberId={params.memberId}
+            memberId={localStorage.getItem("memberId")}
             Token={AccsesToken}
           />
         </div>

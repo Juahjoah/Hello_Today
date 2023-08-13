@@ -42,7 +42,6 @@ public class RoutineService {
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
     private final JPAQueryFactory queryFactory;
-    private final RoutineCheckRepository routineCheckRepository;
     private final FileUploadUtil fileUploadUtil;
     private final RoutineTagRepository routineTagRepository;
     private final RoutineValidator routineValidator;
@@ -158,13 +157,23 @@ public class RoutineService {
         }
     }
 
-    public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto, Member findMember, MultipartFile file) {
+    public BaseResponseDto checkPrivateRoutine(RoutineCheckRequestDto routineCheckRequestDto,
+                                               Member findMember, MultipartFile file) {
         RoutineCheck routineCheck =
                 queryFactory.selectFrom(QRoutineCheck.routineCheck)
-                        .leftJoin(routineDetailCat).on(QRoutineCheck.routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
-                        .where(routineDetailCat.routine.routineId.eq(routineCheckRequestDto.getRoutineId()).and(QRoutineCheck.routineCheck.checkDaySeq.eq(routineCheckRequestDto.getCheckDaySeq()).and(routineDetailCat.routineDetail.routineDetailId.eq(routineCheckRequestDto.getRoutineDetailId())))).fetchFirst();
+                        .leftJoin(routineDetailCat)
+                        .on(QRoutineCheck.routineCheck.routineDetailCat.routineDetailCatId
+                                .eq(routineDetailCat.routineDetailCatId))
+                        .where(routineDetailCat.routine.routineId
+                                .eq(routineCheckRequestDto.getRoutineId())
+                                .and(QRoutineCheck.routineCheck.checkDaySeq
+                                        .eq(routineCheckRequestDto.getCheckDaySeq())
+                                        .and(routineDetailCat.routineDetail.routineDetailId
+                                                .eq(routineCheckRequestDto.getRoutineDetailId()))))
+                        .fetchFirst();
 
-        if (findMember.getMemberId() != routineCheck.getRoutineDetailCat().getRoutine().getMember().getMemberId()) {
+        if (!findMember.getMemberId()
+                .equals(routineCheck.getRoutineDetailCat().getRoutine().getMember().getMemberId())) {
             throw new IllegalArgumentException("잘못된 접근입니다");
         }
 

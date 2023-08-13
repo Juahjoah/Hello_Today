@@ -14,7 +14,6 @@ function HomeMountain({ goHomeTop, HomeMountWantVisible }) {
         setIsVisible(true);
       }, 1000);
     } else {
-      console.log("들어가나?");
       setIsVisible(false);
     }
   }, [HomeMountWantVisible]);
