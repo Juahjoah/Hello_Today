@@ -15,6 +15,9 @@ function WidgetDiary() {
   const [editedDiary, setEditedDiary] = useState("");
   const [editedDiaryId, setEditedDiaryId] = useState(null);
 
+  const [nowPage, setNowPage] = useState(1);
+  const itemsIncludePage = 5;
+
   const getDiary = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/onediary/`, {
@@ -106,13 +109,29 @@ function WidgetDiary() {
       });
   };
 
+  const indexOfLastItem = nowPage * itemsIncludePage;
+  const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
+
+  const nowdiary =
+    diary.length === 0 ? [] : diary.slice(indexOfFirstItem, indexOfLastItem);
+
+  const setPage = (pageNumber) => {
+    if (
+      pageNumber < 1 ||
+      pageNumber > Math.ceil(diary.length / itemsIncludePage)
+    ) {
+      return; // Prevent setting invalid page numbers
+    }
+    setNowPage(pageNumber);
+  };
+
   return (
     <div className="WidgetDiary">
       <p> {memberId}님의 한 줄 일기 </p>
       <div>
-        {diary.length === 0 && <div>일기가 없습니다.</div>}
-        {diary.length > 0 &&
-          diary.map((diaryItem) => {
+        {nowdiary.length === 0 && <div>일기가 없습니다.</div>}
+        {nowdiary.length > 0 &&
+          nowdiary.map((diaryItem) => {
             return (
               <div key={diaryItem.wishDiaryId}>
                 {isEdit && editedDiaryId === diaryItem.wishDiaryId ? (
@@ -162,6 +181,12 @@ function WidgetDiary() {
               </div>
             );
           })}
+
+        <div className="pagination">
+          <button onClick={() => setPage(nowPage - 1)}>이전</button>
+          <button onClick={() => setPage(nowPage + 1)}>다음</button>
+        </div>
+
         <div>
           {isMe && (
             <div>

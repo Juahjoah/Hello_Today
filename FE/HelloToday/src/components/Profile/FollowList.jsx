@@ -11,6 +11,9 @@ function FollowList() {
   const [Followers, setFollowers] = useState([]);
   const [Followings, setFollowings] = useState([]);
 
+  const [nowPage, setNowPage] = useState(1);
+  const itemsIncludePage = 5;
+
   useEffect(() => {
     getUserFollowers(memberId);
     getUserFollowings(memberId);
@@ -47,28 +50,75 @@ function FollowList() {
       });
   };
 
+  const indexOfLastItem = nowPage * itemsIncludePage;
+  const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
+  const nowFollowings = Followings.slice(indexOfFirstItem, indexOfLastItem);
+  const nowFollowers = Followers.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setNowPage(pageNumber);
+  };
+
   return (
     <div>
       <h1>함께하는 모듈러 보기</h1>
       <h3>내가 팔로잉하는 사람</h3>
-      {Followings.length === 0 && <div>팔로잉 없음</div>}
-      {Followings.length > 0 &&
-        Followings.map((following) => (
+      {nowFollowings.length === 0 && <div>팔로잉 없음</div>}
+      {nowFollowings.length > 0 &&
+        nowFollowings.map((following) => (
           <div key={following.memberId}>
             <img src={following.profilePath} alt="followerImg" />
             {following.nickname}
           </div>
         ))}
+      {Followings.length > itemsIncludePage && (
+        <div>
+          <button
+            onClick={() => paginate(nowPage - 1)}
+            disabled={nowPage === 1}
+          >
+            이전
+          </button>
+          <button
+            onClick={() => paginate(nowPage + 1)}
+            disabled={
+              nowFollowings.length < itemsIncludePage ||
+              nowFollowings.length === 0
+            }
+          >
+            다음
+          </button>
+        </div>
+      )}
 
       <h3>나를 팔로우하는 사람</h3>
-      {Followers.length === 0 && <div>팔로워 없음</div>}
-      {Followers.length > 0 &&
-        Followers.map((follower) => (
+      {nowFollowers.length === 0 && <div>팔로워 없음</div>}
+      {nowFollowers.length > 0 &&
+        nowFollowers.map((follower) => (
           <div key={follower.memberId}>
             <img src={follower.profilePath} alt="followerImg" />
             {follower.nickname}
           </div>
         ))}
+      {Followers.length > itemsIncludePage && (
+        <div>
+          <button
+            onClick={() => paginate(nowPage - 1)}
+            disabled={nowPage === 1}
+          >
+            이전
+          </button>
+          <button
+            onClick={() => paginate(nowPage + 1)}
+            disabled={
+              nowFollowers.length < itemsIncludePage ||
+              nowFollowers.length === 0
+            }
+          >
+            다음
+          </button>
+        </div>
+      )}
     </div>
   );
 }
