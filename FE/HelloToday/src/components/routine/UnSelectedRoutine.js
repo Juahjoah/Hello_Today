@@ -1,4 +1,5 @@
-import classes from "../../pages/RoutineSelectMain/RoutineSelectMain.module.css"
+// import classes from "../../pages/RoutineSelectMain/RoutineSelectMain.module.css"
+import classes from "./UnSelectedRoutine.module.css";
 import { useState, useEffect } from "react";
 import SelectRoutineList from "./SelectRoutineList";
 import { useDispatch, useSelector } from "react-redux";
