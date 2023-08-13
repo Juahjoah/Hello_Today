@@ -1,3 +1,5 @@
+import classes from "./WidgetDiary.module.css";
+
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -126,8 +128,8 @@ function WidgetDiary() {
   };
 
   return (
-    <div className="WidgetDiary">
-      <p> {memberId}님의 한 줄 일기 </p>
+    <div className={classes.WidgetDiary}>
+      <p className={classes.diaryTitle}> 소중한 한 줄 일기 </p>
       <div>
         {nowdiary.length === 0 && <div>일기가 없습니다.</div>}
         {nowdiary.length > 0 &&
