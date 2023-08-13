@@ -178,7 +178,7 @@ public class OpenviduService {
             openvidu.fetch();
             Session session = openvidu.getActiveSession(room.getSessionId());
             // 인원 수가 1이라면 세션까지 닫기
-            if (session.getActiveConnections().size() <= 1) {
+            if (session.getActiveConnections().size() <= 0) {
                 session.close();
                 room.updateActiveFlag(false);
                 return BaseResponseDto.builder()
