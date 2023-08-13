@@ -18,11 +18,6 @@
   background-color: #a581cf !important;
   border: #a581cf !important;
 }
-/* .scrollbar {
-  width: 250px;
-  height: 250px;
-  overflow-y: scroll;
-} */
 .fc-today-button {
   background-color: #ffcb6b !important;
 }
@@ -36,6 +31,7 @@
   border: #a581cf !important;
   padding: 5px 20px 5px 20px;
   border-radius: 15px;
+  color: white;
 }
 /*스크롤바*/
 *::-webkit-scrollbar {

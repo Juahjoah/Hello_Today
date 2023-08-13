@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { formatDate } from "@fullcalendar/core";
+// import { formatDate } from "@fullcalendar/core";
 import axios from "axios";
-import { DateTime } from "luxon";
+// import { DateTime } from "luxon";
 import { format } from "date-fns";
 
 import FullCalendar from "@fullcalendar/react"; //풀캘린더 import
@@ -63,8 +63,10 @@ export function ProfileCalender() {
               start: format(new Date(item.startDate), "yyyy-MM-dd"),
               end: format(new Date(item.endDate), "yyyy-MM-dd"),
               title: "오늘의 routine",
+              color: "#ffcb6b",
             }));
             const dbdata2 = res2.data.map((item) => ({
+              //디데이 데이터
               calDate: item.calDate,
               title: item.content,
               description: `${item.content} D${item.calDate}`,
