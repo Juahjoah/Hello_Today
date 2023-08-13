@@ -15,8 +15,9 @@ function WidgetComments() {
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [isMe, setIsMe] = useState(false);
-  const page = 0;
-  const size = 20;
+
+  const [nowPage, setNowPage] = useState(1);
+  const itemsIncludePage = 3;
 
   useEffect(() => {
     const loggedInUserId = sessionStorage.getItem("memberId");
@@ -29,12 +30,12 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
-  const getComments = async (memberId) => {
-    await axios
+  const getComments = (memberId) => {
+    axios
       .get(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
         {
-          params: { memberId, page, size },
+          params: { memberId },
           headers: {
             Authorization: AccsesToken,
           },
@@ -114,18 +115,46 @@ function WidgetComments() {
       });
   };
 
+  const indexOfLastItem = nowPage * itemsIncludePage;
+  const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
+
+  const startIndex = Math.max(indexOfFirstItem, 0);
+  const endIndex = Math.min(indexOfLastItem, comments.length);
+
+  const nowComments =
+    comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
+
+  const paginate = (pageNumber) => {
+    setNowPage(pageNumber);
+  };
+
   return (
     <div className={classes.WidgetComments}>
       <div>
-        <p> {memberId}님을 향한 응원의 댓글!</p>
+        <p className={classes.WidgetCommentsTitle}>
+          {" "}
+          응원의 메세지를 남겨주세요!{" "}
+        </p>
         <div className={classes.CommentSection}>
-          {comments.length === 0 && <p>댓글이 없습니다.</p>}
-          {comments.length > 0 &&
-            comments.map((comment) => (
+          {comments.length > itemsIncludePage && (
+            <div>
+              <button
+                className={classes.editButtonStyle}
+                onClick={() => paginate(nowPage - 1)}
+                disabled={nowPage === 1}
+              >
+                <img src="../../images/Widget/before.png" alt="before" />
+              </button>
+            </div>
+          )}
+          {nowComments.length === 0 && <p>댓글이 없습니다.</p>}
+          {nowComments.length > 0 &&
+            nowComments.map((comment) => (
               <div key={comment.messageId}>
                 {isEdit && editedCommentId === comment.messageId ? (
                   <div>
                     <input
+                      className={classes.editinputstyle}
                       type="text"
                       value={editedComment}
                       onChange={(event) => {
@@ -133,60 +162,65 @@ function WidgetComments() {
                         setEditedCommentId(comment.messageId);
                       }}
                     />
-                    <button
-                      onClick={() => {
-                        SaveEditedComment();
-                      }}
-                    >
-                      저장
-                    </button>
+                    <button onClick={() => SaveEditedComment()}>저장</button>
+                    <button onClick={() => setIsEdit(false)}>취소</button>
                   </div>
                 ) : (
-                  <div>
-                    {comment.content}
+                  <div className={classes.commentPostIt}>
+                    <p>{comment.content}</p>
                     {comment.writerNickName}
                     {isMe && (
                       <button
-                        className={classes.buttonstyle}
+                        className={classes.editButtonStyle}
                         onClick={() => {
                           setIsEdit(comment.messageId);
                           setEditedComment(comment.content);
                           setEditedCommentId(comment.messageId);
                         }}
                       >
-                        <img
-                          className={classes.edit}
-                          src="../../images/Widget/edit.png"
-                          alt="edit"
-                        />
+                        <img src="../../images/Widget/edit.png" alt="edit" />
                       </button>
                     )}
                     {isMe && (
                       <button
-                        className={classes.buttonstyle}
+                        className={classes.editButtonStyle}
                         onClick={() => DeleteComment(comment.messageId)}
                       >
-                        <img
-                          className={classes.clear}
-                          src="../../images/Widget/clear.png"
-                          alt="clear"
-                        />
+                        <img src="../../images/Widget/clear.png" alt="clear" />
                       </button>
                     )}
                   </div>
                 )}
               </div>
             ))}
+          {comments.length > itemsIncludePage && (
+            <div>
+              <button
+                className={classes.editButtonStyle}
+                onClick={() => paginate(nowPage + 1)}
+                disabled={
+                  nowComments.length < itemsIncludePage ||
+                  nowComments.length === 0
+                }
+              >
+                <img src="../../images/Widget/next.png" alt="before" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      <div>
+      <div className={classes.widgetInputStyle}>
         <input
+          className={classes.inputstyle}
           type="text"
           value={newComment}
+          placeholder="응원의 댓글을 남겨주세요!"
           onChange={(event) => setNewComment(event.target.value)}
         />
-        <button onClick={CreateComment}>댓글 작성</button>
+        <button className={classes.inputBtn} onClick={CreateComment}>
+          댓글 작성하기
+        </button>
       </div>
     </div>
   );

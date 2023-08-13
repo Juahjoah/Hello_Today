@@ -6,45 +6,47 @@
   font-style: normal;
 }
 
-.WidgetComments {
+.WidgetBucket {
   font-family: "TheJamsil5Bold";
   box-shadow: 0 0 5px #333;
   border-radius: 10px;
   padding: 1rem;
   margin: 2rem 1rem;
 }
-.CommentSection {
+
+.bucketTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.editButtonStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.bucketSection {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+.bucketListSection {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between;
+  align-items: center; */
+}
 
-.WidgetCommentsTitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+.bucketList {
+  display: flex;
+  flex-direction: column;
 }
-.commentPostIt {
-  border: 1px solid #aaaaaa;
-  width: 12rem;
-  height: 14rem;
-  margin: 1rem;
-  /* width: 21.29406rem;
-  height: 21.41219rem;
-  flex-shrink: 0;
-  fill: linear-gradient(
-    2deg,
-    #fff199 0%,
-    #fced8d 4%,
-    #f8e97d 12%,
-    #f7e777 18%,
-    #f6e676 58%,
-    #f5df6e 85%,
-    #f3dc75 96%,
-    #f2da79 100%
-  ); */
+
+.bucketItem {
+  display: flex;
 }
+
 .editButtonStyle {
   border: 0;
   background-color: transparent;
