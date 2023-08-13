@@ -15,6 +15,9 @@ function WidgetBucket() {
   const [editedBucket, setEditedBucket] = useState("");
   const [editedBucketId, setEditedBucketId] = useState(null);
 
+  const [nowPage, setNowPage] = useState(1);
+  const itemsIncludePage = 5;
+
   const getBucket = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/bucketlist`, {
@@ -101,13 +104,31 @@ function WidgetBucket() {
       });
   };
 
+  const indexOfLastItem = nowPage * itemsIncludePage;
+  const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
+
+  const nowBucket =
+    bucket.length === 0 ? [] : bucket.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Update the current page
+  // const paginate = (pageNumber) => setNowPage(pageNumber);
+  const setPage = (pageNumber) => {
+    if (
+      pageNumber < 1 ||
+      pageNumber > Math.ceil(bucket.length / itemsIncludePage)
+    ) {
+      return; // Prevent setting invalid page numbers
+    }
+    setNowPage(pageNumber);
+  };
+
   return (
     <div className="WidgetBucket">
       <p> {memberId} 님의 버킷리스트</p>
       <div>
-        {bucket.length === 0 && <div>버킷리스트가 없습니다.</div>}
-        {bucket.length > 0 &&
-          bucket.map((bucketItem) => (
+        {nowBucket.length === 0 && <div>버킷리스트가 없습니다.</div>}
+        {nowBucket.length > 0 &&
+          nowBucket.map((bucketItem) => (
             <div key={bucketItem.wishDiaryId}>
               {isEdit && editedBucketId === bucketItem.wishDiaryId ? (
                 <div>
@@ -156,6 +177,11 @@ function WidgetBucket() {
             </div>
           ))}
 
+        <div className="pagination">
+          <button onClick={() => setPage(nowPage - 1)}>이전</button>
+          <button onClick={() => setPage(nowPage + 1)}>다음</button>
+        </div>
+
         <div>
           {isMe && (
             <div>
@@ -172,6 +198,5 @@ function WidgetBucket() {
     </div>
   );
 }
-// }
 
 export default WidgetBucket;

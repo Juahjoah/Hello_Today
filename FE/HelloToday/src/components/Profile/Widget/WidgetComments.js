@@ -15,8 +15,6 @@ function WidgetComments() {
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [isMe, setIsMe] = useState(false);
-  const page = 0;
-  const size = 100;
 
   const [nowPage, setNowPage] = useState(1);
   const itemsIncludePage = 5;
@@ -32,12 +30,12 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
-  const getComments = async (memberId) => {
-    await axios
+  const getComments = (memberId) => {
+    axios
       .get(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
         {
-          params: { memberId, page, size },
+          params: { memberId },
           headers: {
             Authorization: AccsesToken,
           },
@@ -119,7 +117,12 @@ function WidgetComments() {
 
   const indexOfLastItem = nowPage * itemsIncludePage;
   const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
-  const nowComments = comments.slice(indexOfFirstItem, indexOfLastItem);
+
+  const startIndex = Math.max(indexOfFirstItem, 0);
+  const endIndex = Math.min(indexOfLastItem, comments.length);
+
+  const nowComments =
+    comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
 
   const paginate = (pageNumber) => {
     setNowPage(pageNumber);
@@ -144,13 +147,8 @@ function WidgetComments() {
                         setEditedCommentId(comment.messageId);
                       }}
                     />
-                    <button
-                      onClick={() => {
-                        SaveEditedComment();
-                      }}
-                    >
-                      저장
-                    </button>
+                    <button onClick={() => SaveEditedComment()}>저장</button>
+                    <button onClick={() => setIsEdit(false)}>취소</button>
                   </div>
                 ) : (
                   <div>
