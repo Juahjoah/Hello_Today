@@ -3,10 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home/Home";
 import User from "./pages/User/User";
-import RoutineSelectMain from "./pages/RoutineSelectMain/RoutineSelectMain";
 import GroupRoutine from "./pages/GroupRoutine/GroupRoutine";
 import MyProfile from "./pages/MyProfile/MyProfile";
-import RoutineAuthMain from "./pages/RoutineAuthMain/RoutineAuthMain";
 import JoinRoom from "./pages/video/JoinRoom";
 import Modal from "react-modal";
 
@@ -54,8 +52,6 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<User />} />
       <Route path="/logout" element={<LogoutPage />} />
-      <Route path="/unselectmain" element={<RoutineSelectMain />} />
-      <Route path="/selectmain" element={<RoutineAuthMain />} />
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
       {/* 남의 memberid 가져오기 */}
       <Route path="/MyProfile/:memberId" element={<MyProfile />} />

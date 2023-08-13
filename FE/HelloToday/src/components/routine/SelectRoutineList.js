@@ -5,7 +5,7 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 import classes from "./SelectRoutineItem.module.css";
 import { useSelector } from "react-redux";
-
+import "../../components/common/customCalender.css";
 function SelectRoutineList({
   bigRoutine,
   idx,

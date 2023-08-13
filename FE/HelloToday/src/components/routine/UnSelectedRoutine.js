@@ -1,4 +1,5 @@
-import classes from "../../pages/RoutineSelectMain/RoutineSelectMain.module.css"
+// import classes from "../../pages/RoutineSelectMain/RoutineSelectMain.module.css"
+import classes from "./UnSelectedRoutine.module.css";
 import { useState, useEffect } from "react";
 import SelectRoutineList from "./SelectRoutineList";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,8 +35,8 @@ function UnSelectedRoutine() {
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
   const [nickName, setNickName] = useState("");
 
-  console.log(typeof FirstLogin)
-  console.log(typeof false)
+  // console.log(typeof FirstLogin)
+  // console.log(typeof false)
   const dispatch = useDispatch();
   const routineSelectBannerImg = "main_banner_routineselect1";
   const routineSelectMainBannerMents = [
@@ -186,7 +187,7 @@ function UnSelectedRoutine() {
             className={classes.modalClose}
           />
           <div className={classes.modalDescriptionTitle}>
-            {nickName}님이 선택하신 루틴 입니다.
+            {localStorage.getItem('nickName')}님이 선택하신 루틴 입니다.
           </div>
           <Splide options={option}>
             {selectRoutineState.map((item, index) => {

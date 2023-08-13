@@ -9,10 +9,13 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import Calendar from "react-calendar";
 import dayjs from "dayjs";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import classNames from "classnames";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { routineCheck } from "../../store/routineCheckModalSlice"
+
 function SelectedRoutine({ routinePrivate }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const routineAuthBannerImg = "main_banner_routineAuth1";
@@ -56,6 +59,9 @@ function SelectedRoutine({ routinePrivate }) {
   };
 
   const closeModal = () => {
+    setRoutineAuthText("");
+    setSelectedFile(null);
+    setFileName("");
     setModalIsOpen(false);
   };
 
@@ -138,7 +144,13 @@ function SelectedRoutine({ routinePrivate }) {
         console.log("루틴 인증 성공");
         navigate('/');
       })
-      .then(setModalIsOpen(false))
+      .then(() => {
+        setModalIsOpen(false);
+        setRoutineAuthText("");
+        setSelectedFile(null);
+        setFileName("");
+        dispatch(routineCheck(true));
+      })
 
       .catch((error) => console.log(error));
   };

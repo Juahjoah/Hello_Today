@@ -60,7 +60,7 @@ function NoLoginHome() {
         const routineResponse = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/routine/detail`
         );
-        console.log(routineResponse);
+
         setAllRoutineList(routineResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);

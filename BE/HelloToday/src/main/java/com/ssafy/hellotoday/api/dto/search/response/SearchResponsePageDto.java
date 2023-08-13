@@ -11,5 +11,6 @@ import java.util.List;
 @Getter
 public class SearchResponsePageDto {
     private int totalPages;
+    private long totalMembers;
     private List<SearchResponseDto> members;
 }

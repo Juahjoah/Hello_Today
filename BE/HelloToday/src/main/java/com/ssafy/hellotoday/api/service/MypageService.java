@@ -1,6 +1,5 @@
 package com.ssafy.hellotoday.api.service;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.mypage.request.*;
@@ -12,13 +11,13 @@ import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.mypage.CheerMessage;
 import com.ssafy.hellotoday.db.entity.mypage.Dday;
 import com.ssafy.hellotoday.db.entity.mypage.Goal;
-import com.ssafy.hellotoday.db.entity.routine.QRoutineCheck;
 import com.ssafy.hellotoday.db.entity.routine.Routine;
 import com.ssafy.hellotoday.db.entity.routine.RoutineCheck;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.mypage.CheerMessageRepository;
 import com.ssafy.hellotoday.db.repository.mypage.DdayRepository;
 import com.ssafy.hellotoday.db.repository.mypage.GoalRepository;
+import com.ssafy.hellotoday.db.repository.querydsl.MypageQueryDslRepository;
 import com.ssafy.hellotoday.db.repository.routine.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -32,12 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.ssafy.hellotoday.db.entity.QMember.member;
-import static com.ssafy.hellotoday.db.entity.routine.QRoutine.routine;
-import static com.ssafy.hellotoday.db.entity.routine.QRoutineCheck.routineCheck;
-import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetail.routineDetail;
-import static com.ssafy.hellotoday.db.entity.routine.QRoutineDetailCat.routineDetailCat;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -48,6 +41,7 @@ public class MypageService {
     private final RoutineRepository routineRepository;
     private final GoalRepository goalRepository;
     private final JPAQueryFactory queryFactory;
+    private final MypageQueryDslRepository mypageQueryDslRepository;
 
     public BaseResponseDto writeCheerMessage(CheerMessageRequestDto cheerMessageRequestDto, Member writer) {
         Member member = getMember(cheerMessageRequestDto.getMemberId());
@@ -73,8 +67,10 @@ public class MypageService {
                 .build();
     }
 
-    public BaseResponseDto modifyCheerMessage(CheerMessageModifyRequestDto cheerMessageModifyRequestDto, Member writer) {
-        CheerMessage cheerMessage = cheerMessageRepository.findById(cheerMessageModifyRequestDto.getCheerMessageId()).get();
+    public BaseResponseDto modifyCheerMessage(CheerMessageModifyRequestDto cheerMessageModifyRequestDto,
+                                              Member writer) {
+        CheerMessage cheerMessage = cheerMessageRepository
+                .findById(cheerMessageModifyRequestDto.getCheerMessageId()).get();
         cheerMessage.update(cheerMessageModifyRequestDto, writer);
 
         return BaseResponseDto.builder()
@@ -90,12 +86,12 @@ public class MypageService {
                 .build();
     }
 
-    public List<CheerMessageResponseDto> getCheerMessages(Integer memberId, PageRequest pageRequest) {
+    public List<CheerMessageResponseDto> getCheerMessages(Integer memberId) {
 
-        List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberId(memberId, pageRequest);
+        List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberId(memberId);
 
         return cheerMessageList.stream()
-                .map(cheerMessage -> new CheerMessageResponseDto(cheerMessage))
+                .map(CheerMessageResponseDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -119,10 +115,9 @@ public class MypageService {
     public List<DdayResponseDto> getDdays(Integer memberId) {
         List<Dday> ddayList = ddayRepository.findByMember_MemberId(memberId);
 
-        List<DdayResponseDto> result = ddayList.stream()
-                .map(dday -> new DdayResponseDto(dday))
+        return ddayList.stream()
+                .map(DdayResponseDto::new)
                 .collect(Collectors.toList());
-        return result;
     }
 
     public BaseResponseDto writeDday(DdayRequestDto ddayRequestDto, Member member) {
@@ -195,32 +190,14 @@ public class MypageService {
         System.out.println("memberId: " + memberId);
         List<Routine> routineList = routineRepository.findByMember_MemberId(memberId);
 
-        List<RoutineResponseDto> result = routineList.stream()
-                .map(routine -> new RoutineResponseDto(routine))
+        return routineList.stream()
+                .map(RoutineResponseDto::new)
                 .collect(Collectors.toList());
-
-        return result;
     }
 
     public List<CalendarHistoryDetailResponseDto> getCalendarRoutineDetail(Integer memberId, LocalDate checkDate) {
 
-        List<CalendarHistoryDetailResponseDto> calendarDetailList = queryFactory
-                .select(Projections.constructor(CalendarHistoryDetailResponseDto.class
-                        , routineDetail.content
-                        , routineCheck.modifiedDate
-                        , routineCheck.imgOriginalName
-                        , routineCheck.content))
-                .from(routineCheck)
-                .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
-                .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
-                .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
-                .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
-                .where(member.memberId.eq(memberId)
-                        .and(routineCheck.checkDate.between(checkDate.atStartOfDay(), checkDate.plusDays(1).atStartOfDay()))
-                )
-                .fetch();
-
-        return calendarDetailList;
+        return mypageQueryDslRepository.findCalendarDetailList(memberId, checkDate);
     }
 
     public List<RoutineHistoryResponseDto> getRoutineHistory(Integer memberId, PageRequest pageRequest) {
@@ -231,11 +208,7 @@ public class MypageService {
         List<RoutineHistoryResponseDto> result = new ArrayList<>();
 
         for (Routine routineItem : routineList) {
-            RoutineCheck routineCheck = queryFactory.selectFrom(QRoutineCheck.routineCheck)
-                    .leftJoin(routineDetailCat).on(QRoutineCheck.routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
-                    .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
-                    .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
-                    .where(routine.routineId.eq(routineItem.getRoutineId())).orderBy(QRoutineCheck.routineCheck.imgPath.desc()).fetch().get(0);
+            RoutineCheck routineCheck = mypageQueryDslRepository.findRoutineCheckImage(routineItem);
 
             result.add(RoutineHistoryResponseDto.builder()
                             .routineId(routineItem.getRoutineId())
@@ -255,20 +228,8 @@ public class MypageService {
         List<RoutineDetailHistoryResponseDto> result = new ArrayList<>();
 
         for (int i = 1; i < 8; i++) {
-            List<CalendarHistoryDetailResponseDto> routineDetailList = queryFactory.select(Projections.constructor(CalendarHistoryDetailResponseDto.class
-                            , routineDetail.content
-                            , routineCheck.modifiedDate
-                            , routineCheck.imgOriginalName
-                            , routineCheck.content))
-                    .from(routineCheck)
-                    .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
-                    .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
-                    .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
-                    .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
-                    .where(routine.routineId.eq(routineId)
-                            .and(routineCheck.checkDaySeq.eq(i))
-                            .and(routineCheck.checkDate.isNotNull()))
-                    .fetch();
+            List<CalendarHistoryDetailResponseDto> routineDetailList =
+                    mypageQueryDslRepository.findRoutineDetailList(routineId, i);
 
             result.add(new RoutineDetailHistoryResponseDto(i, routineDetailList));
         }
@@ -379,16 +340,8 @@ public class MypageService {
     }
 
     public List<GalleryResponseDto> getGallery(Integer memberId) {
-        List<String> imgOriginalNames = queryFactory.select(routineCheck.imgOriginalName)
-                .from(routineCheck)
-                .leftJoin(routineDetailCat).on(routineCheck.routineDetailCat.routineDetailCatId.eq(routineDetailCat.routineDetailCatId))
-                .leftJoin(routine).on(routineDetailCat.routine.routineId.eq(routine.routineId))
-                .leftJoin(member).on(routine.member.memberId.eq(member.memberId))
-                .where(member.memberId.eq(memberId).and(routineCheck.imgOriginalName.isNotNull()))
-                .orderBy(routineCheck.checkDate.desc()).fetch();
+        List<String> imgOriginalNames = mypageQueryDslRepository.findGalleryImages(memberId);
 
-        List<GalleryResponseDto> result = imgOriginalNames.stream().map(imgOriginalName -> new GalleryResponseDto(imgOriginalName)).collect(Collectors.toList());
-
-        return result;
+        return imgOriginalNames.stream().map(GalleryResponseDto::new).collect(Collectors.toList());
     }
 }
