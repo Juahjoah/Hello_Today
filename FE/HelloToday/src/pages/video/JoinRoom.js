@@ -106,8 +106,8 @@ function JoinRoom() {
   };
 
   // 1명이 방안에 남았을 때, 세션 out 요청
-  const axiosSessionDelete = () => {
-    axios({
+  const axiosSessionDelete = async () => {
+    await axios({
       url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${myRoomId}`,
       method: "delete",
       headers: {
