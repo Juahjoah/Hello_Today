@@ -1,0 +1,98 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.WidgetBucket {
+  font-family: "TheJamsil5Bold";
+  box-shadow: 0 0 5px #333;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 2rem 1rem;
+}
+
+.bucketTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.editButtonStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.bucketSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.bucketListSection {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between;
+  align-items: center; */
+}
+
+.bucketList {
+  display: flex;
+  flex-direction: column;
+}
+
+.bucketItem {
+  display: flex;
+}
+
+.editButtonStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.widgetInputStyle {
+  font-family: "TheJamsil5Bold";
+  display: flex;
+}
+
+.inputstyle {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  color: #222222;
+  width: 90%;
+  border: none;
+  border-bottom: solid #aaaaaa 1px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background: none;
+  display: flex;
+  align-self: center;
+}
+
+.inputBtn::after {
+  content: attr(data-text);
+}
+.inputBtn {
+  font-family: "TheJamsil5Bold";
+  width: 7rem;
+  height: 2rem;
+  position: relative;
+  display: inline-block;
+  font-size: 0.7rem;
+  margin: 0.7rem;
+  border-radius: 6px;
+  /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
+}
+
+.inputBtn:active {
+  top: 9px;
+}
+
+inputstyle::placeholder {
+  color: #aaaaaa;
+}
+inputstyle:focus {
+  outline: none;
+}
