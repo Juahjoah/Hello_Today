@@ -6,11 +6,10 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileMain from "../../components/Profile/ProfileMain";
 import FollowButton from "../../components/Profile/FollowButton";
 import FollowList from "../../components/Profile/FollowList";
-import MyProfileEdit from "./MyProfileEdit";
 
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import { Route, Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 //로그인
 import { useDispatch, useSelector } from "react-redux";
