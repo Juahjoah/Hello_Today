@@ -35,49 +35,55 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
 
   const location = useLocation();
   const [selectedFlags, setSelectedFlags] = useState([]);
+  console.log("memberId " + memberId);
+  console.log(Token);
 
-  console.log(location);
-  const widgetAxios = async () => {
-    axios({
-      url: `${process.env.REACT_APP_BASE_URL}/api/mypage/widget`,
-      method: "get",
-      headers: {
-        Authorization: Token,
-      },
-    }).then((res) => {
-      // console.log(res);
-      const newData = [];
-      const data = res.data;
-      newData.push("응원 메세지");
-
-      if (data.ddayFlag === 1) {
-        newData.push("D-Day");
-      }
-
-      if (data.galleryFlag === 1) {
-        newData.push("갤러리");
-      }
-      if (data.goalFlag === 1) {
-        newData.push("소중한 목표");
-      }
-      if (data.oneDiaryFlag === 1) {
-        newData.push("한 줄 일기");
-      }
-      if (data.routineHistoryFlag === 1) {
-        newData.push("나의 루틴들");
-      }
-      if (data.wishListFlag === 1) {
-        newData.push("버킷리스트");
-      }
-      newData.push("편집 모드");
-      setSelectedFlags(newData);
-    });
-    // .catch(console.log(userName));
-  };
-
+  const localMemberId = localStorage.getItem("memberId");
   useEffect(() => {
+    const widgetAxios = async () => {
+      axios({
+        url: `${process.env.REACT_APP_BASE_URL}/api/mypage/widget`,
+        method: "get",
+        headers: {
+          Authorization: Token,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          const newData = [];
+          const data = res.data;
+
+          newData.push("응원 메세지");
+
+          if (data.ddayFlag === 1) {
+            newData.push("D-Day");
+          }
+
+          if (data.galleryFlag === 1) {
+            newData.push("갤러리");
+          }
+          if (data.goalFlag === 1) {
+            newData.push("소중한 목표");
+          }
+          if (data.oneDiaryFlag === 1) {
+            newData.push("한 줄 일기");
+          }
+          if (data.routineHistoryFlag === 1) {
+            newData.push("나의 루틴들");
+          }
+          if (data.wishListFlag === 1) {
+            newData.push("버킷리스트");
+          }
+          if (memberId === localMemberId) {
+            newData.push("편집 모드");
+          }
+          console.log("newData");
+          setSelectedFlags(newData);
+        })
+        .catch(console.log("잘못"));
+    };
     widgetAxios();
-  }, []);
+  }, [memberId, Token]);
 
   const UserSelectMenu = (event) => {
     // console.log(event.target.innerText);
@@ -89,6 +95,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
     setMenu(<WidgetComments memberId={memberId} />);
   }, []);
 
+  console.log(selectedFlags);
   return (
     <div className={classes.UserProfileMenu}>
       {selectedFlags.map((flag) => (

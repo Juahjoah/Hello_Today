@@ -4,6 +4,8 @@ import com.ssafy.hellotoday.api.dto.BaseResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.request.RoomCreateRequestDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomQuestionResponseDto;
 import com.ssafy.hellotoday.common.exception.CustomException;
+import com.ssafy.hellotoday.common.exception.message.MeetingRoomErrorEnum;
+import com.ssafy.hellotoday.common.util.constant.MeetingRoomResponseEnum;
 import com.ssafy.hellotoday.db.entity.MeetingRoom;
 import com.ssafy.hellotoday.db.entity.MeetingRoomQuestion;
 import com.ssafy.hellotoday.db.entity.Member;
@@ -42,7 +44,11 @@ public class MeetingRoomService {
     @Transactional
     public BaseResponseDto getQuestion(int roomId) {
         MeetingRoom room = meetingRoomRepository.findByIdWithQuestionId(roomId)
-                .orElseThrow(() -> new IllegalArgumentException("질문 조회 실패"));
+                .orElseThrow(() -> CustomException.builder()
+                        .status(HttpStatus.BAD_REQUEST)
+                        .code(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getCode())
+                        .message(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getMessage())
+                        .build());
 
         long count = meetingRoomQuestionRepository.count();
         int questionId = room.getQuestion().getQuestionId();
@@ -50,7 +56,11 @@ public class MeetingRoomService {
         if (questionId >= count) questionId = 0;
         questionId++;
         MeetingRoomQuestion question = meetingRoomQuestionRepository.findById(questionId)
-                .orElseThrow(() -> new IllegalArgumentException("질문 조회 실패"));
+                .orElseThrow(() -> CustomException.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .code(MeetingRoomErrorEnum.FAILED_MEETINGROOM_QUESTION.getCode())
+                        .message(MeetingRoomErrorEnum.FAILED_MEETINGROOM_QUESTION.getMessage())
+                        .build());
 
         System.out.println(MeetingRoomQuestionResponseDto.builder()
                 .id(question.getQuestionId())
@@ -58,7 +68,7 @@ public class MeetingRoomService {
         room.updateQuestion(question);
         return BaseResponseDto.builder()
                 .success(true)
-                .message("질문 조회 성공")
+                .message(MeetingRoomResponseEnum.SUCCESS_MEETINGROOM_QUESTION.getName())
                 .data(MeetingRoomQuestionResponseDto.builder()
                         .id(question.getQuestionId())
                         .content(question.getContent())
@@ -69,8 +79,8 @@ public class MeetingRoomService {
     private void checkQuestion(Optional<MeetingRoomQuestion> question) {
         if (question.isEmpty()) throw CustomException.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .code(8000)
-                .message("미팅룸 질문 조회 실패")
+                .code(MeetingRoomErrorEnum.FAILED_MEETINGROOM_QUESTION.getCode())
+                .message(MeetingRoomErrorEnum.FAILED_MEETINGROOM_QUESTION.getMessage())
                 .build();
     }
 }
