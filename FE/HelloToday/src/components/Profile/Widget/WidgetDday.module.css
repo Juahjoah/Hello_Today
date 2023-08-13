@@ -72,13 +72,15 @@
   margin-right: 10px;
 }
 .WidgetDday_input_btn button {
-  font-weight: bold;
+  font-family: The Jamsil OTF !important;
+  font-weight: bold !important;
   background-color: white; /* 파란색 */
-  color: black;
+  color: #a581cf;
   border: #a581cf solid;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
 }
 .WidgetDday_input_btn button:hover {
   background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
