@@ -1,16 +1,19 @@
+import Nav from "../../components/common/Nav";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import classes from "./ProfileCalenderDetail.module.css";
 // import { SET_CALENDAR_DATA } from "../../store/calendarDetailSlice";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "react-bootstrap/Button";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import Button from "react-bootstrap/Button";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProfileCalenderDetail() {
   const navigate = useNavigate();
   const memberId = useParams().memberId;
   const checkDate = useParams().checkDate;
 
+  const AccsesToken = useSelector((state) => state.authToken.accessToken);
   //데이터 불러오기
   //d-day도 달력에 들어가면 기존 불러오는 데이터에 push해서 변화하면 데이터 변경하게 해야함
 
@@ -40,11 +43,15 @@ function ProfileCalenderDetail() {
   //     content: "껄껄껄껄",
   //   },
   // ];
+  const dispatch = useDispatch();
   const [calDetails, setCalDetail] = useState([]);
   useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}/${checkDate}`
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}/${checkDate}`,
+        {
+          headers: { Authorization: AccsesToken },
+        }
       )
       .then((res) => {
         const formattedData = res.data.map((item) => {
@@ -68,54 +75,60 @@ function ProfileCalenderDetail() {
       });
   }, []);
   return (
-    <div className={classes.calDetailContain}>
-      <div className={classes.calDetailContent}>
-        <p>{calDetails.length > 0 ? calDetails[0].writeDate : ""}</p>
-        <hr />
-        <div>
-          {calDetails.map((item, index) => {
-            return (
-              <div className={classes.routinediary} key={index}>
-                <p className={classes.routineContent}>{item.routineContent}</p>
-                <div className={classes.img_txt}>
-                  <div className={classes.img_box}>
-                    {!item.imgPath ||
-                    item.imgPath === "" ||
-                    item.imgPath === undefined ? (
-                      <img
-                        className={classes.img}
-                        src="/images/logo.png"
-                        alt="Default"
-                      />
-                    ) : (
-                      <img
-                        className={classes.img}
-                        src={item.imgPath}
-                        alt="img"
-                      />
-                    )}
-                  </div>
-                  <div className={classes.v_line}></div>
-                  <div className={classes.content}>
-                    <p>{item.content}</p>
+    <div>
+      <Nav />
+      <div className={classes.calDetailContain}>
+        <div className={classes.calDetailContent}>
+          <p className={classes.calDetailDay}>{checkDate}</p>
+          <hr />
+          <p>{calDetails.length > 0 ? "" : "기록을 남겨주세요"}</p>
+          <div>
+            {calDetails.map((item, index) => {
+              return (
+                <div className={classes.routinediary} key={index}>
+                  <p className={classes.routineContent}>
+                    {item.routineContent}
+                  </p>
+                  <div className={classes.img_txt}>
+                    <div className={classes.img_box}>
+                      {!item.imgPath ||
+                      item.imgPath === "" ||
+                      item.imgPath === undefined ? (
+                        <img
+                          className={classes.img}
+                          src="/images/logo.png"
+                          alt="Default"
+                        />
+                      ) : (
+                        <img
+                          className={classes.img}
+                          src={item.imgPath}
+                          alt="img"
+                        />
+                      )}
+                    </div>
+                    <div className={classes.v_line}></div>
+                    <div className={classes.content}>
+                      <p>{item.content}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
-
-      <div>
-        <button
-          type="button"
-          className={"classes.btn-bd-primary"}
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          뒤로 가기
-        </button>
+        <hr />
+        <div>
+          <button
+            type="button"
+            className={classes.btn_back}
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            뒤로 가기
+          </button>
+        </div>
       </div>
     </div>
   );

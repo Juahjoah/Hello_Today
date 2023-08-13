@@ -9,6 +9,7 @@ import {
   ADD_DDAY_DATA,
   SET_ISREGIST,
   SET_ISEDITF,
+  SET_ISDELETE,
 } from "../../../store/ddaySlice";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetDdayEdit from "./WidgetDdayEdit";
@@ -20,28 +21,6 @@ function WidgetDday() {
   const ddaydataId = useRef(0);
   const memberId = useParams().memberId; //url에서 param가져오기
   const dispatch = useDispatch();
-
-  // 더미 데이터
-  // const dummyList = [
-  //   {
-  //     memberId: 1,
-  //     finalDate: "2023-08-06T04:05:01.540Z",
-  //     createdDate: "2023-08-06T04:05:01.540Z",
-  //     modifiedDate: "2023-08-06T04:05:01.540Z",
-  //     content: "내 생일",
-  //     calDate: 30,
-  //     ddayId: 1,
-  //   },
-  //   {
-  //     memberId: 1,
-  //     finalDate: "2023-08-07T04:05:01.540Z",
-  //     createdDate: "2023-08-07T04:05:01.540Z",
-  //     modifiedDate: "2023-08-07T04:05:01.540Z",
-  //     content: "수능",
-  //     calDate: 50,
-  //     ddayId: 2,
-  //   },
-  // ];
 
   // 배열 형태 데이터
   const ddaydata = useSelector((state) => state.dday.ddayData);
@@ -77,25 +56,13 @@ function WidgetDday() {
     dispatch(SET_DDAYID(target));
     console.log(isedit);
     console.log(target);
-
-    // const data = {
-    //   ddayId : 0,
-    //   finalDate : ddayInput.finalDate,
-    //   content : ddayInput.content
-    // }
-    // axios.put(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`,data)
-    // .then((res) => {
-    //   console.log(res)
-    // })
-    // .catch(err) => {
-    //   console.log(err)
-    // })
-    //프런트에서 수정
   };
   const handleDeleteState = (target) => {
     //삭제
     axios
-      .delete(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${target}`)
+      .delete(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${target}`, {
+        headers: { Authorization: AccsesToken },
+      })
       .then((res) => {
         console.log(res);
       })
@@ -108,6 +75,7 @@ function WidgetDday() {
     // alert("삭제하겠습니까?");
     const newDdayList = ddaydata.filter((item) => item.ddayId !== target);
     dispatch(SET_DDAY_DATA(newDdayList));
+    dispatch(SET_ISDELETE(true));
   };
 
   return (

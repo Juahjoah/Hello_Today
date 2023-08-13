@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "@fullcalendar/core";
 import axios from "axios";
 import { DateTime } from "luxon";
+import { format } from "date-fns";
 
 import FullCalendar from "@fullcalendar/react"; //풀캘린더 import
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; //필요없는 것 같기도?
+import { SET_ISDELETE } from "../../store/ddaySlice";
 
 // import { events, setEvents } from "./event-utils"; //달력에 일정 데이터 import함
 import "./ProfileCalendar.css";
 
+//tooltip
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/scale.css";
+import "tippy.js/themes/light.css";
+
 export function ProfileCalender() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // API로 데이터 가져오기
   // nav에서 memberId 고정한 것 고쳐주기
@@ -22,31 +31,61 @@ export function ProfileCalender() {
   const memberId = useParams().memberId;
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
 
+  //디데이
+  const isRegist = useSelector((state) => state.dday.isRegist);
+  const isEditF = useSelector((state) => state.dday.isEditF);
+  const isDelete = useSelector((state) => state.dday.isDelete);
+
   useEffect(() => {
     if (AccsesToken) {
       axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`,
-          {
-            headers: { Authorization: AccsesToken },
-          }
+        .all([
+          axios.get(
+            `${process.env.REACT_APP_BASE_URL}/api/mypage/calendar/${memberId}`,
+            {
+              headers: { Authorization: AccsesToken },
+            }
+          ),
+          axios.get(
+            `${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${memberId}`,
+            {
+              headers: { Authorization: AccsesToken },
+            }
+          ),
+        ])
+        .then(
+          axios.spread((res1, res2) => {
+            console.log("캘린더", res1);
+            console.log("디데이", res2);
+            const dbdata1 = res1.data.map((item) => ({
+              id: item.routineId,
+              start: format(new Date(item.startDate), "yyyy-MM-dd"),
+              end: format(new Date(item.endDate), "yyyy-MM-dd"),
+              title: "오늘의 routine",
+            }));
+            const dbdata2 = res2.data.map((item) => ({
+              calDate: item.calDate,
+              title: item.content,
+              description: `${item.content} D${item.calDate}`,
+              start: item.finalDate,
+              createDate: item.createdDate,
+              memberid: item.memberId,
+              modifedDate: item.modifedDate,
+            }));
+            const dbdata = dbdata1.concat(dbdata2);
+            setEvents(dbdata);
+            console.log("dbdata", dbdata);
+            if (isDelete) {
+              dispatch(SET_ISDELETE(false));
+            }
+          })
         )
-        .then((res) => {
-          const dbdata = res.data.map((item) => ({
-            id: item.routineId,
-            start: item.startDate,
-            end: item.endDate,
-            title: item.activeFlag,
-          }));
-          setEvents(dbdata);
-        })
-        .catch((error) => {
+        .catch((err) => {
           console.log("-------ProfileCalendar error----------");
-          console.log(error);
+          console.log(err);
         });
     }
-  }, [AccsesToken]);
-  //d-day추가하면 캘린더 데이터 수정해주기
+  }, [AccsesToken, isRegist, isEditF, isDelete]);
 
   return (
     <div>
@@ -72,7 +111,11 @@ export function ProfileCalender() {
           if (events.length > 0) {
             const selectedDate = new Date(date);
             selectedDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
-            const clickedDate = selectedDate.toISOString().split("T")[0];
+            const clickedDate = new Date(date);
+            const year = clickedDate.getFullYear();
+            const month = String(clickedDate.getMonth() + 1).padStart(2, "0");
+            const day = String(clickedDate.getDate()).padStart(2, "0");
+            const formattedDate = `${year}-${month}-${day}`;
 
             const isClickable = events.some((event) => {
               const eventStartDate = new Date(event.start);
@@ -85,7 +128,7 @@ export function ProfileCalender() {
             });
 
             if (isClickable) {
-              navigate(`/MyProfile/${memberId}/calen/${clickedDate}`);
+              navigate(`/MyProfile/${memberId}/calen/${formattedDate}`);
             }
           }
         }}
@@ -93,6 +136,7 @@ export function ProfileCalender() {
         dateClick={(info) => {
           if (events.length > 0) {
             const clickedDate = info.dateStr;
+
             const selectedDate = new Date(clickedDate);
             selectedDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
 
@@ -113,6 +157,23 @@ export function ProfileCalender() {
         }}
         events={events} //달력에 표시할 값
         locale="ko" // 한국어 설정
+        //tooltip
+        eventDidMount={(info) => {
+          if (info.event.extendedProps.description) {
+            // description이 있는 경우에만 툴팁 생성
+            const tooltip = new tippy(info.el, {
+              content: info.event.extendedProps.description,
+              placement: "top",
+              animation: "scale",
+              theme: "light",
+              hideOnClick: false,
+            });
+
+            return () => {
+              tooltip.destroy();
+            };
+          }
+        }}
       />
     </div>
   );

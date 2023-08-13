@@ -53,4 +53,9 @@ public class MeetingRoom extends BaseEntity {
     public void updateQuestion(MeetingRoomQuestion question) {
         this.question = question;
     }
+
+    public void updateActiveFlag(boolean activeFlag) {
+        if (activeFlag) this.activeFlag = (byte) 1;
+        else this.activeFlag = (byte) 0;
+    }
 }

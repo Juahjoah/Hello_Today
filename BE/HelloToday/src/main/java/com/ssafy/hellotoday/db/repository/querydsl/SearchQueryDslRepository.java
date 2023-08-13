@@ -6,6 +6,9 @@ import com.ssafy.hellotoday.api.dto.follow.response.SearchTagResponseDto;
 import com.ssafy.hellotoday.api.dto.search.response.SearchResponseDto;
 import com.ssafy.hellotoday.db.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,19 +26,40 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineTag.routineTag;
 public class SearchQueryDslRepository {
     private final JPAQueryFactory queryFactory;
 
-    public List<SearchResponseDto> findMembersWithRoutinTagByMemberIds(List<Integer> memberIds) {
-        return queryFactory.selectFrom(member)
-                .leftJoin(routine).on(member.memberId.eq(routine.member.memberId))
-                .leftJoin(routineDetailCat).on(routine.routineId.eq(routineDetailCat.routine.routineId))
-                .leftJoin(routineDetail).on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
-                .leftJoin(routineTag).on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
+    private long countMembersWithRoutineTagByMemberIds(List<Integer> memberIds) {
+        return queryFactory.selectDistinct(member.count())
+                .from(member)
                 .where(member.memberId.in(memberIds))
+                .fetchFirst();
+    }
+
+    public Page<SearchResponseDto> findMembersWithRoutineTagByMemberIds(List<Integer> memberIds, Pageable pageable) {
+        long count = countMembersWithRoutineTagByMemberIds(memberIds);
+
+        List<SearchResponseDto> results = queryFactory.selectFrom(member)
+                .leftJoin(routine)
+                .on(member.memberId.eq(routine.member.memberId))
+                .leftJoin(routineDetailCat)
+                .on(routine.routineId.eq(routineDetailCat.routine.routineId))
+                .leftJoin(routineDetail)
+                .on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                .leftJoin(routineTag)
+                .on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
+                .where(member.memberId.in(memberIds))
+                .offset(pageable.getOffset())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .transform(groupBy(member.memberId)
-                        .list(Projections.constructor(SearchResponseDto.class,
+                        .list(Projections.constructor(
+                                SearchResponseDto.class,
                                 member.memberId, member.nickname,
                                 member.profileOriginalName,
-                                list(Projections.constructor(SearchTagResponseDto.class,
-                                        routineTag.routineTagId, routineTag.content)))));
+                                list(Projections.constructor(
+                                        SearchTagResponseDto.class,
+                                        routineTag.routineTagId,
+                                        routineTag.content)))));
+
+        return new PageImpl<>(results, pageable, count);
     }
 
     public List<Member> findMembersByTag(int tagId) {

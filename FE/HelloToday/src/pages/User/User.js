@@ -59,6 +59,9 @@ const User = () => {
             />
           </div>
         </div>
+        <div className={classes.naverSection}>
+          회원가입 시 이메일 동의를 반드시 해주세요!
+        </div>
       </div>
       <div className={classes.none}></div>
       <div className={classes.rightContent}></div>

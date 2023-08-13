@@ -1,6 +1,7 @@
 import classes from "./GroupRoom.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
 
 function GroupRoom({
   createdDate,
@@ -14,7 +15,6 @@ function GroupRoom({
   accessToken,
   memberId,
 }) {
-
   const navigate = useNavigate();
 
   const enterRoom = (sessionId, Token, roomId) => {
@@ -40,11 +40,17 @@ function GroupRoom({
       headers: {
         Authorization: accessToken,
       },
-    }).then((res) => {
-      const Token = res.data.data.token;
-      const roomId = res.data.data.roomId;
-      enterRoom(sessionId, Token, roomId);
-    });
+    })
+      .then((res) => {
+        const Token = res.data.data.token;
+        const roomId = res.data.data.roomId;
+        enterRoom(sessionId, Token, roomId);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          alert("제한 인원이 초과되었습니다!");
+        }
+      });
   };
 
   function formatElapsedTime(dateTime) {
@@ -65,9 +71,24 @@ function GroupRoom({
     }
   }
 
+  const limitRoomStyle = classNames({
+    [classes.groupRoom]: memberLimit > joinCnt,
+    [classes.limitGroupRoom]: memberLimit === joinCnt,
+  });
+
+  const limitRoomLeftStyle = classNames({
+    [classes.groupRoomLeft]: memberLimit > joinCnt,
+    [classes.limitGroupRoomLeft]: memberLimit === joinCnt,
+  });
+
+  const limitRoomCountStyle = classNames({
+    [classes.groupRoomLeftCount]: memberLimit > joinCnt,
+    [classes.limitgroupRoomLeftCount]: memberLimit === joinCnt,
+  });
+
   return (
-    <div className={classes.groupRoom} onClick={join}>
-      <div className={classes.groupRoomLeft}>
+    <div className={limitRoomStyle} onClick={join}>
+      <div className={limitRoomLeftStyle}>
         <div className={classes.groupRoomLeftTime}>
           ⏱{" "}
           <span style={{ color: "rgba(0, 0, 0, 0.5)" }}>
@@ -76,7 +97,7 @@ function GroupRoom({
         </div>
         <div className={classes.groupRoomLeftTitle}>{title}</div>
         <div className={classes.groupRoomLeftDesc}>{description}</div>
-        <div className={classes.groupRoomLeftCount}>
+        <div className={limitRoomCountStyle}>
           🙎‍♂️ {joinCnt}/{memberLimit}
         </div>
       </div>

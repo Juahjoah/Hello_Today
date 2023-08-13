@@ -1,0 +1,286 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@keyframes YAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px); /* 이미지가 위로 20px 이동 */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes XAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-2px); /* 이미지가 위로 20px 이동 */
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.MyProfile {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  width: 95%;
+  height: 108vh;
+  margin: 70px auto 20px auto;
+  display: flex;
+  /* justify-content: center; */
+  justify-items: center;
+  align-items: center;
+}
+
+.UserProfile {
+  font-family: "TheJamsil5Bold";
+  /* width: 40%; */
+
+  width: 40vh;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  height: 88vh;
+  /* margin-top: 170px; */
+}
+
+.UserInfo {
+  background: linear-gradient(rgba(165, 129, 207, 0.5), white);
+  border-radius: 1rem;
+}
+
+.ProfileImg {
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.ProfilenNickName {
+  font-family: "TheJamsil5Bold";
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.ProfileMsg {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.UserFollow {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  margin: 1rem;
+  height: 100%;
+  /* text-align: center; */
+}
+
+.Profilecontent {
+  font-family: "TheJamsil5Bold";
+  width: 70%;
+  margin: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.editbtn {
+  position: relative;
+  left: 200px;
+  bottom: 50px;
+  border: none;
+  background: white;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.editForm {
+  width: 67%;
+  height: 85vh;
+  border-radius: 15px;
+  background: rgb(255, 255, 255);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-left: 5vh;
+  font-family: "TheJamsil5Bold";
+}
+.editFormHeader {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* justify-content: center; */
+  align-items: start;
+  margin-top: 1vh;
+  margin-left: 10vh;
+}
+.editFormTitle {
+  font-size: 3vh;
+}
+.widgetBody {
+  display: flex;
+  flex-direction: row;
+}
+.widgetLeft {
+  display: flex;
+  flex: 4.5;
+  margin-left: 10vh;
+  margin-top: 4vh;
+  flex-direction: column;
+}
+
+.widgetLeftTitle {
+  font-size: 2vh;
+}
+.widgetRightTitle {
+  font-size: 2vh;
+}
+.widgetLeftTitleItem {
+}
+
+.widgetLeftForm {
+  border-radius: 15px;
+  height: 45vh;
+  border: 1px solid rgba(200, 200, 200, 5);
+  margin-top: 1vh;
+  padding: 4vh;
+}
+.widgetMid {
+  display: flex;
+  flex: 1;
+  margin-top: 28vh;
+  margin-left: 4vh;
+}
+
+.widgetMidButton {
+}
+.widgetMidButtonForm {
+  width: 8vh;
+  height: 5vh;
+  border: 3px #a581cf solid;
+  border-radius: 8px;
+  color: #a581cf;
+  background: rgb(255, 255, 255);
+  font-family: "TheJamsil5Bold";
+}
+
+.widgetMidButtonForm:hover {
+  color: white;
+  background: #a581cf;
+}
+.widgetRight {
+  display: flex;
+  flex: 4.5;
+  /* margin-left: 10vh; */
+  margin-top: 4vh;
+  flex-direction: column;
+}
+.widgetRightTopForm {
+  border-bottom: 1px solid rgba(200, 200, 200, 5);
+  margin-right: 6vh;
+
+  /* opacity: 0.5; */
+}
+.widgetRightTop {
+  margin-top: 8vh;
+
+  margin-left: 4vh;
+
+  margin-bottom: 4vh;
+
+  font-size: 15px;
+}
+.widgetRightBody {
+  font-size: 18px;
+  margin-top: 2vh;
+  margin-left: 1vh;
+}
+.widgetRightContent {
+  font-size: 15px;
+  margin-left: 4vh;
+}
+.widgetRightItem {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 3vh;
+  margin-top: 2px;
+  text-align: center;
+}
+
+.widgetRightItemFlag {
+  /* animation */
+  animation: XAnimation 0.15s infinite;
+}
+
+.widgetRightButoon {
+  width: auto;
+  /* height: 27px; */
+  border: 3px #a581cf solid;
+  border-radius: 8px;
+  color: #a581cf;
+  background: rgb(255, 255, 255);
+}
+.widgetRightButoon:hover {
+  color: white;
+  background: red;
+  border: 3px white solid;
+}
+
+.widgetLeftFormItem {
+  font-size: 2vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.widgetLeftFormButton {
+  text-align: start;
+  border: none;
+  background: none;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+  background-color: transparent;
+  font-family: "TheJamsil5Bold" !important;
+  padding: 8px 12px;
+  /* color: white; */
+}
+.selectedButton {
+  /* Styling for selected buttons */
+  background-color: #a581cf;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.widgetFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2vh;
+  margin-right: 15vh;
+}
+.widgetFooterButton {
+  width: 11vh;
+  height: 5vh;
+  margin-left: 1vh;
+  border: 3px #a581cf solid;
+  border-radius: 8px;
+  color: #a581cf;
+  background: rgb(255, 255, 255);
+  font-family: "TheJamsil5Bold";
+}
+
+.widgetFooterButton:hover {
+  color: white;
+  background: #a581cf;
+}

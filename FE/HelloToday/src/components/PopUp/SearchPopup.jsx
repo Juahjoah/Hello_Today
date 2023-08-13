@@ -26,6 +26,10 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
   // const [hashList, setHashList] = useState([]);
   const [randomHashList, setRandomHashList] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
+
+  // API연동
+
+  //
   useEffect(() => {
     tagAxios();
   }, []);
@@ -53,6 +57,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
       params: {
         key: "닉네임",
         word: userName,
+        page: 1,
       },
       headers: {
         Authorization: AccsesToken,
@@ -60,13 +65,13 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
     })
       .then((res) => {
         // console.log(res);
-        const userListFromAPI = res.data; // API로부터 받아온 사용자 정보 리스트
+        const userListFromAPI = res.data.members; // API로부터 받아온 사용자 정보 리스트
         setUserList(userListFromAPI);
       })
       .catch(console.log(userName));
   };
 
-  const tagAxios = async() => {
+  const tagAxios = async () => {
     await axios({
       url: `${process.env.REACT_APP_BASE_URL}/api/routine/tag`,
       method: "get",
@@ -154,6 +159,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
           </div>
         </div>
         <div className={classes.searchPopupForm}>
+          {/* TODO: SearchPopupPage 들어갈 곳 */}
           {userList.map((user, index) => (
             <SearchContent
               key={index}

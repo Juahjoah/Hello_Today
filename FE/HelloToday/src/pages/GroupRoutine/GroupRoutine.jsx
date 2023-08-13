@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import classNames from "classnames";
+import GroupRoomPage from "../../components/common/groupRoomPagination/GroupRoomPage";
 
 //로그인
 import React, { useEffect } from "react";
@@ -16,12 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 import allAuth from "../../components/User/allAuth";
 
 function GroupRoutine() {
-  // TODO: DB에서 생성된 방들 데이터 받아와서 컴포넌트로 뿌려줄 것
-  // useEffect(() => {...},[])
-
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [memberCount, setMemberCount] = useState(2);
+  const [memberCount, setMemberCount] = useState(1);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
   // user Info
@@ -36,7 +35,7 @@ function GroupRoutine() {
   const videoEnabled = false;
   const audioEnabled = false;
 
-  const [groupRoomList, setGroupRoomList] = useState([]);
+  // const [groupRoomList, setGroupRoomList] = useState([]);
 
   const groupRoutineBannerImg = "main_banner_groupRoutine1";
   const groupRoutineBannerMents = [
@@ -45,24 +44,29 @@ function GroupRoutine() {
     "다른 오늘러들과 얘기나누며 다시 시작해봐요.",
   ];
 
-  useEffect(() => {
-    async function axiosGroupRoomList() {
-      try {
-        const groupRoomResponse = await axios({
-          url: `${process.env.REACT_APP_BASE_URL}/api/rooms/list`,
-          method: "get",
-          headers: {
-            Authorization: accessToken,
-          },
-        });
+  const makeRoomBtn = classNames({
+    [classes.cantMake]: !roomName || !roomDesc,
+    [classes.canMake]: roomName && roomDesc,
+  });
 
-        setGroupRoomList(groupRoomResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    axiosGroupRoomList();
-  }, []);
+  // useEffect(() => {
+  //   async function axiosGroupRoomList() {
+  //     try {
+  //       const groupRoomResponse = await axios({
+  //         url: `${process.env.REACT_APP_BASE_URL}/api/rooms/list`,
+  //         method: "get",
+  //         headers: {
+  //           Authorization: accessToken,
+  //         },
+  //       });
+
+  //       setGroupRoomList(groupRoomResponse.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   }
+  //   axiosGroupRoomList();
+  // }, []);
 
   // function
 
@@ -182,31 +186,18 @@ function GroupRoutine() {
   return (
     <div>
       <Nav />
-
       <MainBanner
         bannerImg={groupRoutineBannerImg}
         bannerMent={groupRoutineBannerMents}
       />
       {/* 그룹 채팅방 섹션 */}
       <div className={classes.GroupRoomSection}>
-        {groupRoomList.map((room) => {
-          console.log(room);
-          return (
-            <GroupRoom
-              key={room.roomId}
-              createdDate={room.createdDate}
-              title={room.name}
-              description={room.description}
-              roomId={room.roomId}
-              sessionId={room.sessionId}
-              memberLimit={room.memberLimit}
-              joinCnt={room.joinCnt}
-              myUserName={myUserName}
-              accessToken={accessToken}
-              memberId={memberId}
-            />
-          );
-        })}
+        <GroupRoomPage
+          // groupRoomList={groupRoomList}
+          myUserName={myUserName}
+          accessToken={accessToken}
+          memberId={memberId}
+        />
       </div>
       <hr className={classes.divideLine} />
       {/* 하단 방만들기 배너 */}
@@ -299,7 +290,7 @@ function GroupRoutine() {
                   type="number"
                   required
                   value={memberCount}
-                  min={2}
+                  min={1}
                   max={6}
                   className={classes.makeRoomModalMainRoomCountInput}
                 />
@@ -314,12 +305,16 @@ function GroupRoutine() {
               <div className={classes.makeRoomModalMainRoomCountNone}></div>
             </div>
           </div>
-          <button
-            onClick={handleMakeRoomInfo}
-            className={classes.makeRoomModalBtn}
-          >
-            방 생성하기
-          </button>
+
+          {roomName && roomDesc ? (
+            <button onClick={handleMakeRoomInfo} className={makeRoomBtn}>
+              방 생성하기
+            </button>
+          ) : (
+            <button disabled className={makeRoomBtn}>
+              방 생성하기
+            </button>
+          )}
         </div>
       </Modal>
     </div>

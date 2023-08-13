@@ -34,3 +34,14 @@
   cursor: pointer;
   color: black;
 }
+
+.dateSeqItem {
+  font-size: 13px;
+  color: gray;
+}
+
+.checkDateSeqItem {
+  font-size: 13px;
+  color: rgba(10, 10, 20, 10);
+  text-shadow: 1px 1px 1px rgb(222, 213, 213);
+}

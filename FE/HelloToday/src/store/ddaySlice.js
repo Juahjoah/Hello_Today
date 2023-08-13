@@ -6,6 +6,7 @@ const DdaySlice = createSlice({
     isEdit: false,
     isEditF: false,
     isRegist: false,
+    isDelete: false,
     ddayData: [],
     ddayID: "",
   },
@@ -14,7 +15,12 @@ const DdaySlice = createSlice({
       state.isEdit = action.payload;
     },
     SET_ISEDITF(state, action) {
+      //디데이 수정 제출했는지 확인 여부
       state.isEditF = action.payload;
+    },
+    SET_ISDELETE(state, action) {
+      //디데이 삭제되었는지 확인 여부
+      state.isDelete = action.payload;
     },
     SET_DDAYID(state, action) {
       state.ddayID = action.payload;
@@ -39,5 +45,6 @@ export const {
   SET_DDAYID,
   SET_ISREGIST,
   SET_ISEDITF,
+  SET_ISDELETE,
 } = DdaySlice.actions;
 export default DdaySlice.reducer;

@@ -1,15 +1,22 @@
 /*일요일 날짜 빨간색*/
 .fc-day-sun a {
-  color: #ff6767 !important;
+  color: #ff6767;
 }
 /* 토요일 날짜 파란색 */
 .fc-day-sat a {
-  color: #568ddf !important;
+  color: #568ddf;
+}
+/*디데이*/
+.fc-event {
+  color: #c792ea !important;
+}
+.fc-daygrid-event-dot {
+  border: calc(var(--fc-daygrid-event-dot-width) / 2) solid #c792ea !important;
 }
 
 .fc-button-primary {
-  background-color: #ccbbff !important;
-  border: #ccbbff !important;
+  background-color: #c792ea !important;
+  border: #c792ea !important;
 }
 /* .scrollbar {
   width: 250px;
@@ -17,7 +24,7 @@
   overflow-y: scroll;
 } */
 .fc-today-button {
-  background-color: #ffd24c !important;
+  background-color: #ffcb6b !important;
 }
 .fc-h-event {
   background-color: #f9dd7c !important;
@@ -25,8 +32,8 @@
 }
 .fc-toolbar-title {
   /*제목*/
-  background-color: #ccbbff !important;
-  border: #ccbbff !important;
+  background-color: #c792ea !important;
+  border: #c792ea !important;
   padding: 5px 20px 5px 20px;
   border-radius: 15px;
 }
@@ -43,4 +50,8 @@
   background-color: #bcadcd;
   border-radius: 10px;
   border: 3px solid #ffffff;
+}
+.tippy-box {
+  background-color: #c792ea !important;
+  color: white !important;
 }

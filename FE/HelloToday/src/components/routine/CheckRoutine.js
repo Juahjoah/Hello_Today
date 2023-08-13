@@ -1,3 +1,4 @@
+import { color } from "framer-motion";
 import classes from "./CheckRoutine.module.css";
 
 function CheckRoutine({routineCheckDtoList, routineDetailDto, handleAuthButtonClick}) {
@@ -5,8 +6,8 @@ function CheckRoutine({routineCheckDtoList, routineDetailDto, handleAuthButtonCl
         <>
             <div className={classes.routuneAuthMid}>
                 <div className={classes.routineAuthMidDes}>
-                    "<span style={{ color: "#a581cf" }}>{routineDetailDto.content}</span>
-                    "루틴을 완료하셨나요?
+                    "<span style={{ color: "#a581cf"}}>{routineDetailDto.content}</span>
+                    " 루틴을 완료하셨나요?
                 </div>
 
                 {/* 일차별로 보이기 */}
@@ -17,7 +18,7 @@ function CheckRoutine({routineCheckDtoList, routineDetailDto, handleAuthButtonCl
                                 {checkDto.checkDate ? <img className={classes.imgStyle} src="/images/Routine/routineCheck.png" /> : <img className={classes.imgStyle} src="/images/Routine/routineUnCheck.png" />}
                             </div>
                             <div>
-                                <span style={{ fontSize: '13px' }}>{` ${index + 1}일차`}</span>
+                                {checkDto.checkDate ? <span className = {classes.checkDateSeqItem}>{` ${index + 1} 일차`}</span> : <span className = {classes.dateSeqItem}>{` ${index + 1} 일차`}</span>}
                             </div>
                         </div>
                     </div>
@@ -26,8 +27,7 @@ function CheckRoutine({routineCheckDtoList, routineDetailDto, handleAuthButtonCl
 
             <div className={classes.routineAuthRight}>
                 <button className={classes.goToAuth} onClick={handleAuthButtonClick}>
-                {/* <button className={classes.goToAuth} > */}
-                    인증하러 가기
+                    추가 인증하러 가기
                 </button>
             </div>
         </>
