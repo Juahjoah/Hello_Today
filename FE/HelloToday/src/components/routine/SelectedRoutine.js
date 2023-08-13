@@ -138,8 +138,12 @@ function SelectedRoutine({ routinePrivate }) {
         console.log("루틴 인증 성공");
         navigate('/');
       })
-      .then(setModalIsOpen(false))
-
+      .then(() => {
+        setModalIsOpen(false);
+        setRoutineAuthText("");
+        setSelectedFile(null);
+        setFileName("");
+      })
       .catch((error) => console.log(error));
   };
 
