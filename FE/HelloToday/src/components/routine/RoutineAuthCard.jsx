@@ -15,11 +15,10 @@ function RoutineAuthCard({
     handleModalOpen(true);
   };
 
-  console.log("루틴 정보");
-  console.log(routineDetailDto);
-  console.log("루틴 체크");
-  console.log(routineCheckDtoList);
-  console.log(new Date().toLocaleString().substring(0, 10));
+  // console.log("루틴 정보");
+  // console.log(routineDetailDto);
+  // console.log("루틴 체크");
+  // console.log(routineCheckDtoList);
 
   const calCheckSeq = Math.ceil((Math.abs(new Date().getTime() - new Date(routineStartDate).getTime())) / (1000 * 60 * 60 * 24));
 
