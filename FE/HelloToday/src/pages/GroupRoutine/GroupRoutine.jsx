@@ -213,7 +213,7 @@ function GroupRoutine() {
             직접 방을 개설해 보시는건 어떠세요?
           </div>
 
-          <button onClick={openModal} className={classes.makeRoomLeftBtn}>
+          <button onClick={openModal} className={classes.makeRoomLeftBtn} style={{marginTop: "15px"}}>
             방 생성하기
           </button>
         </div>

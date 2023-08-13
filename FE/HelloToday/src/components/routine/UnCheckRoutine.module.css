@@ -34,3 +34,9 @@
   cursor: pointer;
   color: black;
 }
+
+.routineDetailDes {
+    font-family: 'TheJamsil4Bold';
+    font-size: 20px;
+    color: #707070;
+}
