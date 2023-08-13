@@ -145,7 +145,7 @@ public class FollowService {
         memberValidator.checkDifferentMembers(followerId, followeeId);
 
         Member followee = getMember(followeeId);
-        Optional<Follow> follow = followRepository.findByFollowing_MemberId(followee.getMemberId());
+        Optional<Follow> follow = followRepository.findByFollowing(followee);
 
         if (follow.isPresent()) {
             return getFollowStatusResponse(FollowResponseEnum.FOLLOW_STATUS_TRUE.getName(), true);
