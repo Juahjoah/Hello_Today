@@ -86,9 +86,9 @@ public class MypageService {
                 .build();
     }
 
-    public List<CheerMessageResponseDto> getCheerMessages(Integer memberId, PageRequest pageRequest) {
+    public List<CheerMessageResponseDto> getCheerMessages(Integer memberId) {
 
-        List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberId(memberId, pageRequest);
+        List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberId(memberId);
 
         return cheerMessageList.stream()
                 .map(CheerMessageResponseDto::new)
