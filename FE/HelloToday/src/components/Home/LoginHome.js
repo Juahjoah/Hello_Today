@@ -5,46 +5,58 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Nav from "../../components/common/Nav";
-import { useSelector } from "react-redux";
-import UnSelectedRoutine from "../../components/routine/UnSeletedRoutine";
+import UnSelectedRoutine from "../routine/UnSeletedRoutine";
 import SelectedRoutine from "../routine/SelectedRoutine";
 import Footer from "../common/Footer";
+import { useDispatch, useSelector } from "react-redux";
 
 function LoginHome() {
+  const dispatch = useDispatch();
   const [routinePrivateResponse, setRoutinePrivate] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  console.log("여기는?")
-  console.log(AccsesToken);
+  console.log("LoginHome");
+  // console.log(AccsesToken);
+  const haveActiveRoutine = useSelector((state) => state.haveActiveRoutine);
 
+  console.log("haveActiveRoutine: " + haveActiveRoutine);
+
+  useEffect(() => {
     async function axiosRoutinePrivateData() {
+      console.log("useEffect 실행");
       try {
-        const routinePrivateResponse = await 
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/routine/private`, {
+        const routinePrivateResponse = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/routine/private`,
+          {
             headers: {
               Authorization: AccsesToken,
-            }}
+            },
+          }
         );
-        
+
         setRoutinePrivate(routinePrivateResponse.data);
         console.log(routinePrivateResponse);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-    axiosRoutinePrivateData();
+
+    const delay = 200;
+    const timerId = setTimeout(axiosRoutinePrivateData, delay);
+
+    return () => clearTimeout(timerId);
+  }, [haveActiveRoutine]);
 
   return (
-
     <div>
       <Nav />
       {routinePrivateResponse.activeFlag === 1 ? (
         // 진행 중인 루틴이 있는 경우
-        <SelectedRoutine routinePrivate={routinePrivateResponse}/>
+        <SelectedRoutine routinePrivate={routinePrivateResponse} />
       ) : (
         // 진행 중인 루틴이 없는 경우
         <UnSelectedRoutine />
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 }
