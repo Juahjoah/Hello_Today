@@ -84,7 +84,7 @@ function WidgetDdayregist() {
         />
       </div>
       <div>
-        <p className={classes.WidgetDday_txt}>D-day 입력</p>
+        <p className={classes.WidgetDday_txt}>D-Day 입력</p>
         <div className={classes.WidgetDday_input_btn}>
           <div className={classes.input}>
             <input
@@ -94,7 +94,7 @@ function WidgetDdayregist() {
               name="content"
               value={newDday.content}
               onChange={handleChangeState}
-              placeholder="디데이 제목을 입력해주세요"
+              placeholder="D-Day 제목을 입력해주세요"
             ></input>
           </div>
           <div>
