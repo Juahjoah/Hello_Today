@@ -15,7 +15,11 @@
 }
 .routinehistory_day {
   margin-top: 0px;
-  font-size: 30px;
+  font-size: 2rem;
+  background-color: #a581cf;
+  padding: 3px 10px 3px 10px;
+  border-radius: 15px;
+  color: white;
 }
 /* .routinehistory {
   /*루틴 인증*/
@@ -24,6 +28,9 @@
 /* .routinehistoryContent {
   /*루틴 이름
 }*/
+.routineHisotry_tt {
+  font-size: 1.2rem;
+}
 .routinehistory_bottom {
   display: flex;
 }
@@ -39,10 +46,24 @@
   margin-right: 10px;
 }
 .routinehistory_text {
-  width: 1000px;
+  width: 100vh;
   background-color: rgba(254, 250, 237, 1);
   border-radius: 50px;
 }
 .routinehistory_text_p {
   margin: 30px;
+}
+.routinehistory_p_content {
+  /*내용 글자*/
+  font-size: 1.5rem;
+  border-bottom: #a581cf solid 3px;
+}
+.routinehistory_p_content_body {
+  /*내용 실제 글자*/
+  font-size: 1rem;
+}
+.routinehistory_nothing {
+  /*아무것도 없을 때 */
+  margin-top: 10px;
+  font-size: 1rem;
 }

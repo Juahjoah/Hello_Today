@@ -1,53 +1,59 @@
 .WidgetDday {
   /* border: 4px solid; */
-  width: 850px;
-  height: 200px;
+  width: auto;
+  height: auto;
   margin-top: 3px;
 }
 .WidgetDday_name {
   position: relative;
-  top: 10px;
-  background-color: #ccbbff;
-  color: #ffffff;
+  top: 15px;
+  /*font*/
   font-family: The Jamsil OTF;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.25rem; /* 62.5% */
-  padding: 3px 30px 3px 30px;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 1.75em;
+  /*상자*/
+  background-color: #a581cf;
+  padding: 4px 30px 4px 30px;
+  border-radius: 15px;
+}
+.WidgetDday_content {
+  /*디데이 전체 박스*/
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  display: flex;
   border-radius: 10px;
+  /* align-items: center; */
+  padding: 3vh 0vh 0vh 3vh;
+  height: 45vh;
+  /* border: 4px solid; */
+}
+.WidgetDday_text {
+  /* border: 4px solid; */
+  width: 80vh;
+}
+.WidgetDday_edit {
+  /*수정모드*/
+  /* border: 4px solid; */
+  width: 50vh;
+}
+.routineContent {
+  font-size: 1rem;
 }
 .routinediary {
+  /* border: 4px solid; */
   display: flex;
   align-items: center;
-  width: 400px;
 }
 .routineContentCenter {
   flex: 1;
   display: flex;
   margin: auto;
 }
-.routineContent {
-  margin-left: 10px;
-  margin-bottom: 0px;
-}
-.WidgetDday_content {
-  box-shadow: 0 0 5px #333;
-  display: flex;
-  border-radius: 10px;
-  align-items: center;
-  /* border: 4px solid; */
-}
-.WidgetDday_text {
-  /* border: 4px solid; */
-}
-.WidgetDday_edit {
-  /* border: 4px solid; */
-}
-.WidgetDday_txt {
-}
+
 .btn_edit_delete {
   display: flex;
+  margin-left: 20px;
 }
 .buttonstyle {
   background-color: transparent;
@@ -55,8 +61,8 @@
   border: none;
 }
 .v_line {
-  border-left: 2px solid rgba(0, 0, 0, 0.5);
-  height: 150px;
+  border-left: 2px solid rgba(131, 129, 129, 0.2);
+  height: 40vh;
   margin: 10px 10px 10px 0px;
 }
 .input_btn {
@@ -65,10 +71,33 @@
 .input {
   margin-right: 10px;
 }
+.WidgetDday_input_btn button {
+  font-family: The Jamsil OTF !important;
+  font-weight: bold !important;
+  background-color: white; /* 파란색 */
+  color: #a581cf;
+  border: #a581cf solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
+}
+.WidgetDday_input_btn button:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
+}
+
 .WidgetDday_txt {
-  margin-bottom: 0px;
+  /*수정모드 글자(날짜, 이벤트 입력)*/
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+.WidgetDday_submit_btn {
+  margin-right: 5px;
 }
 .WidgetDday_date {
+  /*등록 모드*/
+  width: auto;
   margin-bottom: 30px;
 }
 .WidgetDday_input_btn {
@@ -76,4 +105,21 @@
 }
 .WidgetDday_input {
   margin-right: 10px;
+  width: 200px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid black;
+}
+
+.WidgetDday_btn {
+  /*모든 버튼 글자 통일*/
+  font-family: The Jamsil OTF;
+  font-weight: bold;
+}
+.WidgetDday_nothing {
+  /*아무것도 없을 때 */
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 15vh;
 }
