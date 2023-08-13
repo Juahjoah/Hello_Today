@@ -38,22 +38,16 @@
   height: auto;
   margin: 70px auto 20px auto;
   display: flex;
-  /* justify-content: center; */
-  justify-items: center;
-  align-items: center;
 }
 
 .UserProfile {
   font-family: "TheJamsil5Bold";
-  /* width: 40%; */
-
   width: 40vh;
   margin: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   justify-items: center;
-  /* margin-top: 170px; */
 }
 
 .UserInfo {
