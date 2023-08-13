@@ -30,21 +30,35 @@
   width: 12rem;
   height: 14rem;
   margin: 1rem;
-  /* width: 21.29406rem;
-  height: 21.41219rem;
-  flex-shrink: 0;
-  fill: linear-gradient(
-    2deg,
-    #fff199 0%,
-    #fced8d 4%,
-    #f8e97d 12%,
-    #f7e777 18%,
-    #f6e676 58%,
-    #f5df6e 85%,
-    #f3dc75 96%,
-    #f2da79 100%
-  ); */
+
+  background-color: yellow;
+  padding: 20px;
+  position: relative;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  transform: rotate(-3deg);
 }
+
+.commentPostIt::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid yellow;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* top: 0;
+  left: 0;
+  width: 20px;
+  height: 100%;
+  background-color: #f9e56d;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px; */
+}
+
 .editButtonStyle {
   border: 0;
   background-color: transparent;
