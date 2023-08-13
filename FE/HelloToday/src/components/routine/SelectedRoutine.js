@@ -59,6 +59,9 @@ function SelectedRoutine({ routinePrivate }) {
   };
 
   const closeModal = () => {
+    setRoutineAuthText("");
+    setSelectedFile(null);
+    setFileName("");
     setModalIsOpen(false);
   };
 
