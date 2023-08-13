@@ -38,7 +38,9 @@ public class SearchQueryDslRepository {
 
         List<SearchResponseDto> results = queryFactory.selectFrom(member)
                 .leftJoin(routine)
-                .on(member.memberId.eq(routine.member.memberId))
+                .on(member.memberId
+                        .eq(routine.member.memberId)
+                        .and(routine.activeFlag.eq((byte)1)))
                 .leftJoin(routineDetailCat)
                 .on(routine.routineId.eq(routineDetailCat.routine.routineId))
                 .leftJoin(routineDetail)

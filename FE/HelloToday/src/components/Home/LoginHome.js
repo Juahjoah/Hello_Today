@@ -44,12 +44,6 @@ function LoginHome() {
     return () => clearTimeout(timerId);
   }, [haveActiveRoutine, routineCheckFlag]);
 
-  //   const delay = 200;
-  //   const timerId = setTimeout(axiosRoutinePrivateData, delay);
-
-  //   return () => clearTimeout(timerId);
-  // }, [haveActiveRoutine]);
-
   return (
     <div>
       <Nav />

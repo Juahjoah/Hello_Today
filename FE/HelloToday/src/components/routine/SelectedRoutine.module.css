@@ -232,11 +232,12 @@
   border-radius: 8px;
   outline: none;
   font-size: 15px;
+  font-family: "TheJamsil3Bold";
 }
 
 .uploadLabel {
-  display: inline-block;
-  padding: 5px 12px;
+  /* display: inline-block; */
+  padding: 7px 10px;
   color: black;
   vertical-align: middle;
   cursor: pointer;
