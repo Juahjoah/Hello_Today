@@ -15,16 +15,13 @@ function LoginHome() {
   const dispatch = useDispatch();
   const [routinePrivateResponse, setRoutinePrivate] = useState([]);
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  console.log("LoginHome")
-  // console.log(AccsesToken);
+
   const haveActiveRoutine = useSelector((state) => state.haveActiveRoutine); // 추가
   const routineCheckFlag = useSelector((state) => state.routineCheck);
   
-  console.log("haveActiveRoutine: " + haveActiveRoutine);
-  console.log("routineCheckFlag >>>>>>>>>>" + routineCheckFlag);
   useEffect(() => {
     async function axiosRoutinePrivateData() {
-      console.log("useEffect 실행")
+
       try {
         const routinePrivateResponse = await 
         axios.get(`${process.env.REACT_APP_BASE_URL}/api/routine/private`, {
@@ -34,7 +31,7 @@ function LoginHome() {
         );
         
         setRoutinePrivate(routinePrivateResponse.data);
-        console.log(routinePrivateResponse);
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }

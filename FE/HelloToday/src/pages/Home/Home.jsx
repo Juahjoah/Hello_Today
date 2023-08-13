@@ -4,15 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import NoLoginHome from "../../components/Home/NoLoginHome";
 import LoginHome from "../../components/Home/LoginHome";
 import allAuth from "../../components/User/allAuth";
-import { useLocation } from "react-router-dom";
 
 function Home() {
   // const [FirstLogin, setFirstLogin] = useState(isFirstLogin)/;
   
   const islogin = useSelector((state) => state.login.isLogin);
-  console.log("로그인 상태 >: " + islogin)
   const routineCheckFlag = useSelector((state) => state.routineCheck);
-  console.log(routineCheckFlag)
 
     //------------------------------로그인 시작
     const dispatch = useDispatch();
