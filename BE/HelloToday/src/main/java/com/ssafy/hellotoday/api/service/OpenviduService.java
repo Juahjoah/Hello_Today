@@ -8,8 +8,11 @@ import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomPageDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomOutResponse;
 import com.ssafy.hellotoday.common.exception.CustomException;
+import com.ssafy.hellotoday.common.exception.message.BaseErrorEnum;
+import com.ssafy.hellotoday.common.exception.message.MeetingRoomErrorEnum;
 import com.ssafy.hellotoday.common.exception.message.OpenviduErrorEnum;
 import com.ssafy.hellotoday.common.exception.validator.OpenviduValidator;
+import com.ssafy.hellotoday.common.util.constant.MeetingRoomResponseEnum;
 import com.ssafy.hellotoday.common.util.constant.OpenviduResponseEnum;
 import com.ssafy.hellotoday.db.entity.MeetingRoom;
 import com.ssafy.hellotoday.db.repository.MeetingRoomRepository;
@@ -73,15 +76,19 @@ public class OpenviduService {
 
     public BaseResponseDto joinRoom(int roomId) {
         MeetingRoom room = meetingRoomRepository.findById(roomId)
-                .orElseThrow(() -> new IllegalStateException("미팅룸 조회 실패"));
+                .orElseThrow(() -> CustomException.builder()
+                        .status(HttpStatus.BAD_REQUEST)
+                        .code(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getCode())
+                        .message(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getMessage())
+                        .build());
         try {
             openvidu.fetch();
             Session session = openvidu.getActiveSession(room.getSessionId());
             if (session.getActiveConnections().size() >= room.getMemberLimit()) {
                 throw CustomException.builder()
                         .status(HttpStatus.BAD_REQUEST)
-                        .code(8006)
-                        .message("방 입장 제한 수를 초과하여 입장할 수 없습니다.")
+                        .code(MeetingRoomErrorEnum.CANNOT_ENTER_OVER_MEMBER_LIMIT.getCode())
+                        .message(MeetingRoomErrorEnum.CANNOT_ENTER_OVER_MEMBER_LIMIT.getMessage())
                         .build();
             }
             openviduValidator.checkSession(session, room.getSessionId());
@@ -102,8 +109,8 @@ public class OpenviduService {
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
-                    .code(8005)
-                    .message("openvidu 미팅룸 정보 fetch 실패")
+                    .code(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getCode())
+                    .message(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getMessage())
                     .build();
         }
 
@@ -112,8 +119,8 @@ public class OpenviduService {
     public MeetingRoomPageDto roomList(int page, int size) {
         if (page < 0) throw CustomException.builder()
                 .status(HttpStatus.BAD_REQUEST)
-                .code(1003)
-                .message("페이지는 1 이상이어야 합니다.")
+                .code(BaseErrorEnum.INVALID_PAGE_NUM.getCode())
+                .message(BaseErrorEnum.INVALID_PAGE_NUM.getMessage())
                 .build();
 
         try {
@@ -152,8 +159,8 @@ public class OpenviduService {
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw CustomException.builder()
                     .status(HttpStatus.BAD_REQUEST)
-                    .code(8005)
-                    .message("방 목록 조회에 실패했습니다: openvidu fetch 실패")
+                    .code(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getCode())
+                    .message(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getMessage())
                     .build();
         }
     }
@@ -161,7 +168,11 @@ public class OpenviduService {
     @Transactional
     public BaseResponseDto deleteConnection(int roomId) {
         MeetingRoom room = meetingRoomRepository.findById(roomId)
-                .orElseThrow(() -> new IllegalArgumentException("미팅룸 정보 조회에 실패했습니다."));
+                .orElseThrow(() -> CustomException.builder()
+                        .status(HttpStatus.BAD_REQUEST)
+                        .code(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getCode())
+                        .message(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getMessage())
+                        .build());
 
         try {
             openvidu.fetch();
@@ -172,14 +183,18 @@ public class OpenviduService {
                 room.updateActiveFlag(false);
                 return BaseResponseDto.builder()
                         .success(true)
-                        .message("미팅룸이 종료되었습니다.")
-                        .data(RoomOutResponse.builder().code(100).build())
+                        .message(MeetingRoomResponseEnum.CLOSE_MEETINGROOM.getName())
+                        .data(RoomOutResponse.builder()
+                                .code(MeetingRoomResponseEnum.CLOSE_MEETINGROOM.getCode())
+                                .build())
                         .build();
             } else {
                 return BaseResponseDto.builder()
                         .success(true)
-                        .message("미팅룸을 나갔습니다.")
-                        .data(RoomOutResponse.builder().code(200).build())
+                        .message(MeetingRoomResponseEnum.EXIT_MEETINGROOM.getName())
+                        .data(RoomOutResponse.builder()
+                                .code(MeetingRoomResponseEnum.EXIT_MEETINGROOM.getCode())
+                                .build())
                         .build();
             }
 
