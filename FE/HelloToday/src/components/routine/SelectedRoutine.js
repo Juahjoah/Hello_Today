@@ -189,7 +189,7 @@ function SelectedRoutine({ routinePrivate }) {
             오늘의 루틴을 진행할 힘을 얻을 수 있을거랍니다!
           </p>
           <Link to="/GroupRoutine">
-            <button className={classes.toGroupBannerLeftBtn}>
+            <button className={classes.toGroupBannerLeftBtn} style={{marginTop: "15px"}}>
               단체루틴 바로가기
             </button>
           </Link>
