@@ -23,7 +23,6 @@
   border: 1px solid rgba(131, 129, 129, 0.2);
   display: flex;
   border-radius: 10px;
-  /* align-items: center; */
   padding: 3vh 0vh 0vh 3vh;
   height: 42vh;
   /* border: 4px solid; */
@@ -31,34 +30,28 @@
 .WidgetDday_text {
   /* border: 4px solid; */
   width: 80vh;
+  display: flex;
+  flex-wrap: wrap;
 }
 .WidgetDday_edit {
   /*수정모드*/
   /* border: 4px solid; */
   width: 50vh;
 }
-.routineContent {
-  font-size: 1rem;
-}
 .routinediary {
   /* border: 4px solid; */
   display: flex;
-  align-items: center;
-}
-.routineContentCenter {
-  flex: 1;
-  display: flex;
-  margin: auto;
 }
 
 .btn_edit_delete {
   display: flex;
-  margin-left: 20px;
+  float: right;
 }
 .buttonstyle {
   background-color: transparent;
   cursor: pointer;
   border: none;
+  padding: 0px;
 }
 .v_line {
   border-left: 2px solid rgba(131, 129, 129, 0.2);
@@ -123,4 +116,15 @@
 }
 .WidgetDday_vedit {
   display: flex;
+}
+.WidgetDday_oneitem {
+  /* border: 1px solid; */
+  padding: 1rem;
+}
+.WidgetDday_dday {
+  color: #a581cf;
+  font-size: 1.3rem;
+}
+.WidgetDday_ddaycontent {
+  font-size: 1rem;
 }
