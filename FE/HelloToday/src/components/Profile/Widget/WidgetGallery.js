@@ -46,7 +46,11 @@ function WidgetGallery() {
     <div className={classes.WidgetGallery}>
       <span className={classes.WidgetDday_name}>갤러리</span>
       <div className={classes.WidgetContent}>
-        {nowPicItem.length === 0 && <p>등록된 사진이 없습니다.</p>}
+        {nowPicItem.length === 0 && (
+          <div className={classes.WidgetContentTxt}>
+            <p>등록된 사진이 없습니다.</p>
+          </div>
+        )}
         {nowPicItem.length > 0 &&
           nowPicItem.map((galleryItem) => (
             <div className={classes.galleryIgmItem} key={galleryItem.imgPath}>
