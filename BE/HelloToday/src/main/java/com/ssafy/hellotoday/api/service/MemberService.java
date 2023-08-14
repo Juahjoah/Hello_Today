@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
 import com.ssafy.hellotoday.api.dto.member.request.ShowInfoEditRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.*;
 import com.ssafy.hellotoday.common.exception.CustomException;
+import com.ssafy.hellotoday.common.exception.validator.MemberValidator;
 import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
 import com.ssafy.hellotoday.db.entity.*;
 
@@ -46,6 +47,7 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final FileUploadUtil fileUploadUtil;
     private final RedisTemplate<String, String> redisTemplate;
+    private final MemberValidator memberValidator;
     // authorizedCode로 가입된 사용자 조회
     @Transactional
     public LoginDto findKakaoMemberByAuthorizedCode(String authorizedCode, String redirectUri) {
@@ -176,6 +178,7 @@ public class MemberService {
         TokenDto tokenDto = new TokenDto();
         tokenDto.setAccessToken(newAccessToken);
         tokenDto.setRefreshToken(newRefreshToken);
+        tokenDto.setMemberId(findMember.getMemberId());
         return tokenDto;
     }
 
@@ -336,11 +339,12 @@ public class MemberService {
     @Transactional(readOnly = true)
     public MemberInfoResponseDto getDetailMemberInfo(Integer memberId) {
 
-        Member targetMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("회원아이디 \"" + memberId + " \" 에해당하는 사용자가 존재하지 않습니다."));
+        Optional<Member> targetMember = memberRepository.findById(memberId);
+
+        memberValidator.checkMember(targetMember,memberId);
 
         return MemberInfoResponseDto.builder()
-                .member(targetMember)
+                .member(targetMember.get())
                 .build();
     }
 }
