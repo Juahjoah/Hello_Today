@@ -53,12 +53,18 @@ export function ProfileCalender() {
         ])
         .then(
           axios.spread((res1, res2) => {
-            console.log("캘린더", res1);
-            console.log("디데이", res2);
+            // console.log("캘린더", res1);
+            // console.log("디데이", res2);
+
             const dbdata1 = res1.data.map((item) => ({
               id: item.routineId,
               start: format(new Date(item.startDate), "yyyy-MM-dd"),
-              end: format(new Date(item.endDate), "yyyy-MM-dd"),
+              end: format(
+                new Date(item.endDate).setDate(
+                  new Date(item.endDate).getDate() + 1
+                ),
+                "yyyy-MM-dd"
+              ),
               title: "오늘의 routine",
               color: "#ffcb6b",
             }));
@@ -66,23 +72,24 @@ export function ProfileCalender() {
               //디데이 데이터
               calDate: item.calDate,
               title: item.content,
-              description: `${item.content} D${item.calDate}`,
+              description:
+                item.calDate < 1 ? `D ${item.calDate}` : `D + ${item.calDate}`,
               start: item.finalDate,
               createDate: item.createdDate,
               memberid: item.memberId,
               modifedDate: item.modifedDate,
             }));
             const dbdata = dbdata1.concat(dbdata2);
+
             setEvents(dbdata);
-            console.log("dbdata", dbdata);
             if (isDelete) {
               dispatch(SET_ISDELETE(false));
             }
           })
         )
         .catch((err) => {
-          console.log("-------ProfileCalendar error----------");
-          console.log(err);
+          // console.log("-------ProfileCalendar error----------");
+          // console.log(err);
         });
     }
   }, [AccsesToken, isRegist, isEditF, isDelete]);
@@ -121,6 +128,7 @@ export function ProfileCalender() {
               const eventStartDate = new Date(event.start);
               eventStartDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
               const eventEndDate = new Date(event.end);
+              eventEndDate.setDate(eventEndDate.getDate() - 1);
               eventEndDate.setHours(23, 59, 59, 999); // 시간을 23:59:59로 조정
               return (
                 eventStartDate <= selectedDate && selectedDate <= eventEndDate
@@ -144,6 +152,7 @@ export function ProfileCalender() {
               const eventStartDate = new Date(event.start);
               eventStartDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 조정
               const eventEndDate = new Date(event.end);
+              eventEndDate.setDate(eventEndDate.getDate() - 1);
               eventEndDate.setHours(23, 59, 59, 999); // 시간을 23:59:59로 조정
               return (
                 eventStartDate <= selectedDate && selectedDate <= eventEndDate

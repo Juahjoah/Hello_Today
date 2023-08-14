@@ -27,13 +27,12 @@
 }
 .commentPostIt {
   border: 1px solid #aaaaaa;
-  width: 12rem;
-  height: 14rem;
+  width: 8rem;
+  height: 8rem;
   margin: 1rem;
 
   background-color: #fff8e1;
   padding: 20px;
-  position: relative;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   transform: rotate(-3deg);

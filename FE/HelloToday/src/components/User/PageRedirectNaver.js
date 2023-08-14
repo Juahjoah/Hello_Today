@@ -25,7 +25,7 @@ function PageRedirectNaver() {
   const dispatch = useDispatch();
   useEffect(() => {
     //useEffect에 빈 배열을 전달하게 되면, 콜백함수가 mount된 시점에만 작동
-    console.log(code);
+    // console.log(code);
 
     axios({
       url: `${process.env.REACT_APP_BASE_URL}/api/members/naver/login`,
@@ -47,9 +47,9 @@ function PageRedirectNaver() {
         sessionStorage.setItem("memberId", res.data.memberId);
         localStorage.setItem("isFirstLogin", isFirstLogin);
         localStorage.setItem("memberId", memberId);
-        console.log(res.data);
-        console.log("Access Token:", accessToken);
-        console.log("Refresh Token:", refreshToken);
+        // console.log(res.data);
+        // console.log("Access Token:", accessToken);
+        // console.log("Refresh Token:", refreshToken);
         dispatch(SET_TOKEN(accessToken));
         setRefreshToken(refreshToken);
         dispatch(Loginstate());
@@ -64,8 +64,8 @@ function PageRedirectNaver() {
         });
       })
       .catch((error) => {
-        console.log(error.data);
-        console.log("ERORR입니다!!");
+        // console.log(error.data);
+        // console.log("ERORR입니다!!");
       });
   }, []);
 

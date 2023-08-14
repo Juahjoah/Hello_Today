@@ -1,11 +1,10 @@
 import classes from "./WidgetDday.module.css";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import {
   SET_ISEDIT,
   SET_DDAY_DATA,
-  ADD_DDAY_DATA,
   SET_DDAYID,
   SET_ISEDITF,
 } from "../../../store/ddaySlice";
@@ -13,14 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 function WidgetDdayEdit() {
   const ddaycontentinput = useRef();
-  const ddaydataId = useRef(0);
-  const memberId = useParams().memberId; //url에서 param가져오기
+  const ddayfinalinput = useRef();
   const dispatch = useDispatch();
-
   const ddaydata = useSelector((state) => state.dday.ddayData);
-  const ddayinput = useSelector((state) => state.dday.ddayInput);
-
-  const isedit = useSelector((state) => state.dday.isEdit);
 
   //State 상태 변경
   const ddayid = useSelector((state) => state.dday.ddayID);
@@ -33,8 +27,8 @@ function WidgetDdayEdit() {
   useEffect(() => {
     const propdata = ddaydata.find((item) => item.ddayId == ddayid);
     setNewDday({ finalDate: propdata.finalDate, content: propdata.content });
-    console.log(newDday.finalDate);
-    console.log(newDday.content);
+    // console.log(newDday.finalDate);
+    // console.log(newDday.content);
   }, []);
   const handleChangeState = (e) => {
     setNewDday({
@@ -48,25 +42,27 @@ function WidgetDdayEdit() {
   const handleSubmit = () => {
     if (newDday.content.length < 1) {
       //focus
-      console.log("한 개 이상의 글을 쓰시오");
+      // console.log("한 개 이상의 글을 쓰시오");
       ddaycontentinput.current.focus();
       return;
     }
-
+    if (newDday.finalDate.length < 1) {
+      ddayfinalinput.current.focus();
+      return;
+    }
     //백에 연락 날리기
-
     const data = {
       finalDate: new Date(newDday.finalDate).toISOString(),
       content: newDday.content,
       ddayId: ddayid,
     };
-    console.log(newDday);
+    // console.log(newDday);
     axios
       .put(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`, data, {
         headers: { Authorization: AccsesToken },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // alert("저장 성공");
         //submit한 데이터 저장하기
         const updatedDdayData = ddaydata.map((item) =>
@@ -83,7 +79,7 @@ function WidgetDdayEdit() {
         dispatch(SET_ISEDITF(true));
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
   const handleCancle = () => {
@@ -100,6 +96,7 @@ function WidgetDdayEdit() {
           name="finalDate" //이거 써야 변수와 연결
           value={newDday.finalDate}
           onChange={handleChangeState}
+          ref={ddaycontentinput}
         />
       </div>
       <div>
@@ -108,7 +105,7 @@ function WidgetDdayEdit() {
           <input
             className={classes.WidgetDday_input}
             type="text"
-            ref={ddaycontentinput}
+            ref={ddayfinalinput}
             name="content"
             value={newDday.content}
             onChange={handleChangeState}

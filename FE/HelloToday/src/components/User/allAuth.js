@@ -13,29 +13,29 @@ const allAuth = async (isAccess, dispatch) => {
   //함수 정의
   const cookies = new Cookies();
   const refreshtoken_ = cookies.get("refresh_token");
-  console.log("첫 마운트 refreshtoken = ", refreshtoken_);
+  // console.log("첫 마운트 refreshtoken = ", refreshtoken_);
 
   const fetchData = async (refreshtoken) => {
     try {
       const res = await getRefreshToken(refreshtoken); //날리기
       const newaccessToken = res.headers["authorization"];
       const newrefreshToken = res.headers["authorization-refresh"];
-      console.log("Access Token:", newaccessToken);
-      console.log("Refresh Token:", newrefreshToken);
+      // console.log("Access Token:", newaccessToken);
+      // console.log("Refresh Token:", newrefreshToken);
       dispatch(SET_TOKEN(newaccessToken));
       setRefreshToken(newrefreshToken);
       dispatch(Loginstate());
     } catch (error) {
-      console.log(error); // 에러 응답 데이터 출력
+      // console.log(error); // 에러 응답 데이터 출력
     }
   };
   const accessData = async (refreshtoken, accessToken) => {
     try {
       const res = await getAccessToken(refreshtoken, accessToken); //access 만료 유무
-      console.log("성공");
+      // console.log("성공");
     } catch (error) {
-      console.log("accessData함수 = ", error);
-      console.log("access토큰이 만료되었나? ", error.response.status === 401);
+      // console.log("accessData함수 = ", error);
+      // console.log("access토큰이 만료되었나? ", error.response.status === 401);
       if (error.response.status === 401) {
         //access 만료 error 못 잡음
         await fetchData(refreshtoken);
@@ -44,13 +44,13 @@ const allAuth = async (isAccess, dispatch) => {
   };
   //함수 실제 실행
   if (!isAccess) {
-    console.log("access토큰 없음");
+    // console.log("access토큰 없음");
 
     await fetchData(refreshtoken_);
   } else {
-    console.log("access토큰 있음");
+    // console.log("access토큰 있음");
     //토큰
-    console.log(isAccess);
+    // console.log(isAccess);
 
     await accessData(refreshtoken_, isAccess);
   }

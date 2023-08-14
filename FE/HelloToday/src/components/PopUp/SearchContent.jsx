@@ -2,7 +2,13 @@
 import classes from "./SearchPopup.module.css";
 import { Link } from "react-router-dom";
 
-const SearchContent = ({ profileImg, nickname, tagList, memberId }) => {
+const SearchContent = ({
+  profileImg,
+  nickname,
+  tagList,
+  memberId,
+  setIsPopupOpen,
+}) => {
   const linkStyle = {
     textDecoration: "none", // 밑줄 없애기
     color: "inherit", // 부모 요소의 글자색 사용
@@ -16,8 +22,12 @@ const SearchContent = ({ profileImg, nickname, tagList, memberId }) => {
 
   const tagContent = [...new Set(taglistSET)];
 
+  const onclick = () => {
+    setIsPopupOpen(false);
+  };
+
   return (
-    <Link to={`/MyProfile/${memberId}`} style={linkStyle}>
+    <Link to={`/MyProfile/${memberId}`} style={linkStyle} onClick={onclick}>
       <div className={classes.test}>
         <div className={classes.searchPopupFind}>
           <div className={classes.searchLeft}>

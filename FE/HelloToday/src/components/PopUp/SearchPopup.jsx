@@ -8,6 +8,8 @@ import SearchHashTag from "./SearchHashTag";
 import { HiSearch } from "react-icons/hi";
 import { GrFormRefresh } from "react-icons/gr";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import Swal from "sweetalert2";
 
 function getRandomIndexes(totalLength, count) {
@@ -54,8 +56,8 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
         icon: "info",
         title: "닉네임 설정",
         text: "닉네임을 설정해주세요",
-        confirmButtonText: "확인"
-      })
+        confirmButtonText: "확인",
+      });
       return;
     }
     axios({
@@ -122,6 +124,11 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
         isOpen={isOpen}
         onRequestClose={() => closePopup()}
       >
+        <FontAwesomeIcon
+          onClick={closePopup}
+          icon={faCircleXmark}
+          className={classes.modalClose}
+        />
         <div className={classes.searchPopupHeader}>
           <p className={classes.searchPopupTitle}>검색창</p>
         </div>
@@ -173,6 +180,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
                     profileImg={user.profile}
                     nickname={user.nickname}
                     tagList={user.tagList}
+                    setIsPopupOpen={setIsPopupOpen}
                   />
                 ))}
               </div>

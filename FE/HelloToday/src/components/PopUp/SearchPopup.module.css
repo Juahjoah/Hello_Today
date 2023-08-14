@@ -204,3 +204,16 @@
   align-items: center;
   padding: 20vh;
 }
+
+.modalClose {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  transition: all 250ms ease-in;
+  width: 30px;
+  height: 30px;
+}
+.modalClose:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
