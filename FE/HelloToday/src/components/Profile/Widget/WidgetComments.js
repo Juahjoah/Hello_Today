@@ -35,6 +35,8 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
+  console.log(memberId);
+
   const getComments = async (memberId) => {
     await axios
       .get(
@@ -154,9 +156,8 @@ function WidgetComments() {
 
   // const nowComments =
   //   comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
-  const nowComments = comments
-    ? comments.slice(startIndex, endIndex)
-    : comments.slice(startIndex, endIndex);
+  const nowComments =
+    comments[0] === undefined ? comments.slice(startIndex, endIndex) : [];
 
   const paginate = (pageNumber) => {
     setNowPage(pageNumber);
