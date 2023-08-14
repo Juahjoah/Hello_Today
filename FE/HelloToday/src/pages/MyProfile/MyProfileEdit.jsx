@@ -38,12 +38,8 @@ function MyProfileEdit() {
       })
       .then((response) => {
         setUser(response.data);
-        // console.log("user");
-        // console.log(response.data);
       })
-      .catch((error) => {
-        // console.log(error);
-      });
+      .catch((error) => {});
   }, []);
 
   // const NowUser = sessionStorage.getItem("user");
@@ -68,7 +64,6 @@ function MyProfileEdit() {
       setSelectedButtonIndexes([...selectedButtonIndexes, index]);
       setChoicedData([...choicedData, selectedFlags[index]]);
     }
-    console.log(choicedData);
   };
   // const choicedData = [];
   const handleSelectButton = () => {
@@ -98,11 +93,9 @@ function MyProfileEdit() {
         Authorization: AccsesToken,
       },
     }).then((res) => {
-      // console.log(res);
       const choiceData = [];
       const unchoiceDate = [];
       const data = res.data;
-      // unchoiceDate.push("응원 메시지");
 
       if (data.ddayFlag === 0) {
         choiceData.push("D-Day");
@@ -138,7 +131,6 @@ function MyProfileEdit() {
       setSelectedFlags(choiceData);
       unsetSelectedFlags(unchoiceDate);
     });
-    // .catch(console.log(userName));
   };
   const editWidgetAxios = () => {
     // const flagMappings = {
@@ -175,13 +167,10 @@ function MyProfileEdit() {
         data: "갤러리",
       },
     ];
-    console.log(unselectedFlags);
 
     let additionalFlag = {};
 
     for (let i = 0; i < flagMappings.length; i++) {
-      console.log(flagMappings[i].data);
-
       if (unselectedFlags.includes(flagMappings[i].data)) {
         const test = flagMappings[i].flagName;
         additionalFlag[test] = "1";
@@ -189,7 +178,6 @@ function MyProfileEdit() {
     }
 
     const additionalFlagJSON = JSON.stringify(additionalFlag);
-    console.log(additionalFlagJSON);
 
     axios
       .put(
@@ -204,7 +192,6 @@ function MyProfileEdit() {
       )
       .then((response) => {
         // 요청 성공 시 처리
-        // console.log(response);
         navigate(`/MyProfile/${response.data.data.memberId}`);
       });
   };
@@ -234,11 +221,8 @@ function MyProfileEdit() {
         dispatch(Logoutstate());
         sessionStorage.clear();
         navigate("/");
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     } else {
-      console.log("회원탈퇴를 취소하셨습니다.");
     }
   };
   return (
