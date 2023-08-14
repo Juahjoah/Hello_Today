@@ -22,13 +22,10 @@ function WidgetDiary() {
 
   const getDiary = () => {
     axios
-      .get(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/onediary/${memberId}`,
-        {
-          params: { memberId },
-          headers: { Authorization: AccsesToken },
-        }
-      )
+      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/onediary`, {
+        params: { memberId },
+        headers: { Authorization: AccsesToken },
+      })
       .then((response) => {
         setDiary(response.data);
         // console.log(response.data);
