@@ -310,9 +310,9 @@ public class MypageService {
 
 
     @Transactional(readOnly = true)
-    public List<GoalResponseDto> getGoal(Member findMember) {
+    public List<GoalResponseDto> getGoal(Integer memberId) {
 
-        List<Goal> allByMemberId = goalRepository.findAllByMemberId(findMember.getMemberId());
+        List<Goal> allByMemberId = goalRepository.findAllByMemberId(memberId);
 
         return allByMemberId.stream()
                 .map(goal->GoalResponseDto.builder()
