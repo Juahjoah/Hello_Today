@@ -2,27 +2,21 @@
   /* border: 4px solid; */
   width: auto;
   height: auto;
-  margin-top: 3px;
 }
 .WidgetHistory_title {
-  position: relative;
-  top: 15px;
   /*font*/
-  font-family: The Jamsil OTF;
-  color: #ffffff;
-  font-size: 1.75em;
+  font-family: "The Jamsil OTF";
   font-weight: bold;
+  color: #ffffff;
+  font-size: 1.5em;
   /*상자*/
   background-color: #a581cf;
-  padding: 4px 30px 4px 30px;
-  border-radius: 15px;
+  padding: 2px 30px 2px 30px;
+  border-radius: 12px;
 }
 .WidgetHistory_body {
-  height: 45vh;
   border-radius: 12px;
   font-family: "TheJamsil5Bold";
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(131, 129, 129, 0.2);
   display: flex; /* 가운데 정렬을 위해 추가 */
   flex-direction: column;
   align-items: center; /* 세로 가운데 정렬을 위해 추가 */
@@ -32,12 +26,12 @@
   display: flex; /* 요소들을 가로로 배치 */
 }
 .WidgetHistory_img {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
 }
 .WidgetHistory_one {
   /*사진+날짜*/
-  border: 1px solid #a581cf;
+  border: 1px solid rgba(131, 129, 129, 0.2);
   margin: 0px 20px 0px 20px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -48,4 +42,7 @@
 }
 .WidgetHistory_nothing {
   font-size: 1.5rem;
+}
+.WidgetHistory_date {
+  font-size: 0.4rem;
 }

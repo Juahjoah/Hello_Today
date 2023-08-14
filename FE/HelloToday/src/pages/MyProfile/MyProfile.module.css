@@ -30,64 +30,73 @@
 }
 
 .MyProfile {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
-  width: 95%;
-  height: auto;
-  margin: 70px auto 20px auto;
   display: flex;
-  /* justify-content: center; */
-  justify-items: center;
-  /* align-items: center; */
+  height: 90vh;
+  margin-top: 70px;
 }
 
 .UserProfile {
-  font-family: "TheJamsil5Bold";
-  /* width: 40%; */
+  flex: 2.8;
+}
 
-  width: 350px;
-  margin: 2rem;
+.UserProfileSection {
+  width: 90%;
+  height: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  justify-items: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 10px;
+  border: 1px solid black;
+  border-radius: 12px;
 }
 
 .UserInfo {
-  background: linear-gradient(rgba(165, 129, 207, 0.5), white);
-  border-radius: 1rem;
+  flex: 3;
 }
 
-.ProfileImg {
-  width: 10rem;
-  height: 10rem;
+.userInfoMenu {
+  flex: 7;
+}
+
+.Profilecontent {
+  flex: 7.2;
+}
+
+/* .MyProfile {
   display: flex;
-  margin: 0 auto;
-  padding: 0.3rem;
-  border-radius: 50%;
+  height: 90vh;
+  margin-top: 70px;
 }
 
-.ProfilenNickName {
-  font-family: "TheJamsil5Bold";
-  font-size: 1.2rem;
-  text-align: center;
+.UserProfile {
+  flex: 2.8;
 }
 
-.ProfileMsg {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  text-align: center;
-  margin: 0.5rem;
+.UserProfileSection {
+  width: 90%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 10px;
+  border: 1px solid black;
+  border-radius: 12px;
 }
 
-.UserFollow {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  margin: 1rem;
-  height: 100%;
-  /* text-align: center; */
+.UserInfo {
+  flex: 3;
+}
+
+.userInfoMenu {
+  flex: 7;
+}
+
+.Profilecontent {
+  flex: 7.2;
 }
 
 .Profilecontent {
@@ -122,11 +131,11 @@
   flex-direction: column;
   width: 100%;
   /* justify-content: center; */
-  align-items: start;
-  margin-top: 10vh;
-  margin-left: 10vh;
-}
-.editFormTitle {
+/* align-items: start; */
+/* margin-top: 10vh; */
+/* margin-left: 10vh; */
+/* } */
+/* .editFormTitle {
   font-size: 25px;
 }
 .widgetBody {
@@ -143,8 +152,8 @@
 
 .widgetLeftTitle {
   font-size: 15px;
-}
-.widgetRightTitle {
+} */
+/* .widgetRightTitle {
   font-size: 15px;
 }
 .widgetLeftTitleItem {
@@ -173,9 +182,9 @@
   border-radius: 8px;
   color: #a581cf;
   background: rgb(255, 255, 255);
-}
+} */
 
-.widgetMidButtonForm:hover {
+/* .widgetMidButtonForm:hover {
   color: white;
   background: #a581cf;
 }
@@ -183,16 +192,16 @@
   display: flex;
   flex: 4.5;
   /* margin-left: 10vh; */
-  margin-top: 5vh;
-  flex-direction: column;
-}
-.widgetRightTopForm {
-  border-bottom: 1px solid;
-  margin-right: 6vh;
+/* margin-top: 5vh; */
+/* flex-direction: column; */
+/* } */
+/* .widgetRightTopForm { */
+/* border-bottom: 1px solid; */
+/* margin-right: 6vh; */
 
-  /* opacity: 0.5; */
-}
-.widgetRightTop {
+/* opacity: 0.5; */
+/* } */
+/* .widgetRightTop {
   margin-top: 11vh;
 
   margin-left: 4vh;
@@ -200,50 +209,50 @@
   margin-bottom: 2vh;
 
   font-size: 2vh;
-}
-.widgetRightBody {
+} */
+/* .widgetRightBody {
   font-size: 15px;
   margin-top: 2vh;
   margin-left: 1vh;
-}
-.widgetRightContent {
+} */
+/* .widgetRightContent {
   font-size: 2vh;
   margin-left: 4vh;
-}
-.widgetRightItem {
+} */
+/* .widgetRightItem {
   display: flex;
   justify-content: space-between;
   margin-right: 3vh;
   margin-top: 2px;
   text-align: center;
-}
+} */
 
-.widgetRightItemFlag {
-  /* animation */
-  animation: XAnimation 0.15s infinite;
-}
+/* .widgetRightItemFlag { */
+/* animation */
+/* animation: XAnimation 0.15s infinite; */
+/* } */
 
-.widgetRightButoon {
+/* .widgetRightButoon {
   width: auto;
-  /* height: 27px; */
+
   border: 3px #a581cf solid;
   border-radius: 8px;
   color: #a581cf;
   background: rgb(255, 255, 255);
-}
-.widgetRightButoon:hover {
+} */
+/* .widgetRightButoon:hover {
   color: white;
   background: red;
   border: 3px white solid;
-}
+}  */
 
-.widgetLeftFormItem {
+/* .widgetLeftFormItem {
   font-size: 2vh;
   display: flex;
   flex-direction: column;
-}
+} */
 
-.widgetLeftFormButton {
+/* .widgetLeftFormButton {
   text-align: start;
   border: none;
   background: none;
@@ -252,16 +261,15 @@
   background-color: transparent;
   font-family: "TheJamsil5Bold" !important;
   padding: 8px 12px;
-  /* color: white; */
-}
-.selectedButton {
-  /* Styling for selected buttons */
+
+} */
+/* .selectedButton {
   background-color: #a581cf;
   color: #fff;
   border-radius: 5px;
-}
+} */
 
-.widgetFooter {
+/* .widgetFooter {
   display: flex;
   justify-content: flex-end;
   margin-top: 2vh;
@@ -275,42 +283,41 @@
   border-radius: 8px;
   color: #a581cf;
   background: rgb(255, 255, 255);
-}
-
+} */
 
 /*회원 정보 수정*/
-.Profile_edit_btn {
+/* .Profile_edit_btn {
   font-family: "TheJamsil5Bold";
-  background-color: white; /* 파란색 */
+  background-color: white; 
   color: #a581cf;
   border: #a581cf solid;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding: 3px 10px 3px 10px;
-}
-.Profile_edit_btn:hover {
-  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
-  color: white;
-}
-.Profile_edit_input {
-  /*수정 input창*/
-  background-color: rgba(0, 0, 0, 0);
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 2px solid #a581cf;
-}
-.Profile_btns {
-  /*완료, 취소 버튼*/
-  margin-left: 80px;
-}
-.Profile_cancle_btn {
+} */
+/* .Profile_edit_btn:hover { */
+/* background-color: #a581cf; 마우스 호버시 조금 더 진한 파란색 */
+/* color: white; */
+/* } */
+/* .Profile_edit_input { */
+/*수정 input창*/
+/* background-color: rgba(0, 0, 0, 0); */
+/* border-top: none; */
+/* border-left: none; */
+/* border-right: none; */
+/* border-bottom: 2px solid #a581cf; */
+/* } */
+/* .Profile_btns { */
+/*완료, 취소 버튼*/
+/* margin-left: 80px; */
+/* } */
+/* .Profile_cancle_btn {
   margin-left: 10px;
-}
-.Profile_file_btn {
-  /*파일 버튼*/
-  position: relative;
-  top: -20px;
-  margin-left: 180px;
-}
+} */
+/* .Profile_file_btn { */
+/*파일 버튼*/
+/* position: relative; */
+/* top: -20px; */
+/* margin-left: 180px; */
+/* } */

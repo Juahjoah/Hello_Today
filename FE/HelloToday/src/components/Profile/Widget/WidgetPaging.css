@@ -1,7 +1,8 @@
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 ul {
@@ -11,13 +12,13 @@ ul {
 
 ul.pagination li {
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border: 1px solid #e2e2e2;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  font-size: 0.1rem;
 }
 
 ul.pagination li:first-child {
@@ -48,7 +49,7 @@ ul.pagination li a.active {
 }
 
 .page-selection {
-  width: 48px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   color: #a581cf;
 }
