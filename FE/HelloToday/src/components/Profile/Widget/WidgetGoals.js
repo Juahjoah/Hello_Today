@@ -25,6 +25,7 @@ function WidgetGoals() {
   const getGoal = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/goal`, {
+        params: { memberId },
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
