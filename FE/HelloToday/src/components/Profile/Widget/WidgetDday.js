@@ -20,6 +20,7 @@ function WidgetDday() {
   const ddaycontentinput = useRef();
   const ddaydataId = useRef(0);
   const memberId = useParams().memberId; //url에서 param가져오기
+  const smemberId = sessionStorage.getItem("memberId");
   const dispatch = useDispatch();
 
   // 배열 형태 데이터
@@ -87,7 +88,7 @@ function WidgetDday() {
           {/* dday 데이터 있으면 뿌려주고 아니면 글 써달라는 거 써놓기  */}
           {ddaydata.length === 0 ? (
             <div className={classes.WidgetDday_nothing}>
-              새로운 D-Day를 입력해주세요
+              새로운 D-Day를 입력해주세요😊
             </div>
           ) : (
             ddaydata.map((item) => {
@@ -98,36 +99,46 @@ function WidgetDday() {
                       {item.content} D{item.calDate}
                     </p>
 
-                    <div className={classes.btn_edit_delete}>
-                      {/* 콜백으로 안 하면 그냥 다 삭제함 */}
-                      <button className={classes.buttonstyle}>
-                        <img
-                          className={classes.edit}
-                          src="../../images/Widget/edit.png"
-                          alt="edit"
-                          onClick={() => handleEditState(item.ddayId)}
-                        />
-                      </button>
-                      <button className={classes.buttonstyle}>
-                        <img
-                          className={classes.clear}
-                          src="../../images/Widget/clear.png"
-                          alt="clear"
-                          onClick={() => handleDeleteState(item.ddayId)}
-                        />
-                      </button>
-                    </div>
+                    {/* 콜백으로 안 하면 그냥 다 삭제함 */}
+                    {memberId === smemberId ? (
+                      <div className={classes.btn_edit_delete}>
+                        <button className={classes.buttonstyle}>
+                          <img
+                            className={classes.edit}
+                            src="../../images/Widget/edit.png"
+                            alt="edit"
+                            onClick={() => handleEditState(item.ddayId)}
+                          />
+                        </button>
+                        <button className={classes.buttonstyle}>
+                          <img
+                            className={classes.clear}
+                            src="../../images/Widget/clear.png"
+                            alt="clear"
+                            onClick={() => handleDeleteState(item.ddayId)}
+                          />
+                        </button>{" "}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               );
             })
           )}
         </div>
-        <div className={classes.v_line}></div>
-        <div className={classes.WidgetDday_edit}>
-          {isedit ? <WidgetDdayEdit /> : <WidgetDdayregist />}
-          {/* {isedit ? <div>수정</div> : <div>등록</div>} */}
-        </div>
+        {memberId === smemberId ? (
+          <div className={classes.WidgetDday_vedit}>
+            <div className={classes.v_line}></div>
+            <div className={classes.WidgetDday_edit}>
+              {isedit ? <WidgetDdayEdit /> : <WidgetDdayregist />}
+              {/* {isedit ? <div>수정</div> : <div>등록</div>} */}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
