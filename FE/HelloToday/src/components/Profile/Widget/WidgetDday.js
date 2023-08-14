@@ -95,6 +95,9 @@ function WidgetDday() {
               return (
                 <div className={classes.routinediary} key={item.ddayId}>
                   <div className={classes.routineContentCenter}>
+                    <div>
+                      <p></p>
+                    </div>
                     <p className={classes.routineContent}>
                       {item.content} D{item.calDate}
                     </p>
@@ -117,7 +120,7 @@ function WidgetDday() {
                             alt="clear"
                             onClick={() => handleDeleteState(item.ddayId)}
                           />
-                        </button>{" "}
+                        </button>
                       </div>
                     ) : (
                       <></>
