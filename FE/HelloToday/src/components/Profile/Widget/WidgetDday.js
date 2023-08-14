@@ -96,7 +96,10 @@ function WidgetDday() {
                 <div className={classes.routinediary} key={item.ddayId}>
                   <div className={classes.WidgetDday_oneitem}>
                     <div>
-                      <p className={classes.WidgetDday_dday}>D{item.calDate}</p>
+                      <p className={classes.WidgetDday_dday}>
+                        {item.calDate < 1 ? "D" : "D +"}
+                        {item.calDate}
+                      </p>
                     </div>
                     <div>
                       <p className={classes.WidgetDday_ddaycontent}>
