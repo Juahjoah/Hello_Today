@@ -40,7 +40,7 @@ function GroupRoomPage({ myUserName, accessToken, memberId }) {
       setTotalRoomCount(groupRoomResponse.data.totalRooms);
     }
     axiosGroupRoomList();
-  }, [page]);
+  }, [page, accessToken]);
 
   return (
     <>
