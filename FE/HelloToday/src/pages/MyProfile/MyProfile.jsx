@@ -11,6 +11,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
+
 //로그인
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
@@ -67,7 +68,7 @@ function MyProfile() {
       .catch((error) => {
         console.log(error);
       });
-  }, [AccsesToken, isUserEdit]);
+  }, [AccsesToken, isUserEdit, memberId]);
 
   const [Menu, setMenu] = useState(0);
 
@@ -75,34 +76,7 @@ function MyProfile() {
 
   const navigate = useNavigate();
 
-  //회원 탈퇴하기
-  const handleunregister = async () => {
-    //백에 요청 날리고
-    const data = {
-      headers: {
-        Authorization: AccsesToken,
-      },
-    };
-    if (window.confirm("정말로 탈퇴하시겠습니까?")) {
-      try {
-        const res = await axios.delete(
-          `${process.env.REACT_APP_BASE_URL}/api/members/withdrawal`,
-          data
-        );
-        console.log("탈퇴 결과", res);
-        dispatch(DELETE_TOKEN()); // store에 저장된 Access Token 정보를 삭제
-        removeCookieToken(); // Cookie에 저장된 Refresh Token 정보를 삭제
-        dispatch(Logoutstate());
-        sessionStorage.clear();
-        localStorage.clear();
-        navigate("/");
-      } catch (error) {
-        console.log("회원탈퇴 에러", error);
-      }
-    } else {
-      console.log("회원탈퇴를 취소하셨습니다.");
-    }
-  };
+ 
   //회원정보 수정
   const nicknameinput = useRef();
   const stMsginput = useRef();
@@ -199,6 +173,7 @@ function MyProfile() {
         console.log("제출결과 : ", res);
         //edit모드 false로 바꾸기
         setIsUserEdit(false);
+        localStorage.setItem("nickName", user.nickname);
       })
       .catch((err) => {
         console.log(err);
@@ -275,7 +250,7 @@ function MyProfile() {
                 </form>
               </div>
             ) : (
-              <div>
+              <div className={classes.UserInfoList}>
                 <img
                   className={classes.ProfileImg}
                   src={user.profilePath}
@@ -311,14 +286,15 @@ function MyProfile() {
               />
             </div>
           </div>
-          <hr />
 
-          <ProfileMenu
-            setMenu={setMenu}
-            setFollowButtonClick={setFollowButtonClick}
-            memberId={params.memberId}
-            Token={AccsesToken}
-          />
+          <div className={classes.userInfoMenu}>
+            <ProfileMenu
+              setMenu={setMenu}
+              setFollowButtonClick={setFollowButtonClick}
+              memberId={params.memberId}
+              Token={AccsesToken}
+            />
+          </div>
         </div>
 
         {/* 화면 오른쪽 화면 출력 창 */}
@@ -332,18 +308,6 @@ function MyProfile() {
           {/* <ProfileMain Menu={Menu} /> */}
         </div>
       </div>
-      {memberId === smemberId ? (
-        <div className={classes.profile_unregist}>
-          <button
-            className={classes.profile_unregist_btn}
-            onClick={() => handleunregister()}
-          >
-            회원 탈퇴
-          </button>
-        </div>
-      ) : (
-        <></>
-      )}
     </div>
   );
 }
