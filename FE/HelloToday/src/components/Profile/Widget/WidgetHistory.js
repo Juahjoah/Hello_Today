@@ -99,7 +99,7 @@ function WidgetHistory() {
               ))
             ) : (
               <p className={classes.WidgetHistory_nothing}>
-                게시물이 없습니다.
+                루틴 히스토리가 없습니다😢
               </p>
             )}
           </div>

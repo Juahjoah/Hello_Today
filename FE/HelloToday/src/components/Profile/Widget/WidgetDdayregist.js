@@ -56,7 +56,7 @@ function WidgetDdayregist() {
       })
       .then((res) => {
         console.log(res);
-        alert("저장 성공");
+        // alert("저장 성공");
         //submit한 데이터 저장하기
         dispatch(ADD_DDAY_DATA(newDday));
         //버튼 누르면 초기화하기 위해
