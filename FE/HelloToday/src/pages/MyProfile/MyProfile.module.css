@@ -276,20 +276,7 @@
   color: #a581cf;
   background: rgb(255, 255, 255);
 }
-/*회원탈퇴버튼*/
-.profile_unregist {
-  position: relative;
-  top: -10px;
-  padding-right: 37px;
-  margin: 0px;
-  text-align: right;
-}
-.profile_unregist_btn {
-  border: none;
-  background-color: white;
-  font-family: "TheJamsil5Bold";
-  color: rgb(98, 98, 98);
-}
+
 
 /*회원 정보 수정*/
 .Profile_edit_btn {
