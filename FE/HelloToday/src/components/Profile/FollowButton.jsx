@@ -79,14 +79,33 @@ function FollowButton(props) {
 
   return (
     <div className={classes.FollowButton}>
+      <button
+        className={classes.FollowButtonShow}
+        onClick={() => props.setFollowButtonClick(true)}
+      >
+        팔로우하는 사람보기
+      </button>
+      <span style={{ fontSize: "12px", color: "rgb(110, 122, 150)" }}>|</span>
       {!isMe ? (
+        <button
+          className={classes.FollowButtonUnFollowBtn}
+          onClick={UserFollowClick}
+        >
+          {isFollow ? "unFollow" : "Follow"}
+        </button>
+      ) : (
+        <button
+          className={classes.FollowButtonFollowBtn}
+          onClick={UserFollowClick}
+        >
+          {isFollow ? "unFollow" : "Follow"}
+        </button>
+      )}
+      {/* {!isMe ? (
         <button onClick={UserFollowClick}>
           {isFollow ? "unFollow" : "Follow"}
         </button>
-      ) : null}
-      <button onClick={() => props.setFollowButtonClick(true)}>
-        팔로우하는 사람보기
-      </button>
+      ) : null} */}
     </div>
   );
 }

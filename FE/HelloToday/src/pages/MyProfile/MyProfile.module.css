@@ -6,6 +6,38 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
 @keyframes YAnimation {
   0% {
     transform: translateY(0);
@@ -36,32 +68,133 @@
 }
 
 .UserProfile {
-  flex: 2.8;
+  flex: 3;
 }
 
 .UserProfileSection {
-  width: 90%;
+  width: 80%;
   height: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
+  margin: 0px 0px 0px 80px;
   margin-top: 10px;
   border: 1px solid black;
   border-radius: 12px;
+  /* background: rgba(255, 255, 255, 1); */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  background: rgb(207, 193, 228);
+  background: linear-gradient(
+    180deg,
+    rgba(207, 193, 228, 1) 0%,
+    rgba(255, 255, 255, 1) 35%
+  );
 }
 
 .UserInfo {
-  flex: 3;
+  flex: 3.5;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.UserInfoTop {
+  flex: 8;
+}
+
+.UserInformation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.ProfileImg {
+  border-radius: 50%;
+}
+
+.ProfilenNickName {
+  font-family: "TheJamsil4Bold";
+  color: rgb(110, 122, 150);
+}
+
+.ProfileMsg {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-family: "TheJamsil3Bold";
+  color: rgb(110, 122, 150);
+}
+
+.editbtn {
+  position: relative;
+  left: 25px;
+  bottom: 95px;
+  border: none;
+  background: white;
+  border-radius: 100px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+.UserFollow {
+  flex: 2;
+}
+
+.editable {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.Profile_edit_btn {
+  font-family: "TheJamsil4Bold";
+  background-color: white;
+  color: #a581cf;
+  border: 2px #a581cf solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
+}
+
+.Profile_Img_edit_btn {
+  border-radius: 8px;
+  position: absolute;
+  padding: 3px 6px;
+  top: 45px;
+  left: 195px;
+}
+
+.Profile_edit_input {
+  /*수정 input창*/
+  background-color: rgba(0, 0, 0, 0);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #a581cf;
+  outline: none;
+  color: rgb(110, 122, 150);
+  font-family: "TheJamsil3Bold";
+  margin: 8px 0px 0px 0px;
+}
+
+.Profile_btns {
+  margin: 11px 0px;
 }
 
 .userInfoMenu {
-  flex: 7;
+  flex: 6.5;
 }
 
 .Profilecontent {
-  flex: 7.2;
+  flex: 7;
 }
 
 /* .MyProfile {
@@ -286,28 +419,12 @@
 } */
 
 /*회원 정보 수정*/
-/* .Profile_edit_btn {
-  font-family: "TheJamsil5Bold";
-  background-color: white; 
-  color: #a581cf;
-  border: #a581cf solid;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  padding: 3px 10px 3px 10px;
-} */
+
 /* .Profile_edit_btn:hover { */
 /* background-color: #a581cf; 마우스 호버시 조금 더 진한 파란색 */
 /* color: white; */
 /* } */
-/* .Profile_edit_input { */
-/*수정 input창*/
-/* background-color: rgba(0, 0, 0, 0); */
-/* border-top: none; */
-/* border-left: none; */
-/* border-right: none; */
-/* border-bottom: 2px solid #a581cf; */
-/* } */
+
 /* .Profile_btns { */
 /*완료, 취소 버튼*/
 /* margin-left: 80px; */

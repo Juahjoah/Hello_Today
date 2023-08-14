@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+.FollowButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.FollowButtonShow {
+  background: transparent;
+  border: none;
+  color: rgb(110, 122, 150);
+  font-family: "TheJamsil3Bold";
+  transition: all 250ms ease-in-out;
+  padding-right: 8px;
+}
+
+.FollowButtonFollowBtn {
+  background: transparent;
+  border: none;
+  color: rgb(110, 122, 150);
+  font-family: "TheJamsil3Bold";
+  transition: all 250ms ease-in-out;
+  padding-left: 8px;
+}
+
+.FollowButtonUnFollowBtn {
+  background: transparent;
+  border: none;
+  color: rgb(110, 122, 150);
+  font-family: "TheJamsil3Bold";
+  transition: all 250ms ease-in-out;
+  padding-left: 8px;
+}
+
+.FollowButtonShow:hover {
+  cursor: pointer;
+  font-family: "TheJamsil4Bold";
+}
+
+.FollowButtonFollowBtn:hover {
+  cursor: pointer;
+  font-family: "TheJamsil4Bold";
+}
+
+.FollowButtonUnFollowBtn:hover {
+  cursor: pointer;
+  font-family: "TheJamsil4Bold";
+}
