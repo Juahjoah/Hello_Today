@@ -45,7 +45,7 @@ public class FollowController {
     public BaseResponseDto enrollFollow(@AuthenticationPrincipal MemberDetailsImpl member,
                                         @RequestBody FollowSaveRequestDto followSaveRequestDto) {
 
-        return followService.enrollFollow(member.getUser(), followSaveRequestDto);
+        return followService.enrollFollow(member.getUser().getMemberId(), followSaveRequestDto);
     }
 
     @Operation(summary = "팔로우 취소", description = "팔로우를 취소하는 API")
@@ -53,7 +53,7 @@ public class FollowController {
     public BaseResponseDto deleteFollow(@AuthenticationPrincipal MemberDetailsImpl member,
                                         @RequestParam(name = "target") int targetId) {
 
-        return followService.deleteFollow(member.getUser(), targetId);
+        return followService.deleteFollow(member.getUser().getMemberId(), targetId);
     }
 
     @Operation(summary = "팔로우 상태 확인", description = "팔로우를 상태를 확인하는 API")
@@ -61,6 +61,6 @@ public class FollowController {
     public BaseResponseDto checkFollowStatus(@RequestParam int memberId,
                                              @AuthenticationPrincipal MemberDetailsImpl member) {
 
-        return followService.checkFollowStatus(member.getUser(), memberId);
+        return followService.checkFollowStatus(member.getUser().getMemberId(), memberId);
     }
 }

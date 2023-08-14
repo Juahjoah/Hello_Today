@@ -36,7 +36,7 @@ function Nav() {
     <nav className={classes.nav}>
       <Link to="/">
         <img
-          src="images/logo_mini.png"
+          src="/images/logo_mini.png"
           alt="logo"
           className={classes.navLeftLogo}
         />
