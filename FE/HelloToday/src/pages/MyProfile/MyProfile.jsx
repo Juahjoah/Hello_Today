@@ -67,7 +67,7 @@ function MyProfile() {
       .catch((error) => {
         console.log(error);
       });
-  }, [AccsesToken, isUserEdit]);
+  }, [AccsesToken, isUserEdit, memberId]);
 
   const [Menu, setMenu] = useState(0);
 
