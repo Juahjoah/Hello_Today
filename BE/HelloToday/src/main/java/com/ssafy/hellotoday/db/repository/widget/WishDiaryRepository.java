@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface WishDiaryRepository extends JpaRepository<WishDiary,Integer> {
 
 
-    @Query("select w from WishDiary w join fetch w.member where w.member.memberId=:memberId and w.type=:type")
+    @Query("select w from WishDiary w join fetch w.member where w.member.memberId=:memberId and w.type=:type order by w.wishDiaryId desc ")
     List<WishDiary> findAllByMemberIdAndType(Integer memberId, Type type);
 }
