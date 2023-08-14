@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { configureStore } from "@reduxjs/toolkit";
+import { cl } from "@fullcalendar/core/internal-common";
 
 function WidgetComments() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
@@ -16,24 +18,21 @@ function WidgetComments() {
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [isMe, setIsMe] = useState(false);
-  const [isWriter, setIsWriter] = useState(false);
 
   const [nowPage, setNowPage] = useState(1);
   const itemsIncludePage = 3;
+  const loggedInUserId = sessionStorage.getItem("memberId");
 
   useEffect(() => {
-    const loggedInUserId = sessionStorage.getItem("memberId");
     setIsMe(
-      loggedInUserId === memberId ||
-        comments.some((comment) => comment.writerNickName === loggedInUserId)
+      loggedInUserId === memberId ? true : false
       // memberId === +sessionStorage.getItem("memberId") ? true : false
-    );
-    setIsWriter(
-      comments.some((comment) => comment.writerNickName === loggedInUserId)
     );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
+
+  console.log(isMe);
 
   const getComments = async (memberId) => {
     await axios
@@ -140,6 +139,7 @@ function WidgetComments() {
         }
         // console.log(response);
         getComments(memberId);
+        setNowPage(1);
       })
       .catch((error) => {
         console.log(error);
@@ -152,11 +152,8 @@ function WidgetComments() {
   const startIndex = Math.max(indexOfFirstItem, 0);
   const endIndex = Math.min(indexOfLastItem, comments.length);
 
-  const nowComments = comments
-    ? comments
-    : comments.slice(startIndex, endIndex);
-  // const nowComments =
-  //   comments[0] === undefined ? comments.slice(startIndex, endIndex) : [];
+  const nowComments =
+    comments[0] === undefined ? comments : comments.slice(startIndex, endIndex);
 
   const paginate = (pageNumber) => {
     setNowPage(pageNumber);
@@ -185,8 +182,8 @@ function WidgetComments() {
             nowComments.map((comment) => (
               <div key={comment.messageId}>
                 {isEdit && editedCommentId === comment.messageId ? (
-                  <div>
-                    <input
+                  <div className={classes.commentPostIt}>
+                    <textarea
                       className={classes.editinputstyle}
                       type="text"
                       value={editedComment}
@@ -195,35 +192,54 @@ function WidgetComments() {
                         setEditedCommentId(comment.messageId);
                       }}
                     />
-                    <button onClick={() => SaveEditedComment()}>저장</button>
-                    <button onClick={() => setIsEdit(false)}>취소</button>
+                    <div className={classes.inputBtnArea}>
+                      <button
+                        className={classes.inputBtnMini}
+                        onClick={() => SaveEditedComment()}
+                      >
+                        저장
+                      </button>
+                      <button
+                        className={classes.inputBtnMini}
+                        onClick={() => setIsEdit(false)}
+                      >
+                        취소
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div className={classes.commentPostIt}>
-                    <p>{comment.content}</p>
-                    {comment.writerNickName}
-                    {comment.createdDate}
-                    {/* {isMe && isWriter && ( */}
-                    {isMe && (
+                    {(isMe || comment.writerId === loggedInUserId) && (
+                      <button
+                        className={classes.deleteButtonStyle}
+                        // onClick={() => DeleteComment(comment.messageId)}
+                        onClick={() => deleteAlert(comment.messageId)}
+                      >
+                        <img src="../../images/Widget/clear.png" alt="clear" />
+                      </button>
+                    )}
+                    <p className={classes.postContent}>{comment.content}</p>
+                    <p className={classes.postNickName}>
+                      {comment.writerNickName}
+                    </p>
+                    <p className={classes.postDate}>
+                      {new Date(comment.createdDate).toLocaleDateString()}
+                    </p>
+
+                    {(isMe || comment.writerId === loggedInUserId) && ( // 여기 이부분 말이야
                       <button
                         className={classes.editButtonStyle}
                         onClick={() => {
-                          setIsEdit(comment.messageId);
+                          console.log(
+                            "Edit button clicked for comment:",
+                            comment
+                          );
+                          setIsEdit(true);
                           setEditedComment(comment.content);
                           setEditedCommentId(comment.messageId);
                         }}
                       >
                         <img src="../../images/Widget/edit.png" alt="edit" />
-                      </button>
-                    )}
-                    {/* {isMe && isWriter && ( */}
-                    {isMe && (
-                      <button
-                        className={classes.editButtonStyle}
-                        // onClick={() => DeleteComment(comment.messageId)}
-                        onClick={() => deleteAlert(comment.messageId)}
-                      >
-                        <img src="../../images/Widget/clear.png" alt="clear" />
                       </button>
                     )}
                   </div>
