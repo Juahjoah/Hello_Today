@@ -1,3 +1,5 @@
+import classes from "./WidgetGoals.module.css";
+
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -16,6 +18,9 @@ function WidgetGoals() {
   const [editedGoalId, setEditedGoalId] = useState(null);
   const [goalType, setGoalType] = useState("0");
   const [editedGoalType, setEditedGoalType] = useState("0");
+
+  const [nowPage, setNowPage] = useState(1);
+  const itemsIncludePage = 5;
 
   const getGoal = () => {
     axios
@@ -112,13 +117,25 @@ function WidgetGoals() {
       });
   };
 
+  const indexOfLastItem = nowPage * itemsIncludePage;
+  const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
+
+  const startIndex = Math.max(indexOfFirstItem, 0);
+  const endIndex = Math.min(indexOfLastItem, goal.length);
+
+  const nowgoal = goal.length === 0 ? [] : goal.slice(startIndex, endIndex);
+
+  const paginate = (pageNumber) => {
+    setNowPage(pageNumber);
+  };
+
   return (
-    <div className="WidgetGoals">
-      <p> {memberId} 소중한 목표</p>
+    <div className={classes.WidgetGoals}>
+      <p className={classes.goalTitle}> 작고 소중한 목표를 세웠어요! </p>
       <div>
-        {goal.length === 0 && <div>아직 목표가 없어요!</div>}
-        {goal.length > 0 &&
-          goal.map((goalItem) => {
+        {nowgoal.length === 0 && <div>아직 목표가 없어요!</div>}
+        {nowgoal.length > 0 &&
+          nowgoal.map((goalItem) => {
             return (
               <div key={goalItem.goalId}>
                 {isEdit && editedGoalId === goalItem.goalId ? (
@@ -153,6 +170,7 @@ function WidgetGoals() {
                     {isMe && (
                       <div>
                         <button
+                          className={classes.editButtonStyle}
                           onClick={() => {
                             setIsEdit(true);
                             setEditedGoalId(goalItem.goalId);
@@ -175,6 +193,25 @@ function WidgetGoals() {
               </div>
             );
           })}
+
+        {goal.length > itemsIncludePage && (
+          <div>
+            <button
+              onClick={() => paginate(nowPage - 1)}
+              disabled={nowPage === 1}
+            >
+              이전
+            </button>
+            <button
+              onClick={() => paginate(nowPage + 1)}
+              disabled={
+                nowgoal.length < itemsIncludePage || nowgoal.length === 0
+              }
+            >
+              다음
+            </button>
+          </div>
+        )}
 
         <div>
           {isMe && (

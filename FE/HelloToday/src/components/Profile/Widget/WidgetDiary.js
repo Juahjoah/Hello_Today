@@ -1,3 +1,5 @@
+import classes from "./WidgetDiary.module.css";
+
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -14,6 +16,9 @@ function WidgetDiary() {
   const [newDiary, setNewDiary] = useState("");
   const [editedDiary, setEditedDiary] = useState("");
   const [editedDiaryId, setEditedDiaryId] = useState(null);
+
+  const [nowPage, setNowPage] = useState(1);
+  const itemsIncludePage = 5;
 
   const getDiary = () => {
     axios
@@ -106,27 +111,59 @@ function WidgetDiary() {
       });
   };
 
+  const indexOfLastItem = nowPage * itemsIncludePage;
+  const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
+
+  const nowdiary =
+    diary.length === 0 ? [] : diary.slice(indexOfFirstItem, indexOfLastItem);
+
+  const setPage = (pageNumber) => {
+    if (
+      pageNumber < 1 ||
+      pageNumber > Math.ceil(diary.length / itemsIncludePage)
+    ) {
+      return; // Prevent setting invalid page numbers
+    }
+    setNowPage(pageNumber);
+  };
+
   return (
-    <div className="WidgetDiary">
-      <p> {memberId}님의 한 줄 일기 </p>
+    <div className={classes.WidgetDiary}>
+      <p className={classes.diaryTitle}> 소중한 한 줄 일기 </p>
       <div>
-        {diary.length === 0 && <div>일기가 없습니다.</div>}
-        {diary.length > 0 &&
-          diary.map((diaryItem) => {
+        <div className={classes.pagination}>
+          <button onClick={() => setPage(nowPage - 1)}>
+            <img src="../../images/Widget/before.png" alt="before" />
+          </button>
+        </div>
+        {nowdiary.length === 0 && <div>일기가 없습니다.</div>}
+        {nowdiary.length > 0 &&
+          nowdiary.map((diaryItem) => {
             return (
               <div key={diaryItem.wishDiaryId}>
                 {isEdit && editedDiaryId === diaryItem.wishDiaryId ? (
                   <div>
                     <input
                       type="text"
+                      className={classes.inputstyle}
                       value={editedDiary}
                       onChange={(event) => {
                         setEditedDiary(event.target.value);
                         setEditedDiaryId(diaryItem.wishDiaryId);
                       }}
                     />
-                    <button onClick={() => saveEditedDiary()}>저장</button>
-                    <button onClick={() => setIsEdit(false)}>취소</button>
+                    <button
+                      className={classes.inputBtnMini}
+                      onClick={() => saveEditedDiary()}
+                    >
+                      저장
+                    </button>
+                    <button
+                      className={classes.inputBtnMini}
+                      onClick={() => setIsEdit(false)}
+                    >
+                      취소
+                    </button>
                   </div>
                 ) : (
                   <div>
@@ -141,7 +178,7 @@ function WidgetDiary() {
                           }}
                         >
                           <img
-                            // className={classes.edit}
+                            className={classes.editButtonStyle}
                             src="../../images/Widget/edit.png"
                             alt="edit"
                           />
@@ -150,7 +187,7 @@ function WidgetDiary() {
                           onClick={() => deleteDiary(diaryItem.wishDiaryId)}
                         >
                           <img
-                            // className={classes.clear}
+                            className={classes.editButtonStyle}
                             src="../../images/Widget/clear.png"
                             alt="clear"
                           />
@@ -162,15 +199,28 @@ function WidgetDiary() {
               </div>
             );
           })}
+
+        <div className={classes.pagination}>
+          <button onClick={() => setPage(nowPage + 1)}>
+            <img src="../../images/Widget/next.png" alt="next" />
+          </button>
+        </div>
+
         <div>
           {isMe && (
-            <div>
+            <div className={classes.widgetInputStyle}>
               <input
                 type="text"
+                className={classes.inputstyle}
                 value={newDiary}
                 onChange={(event) => setNewDiary(event.target.value)}
               />
-              <button onClick={() => createDiary()}>댓글 입력</button>
+              <button
+                className={classes.inputBtn}
+                onClick={() => createDiary()}
+              >
+                댓글 입력
+              </button>
             </div>
           )}
         </div>
