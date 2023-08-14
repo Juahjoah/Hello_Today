@@ -1,25 +1,14 @@
 import classes from "./WidgetDday.module.css";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import {
-  SET_ISEDIT,
-  SET_DDAY_DATA,
-  ADD_DDAY_DATA,
-  SET_ISREGIST,
-  SET_ISEDITF,
-} from "../../../store/ddaySlice";
+import { ADD_DDAY_DATA, SET_ISREGIST } from "../../../store/ddaySlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function WidgetDdayregist() {
   const ddaycontentinput = useRef();
   const ddayfinalinput = useRef();
-  const ddaydataId = useRef(0);
-  const memberId = useParams().memberId; //url에서 param가져오기
   const dispatch = useDispatch();
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-
-  const ddaydata = useSelector((state) => state.dday.ddayData);
 
   //State 상태 변경
   const [newDday, setNewDday] = useState({
@@ -34,7 +23,7 @@ function WidgetDdayregist() {
       ...newDday,
       [e.target.name]: e.target.value,
     });
-    console.log(newDday);
+    // console.log(newDday);
   };
 
   // submit 보냄
@@ -55,13 +44,13 @@ function WidgetDdayregist() {
       content: newDday.content,
       type: "1",
     };
-    console.log(newDday);
+    // console.log(newDday);
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday`, data, {
         headers: { Authorization: AccsesToken },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // alert("저장 성공");
         //submit한 데이터 저장하기
         dispatch(ADD_DDAY_DATA(newDday));
@@ -73,7 +62,7 @@ function WidgetDdayregist() {
         });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

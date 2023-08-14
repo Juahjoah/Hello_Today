@@ -25,11 +25,11 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
           { params, headers }
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setRoutineList(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     }
   }, [isOpen]);

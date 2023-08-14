@@ -21,7 +21,7 @@ function WidgetHistory() {
   const setPage = (e) => {
     // 페이지가 바뀔 때 핸들링해줄 함수
     setCurrentpage(e); //현재 페이지
-    console.log("현재 페이지 : ", e);
+    // console.log("현재 페이지 : ", e);
   };
 
   useEffect(() => {
@@ -39,14 +39,14 @@ function WidgetHistory() {
         { params, headers }
       )
       .then((res) => {
-        console.log("받아온 데이터", res);
+        // console.log("받아온 데이터", res);
         setItems(res.data);
-        console.log("뿌리는 데이터", items);
+        // console.log("뿌리는 데이터", items);
         setCount(res.data[0].size); //총 아이템의 개수
-        console.log(count);
+        // console.log(count);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [currentpage, memberId]);
 
@@ -56,7 +56,7 @@ function WidgetHistory() {
   const openPopup = (routineid) => {
     setIsPopupOpen(true);
     setRoutineId(routineid);
-    console.log("routineId찍어", routineid);
+    // console.log("routineId찍어", routineid);
   };
 
   // const closePopup = () => {

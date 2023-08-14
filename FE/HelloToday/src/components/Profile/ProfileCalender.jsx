@@ -53,8 +53,8 @@ export function ProfileCalender() {
         ])
         .then(
           axios.spread((res1, res2) => {
-            console.log("캘린더", res1);
-            console.log("디데이", res2);
+            // console.log("캘린더", res1);
+            // console.log("디데이", res2);
 
             const dbdata1 = res1.data.map((item) => ({
               id: item.routineId,
@@ -88,8 +88,8 @@ export function ProfileCalender() {
           })
         )
         .catch((err) => {
-          console.log("-------ProfileCalendar error----------");
-          console.log(err);
+          // console.log("-------ProfileCalendar error----------");
+          // console.log(err);
         });
     }
   }, [AccsesToken, isRegist, isEditF, isDelete]);
