@@ -24,6 +24,7 @@ function GroupRoutine() {
   const [memberCount, setMemberCount] = useState(1);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
+
   // user Info
   const nickName = localStorage.getItem("nickName");
   const memberId = localStorage.getItem("memberId");
@@ -77,6 +78,8 @@ function GroupRoutine() {
 
   const closeModal = () => {
     setModalIsOpen(false);
+    setRoomName("");
+    setRoomDesc("");
   };
 
   const handleIncrement = () => {
@@ -224,12 +227,12 @@ function GroupRoutine() {
             src="images/BannerImage/GroupRoutineFooterBanner.png"
             alt="toGroupBanner"
           />
-        </div>
+        </div>``
       </div>
       <Modal
         style={modalStyle}
         isOpen={modalIsOpen}
-        onRequestClose={() => closeModal(false)}
+        onRequestClose={closeModal}
       >
         <div className={classes.makeRoomModal}>
           <FontAwesomeIcon
@@ -252,6 +255,7 @@ function GroupRoutine() {
                 className={classes.makeRoomModalMainRoomTitleInput}
                 type="text"
                 id="roomName"
+                maxLength="33"
                 value={roomName}
                 onChange={handleRoomNameChange}
                 placeholder="방 제목을 입력해주세요."
@@ -267,6 +271,7 @@ function GroupRoutine() {
               <textarea
                 name=""
                 id="roomDesc"
+                maxLength="200"
                 className={classes.makeRoomModalMainRoomDescInput}
                 value={roomDesc}
                 onChange={handleRoomDescChange}
