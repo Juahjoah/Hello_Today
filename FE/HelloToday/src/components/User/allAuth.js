@@ -18,6 +18,7 @@ const allAuth = async (isAccess, dispatch) => {
   const fetchData = async (refreshtoken) => {
     try {
       const res = await getRefreshToken(refreshtoken); //날리기
+      // console.log(res);
       const newaccessToken = res.headers["authorization"];
       const newrefreshToken = res.headers["authorization-refresh"];
       // console.log("Access Token:", newaccessToken);
@@ -25,6 +26,10 @@ const allAuth = async (isAccess, dispatch) => {
       dispatch(SET_TOKEN(newaccessToken));
       setRefreshToken(newrefreshToken);
       dispatch(Loginstate());
+      const memberId = sessionStorage.getItem("memberId");
+      if (!memberId) {
+        sessionStorage.setItem("memberId", res.data.memberId);
+      }
     } catch (error) {
       // console.log(error); // 에러 응답 데이터 출력
     }
@@ -33,6 +38,10 @@ const allAuth = async (isAccess, dispatch) => {
     try {
       const res = await getAccessToken(refreshtoken, accessToken); //access 만료 유무
       // console.log("성공");
+      const memberId = sessionStorage.getItem("memberId");
+      if (!memberId) {
+        sessionStorage.setItem("memberId", res.data.memberId);
+      }
     } catch (error) {
       // console.log("accessData함수 = ", error);
       // console.log("access토큰이 만료되었나? ", error.response.status === 401);
