@@ -38,11 +38,11 @@ function ProfileCalenderDetail() {
         });
 
         setCalDetail(formattedData);
-        console.log(res.data);
-        console.log("ok");
+        // console.log(res.data);
+        // console.log("ok");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
   return (

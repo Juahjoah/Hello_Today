@@ -237,7 +237,7 @@ function MyProfileEdit() {
             `${process.env.REACT_APP_BASE_URL}/api/members/withdrawal`,
             data
           );
-          console.log("탈퇴 결과", res);
+          // console.log("탈퇴 결과", res);
           dispatch(DELETE_TOKEN()); // store에 저장된 Access Token 정보를 삭제
           removeCookieToken(); // Cookie에 저장된 Refresh Token 정보를 삭제
           dispatch(Logoutstate());
@@ -245,7 +245,7 @@ function MyProfileEdit() {
           localStorage.clear();
           navigate("/");
         } catch (error) {
-          console.log("회원탈퇴 에러", error);
+          // console.log("회원탈퇴 에러", error);
         }
       }
     });

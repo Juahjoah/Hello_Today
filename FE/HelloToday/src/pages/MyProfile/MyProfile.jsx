@@ -20,10 +20,6 @@ import allAuth from "../../components/User/allAuth";
 //회원탈퇴
 import { useNavigate } from "react-router";
 
-import { removeCookieToken } from "../../components/User/CookieStorage";
-import { DELETE_TOKEN } from "../../store/TokenSlice";
-
-import { Logoutstate } from "../../store/LoginSlice";
 
 function MyProfile() {
   //------------------------------로그인 시작
@@ -54,8 +50,8 @@ function MyProfile() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        console.log("user정보 가지고 와랐!!!!");
-        console.log(response.data);
+        // console.log("user정보 가지고 와랐!!!!");
+        // console.log(response.data);
         setUser({
           memberId: response.data.memberId,
           nickname: response.data.nickname,
@@ -66,7 +62,7 @@ function MyProfile() {
         setURLThumbnail(response.data.profilePath);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, [AccsesToken, isUserEdit, memberId]);
 
@@ -147,7 +143,7 @@ function MyProfile() {
       stMsg: user.stMsg,
       file: user.file,
     };
-    console.log(selectedFile);
+    // console.log(selectedFile);
 
     formData.append(
       "request",
@@ -170,13 +166,13 @@ function MyProfile() {
         }
       )
       .then((res) => {
-        console.log("제출결과 : ", res);
+        // console.log("제출결과 : ", res);
         //edit모드 false로 바꾸기
         setIsUserEdit(false);
         localStorage.setItem("nickName", user.nickname);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
   return (
