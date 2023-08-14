@@ -6,16 +6,17 @@ function Paging({
   pageRangeDisplayed,
   handlePageChange,
   page,
+  setPage,
 }) {
   return (
     <Pagination
       activePage={page}
       itemsCountPerPage={postPerPage}
-      totalItemsCount={totalCount ? totalCount : 0}
+      totalItemsCount={totalCount ?? 0}
       pageRangeDisplayed={pageRangeDisplayed}
       prevPageText={"<"}
       nextPageText={">"}
-      onChange={handlePageChange}
+      onChange={(newPage) => setPage(newPage)}
     />
   );
 }
