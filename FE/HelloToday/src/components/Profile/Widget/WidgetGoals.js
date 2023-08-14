@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
 import axios from "axios";
 
 function WidgetGoals() {
@@ -99,6 +101,24 @@ function WidgetGoals() {
     setEditedGoalId("");
   };
 
+  const deleteAlert = (messageId) => {
+    let confirmed = false;
+
+    Swal.fire({
+      icon: "question",
+      title: "댓글을 삭제합니다.",
+      text: "댓글을 정말 삭제하시겠습니까?",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+      showCancelButton: true,
+    }).then((response) => {
+      if (response.isConfirmed) {
+        confirmed = true;
+        deleteGoal(messageId);
+      }
+    });
+  };
+
   const deleteGoal = (goalId) => {
     axios
       .delete(
@@ -109,6 +129,14 @@ function WidgetGoals() {
         }
       )
       .then((response) => {
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "댓글이 삭제되었습니다.",
+            text: "",
+            confirmButtonText: "확인",
+          });
+        }
         // console.log(response);
         getGoal();
       })
@@ -181,7 +209,7 @@ function WidgetGoals() {
                         >
                           <img src="../../images/Widget/edit.png" alt="edit" />
                         </button>
-                        <button onClick={() => deleteGoal(goalItem.goalId)}>
+                        <button onClick={() => deleteAlert(goalItem.goalId)}>
                           <img
                             src="../../images/Widget/clear.png"
                             alt="clear"
