@@ -173,6 +173,7 @@ function MyProfile() {
         console.log("제출결과 : ", res);
         //edit모드 false로 바꾸기
         setIsUserEdit(false);
+        localStorage.setItem("nickName", user.nickname);
       })
       .catch((err) => {
         console.log(err);
@@ -249,7 +250,7 @@ function MyProfile() {
                 </form>
               </div>
             ) : (
-              <div>
+              <div className={classes.UserInfoList}>
                 <img
                   className={classes.ProfileImg}
                   src={user.profilePath}
@@ -285,14 +286,15 @@ function MyProfile() {
               />
             </div>
           </div>
-          <hr />
 
-          <ProfileMenu
-            setMenu={setMenu}
-            setFollowButtonClick={setFollowButtonClick}
-            memberId={params.memberId}
-            Token={AccsesToken}
-          />
+          <div className={classes.userInfoMenu}>
+            <ProfileMenu
+              setMenu={setMenu}
+              setFollowButtonClick={setFollowButtonClick}
+              memberId={params.memberId}
+              Token={AccsesToken}
+            />
+          </div>
         </div>
 
         {/* 화면 오른쪽 화면 출력 창 */}
