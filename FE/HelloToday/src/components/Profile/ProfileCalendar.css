@@ -54,3 +54,11 @@
 .tippy-box[data-placement^="top"] > .tippy-arrow:before {
   border-top-color: #a581cf !important;
 }
+
+.fc-toolbar-title {
+  border-radius: 8px;
+}
+
+.fc-button-primary {
+  border-radius: 8px;
+}
