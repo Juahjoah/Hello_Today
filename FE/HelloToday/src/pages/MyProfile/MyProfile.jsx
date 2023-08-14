@@ -181,65 +181,91 @@ function MyProfile() {
       <div className={classes.MyProfile}>
         {/* 화면 왼쪽 개인 정보 */}
         <div className={classes.UserProfile}>
-          <div className={classes.UserInfo}>
-            {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
-            {isUserEdit ? (
-              <div className={classes.editable}>
-                <form id="form">
+          <div className={classes.UserProfileSection}>
+            <div className={classes.UserInfo}>
+              {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
+              {isUserEdit ? (
+                <div className={classes.editable}>
+                  <form id="form">
+                    <img
+                      className={classes.ProfileImg}
+                      src={URLThumbnail}
+                      alt="thumbnail"
+                    />
+                    <button
+                      className={`${classes.Profile_edit_btn} ${classes.Profile_file_btn}`}
+                      onClick={handleClick}
+                      type="button"
+                    >
+                      파일
+                      <input
+                        type="file"
+                        accept="image/*"
+                        ref={thumbnailInput}
+                        onChange={handleFileChange}
+                      />
+                    </button>
+                    <div className={classes.ProfilenNickName}>
+                      <input
+                        className={classes.Profile_edit_input}
+                        type="text"
+                        value={user.nickname}
+                        placeholder="닉네임을 입력하세요"
+                        ref={nicknameinput}
+                        onChange={handleChangeState}
+                        name="nickname"
+                      ></input>
+                    </div>
+                    <div className={classes.ProfileMsg}>
+                      <input
+                        className={classes.Profile_edit_input}
+                        type="text"
+                        value={user.stMsg}
+                        placeholder="상태메세지를 입력하세요"
+                        ref={stMsginput}
+                        onChange={handleChangeState}
+                        name="stMsg"
+                      ></input>
+                    </div>
+                    <div className={classes.Profile_btns}>
+                      <button
+                        className={classes.Profile_edit_btn}
+                        onClick={handleSubmit}
+                        type="button"
+                      >
+                        완료
+                      </button>
+                      <button
+                        className={`${classes.Profile_edit_btn} ${classes.Profile_cancle_btn}`}
+                        onClick={handleCancle}
+                        type="button"
+                      >
+                        취소
+                      </button>
+                    </div>
+                    {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
+                  </form>
+                </div>
+              ) : (
+                <div className={classes.UserInfoTop}>
                   <img
                     className={classes.ProfileImg}
-                    src={URLThumbnail}
-                    alt="thumbnail"
+                    src={user.profilePath}
+                    alt={user.Userprofilepic}
                   />
-                  <button
-                    className={`${classes.Profile_edit_btn} ${classes.Profile_file_btn}`}
-                    onClick={handleClick}
-                    type="button"
-                  >
-                    파일
-                    <input
-                      type="file"
-                      accept="image/*"
-                      ref={thumbnailInput}
-                      onChange={handleFileChange}
-                    />
-                  </button>
-                  <div className={classes.ProfilenNickName}>
-                    <input
-                      className={classes.Profile_edit_input}
-                      type="text"
-                      value={user.nickname}
-                      placeholder="닉네임을 입력하세요"
-                      ref={nicknameinput}
-                      onChange={handleChangeState}
-                      name="nickname"
-                    ></input>
-                  </div>
-                  <div className={classes.ProfileMsg}>
-                    <input
-                      className={classes.Profile_edit_input}
-                      type="text"
-                      value={user.stMsg}
-                      placeholder="상태메세지를 입력하세요"
-                      ref={stMsginput}
-                      onChange={handleChangeState}
-                      name="stMsg"
-                    ></input>
-                  </div>
-                  <div className={classes.Profile_btns}>
-                    <button
-                      className={classes.Profile_edit_btn}
-                      onClick={handleSubmit}
-                      type="button"
-                    >
-                      완료
-                    </button>
-                    <button
-                      className={`${classes.Profile_edit_btn} ${classes.Profile_cancle_btn}`}
-                      onClick={handleCancle}
-                      type="button"
-                    >
-                      취소
+                  <p className={classes.ProfilenNickName}>{user.nickname}</p>
+                  <p className={classes.ProfileMsg}>{user.stMsg}</p>
+                  {memberId === smemberId ? (
+                    <button className={classes.editbtn}>
+                      <img
+                        src="../../images/Widget/gear.png"
+                        alt="useredit"
+                        onClick={handleUserEdit}
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                        }}
+                      />
                     </button>
                   </div>
                   {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
@@ -274,11 +300,21 @@ function MyProfile() {
             {/* <Link to="/MyProfile/edit">
               <button>편집모드 이도오옹</button>
             </Link> */}
-            {/* 팔로잉/팔로워 */}
-            <div className={classes.UserFollow}>
-              <FollowButton
-                memberId={params.memberId}
+              {/* 팔로잉/팔로워 */}
+              <div className={classes.UserFollow}>
+                <FollowButton
+                  memberId={params.memberId}
+                  setFollowButtonClick={setFollowButtonClick}
+                />
+              </div>
+            </div>
+
+            <div className={classes.userInfoMenu}>
+              <ProfileMenu
+                setMenu={setMenu}
                 setFollowButtonClick={setFollowButtonClick}
+                memberId={params.memberId}
+                Token={AccsesToken}
               />
             </div>
           </div>
