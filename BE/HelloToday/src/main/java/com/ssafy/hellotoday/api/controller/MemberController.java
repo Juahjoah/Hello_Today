@@ -7,6 +7,7 @@ import com.ssafy.hellotoday.api.dto.member.request.LoginRequestDto;
 import com.ssafy.hellotoday.api.dto.member.request.MemberInfoUpdateRequestDto;
 import com.ssafy.hellotoday.api.dto.member.request.NickNameRequestDto;
 import com.ssafy.hellotoday.api.dto.member.response.LoginResponseDto;
+import com.ssafy.hellotoday.api.dto.member.response.RefreshTokenResponseDto;
 import com.ssafy.hellotoday.api.service.MemberService;
 import com.ssafy.hellotoday.common.util.property.RedirectUrlProperties;
 import com.ssafy.hellotoday.db.entity.Member;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @Tag(name = "Member", description = "멤버 관련 API")
 @RestController
@@ -77,7 +77,7 @@ public class MemberController {
     }
     @Operation(summary = "access&refresh 토큰 재발급", description = "access토큰 만료되면 refresh 토큰을 이용하여 재발급하는 API")
     @GetMapping("/api/members/reissue")
-    public ResponseEntity<String> reissue(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<RefreshTokenResponseDto> reissue(HttpServletRequest httpServletRequest) {
         String refreshToken = httpServletRequest.getHeader("Authorization-Refresh");
 
         System.out.println("refreshToken = " + refreshToken);
@@ -87,7 +87,10 @@ public class MemberController {
         return  ResponseEntity.ok()
                 .header("Authorization", tokenDto.getAccessToken())
                 .header("Authorization-Refresh",tokenDto.getRefreshToken())
-                .body("refresh과 accesstoken 재발급 성공하였습니다.");
+                .body(RefreshTokenResponseDto.builder()
+                        .message("accessToken 과 refreshToken이 재발급 성공하셨습니다")
+                        .memberId(tokenDto.getMemberId())
+                        .build());
     }
 
     @Operation(summary = "멤버 정보 수정", description = "멤버 정보(프로필,닉네임,상태메시지) 수정")
@@ -141,12 +144,16 @@ public class MemberController {
     }
 
 
-
     @GetMapping("/api/test")
-    public ResponseEntity<String> tokenTest() {
+    public ResponseEntity<RefreshTokenResponseDto> tokenTest(HttpServletRequest httpServletRequest) {
 
-
-        return new ResponseEntity<>("TokenTest성공", HttpStatus.OK);
+        String token = httpServletRequest.getHeader("Authorization");
+        if (token==null) return null;
+        Member findMember = memberService.findMemberByJwtToken(token);
+        return ResponseEntity.ok()
+                .body(RefreshTokenResponseDto.builder()
+                        .memberId(findMember.getMemberId())
+                        .message("Token 테스트 성공").build());
     }
 
 
