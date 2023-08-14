@@ -10,8 +10,9 @@ import java.util.Optional;
 
 public interface RoutineRepository extends JpaRepository<Routine, Integer> {
     List<Routine> findByMember_MemberId(Integer memberId);
-    List<Routine> findByMember_MemberId(Integer memberId, PageRequest pageRequest);
     List<Routine> findByEndDateBeforeAndActiveFlag(LocalDateTime localDateTime, byte b);
 
     Optional<Routine> findByMember_MemberIdAndActiveFlag(Integer memberId, byte b);
+
+    List<Routine> findByMember_MemberIdOrderByStartDateDesc(Integer memberId, PageRequest pageRequest);
 }

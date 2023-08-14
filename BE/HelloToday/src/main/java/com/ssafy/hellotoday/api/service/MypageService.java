@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,7 +89,7 @@ public class MypageService {
 
     public List<CheerMessageResponseDto> getCheerMessages(Integer memberId) {
 
-        List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberId(memberId);
+        List<CheerMessage> cheerMessageList = cheerMessageRepository.findByMember_MemberIdOrderByCreatedDateDesc(memberId);
 
         return cheerMessageList.stream()
                 .map(CheerMessageResponseDto::new)
@@ -117,6 +118,7 @@ public class MypageService {
 
         return ddayList.stream()
                 .map(DdayResponseDto::new)
+                .sorted(Comparator.comparing(DdayResponseDto::getCalDate).reversed())
                 .collect(Collectors.toList());
     }
 
@@ -204,7 +206,7 @@ public class MypageService {
 
         // calendarHistory + 대표 이미지 사진
         // 이미지가 있으면 우선으로 보이게 하도록 설정하는 Case문
-        List<Routine> routineList = routineRepository.findByMember_MemberId(memberId, pageRequest);
+        List<Routine> routineList = routineRepository.findByMember_MemberIdOrderByStartDateDesc(memberId, pageRequest);
         List<RoutineHistoryResponseDto> result = new ArrayList<>();
 
         for (Routine routineItem : routineList) {
