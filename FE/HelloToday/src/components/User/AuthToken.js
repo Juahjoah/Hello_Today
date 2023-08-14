@@ -17,8 +17,8 @@ export const getRefreshToken = async (refreshtoken_) => {
   };
 
   try {
-    console.log("머가 문제");
-    console.log("refreshtoken_ = ", refreshtoken_);
+    // console.log("머가 문제");
+    // console.log("refreshtoken_ = ", refreshtoken_);
     const res = await axios.get(
       `${process.env.REACT_APP_BASE_URL}/api/members/reissue`,
       data
@@ -27,10 +27,10 @@ export const getRefreshToken = async (refreshtoken_) => {
     //   `https://i9b308.p.ssafy.io/api/members/reissue`,
     //   data
     // );
-    console.log("requestAccessToken");
+    // console.log("requestAccessToken");
     return res;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error; // 에러를 다시 던져서 호출하는 곳에서도 에러 처리 가능
   }
 };
@@ -51,11 +51,11 @@ export const getAccessToken = async (refreshtoken_, accesstoken_) => {
     //   `https://i9b308.p.ssafy.io/api/members/reissue`,
     //   data
     // );
-    console.log("매개변수 받은 accesstoken = ", accesstoken_);
-    console.log("만료 안 함. 해당 페이지에 있어도 ok ");
+    // console.log("매개변수 받은 accesstoken = ", accesstoken_);
+    // console.log("만료 안 함. 해당 페이지에 있어도 ok ");
     return res; //access만료 안함. 해당 페이지에 있어도 괜찮다.
   } catch (error) {
-    console.log("getAccessToken:", error); //에러 등장. 밖에서 에러 잡고 프레시 토큰 날리고
+    // console.log("getAccessToken:", error); //에러 등장. 밖에서 에러 잡고 프레시 토큰 날리고
     throw error; // 에러를 다시 던져서 호출하는 곳에서도 에러 처리 가능
   }
 };
