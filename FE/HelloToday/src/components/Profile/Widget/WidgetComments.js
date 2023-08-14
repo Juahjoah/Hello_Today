@@ -30,8 +30,8 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
-  const getComments = (memberId) => {
-    axios
+  const getComments = async (memberId) => {
+    await axios
       .get(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${memberId}`,
         {
@@ -121,8 +121,11 @@ function WidgetComments() {
   const startIndex = Math.max(indexOfFirstItem, 0);
   const endIndex = Math.min(indexOfLastItem, comments.length);
 
-  const nowComments =
-    comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
+  // const nowComments =
+  //   comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
+  const nowComments = comments
+    ? comments
+    : comments.slice(startIndex, endIndex);
 
   const paginate = (pageNumber) => {
     setNowPage(pageNumber);
@@ -203,7 +206,7 @@ function WidgetComments() {
                   nowComments.length === 0
                 }
               >
-                <img src="../../images/Widget/next.png" alt="before" />
+                <img src="../../images/Widget/next.png" alt="next" />
               </button>
             </div>
           )}
