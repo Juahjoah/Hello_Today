@@ -236,7 +236,7 @@
 .widgetRightButoon:hover {
   color: white;
   background: red;
-  border: 3px white solid;
+  border: 3px red solid;
 }
 
 .widgetLeftFormItem {
