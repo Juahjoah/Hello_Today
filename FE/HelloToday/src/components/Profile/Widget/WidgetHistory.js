@@ -91,7 +91,7 @@ function WidgetHistory() {
                       alt={item.imgPath}
                     />
                   )}
-                  <p>
+                  <p className={classes.WidgetHistory_date}>
                     {new Date(item.startDate).toLocaleDateString()} ~
                     {new Date(item.endDate).toLocaleDateString()}
                   </p>
