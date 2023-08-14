@@ -20,7 +20,7 @@ function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
     if (HomeOneWantVisible) {
       setTimeout(() => {
         setIsVisible(true);
-      }, 10000);
+      }, 8000);
     }
   }, [HomeOneWantVisible]);
 
@@ -46,7 +46,7 @@ function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
             // data-aos="zoom-in"
             data-aos="fade-up"
             data-aos-easing="linear"
-            data-aos-delay="1500"
+            data-aos-delay="500"
           >
             <div>걱정말고, 다시 시작해보아요</div>
             <div className={classes.HomeOneTextTitle}>오늘도, 안녕</div>
@@ -80,16 +80,16 @@ function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
                   }}
                   getBeforeInit={(instance) => {
                     instance
-                      .pause(2100)
-                      .type("계획은 있었지만")
-                      .pause(200)
+                      .pause(600)
+                      .type("계획은 있었지만", { speed: 200 })
+                      .pause(100)
                       .type(",")
-                      .pause(200)
+                      .pause(100)
                       .type(",")
-                      .pause(200)
+                      .pause(100)
                       .type(",")
-                      .pause(200)
-                      .type("지키지 못했어요.");
+                      .pause(100)
+                      .type("지키지 못했어요.", { speed: 200 });
 
                     return instance;
                   }}
@@ -112,7 +112,7 @@ function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
                   options={{ waitUntilVisible: true }}
                   getBeforeInit={(instance) => {
                     instance
-                      .pause(5000)
+                      .pause(3000)
                       .type("딱히 하루 계획을 세우지 못했어요.");
 
                     return instance;
@@ -136,9 +136,9 @@ function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
                   options={{ waitUntilVisible: true }}
                   getBeforeInit={(instance) => {
                     instance
-                      .pause(7000)
+                      .pause(5000)
                       .type("흠,,")
-                      .pause(300)
+                      .pause(100)
                       .type("꼭 계획을 세워야 할까요?");
 
                     return instance;

@@ -42,7 +42,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
   useEffect(() => {
     const widgetAxios = async () => {
       axios({
-        url: `${process.env.REACT_APP_BASE_URL}/api/mypage/widget`,
+        url: `${process.env.REACT_APP_BASE_URL}/api/mypage/widget/${memberId}`,
         method: "get",
         headers: {
           Authorization: Token,
@@ -101,7 +101,7 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
       {selectedFlags.map((flag) => (
         <div className={classes.ProfileMenu} key={flag}>
           {flag === "편집 모드" ? (
-            <Link to="/MyProfile/edit">
+            <Link to={`/MyProfile/edit/${memberId}`}>
               <button className={classes.ProfileItem}>
                 <RiListSettingsLine
                   className={classes.WidgetFlagImg}
