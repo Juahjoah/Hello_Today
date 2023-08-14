@@ -106,7 +106,7 @@ export function ProfileCalender() {
           right: "today", // 오늘
         }}
         //Sizing
-        height={"430px"}
+        height={"350px"}
         //Month
         fixedWeekCount={false} //true면 기본이 6줄
         initialView="dayGridMonth" //처음 보이는 부분은 달
