@@ -275,110 +275,112 @@ function MyProfileEdit() {
           />
         </div>
         <div className={classes.editForm}>
-          <div className={classes.editFormHeader}>
-            <p className={classes.editFormTitle}>
-              마이페이지에서 보일 위젯을 설정해주세요
-            </p>
-          </div>
-          <div className={classes.widgetBody}>
-            <div className={classes.widgetLeft}>
-              <div className={classes.widgetLeftTitle}>
-                <p className={classes.widgetLeftTitleItem}>
-                  옵션 위젯 목록({selectedFlags.length})
-                </p>
-              </div>
-              <div className={classes.widgetLeftForm}>
-                <div className={classes.widgetLeftFormItem}>
-                  {selectedFlags.map((flag, index) => (
-                    <button
-                      key={flag}
-                      className={`${classes.widgetLeftFormButton} ${
-                        selectedButtonIndexes.includes(index) &&
-                        selectedFlags.includes(flag)
-                          ? classes.selectedButton
-                          : ""
-                      }`}
-                      onClick={() => toggleButton(index)}
-                    >
-                      {flag}
-                    </button>
-                  ))}
+          <div>
+            <div className={classes.editFormHeader}>
+              <p className={classes.editFormTitle}>
+                마이페이지에서 보일 위젯을 설정해주세요
+              </p>
+            </div>
+            <div className={classes.widgetBody}>
+              <div className={classes.widgetLeft}>
+                <div className={classes.widgetLeftTitle}>
+                  <p className={classes.widgetLeftTitleItem}>
+                    옵션 위젯 목록({selectedFlags.length})
+                  </p>
                 </div>
-              </div>
-            </div>
-
-            <div className={classes.widgetMid}>
-              <div className={classes.widgetMidButton}>
-                <button
-                  className={classes.widgetMidButtonForm}
-                  onClick={handleSelectButton}
-                >
-                  선택
-                </button>
-              </div>
-            </div>
-
-            <div className={classes.widgetRight}>
-              <div className={classes.widgetRightTitle}>
-                <p className={classes.widgetRightTitleItem}>
-                  마이페이지 위젯 목록({unselectedFlags.length + 2})
-                </p>
-              </div>
-              <div className={classes.widgetRightForm}>
-                <div className={classes.widgetRightTopForm}>
-                  <div className={classes.widgetRightTop}>
-                    <div>캘린더</div>
-                    <div>응원 메시지</div>
+                <div className={classes.widgetLeftForm}>
+                  <div className={classes.widgetLeftFormItem}>
+                    {selectedFlags.map((flag, index) => (
+                      <button
+                        key={flag}
+                        className={`${classes.widgetLeftFormButton} ${
+                          selectedButtonIndexes.includes(index) &&
+                          selectedFlags.includes(flag)
+                            ? classes.selectedButton
+                            : ""
+                        }`}
+                        onClick={() => toggleButton(index)}
+                      >
+                        {flag}
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <div className={classes.widgetRightBody}>
-                  <p>선택 옵션</p>
-                </div>
-                {/* <div className={classes.widgetRightTopForm}> */}
+              </div>
 
-                <div className={classes.widgetRightContent}>
-                  {unselectedFlags.map((flag) => (
-                    <div className={classes.widgetRightItem}>
-                      <div className={classes.widgetRightItemFlag} key={flag}>
-                        {flag}
-                      </div>
-                      <button
-                        className={classes.widgetRightButoon}
-                        onClick={() => handleCancelFlag(flag)}
-                      >
-                        x
-                      </button>
-                    </div>
-                  ))}
+              <div className={classes.widgetMid}>
+                <div className={classes.widgetMidButton}>
+                  <button
+                    className={classes.widgetMidButtonForm}
+                    onClick={handleSelectButton}
+                  >
+                    선택
+                  </button>
                 </div>
               </div>
 
-              {/* </div> */}
+              <div className={classes.widgetRight}>
+                <div className={classes.widgetRightTitle}>
+                  <p className={classes.widgetRightTitleItem}>
+                    마이페이지 위젯 목록({unselectedFlags.length + 2})
+                  </p>
+                </div>
+                <div className={classes.widgetRightForm}>
+                  <div className={classes.widgetRightTopForm}>
+                    <div className={classes.widgetRightTop}>
+                      <div>캘린더</div>
+                      <div>응원 메시지</div>
+                    </div>
+                  </div>
+                  <div className={classes.widgetRightBody}>
+                    <p>선택 옵션</p>
+                  </div>
+                  {/* <div className={classes.widgetRightTopForm}> */}
+
+                  <div className={classes.widgetRightContent}>
+                    {unselectedFlags.map((flag) => (
+                      <div className={classes.widgetRightItem}>
+                        <div className={classes.widgetRightItemFlag} key={flag}>
+                          {flag}
+                        </div>
+                        <button
+                          className={classes.widgetRightButoon}
+                          onClick={() => handleCancelFlag(flag)}
+                        >
+                          x
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* </div> */}
+              </div>
+            </div>
+
+            <div className={classes.widgetFooter}>
+              <button
+                className={classes.widgetFooterButton}
+                onClick={editWidgetAxios}
+              >
+                수정 완료
+              </button>
             </div>
           </div>
-
-          <div className={classes.widgetFooter}>
-            <button
-              className={classes.widgetFooterButton}
-              onClick={editWidgetAxios}
-            >
-              수정 완료
-            </button>
-          </div>
+          {memberId === smemberId ? (
+            <div className={classes.profile_unregist}>
+              <button
+                className={classes.profile_unregist_btn}
+                onClick={() => handleunregister()}
+              >
+                회원 탈퇴
+              </button>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
-      {memberId === smemberId ? (
-        <div className={classes.profile_unregist}>
-          <button
-            className={classes.profile_unregist_btn}
-            onClick={() => handleunregister()}
-          >
-            회원 탈퇴
-          </button>
-        </div>
-      ) : (
-        <></>
-      )}
     </>
   );
 }
