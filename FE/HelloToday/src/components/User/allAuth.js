@@ -13,7 +13,7 @@ const allAuth = async (isAccess, dispatch) => {
   //함수 정의
   const cookies = new Cookies();
   const refreshtoken_ = cookies.get("refresh_token");
-  console.log("첫 마운트 refreshtoken = ", refreshtoken_);
+  // console.log("첫 마운트 refreshtoken = ", refreshtoken_);
 
   const fetchData = async (refreshtoken) => {
     try {
