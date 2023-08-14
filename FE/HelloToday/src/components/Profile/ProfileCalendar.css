@@ -62,3 +62,6 @@
 .fc-button-primary {
   border-radius: 8px;
 }
+.fc-event-time {
+  display: none;
+}
