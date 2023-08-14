@@ -61,6 +61,10 @@
 }
 
 .Profilecontent {
+  flex: 7.2;
+}
+
+.Profilecontent {
   font-family: "TheJamsil5Bold";
   width: 70%;
   margin: 2rem;
@@ -246,7 +250,6 @@
   color: #a581cf;
   background: rgb(255, 255, 255);
 }
-
 
 /*회원 정보 수정*/
 .Profile_edit_btn {
