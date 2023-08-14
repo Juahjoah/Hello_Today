@@ -50,9 +50,11 @@ function ProfileCalenderDetail() {
       <Nav />
       <div className={classes.calDetailContain}>
         <div className={classes.calDetailContent}>
-          <p className={classes.calDetailDay}>{checkDate}</p>
+          <span className={classes.calDetailDay}>{checkDate}</span>
           <hr />
-          <p>{calDetails.length > 0 ? "" : "기록을 남겨주세요"}</p>
+          <p className={classes.nothingmsg}>
+            {calDetails.length > 0 ? "" : "기록을 남겨주세요😊"}
+          </p>
           <div>
             {calDetails.map((item, index) => {
               return (
@@ -89,7 +91,7 @@ function ProfileCalenderDetail() {
           </div>
         </div>
         <hr />
-        <div>
+        <div  className={classes.calendardetail_btn}>
           <button
             type="button"
             className={classes.btn_back}

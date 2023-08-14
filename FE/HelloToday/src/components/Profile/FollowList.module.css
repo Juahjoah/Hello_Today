@@ -1,0 +1,11 @@
+.followCard {
+  border: 1px solid #ccc;
+  width: 4rem;
+  height: 2.3rem;
+  margin: 1rem;
+}
+
+.followImg {
+  width: 2rem;
+  height: 2rem;
+}

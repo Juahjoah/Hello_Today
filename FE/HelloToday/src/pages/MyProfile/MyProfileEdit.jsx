@@ -33,7 +33,7 @@ function MyProfileEdit() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/${params.memberId}`, {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
@@ -92,7 +92,7 @@ function MyProfileEdit() {
 
   const widgetAxios = async () => {
     axios({
-      url: `${process.env.REACT_APP_BASE_URL}/api/mypage/widget`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/mypage/widget/${params.memberId}`,
       method: "get",
       headers: {
         Authorization: AccsesToken,

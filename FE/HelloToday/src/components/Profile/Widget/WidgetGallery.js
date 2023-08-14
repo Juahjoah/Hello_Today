@@ -1,3 +1,5 @@
+import classes from "./WidgetGallery.module.css";
+
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -41,14 +43,18 @@ function WidgetGallery() {
   };
 
   return (
-    <div className="WidgetGallery">
+    <div className={classes.WidgetGallery}>
       <p> 소중한 루틴 추억 ^_^</p>
       <div>
         {nowPicItem.length === 0 && <p>등록된 사진이 없습니다.</p>}
         {nowPicItem.length > 0 &&
           nowPicItem.map((galleryItem) => (
             <div key={galleryItem.imgPath}>
-              <img src={galleryItem.imgPath} alt="userGallery.Item" />
+              <img
+                className={classes.galleryIgmItem}
+                src={galleryItem.imgPath}
+                alt="userGallery.Item"
+              />
             </div>
           ))}
 

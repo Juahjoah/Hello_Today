@@ -31,57 +31,16 @@ function GroupRoomPage({ myUserName, accessToken, memberId }) {
       });
 
       const slicedPosts = groupRoomResponse.data.rooms || [];
-      //   const slicedPosts = groupRoomResponse.data.rooms;
 
-      //   const filledPosts = Array.from(
-      //     { length: postPerPage },
-      //     (_, index) => slicedPosts[index] || "dummy"
-      //   );
-
-      // ...
       const filledPosts = Array.from({ length: postPerPage }, (_, index) =>
         index < slicedPosts.length ? slicedPosts[index] : "dummy"
       );
-      // ...
 
-      console.log(filledPosts);
-      console.log(groupRoomResponse.data.totalRooms);
       setCurrentPosts(filledPosts);
       setTotalRoomCount(groupRoomResponse.data.totalRooms);
     }
     axiosGroupRoomList();
-  }, [page]);
-
-  //
-
-  //   useEffect(() => {
-  //     async function axiosGroupRoomList() {
-  //       try {
-  //         const groupRoomResponse = await axios({
-  //           url: `${process.env.REACT_APP_BASE_URL}/api/rooms/list`,
-  //           method: "get",
-  //           headers: {
-  //             Authorization: accessToken,
-  //           },
-  //         });
-
-  //         const reversedPosts = [...groupRoomResponse.data].reverse();
-  //         const slicedPosts = reversedPosts.slice(
-  //           indexOfFirstPost,
-  //           indexOfLastPost
-  //         );
-  //         const filledPosts = Array.from(
-  //           { length: postPerPage },
-  //           (_, index) => slicedPosts[index] || "dummy"
-  //         );
-  //         setPosts(reversedPosts);
-  //         setCurrentPosts(filledPosts);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //       }
-  //     }
-  //     axiosGroupRoomList();
-  //   }, [indexOfFirstPost, indexOfLastPost, postPerPage, accessToken]);
+  }, [page, accessToken]);
 
   return (
     <>
