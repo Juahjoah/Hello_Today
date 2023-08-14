@@ -54,3 +54,6 @@
 .tippy-box[data-placement^="top"] > .tippy-arrow:before {
   border-top-color: #a581cf !important;
 }
+.fc-event-time {
+  display: none;
+}
