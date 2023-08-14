@@ -1,5 +1,5 @@
 import classes from "./SelectedRoutine.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoutineAuthCard from "./RoutineAuthCard";
 import { Link } from "react-router-dom";
 import MainBanner from "../common/MainBanner";
@@ -14,10 +14,58 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { routineCheck } from "../../store/routineCheckModalSlice"
 import Swal from "sweetalert2";
+import confetti from "canvas-confetti";
+import { allRoutineCheck } from "../../store/allRoutineCheckSlice";
 
 function SelectedRoutine({ routinePrivate }) {
+
+  const allRoutineCheckFlag = useSelector((state) => state.allRoutineCheck);
+  useEffect(() => {
+    if (allRoutineCheckFlag) {
+      fire(0.25, {
+        spread: 100,
+        startVelocity: 60,
+      });
+      fire(0.2, {
+        spread: 110,
+      });
+      fire(0.35, {
+        spread: 120,
+        decay: 0.91,
+        scalar: 1.0
+      });
+      fire(0.1, {
+        spread: 150,
+        startVelocity: 25,
+        decay: 0.92,
+        scalar: 1.5
+      });
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 45,
+      });
+
+      Swal.fire({
+        title: "루틴 진행",
+        text: "루틴을 모두 진행하셨습니다! 🎉",
+        confirmButtonText: "확인"
+      })
+    }
+  }, [allRoutineCheckFlag]);
+
+  var count = 300;
+  var defaults = {
+    origin: { y: 0.8 }
+  };
+
+  function fire(particleRatio, opts) {
+    confetti(Object.assign({}, defaults, opts, {
+      particleCount: Math.floor(count * particleRatio)
+    }));
+  }
+
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const routineAuthBannerImg = "main_banner_routineAuth1";
   const routineAuthBannerMents = [
@@ -101,7 +149,7 @@ function SelectedRoutine({ routinePrivate }) {
     const calCheckSeq =
       Math.ceil(
         Math.abs(routineCheckDt.getTime() - routineStartDt.getTime()) /
-          (1000 * 60 * 60 * 24)
+        (1000 * 60 * 60 * 24)
       ) + 1;
 
     let offset = new Date().getTimezoneOffset() * 60000;
@@ -122,8 +170,6 @@ function SelectedRoutine({ routinePrivate }) {
       checkDate: checkDate,
     };
 
-    console.log(routineCheckRequest);
-
     formData.append(
       "request",
       new Blob([JSON.stringify(routineCheckRequest)], {
@@ -143,8 +189,6 @@ function SelectedRoutine({ routinePrivate }) {
         }
       )
       .then((res) => {
-        console.log(res.data);
-        console.log("루틴 인증 성공");
         navigate('/');
       })
       .then(() => {
@@ -156,7 +200,7 @@ function SelectedRoutine({ routinePrivate }) {
       })
 
       .catch((error) => {
-        if(error.response.data.code === 4001) {
+        if (error.response.data.code === 4001) {
           Swal.fire({
             icon: "warning",
             title: "루틴 인증",
@@ -167,12 +211,42 @@ function SelectedRoutine({ routinePrivate }) {
       });
   };
 
+  function checkRoutineCheckAll(routinePrivate) {
+    var flag = true;
+    for (var i = 0; i < routinePrivate?.routineDetailCatCheck?.length; i++) {
+      for (var j = 0; j < routinePrivate.routineDetailCatCheck[i].routineCheckDtoList.length; j++) {
+        if (routinePrivate.routineDetailCatCheck[i].routineCheckDtoList[j].checkDate == null) {
+          return false;
+        }
+      }
+    }
+    return flag;
+  }
+
+  const result = checkRoutineCheckAll(routinePrivate);
+
+  if (result) {
+    dispatch(allRoutineCheck(true));
+  }
+
+
   return (
     <div>
       <MainBanner
         bannerImg={routineAuthBannerImg}
         bannerMent={routineAuthBannerMents}
       />
+      <div className={classes.routineSelectMain}>
+        <div className={classes.test}>
+        오늘도 루틴을 잘 진행하셨나요?!
+
+          <span className={classes.testSide} style={{marginLeft: "20px"}}>
+          루틴을 모두 7일 동안 성공하면 '오늘도, 안녕'의 깜짝 선물이!
+          </span>
+        </div>
+      </div>
+
+
       <div className={classes.routineCardSection}>
         {routinePrivate.routineDetailCatCheck.map((item) => {
           return (
@@ -201,7 +275,7 @@ function SelectedRoutine({ routinePrivate }) {
             오늘의 루틴을 진행할 힘을 얻을 수 있을거랍니다!
           </p>
           <Link to="/GroupRoutine">
-            <button className={classes.toGroupBannerLeftBtn} style={{marginTop: "15px"}}>
+            <button className={classes.toGroupBannerLeftBtn} style={{ marginTop: "15px" }}>
               단체루틴 바로가기
             </button>
           </Link>
@@ -259,19 +333,19 @@ function SelectedRoutine({ routinePrivate }) {
                   이번 루틴은 어떠셨나요?
                 </div>
                 <div className={classes.authtextArea}>
-                <textarea 
-                  className={classes.authModalMainRightTextArea}
-                  name="textarea"
-                  spellCheck="false"
-                  defaultValue={routineAuthText} // 업데이트된 부분
-                  onChange={handleTextChange} // 업데이트된 부분
-                  maxLength="500" 
-                  placeholder="오늘 진행한 루틴은 어땠는지 한 이야기를 들려주세요."
-                ></textarea>
-                <div className={classes.authModalMainRightTextAreaLimit}>
-                  <span>{routineInputkTextCount}</span>
-                  <span>/500 자</span>
-                </div>
+                  <textarea
+                    className={classes.authModalMainRightTextArea}
+                    name="textarea"
+                    spellCheck="false"
+                    defaultValue={routineAuthText} // 업데이트된 부분
+                    onChange={handleTextChange} // 업데이트된 부분
+                    maxLength="500"
+                    placeholder="오늘 진행한 루틴은 어땠는지 한 이야기를 들려주세요."
+                  ></textarea>
+                  <div className={classes.authModalMainRightTextAreaLimit}>
+                    <span>{routineInputkTextCount}</span>
+                    <span>/500 자</span>
+                  </div>
                 </div>
               </div>
               <div className={classes.authModalMainRightImg}>
