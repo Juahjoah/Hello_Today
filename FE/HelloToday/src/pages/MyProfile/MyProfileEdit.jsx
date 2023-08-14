@@ -17,6 +17,7 @@ import { removeCookieToken } from "../../components/User/CookieStorage";
 import { DELETE_TOKEN } from "../../store/TokenSlice";
 
 import { Logoutstate } from "../../store/LoginSlice";
+import Swal from "sweetalert2";
 
 function MyProfileEdit() {
   //------------------------------로그인 시작
@@ -203,6 +204,11 @@ function MyProfileEdit() {
   const [FollowButtonClick, setFollowButtonClick] = useState(false);
 
   const navigate = useNavigate();
+
+  //회원 탈퇴하기
+  const memberId = useParams().memberId; //url에서 param가져오기
+  const smemberId = sessionStorage.getItem("memberId");
+
   const handleunregister = async () => {
     //백에 요청 날리고
     const data = {
@@ -210,20 +216,39 @@ function MyProfileEdit() {
         Authorization: AccsesToken,
       },
     };
-    if (window.confirm("정말로 탈퇴하시겠습니까?")) {
-      try {
-        await axios.get(`${process.env.REACT_APP_BASE_URL}/api/test`, data);
-        //logoutpage 하기
-        // store에 저장된 Access Token 정보를 삭제
-        dispatch(DELETE_TOKEN());
-        // Cookie에 저장된 Refresh Token 정보를 삭제
-        removeCookieToken();
-        dispatch(Logoutstate());
-        sessionStorage.clear();
-        navigate("/");
-      } catch (error) {}
-    } else {
-    }
+    Swal.fire({
+      title: "정말로 탈퇴하시겠어요?",
+      text: "다시 되돌릴 수 없습니다",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "회원 탈퇴 진행",
+      cancelButtonText: "회원 탈퇴 취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          "회원 탈퇴되었습니다.",
+          "회원님의 정보가 삭제되었습니다.",
+          "succcess"
+        );
+        try {
+          const res = axios.delete(
+            `${process.env.REACT_APP_BASE_URL}/api/members/withdrawal`,
+            data
+          );
+          console.log("탈퇴 결과", res);
+          dispatch(DELETE_TOKEN()); // store에 저장된 Access Token 정보를 삭제
+          removeCookieToken(); // Cookie에 저장된 Refresh Token 정보를 삭제
+          dispatch(Logoutstate());
+          sessionStorage.clear();
+          localStorage.clear();
+          navigate("/");
+        } catch (error) {
+          console.log("회원탈퇴 에러", error);
+        }
+      }
+    });
   };
   return (
     <>
@@ -342,6 +367,18 @@ function MyProfileEdit() {
           </div>
         </div>
       </div>
+      {memberId === smemberId ? (
+        <div className={classes.profile_unregist}>
+          <button
+            className={classes.profile_unregist_btn}
+            onClick={() => handleunregister()}
+          >
+            회원 탈퇴
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
