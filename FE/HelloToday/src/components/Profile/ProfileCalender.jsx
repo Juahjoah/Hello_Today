@@ -73,7 +73,11 @@ export function ProfileCalender() {
               calDate: item.calDate,
               title: item.content,
               description:
-                item.calDate < 1 ? `D ${item.calDate}` : `D + ${item.calDate}`,
+                item.calDate > 1
+                  ? `D +${item.calDate}`
+                  : item.calDate === 0
+                  ? "D-day"
+                  : `D ${item.calDate}`,
               start: item.finalDate,
               createDate: item.createdDate,
               memberid: item.memberId,
