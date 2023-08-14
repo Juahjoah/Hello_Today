@@ -1,3 +1,5 @@
+import classes from "./FollowList.module.css";
+
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -66,8 +68,12 @@ function FollowList() {
       {nowFollowings.length === 0 && <div>팔로잉 없음</div>}
       {nowFollowings.length > 0 &&
         nowFollowings.map((following) => (
-          <div key={following.memberId}>
-            <img src={following.profilePath} alt="followerImg" />
+          <div className={classes.followItem} key={following.memberId}>
+            <img
+              className={classes.followImg}
+              src={following.profilePath}
+              alt="followerImg"
+            />
             {following.nickname}
           </div>
         ))}
@@ -95,8 +101,12 @@ function FollowList() {
       {nowFollowers.length === 0 && <div>팔로워 없음</div>}
       {nowFollowers.length > 0 &&
         nowFollowers.map((follower) => (
-          <div key={follower.memberId}>
-            <img src={follower.profilePath} alt="followerImg" />
+          <div className={classes.followItem} key={follower.memberId}>
+            <img
+              className={classes.followImg}
+              src={follower.profilePath}
+              alt="followerImg"
+            />
             {follower.nickname}
           </div>
         ))}
