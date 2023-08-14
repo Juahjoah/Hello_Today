@@ -152,8 +152,9 @@ function WidgetComments() {
   const startIndex = Math.max(indexOfFirstItem, 0);
   const endIndex = Math.min(indexOfLastItem, comments.length);
 
-  const nowComments =
-    comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
+  const nowComments = comments
+    ? comments
+    : comments.slice(startIndex, endIndex);
   // const nowComments =
   //   comments[0] === undefined ? comments.slice(startIndex, endIndex) : [];
 
