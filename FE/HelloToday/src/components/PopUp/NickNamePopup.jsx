@@ -62,7 +62,6 @@ function NickNamePopup({
     })
       .then((res) => {
         const isValidNick = res.data.success;
-        console.log(isValidNick);
 
         if (isValidNick) {
           alert("사용가능한 닉네임입니다!");
@@ -122,8 +121,6 @@ function NickNamePopup({
       borderRadius: "12px",
     },
   };
-
-  console.log(typeof FirstLogin);
 
   return (
     <Modal style={modalStyle} isOpen={FirstLogin}>

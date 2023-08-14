@@ -116,10 +116,6 @@ function GroupRoutine() {
 
   const handleMakeRoomInfo = () => {
     if (roomName && roomDesc) {
-      console.log(`방 제목 : ${roomName}`);
-      console.log(`방 설명 : ${roomDesc}`);
-      console.log(`방 제한 인원 : ${memberCount}`);
-
       const requestData = {
         title: roomName,
         description: roomDesc,
@@ -138,7 +134,7 @@ function GroupRoutine() {
         const sessionId = res.data.data.sessionId;
         const Token = res.data.data.token;
         const roomId = res.data.data.roomId;
-        // console.log(roomId);
+
         enterRoom(sessionId, Token, roomId);
       });
     } else if (!roomName) {
@@ -213,7 +209,11 @@ function GroupRoutine() {
             직접 방을 개설해 보시는건 어떠세요?
           </div>
 
-          <button onClick={openModal} className={classes.makeRoomLeftBtn} style={{marginTop: "15px"}}>
+          <button
+            onClick={openModal}
+            className={classes.makeRoomLeftBtn}
+            style={{ marginTop: "15px" }}
+          >
             방 생성하기
           </button>
         </div>

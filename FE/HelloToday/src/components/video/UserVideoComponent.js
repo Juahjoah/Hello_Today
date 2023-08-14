@@ -6,7 +6,6 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 
 function VideoComponent(props) {
-
   const memberId = parseInt(
     JSON.parse(props.streamManager.stream.connection.data).clientData.memberId
   );
@@ -27,10 +26,13 @@ function VideoComponent(props) {
   useEffect(() => {
     async function followCheckAxios() {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/follow`, {
-          params: { memberId: memberId },
-          headers: { Authorization: accessToken },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/follow`,
+          {
+            params: { memberId: memberId },
+            headers: { Authorization: accessToken },
+          }
+        );
         console.log(response.data.data);
         setIsFollow(response.data.data);
       } catch (error) {
@@ -76,10 +78,13 @@ function VideoComponent(props) {
 
   const unFollow = async () => {
     try {
-      const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/follow`, {
-        params: { target: memberId },
-        headers: { Authorization: accessToken },
-      });
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/api/follow`,
+        {
+          params: { target: memberId },
+          headers: { Authorization: accessToken },
+        }
+      );
       console.log(response);
       setIsFollow(false);
     } catch (error) {
