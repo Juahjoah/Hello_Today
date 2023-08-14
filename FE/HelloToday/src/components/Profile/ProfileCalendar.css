@@ -26,6 +26,11 @@
 .fc-event {
   color: #a581cf !important;
 }
+
+.fc-event-time {
+  display: none;
+}
+
 .fc-daygrid-event-dot {
   border: calc(var(--fc-daygrid-event-dot-width) / 2) solid #a581cf !important;
 }
