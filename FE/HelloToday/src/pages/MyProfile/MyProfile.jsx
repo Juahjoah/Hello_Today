@@ -11,7 +11,6 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-
 //로그인
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
@@ -20,6 +19,10 @@ import allAuth from "../../components/User/allAuth";
 //회원탈퇴
 import { useNavigate } from "react-router";
 
+import { removeCookieToken } from "../../components/User/CookieStorage";
+import { DELETE_TOKEN } from "../../store/TokenSlice";
+
+import { Logoutstate } from "../../store/LoginSlice";
 
 function MyProfile() {
   //------------------------------로그인 시작
@@ -50,8 +53,8 @@ function MyProfile() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        // console.log("user정보 가지고 와랐!!!!");
-        // console.log(response.data);
+        console.log("user정보 가지고 와랐!!!!");
+        console.log(response.data);
         setUser({
           memberId: response.data.memberId,
           nickname: response.data.nickname,
@@ -62,9 +65,9 @@ function MyProfile() {
         setURLThumbnail(response.data.profilePath);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
-  }, [AccsesToken, isUserEdit, memberId]);
+  }, [AccsesToken, isUserEdit]);
 
   const [Menu, setMenu] = useState(0);
 
@@ -72,7 +75,34 @@ function MyProfile() {
 
   const navigate = useNavigate();
 
- 
+  //회원 탈퇴하기
+  const handleunregister = async () => {
+    //백에 요청 날리고
+    const data = {
+      headers: {
+        Authorization: AccsesToken,
+      },
+    };
+    if (window.confirm("정말로 탈퇴하시겠습니까?")) {
+      try {
+        const res = await axios.delete(
+          `${process.env.REACT_APP_BASE_URL}/api/members/withdrawal`,
+          data
+        );
+        console.log("탈퇴 결과", res);
+        dispatch(DELETE_TOKEN()); // store에 저장된 Access Token 정보를 삭제
+        removeCookieToken(); // Cookie에 저장된 Refresh Token 정보를 삭제
+        dispatch(Logoutstate());
+        sessionStorage.clear();
+        localStorage.clear();
+        navigate("/");
+      } catch (error) {
+        console.log("회원탈퇴 에러", error);
+      }
+    } else {
+      console.log("회원탈퇴를 취소하셨습니다.");
+    }
+  };
   //회원정보 수정
   const nicknameinput = useRef();
   const stMsginput = useRef();
@@ -143,7 +173,7 @@ function MyProfile() {
       stMsg: user.stMsg,
       file: user.file,
     };
-    // console.log(selectedFile);
+    console.log(selectedFile);
 
     formData.append(
       "request",
@@ -166,13 +196,12 @@ function MyProfile() {
         }
       )
       .then((res) => {
-        // console.log("제출결과 : ", res);
+        console.log("제출결과 : ", res);
         //edit모드 false로 바꾸기
         setIsUserEdit(false);
-        localStorage.setItem("nickName", user.nickname);
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
       });
   };
   return (
@@ -267,37 +296,12 @@ function MyProfile() {
                         }}
                       />
                     </button>
-                  </div>
-                  {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
-                </form>
-              </div>
-            ) : (
-              <div className={classes.UserInfoList}>
-                <img
-                  className={classes.ProfileImg}
-                  src={user.profilePath}
-                  alt={user.Userprofilepic}
-                />
-                <p className={classes.ProfilenNickName}>{user.nickname}</p>
-                <p className={classes.ProfileMsg}>{user.stMsg}</p>
-                {memberId === smemberId ? (
-                  <button className={classes.editbtn}>
-                    <img
-                      src="../../images/Widget/gear.png"
-                      alt="useredit"
-                      onClick={handleUserEdit}
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                      }}
-                    />
-                  </button>
-                ) : (
-                  <></>
-                )}
-              </div>
-            )}
-            {/* <Link to="/MyProfile/edit">
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              )}
+              {/* <Link to="/MyProfile/edit">
               <button>편집모드 이도오옹</button>
             </Link> */}
               {/* 팔로잉/팔로워 */}
@@ -318,15 +322,6 @@ function MyProfile() {
               />
             </div>
           </div>
-
-          <div className={classes.userInfoMenu}>
-            <ProfileMenu
-              setMenu={setMenu}
-              setFollowButtonClick={setFollowButtonClick}
-              memberId={params.memberId}
-              Token={AccsesToken}
-            />
-          </div>
         </div>
 
         {/* 화면 오른쪽 화면 출력 창 */}
@@ -340,6 +335,18 @@ function MyProfile() {
           {/* <ProfileMain Menu={Menu} /> */}
         </div>
       </div>
+      {/* {memberId === smemberId ? (
+        <div className={classes.profile_unregist}>
+          <button
+            className={classes.profile_unregist_btn}
+            onClick={() => handleunregister()}
+          >
+            회원 탈퇴
+          </button>
+        </div>
+      ) : (
+        <></>
+      )} */}
     </div>
   );
 }
