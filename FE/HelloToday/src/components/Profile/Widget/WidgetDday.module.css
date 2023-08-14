@@ -72,8 +72,7 @@
   margin-right: 10px;
 }
 .WidgetDday_input_btn button {
-  font-family: "The Jamsil OTF" !important;
-  font-weight: bold !important;
+  font-family: "TheJamsil5Bold";
   background-color: white; /* 파란색 */
   color: #a581cf;
   border: #a581cf solid;

@@ -87,7 +87,7 @@ function WidgetDday() {
           {/* dday 데이터 있으면 뿌려주고 아니면 글 써달라는 거 써놓기  */}
           {ddaydata.length === 0 ? (
             <div className={classes.WidgetDday_nothing}>
-              새로운 D-Day를 입력해주세요
+              새로운 D-Day를 입력해주세요😊
             </div>
           ) : (
             ddaydata.map((item) => {
