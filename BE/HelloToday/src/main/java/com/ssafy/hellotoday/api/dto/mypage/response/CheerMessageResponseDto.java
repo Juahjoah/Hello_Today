@@ -10,15 +10,17 @@ import java.time.LocalDateTime;
 public class CheerMessageResponseDto {
     private Integer messageId;
     private String writerNickName;
+    private Integer writerId;
     private Integer memberId;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private String content;
 
     @Builder
-    public CheerMessageResponseDto(Integer messageId, String writerNickName, Integer memberId, LocalDateTime createdDate, LocalDateTime modifiedDate, String content) {
+    public CheerMessageResponseDto(Integer messageId, String writerNickName, Integer writerId, Integer memberId, LocalDateTime createdDate, LocalDateTime modifiedDate, String content) {
         this.messageId = messageId;
         this.writerNickName = writerNickName;
+        this.writerId = writerId;
         this.memberId = memberId;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
@@ -28,6 +30,7 @@ public class CheerMessageResponseDto {
     public CheerMessageResponseDto(CheerMessage cheerMessage) {
         this.messageId = cheerMessage.getCheerMessageId();
         this.writerNickName = cheerMessage.getWriter().getNickname();
+        this.writerId = cheerMessage.getWriter().getMemberId();
         this.memberId = cheerMessage.getMember().getMemberId();
         this.createdDate = cheerMessage.getCreatedDate();
         this.modifiedDate = cheerMessage.getModifiedDate();
