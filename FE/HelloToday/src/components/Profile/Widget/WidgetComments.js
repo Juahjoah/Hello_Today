@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { configureStore } from "@reduxjs/toolkit";
-import { cl } from "@fullcalendar/core/internal-common";
 
 function WidgetComments() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
