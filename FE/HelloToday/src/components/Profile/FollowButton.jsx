@@ -39,8 +39,6 @@ function FollowButton(props) {
       });
   };
 
-  console.log(isFollow);
-
   const UserFollowClick = () => {
     if (!isFollow) {
       // event.target.innerText = "Follow";
