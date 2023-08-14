@@ -25,6 +25,9 @@
   /* border: 1px solid black; */
   display: flex;
 }
+.WidgetContentTxt {
+  margin: 0 auto;
+}
 
 .galleryIgmItem {
   margin: 0.4rem 0rem 0rem 0.4rem;
