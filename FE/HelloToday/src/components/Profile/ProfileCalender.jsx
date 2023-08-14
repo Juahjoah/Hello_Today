@@ -72,7 +72,8 @@ export function ProfileCalender() {
               //디데이 데이터
               calDate: item.calDate,
               title: item.content,
-              description: `${item.content} D${item.calDate}`,
+              description:
+                item.calDate < 1 ? `D ${item.calDate}` : `D + ${item.calDate}`,
               start: item.finalDate,
               createDate: item.createdDate,
               memberid: item.memberId,
