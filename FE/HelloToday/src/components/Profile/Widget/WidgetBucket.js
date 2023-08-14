@@ -23,6 +23,7 @@ function WidgetBucket() {
   const getBucket = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/bucketlist`, {
+        params: { memberId },
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {

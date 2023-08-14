@@ -22,7 +22,7 @@ function HomeThree({ AllRoutineList, goHomeMountain, HomeThreeWantVisible }) {
     if (HomeThreeWantVisible) {
       setTimeout(() => {
         setIsVisible(true);
-      }, 4000);
+      }, 3000);
     }
   }, [HomeThreeWantVisible]);
 

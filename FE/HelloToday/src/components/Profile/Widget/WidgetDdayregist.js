@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function WidgetDdayregist() {
   const ddaycontentinput = useRef();
+  const ddayfinalinput = useRef();
   const ddaydataId = useRef(0);
   const memberId = useParams().memberId; //url에서 param가져오기
   const dispatch = useDispatch();
@@ -28,10 +29,12 @@ function WidgetDdayregist() {
   const handleChangeState = (e) => {
     // console.log(e.target.value);
     // console.log(typeof e.target.value);
+
     setNewDday({
       ...newDday,
       [e.target.name]: e.target.value,
     });
+    console.log(newDday);
   };
 
   // submit 보냄
@@ -42,7 +45,10 @@ function WidgetDdayregist() {
       ddaycontentinput.current.focus();
       return;
     }
-
+    if (newDday.finalDate.length < 1) {
+      ddayfinalinput.current.focus();
+      return;
+    }
     //백에 연락 날리기
     const data = {
       finalDate: new Date(newDday.finalDate).toISOString(),
@@ -76,11 +82,13 @@ function WidgetDdayregist() {
       <div className={classes.WidgetDday_date}>
         <p className={classes.WidgetDday_txt}>날짜</p>
         <input
+          ref={ddayfinalinput}
           type="date"
           placeholder="날짜를 선택해주세요."
           name="finalDate" //이거 써야 변수와 연결
           value={newDday.finalDate}
           onChange={handleChangeState}
+          className={newDday.finalDate ? "" : "WidgetDday_highlight"}
         />
       </div>
       <div>
