@@ -3,6 +3,7 @@ import classes from "./NickNamePopup.module.css";
 import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
+import Swal from "sweetalert2";
 
 function NickNamePopup({
   FirstLogin,
@@ -65,11 +66,21 @@ function NickNamePopup({
         console.log(isValidNick);
 
         if (isValidNick) {
-          alert("사용가능한 닉네임입니다!");
+          Swal.fire({
+              icon: "success",
+              title: "닉네임 설정",
+              text: "사용가능한 닉네임입니다.",
+              confirmButtonText: "확인"
+          });
           setValidUserName(isValidNick);
           setCheckUserNameMessage("✔");
         } else {
-          alert("이미 존재하는 닉네임입니다!");
+          Swal.fire({
+            icon: "warning",
+            title: "닉네임 설정",
+            text: "이미 존재하는 닉네임입니다.",
+            confirmButtonText: "확인",
+          })
           setUserName("");
         }
       })
