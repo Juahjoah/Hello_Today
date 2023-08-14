@@ -16,6 +16,7 @@ function WidgetComments() {
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [isMe, setIsMe] = useState(false);
+  const [isWriter, setIsWriter] = useState(false);
 
   const [nowPage, setNowPage] = useState(1);
   const itemsIncludePage = 3;
@@ -26,6 +27,9 @@ function WidgetComments() {
       loggedInUserId === memberId ||
         comments.some((comment) => comment.writerNickName === loggedInUserId)
       // memberId === +sessionStorage.getItem("memberId") ? true : false
+    );
+    setIsWriter(
+      comments.some((comment) => comment.writerNickName === loggedInUserId)
     );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -151,7 +155,7 @@ function WidgetComments() {
   // const nowComments =
   //   comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
   const nowComments = comments
-    ? comments
+    ? comments.slice(startIndex, endIndex)
     : comments.slice(startIndex, endIndex);
 
   const paginate = (pageNumber) => {
@@ -198,7 +202,7 @@ function WidgetComments() {
                   <div className={classes.commentPostIt}>
                     <p>{comment.content}</p>
                     {comment.writerNickName}
-                    {isMe && (
+                    {isMe && isWriter && (
                       <button
                         className={classes.editButtonStyle}
                         onClick={() => {
@@ -210,7 +214,7 @@ function WidgetComments() {
                         <img src="../../images/Widget/edit.png" alt="edit" />
                       </button>
                     )}
-                    {isMe && (
+                    {isMe && isWriter && (
                       <button
                         className={classes.editButtonStyle}
                         // onClick={() => DeleteComment(comment.messageId)}
