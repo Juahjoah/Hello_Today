@@ -6,57 +6,45 @@
   font-style: normal;
 }
 
-.WidgetComments {
+.WidgetBucket {
   font-family: "TheJamsil5Bold";
   box-shadow: 0 0 5px #333;
   border-radius: 10px;
   padding: 1rem;
   margin: 2rem 1rem;
 }
-.CommentSection {
+
+.bucketTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.editButtonStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.bucketSection {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-
-.WidgetCommentsTitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-.commentPostIt {
-  border: 1px solid #aaaaaa;
-  width: 12rem;
-  height: 14rem;
-  margin: 1rem;
-
-  background-color: #fff8e1;
-  padding: 20px;
-  position: relative;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  transform: rotate(-3deg);
+.bucketListSection {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between;
+  align-items: center; */
 }
 
-.commentPostIt::before {
-  /* content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 15px solid yellow;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%); */
-  /* top: 0;
-  left: 0;
-  width: 20px;
-  height: 100%;
-  background-color: #f9e56d;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px; */
+.bucketList {
+  display: flex;
+  flex-direction: column;
+}
+
+.bucketItem {
+  display: flex;
 }
 
 .editButtonStyle {

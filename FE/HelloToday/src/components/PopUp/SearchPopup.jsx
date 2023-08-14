@@ -8,6 +8,8 @@ import SearchHashTag from "./SearchHashTag";
 import { HiSearch } from "react-icons/hi";
 import { GrFormRefresh } from "react-icons/gr";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+
 function getRandomIndexes(totalLength, count) {
   const indexes = [];
   while (indexes.length < count) {
@@ -48,7 +50,12 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
 
   const searchAxios = () => {
     if (userName === "") {
-      alert("닉네임을 입력해주세요");
+      Swal.fire({
+        icon: "info",
+        title: "닉네임 설정",
+        text: "닉네임을 설정해주세요",
+        confirmButtonText: "확인"
+      })
       return;
     }
     axios({

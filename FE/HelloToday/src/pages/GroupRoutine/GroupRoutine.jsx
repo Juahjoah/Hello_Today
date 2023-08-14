@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import classNames from "classnames";
 import GroupRoomPage from "../../components/common/groupRoomPagination/GroupRoomPage";
+import Footer from "../../components/common/Footer";
 
 //로그인
 import React, { useEffect } from "react";
@@ -317,6 +318,8 @@ function GroupRoutine() {
           )}
         </div>
       </Modal>
+
+      <Footer />
     </div>
   );
 }
