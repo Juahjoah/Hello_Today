@@ -44,14 +44,14 @@ function WidgetGallery() {
 
   return (
     <div className={classes.WidgetGallery}>
-      <p> 소중한 루틴 추억 ^_^</p>
-      <div>
+      <span className={classes.WidgetDday_name}>갤러리</span>
+      <div className={classes.WidgetContent}>
         {nowPicItem.length === 0 && <p>등록된 사진이 없습니다.</p>}
         {nowPicItem.length > 0 &&
           nowPicItem.map((galleryItem) => (
-            <div key={galleryItem.imgPath}>
+            <div className={classes.galleryIgmItem} key={galleryItem.imgPath}>
               <img
-                className={classes.galleryIgmItem}
+                className={classes.galleryIgm}
                 src={galleryItem.imgPath}
                 alt="userGallery.Item"
               />
