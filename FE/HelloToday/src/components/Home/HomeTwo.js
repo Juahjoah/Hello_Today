@@ -12,7 +12,7 @@ function HomeTwo({ goHomeThree, HomeTwoWantVisible }) {
     if (HomeTwoWantVisible) {
       setTimeout(() => {
         setIsVisible(true);
-      }, 1500);
+      }, 2000);
     }
   }, [HomeTwoWantVisible]);
 
