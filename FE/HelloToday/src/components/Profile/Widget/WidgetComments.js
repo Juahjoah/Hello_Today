@@ -35,8 +35,6 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
-  console.log(memberId);
-
   const getComments = async (memberId) => {
     await axios
       .get(
@@ -154,10 +152,10 @@ function WidgetComments() {
   const startIndex = Math.max(indexOfFirstItem, 0);
   const endIndex = Math.min(indexOfLastItem, comments.length);
 
-  // const nowComments =
-  //   comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
   const nowComments =
-    comments[0] === undefined ? comments.slice(startIndex, endIndex) : [];
+    comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
+  // const nowComments =
+  //   comments[0] === undefined ? comments.slice(startIndex, endIndex) : [];
 
   const paginate = (pageNumber) => {
     setNowPage(pageNumber);
@@ -203,7 +201,9 @@ function WidgetComments() {
                   <div className={classes.commentPostIt}>
                     <p>{comment.content}</p>
                     {comment.writerNickName}
-                    {isMe && isWriter && (
+                    {comment.createdDate}
+                    {/* {isMe && isWriter && ( */}
+                    {isMe && (
                       <button
                         className={classes.editButtonStyle}
                         onClick={() => {
@@ -215,7 +215,8 @@ function WidgetComments() {
                         <img src="../../images/Widget/edit.png" alt="edit" />
                       </button>
                     )}
-                    {isMe && isWriter && (
+                    {/* {isMe && isWriter && ( */}
+                    {isMe && (
                       <button
                         className={classes.editButtonStyle}
                         // onClick={() => DeleteComment(comment.messageId)}
