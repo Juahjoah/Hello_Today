@@ -54,8 +54,8 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
         icon: "info",
         title: "닉네임 설정",
         text: "닉네임을 설정해주세요",
-        confirmButtonText: "확인"
-      })
+        confirmButtonText: "확인",
+      });
       return;
     }
     axios({
@@ -173,6 +173,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
                     profileImg={user.profile}
                     nickname={user.nickname}
                     tagList={user.tagList}
+                    setIsPopupOpen={setIsPopupOpen}
                   />
                 ))}
               </div>
