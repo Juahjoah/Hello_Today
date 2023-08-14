@@ -94,10 +94,15 @@ function WidgetDday() {
             ddaydata.map((item) => {
               return (
                 <div className={classes.routinediary} key={item.ddayId}>
-                  <div className={classes.routineContentCenter}>
-                    <p className={classes.routineContent}>
-                      {item.content} D{item.calDate}
-                    </p>
+                  <div className={classes.WidgetDday_oneitem}>
+                    <div>
+                      <p className={classes.WidgetDday_dday}>D{item.calDate}</p>
+                    </div>
+                    <div>
+                      <p className={classes.WidgetDday_ddaycontent}>
+                        {item.content}
+                      </p>
+                    </div>
 
                     {/* 콜백으로 안 하면 그냥 다 삭제함 */}
                     {memberId === smemberId ? (
@@ -117,7 +122,7 @@ function WidgetDday() {
                             alt="clear"
                             onClick={() => handleDeleteState(item.ddayId)}
                           />
-                        </button>{" "}
+                        </button>
                       </div>
                     ) : (
                       <></>
