@@ -27,7 +27,7 @@ function SelectRoutineList({
     pagination: false,
     perPage: 5,
     autoScroll: {
-      speed: idx % 2 ? -0.5 : 0.5,
+      speed: idx % 2 ? -0.4 : 0.4,
       // pauseOnHover: false로 설정하면 슬라이더에 마우스를 올려도 자동 스크롤이 멈추지 않습니다.
       // pauseOnFocus: false로 설정하면 슬라이더가 포커스를 받아도 자동 스크롤이 멈추지 않습니다 (예: 슬라이더를 클릭한 경우).
       // rewind: false로 설정하면 자동 스크롤이 마지막 슬라이드에 도달한 후 첫 번째 슬라이드로 돌아가지 않고 멈추게 됩니다.
