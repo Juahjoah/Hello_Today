@@ -23,9 +23,9 @@ public class WishDiaryService {
     private final WishDiaryRepository wishDiaryRepository;
 
     @Transactional(readOnly = true)
-    public List<WishDiaryResponseDto> getWishDiary(Member findMember, Type type) {
+    public List<WishDiaryResponseDto> getWishDiary(Integer memberId, Type type) {
 
-        List<WishDiary> findAllBucketList = wishDiaryRepository.findAllByMemberIdAndType(findMember.getMemberId(), type);
+        List<WishDiary> findAllBucketList = wishDiaryRepository.findAllByMemberIdAndType(memberId, type);
 
 
         return findAllBucketList.stream()

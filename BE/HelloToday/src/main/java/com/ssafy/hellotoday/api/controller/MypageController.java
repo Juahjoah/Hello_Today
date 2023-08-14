@@ -61,13 +61,13 @@ public class MypageController {
 
     //마이페이지 편집 모드
     @Operation(summary = "마이페이지 위젯 사용 여부 조회", description = "마이페이지 위젯 사용 여부를 알 수 있다(0:미사용.1:사용)")
-    @GetMapping("/widget")
-    public ShowInfoFlagsResponseDto myPageWidgetInfo(HttpServletRequest httpServletRequest) {
+    @GetMapping("/widget/{memberId}")
+    public ShowInfoFlagsResponseDto myPageWidgetInfo(@PathVariable Integer memberId, HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return memberService.getWidgetInfo(findMember);
+        return memberService.getWidgetInfo(memberId);
     }
 
     @Operation(summary = "위젯 선택", description = "사용할려는 위젯 사용여부 업데이트")
@@ -158,25 +158,25 @@ public class MypageController {
     }
 
     @Operation(summary = "버킷리스트 전체 조회", description = "버킷리스트 전체 조회")
-    @GetMapping("/bucketlist")
-    public List<WishDiaryResponseDto> getBucketList(HttpServletRequest httpServletRequest) {
+    @GetMapping("/bucketlist/{memberId}")
+    public List<WishDiaryResponseDto> getBucketList(@PathVariable Integer memberId, HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
         if (token == null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.getWishDiary(findMember, Type.BUCKETLIST);
+        return wishDiaryService.getWishDiary(memberId, Type.BUCKETLIST);
     }
 
     @Operation(summary = "한줄 일기 전체 조회", description = "한줄 일기 전체 조회")
-    @GetMapping("/onediary")
-    public List<WishDiaryResponseDto> getOneDiary(HttpServletRequest httpServletRequest) {
+    @GetMapping("/onediary/{memberId}")
+    public List<WishDiaryResponseDto> getOneDiary(@PathVariable Integer memberId, HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
         if (token == null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return wishDiaryService.getWishDiary(findMember, Type.ONEDIARY);
+        return wishDiaryService.getWishDiary(memberId, Type.ONEDIARY);
     }
 
 
@@ -293,14 +293,14 @@ public class MypageController {
     }
 
     @Operation(summary = "목표 전체 조회", description = "목표 전체 조회 type(0:매일,1:매주,2:매년) header에 accessToken 필요")
-    @GetMapping("/goal")
-    public List<GoalResponseDto> getGoal(HttpServletRequest httpServletRequest) {
+    @GetMapping("/goal/{memberId}")
+    public List<GoalResponseDto> getGoal(@PathVariable Integer memberId, HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
         if (token == null) return null;
 
         Member findMember = memberService.findMemberByJwtToken(token);
 
-        return mypageService.getGoal(findMember);
+        return mypageService.getGoal(memberId);
     }
 
 
