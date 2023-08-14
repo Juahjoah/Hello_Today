@@ -67,7 +67,7 @@ function WidgetDdayEdit() {
       })
       .then((res) => {
         console.log(res);
-        alert("저장 성공");
+        // alert("저장 성공");
         //submit한 데이터 저장하기
         const updatedDdayData = ddaydata.map((item) =>
           item.ddayId === ddayid ? { ...item, ...newDday } : item

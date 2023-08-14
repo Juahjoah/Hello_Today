@@ -13,6 +13,7 @@ import classNames from "classnames";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { routineCheck } from "../../store/routineCheckModalSlice"
+import Swal from "sweetalert2";
 
 function SelectedRoutine({ routinePrivate }) {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function SelectedRoutine({ routinePrivate }) {
 
   const [value, onChange] = useState(new Date()); // 루틴 인증 날짜
   const [routineAuthText, setRoutineAuthText] = useState(""); // 루틴 인증 내용
+  const [routineInputkTextCount, setRoutineInputTextCount] = useState(0);
   const [fileName, setFileName] = useState(""); // 루틴 인증 이미지 파일
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const nickName = localStorage.getItem("nickName");
@@ -76,6 +78,7 @@ function SelectedRoutine({ routinePrivate }) {
   const handleTextChange = (event) => {
     const text = event.target.value;
     setRoutineAuthText(text);
+    setRoutineInputTextCount(text.length);
   };
 
   const handleFileChange = (event) => {
@@ -152,7 +155,16 @@ function SelectedRoutine({ routinePrivate }) {
         dispatch(routineCheck(true));
       })
 
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if(error.response.data.code === 4001) {
+          Swal.fire({
+            icon: "warning",
+            title: "루틴 인증",
+            text: "해당 날짜에 이미 인증한 내역이 존재합니다.",
+            confirmButtonText: "확인"
+          })
+        }
+      });
   };
 
   return (
@@ -246,14 +258,21 @@ function SelectedRoutine({ routinePrivate }) {
                 <div className={classes.authModalMainRightDescOne}>
                   이번 루틴은 어떠셨나요?
                 </div>
+                <div className={classes.authtextArea}>
                 <textarea 
                   className={classes.authModalMainRightTextArea}
                   name="textarea"
                   spellCheck="false"
                   defaultValue={routineAuthText} // 업데이트된 부분
                   onChange={handleTextChange} // 업데이트된 부분
+                  maxLength="500" 
                   placeholder="오늘 진행한 루틴은 어땠는지 한 이야기를 들려주세요."
                 ></textarea>
+                <div className={classes.authModalMainRightTextAreaLimit}>
+                  <span>{routineInputkTextCount}</span>
+                  <span>/500 자</span>
+                </div>
+                </div>
               </div>
               <div className={classes.authModalMainRightImg}>
                 <div className={classes.authModalMainRightDescTwo}>

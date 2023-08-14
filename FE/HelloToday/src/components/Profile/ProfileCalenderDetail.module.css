@@ -14,7 +14,15 @@
   padding: 30px;
 }
 .calDetailDay {
+  font-size: 2em;
+  /*font*/
+  color: #ffffff;
   font-size: 1.75em;
+  font-weight: bold;
+  /*상자*/
+  background-color: #a581cf;
+  padding: 4px 30px 4px 30px;
+  border-radius: 15px;
 }
 
 .calDetailContent {
@@ -57,6 +65,24 @@
 .content {
   /*루틴 인증 글*/
 }
+.calendardetail_btn {
+  float: right;
+}
 .btn_back {
-  justify-content: flex-end;
+  font-family: "TheJamsil5Bold";
+  background-color: white; /* 파란색 */
+  color: #a581cf;
+  border: #a581cf solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
+}
+.btn_back:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
+}
+
+.nothingmsg {
+  font-size: 1rem;
 }

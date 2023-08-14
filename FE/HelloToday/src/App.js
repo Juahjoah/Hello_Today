@@ -55,7 +55,7 @@ function App() {
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
       {/* 남의 memberid 가져오기 */}
       <Route path="/MyProfile/:memberId" element={<MyProfile />} />
-      <Route path="/MyProfile/edit" element={<MyProfileEdit />} />
+      <Route path="/MyProfile/edit/:memberId" element={<MyProfileEdit />} />
       <Route path="/:roomId" element={<JoinRoom />} />
 
       <Route
