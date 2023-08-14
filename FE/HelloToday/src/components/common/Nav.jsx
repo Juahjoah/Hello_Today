@@ -22,8 +22,8 @@ function Nav() {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // const memberId = sessionStorage.getItem("memberId");
-  const memberId = localStorage.getItem("memeberId");
+  const memberId = sessionStorage.getItem("memberId");
+  // const memberId = localStorage.getItem("memeberId");
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -36,7 +36,7 @@ function Nav() {
     <nav className={classes.nav}>
       <Link to="/">
         <img
-          src="images/logo_mini.png"
+          src="/images/logo_mini.png"
           alt="logo"
           className={classes.navLeftLogo}
         />

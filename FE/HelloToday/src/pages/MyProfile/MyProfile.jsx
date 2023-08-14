@@ -30,6 +30,8 @@ function MyProfile() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const [isUserEdit, setIsUserEdit] = useState(false);
   const iscaldetail = useSelector((state) => state.calendarDetail.iscaldetail);
+  const memberId = useParams().memberId; //url에서 param가져오기
+  const smemberId = sessionStorage.getItem("memberId");
 
   useEffect(() => {
     allAuth(AccsesToken, dispatch);
@@ -281,17 +283,21 @@ function MyProfile() {
                 />
                 <p className={classes.ProfilenNickName}>{user.nickname}</p>
                 <p className={classes.ProfileMsg}>{user.stMsg}</p>
-                <button className={classes.editbtn}>
-                  <img
-                    src="../../images/Widget/gear.png"
-                    alt="useredit"
-                    onClick={handleUserEdit}
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                    }}
-                  />
-                </button>
+                {memberId === smemberId ? (
+                  <button className={classes.editbtn}>
+                    <img
+                      src="../../images/Widget/gear.png"
+                      alt="useredit"
+                      onClick={handleUserEdit}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                      }}
+                    />
+                  </button>
+                ) : (
+                  <></>
+                )}
               </div>
             )}
             {/* <Link to="/MyProfile/edit">
@@ -326,14 +332,18 @@ function MyProfile() {
           {/* <ProfileMain Menu={Menu} /> */}
         </div>
       </div>
-      <div className={classes.profile_unregist}>
-        <button
-          className={classes.profile_unregist_btn}
-          onClick={() => handleunregister()}
-        >
-          회원 탈퇴
-        </button>
-      </div>
+      {memberId === smemberId ? (
+        <div className={classes.profile_unregist}>
+          <button
+            className={classes.profile_unregist_btn}
+            onClick={() => handleunregister()}
+          >
+            회원 탈퇴
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

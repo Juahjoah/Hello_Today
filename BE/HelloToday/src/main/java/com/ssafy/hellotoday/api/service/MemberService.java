@@ -192,15 +192,19 @@ public class MemberService {
     @Transactional(readOnly = true)
     public MemberInfoResponseDto getMemberInfo(Member findMember) {
 
+
         return MemberInfoResponseDto.builder()
                 .member(findMember)
                 .build();
 
     }
     @Transactional(readOnly = true)
-    public ShowInfoFlagsResponseDto getWidgetInfo(Member findMember) {
-        ShowInfo showInfo = showInfoRepository.findByIdWithMember(findMember.getMemberId())
+    public ShowInfoFlagsResponseDto getWidgetInfo(Integer memberId) {
+
+        ShowInfo showInfo = showInfoRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 유저의 공개정보가 없습니다"));
+
+
         return ShowInfoFlagsResponseDto.builder()
                 .showinfo(showInfo)
                 .build();

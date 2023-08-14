@@ -63,7 +63,6 @@ function NickNamePopup({
     })
       .then((res) => {
         const isValidNick = res.data.success;
-        console.log(isValidNick);
 
         if (isValidNick) {
           Swal.fire({
@@ -133,8 +132,6 @@ function NickNamePopup({
       borderRadius: "12px",
     },
   };
-
-  console.log(typeof FirstLogin);
 
   return (
     <Modal style={modalStyle} isOpen={FirstLogin}>
