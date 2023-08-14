@@ -1,12 +1,11 @@
 import classes from "./WidgetDday.module.css";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import {
   SET_ISEDIT,
   SET_DDAY_DATA,
   SET_DDAYID,
-  ADD_DDAY_DATA,
   SET_ISREGIST,
   SET_ISEDITF,
   SET_ISDELETE,
@@ -17,8 +16,6 @@ import WidgetDdayregist from "./WidgetDdayregist";
 
 function WidgetDday() {
   //submit 조건에 충족 안 할 때 DOM 선택해서 커서 가게 할려고
-  const ddaycontentinput = useRef();
-  const ddaydataId = useRef(0);
   const memberId = useParams().memberId; //url에서 param가져오기
   const smemberId = sessionStorage.getItem("memberId");
   const dispatch = useDispatch();
@@ -37,7 +34,7 @@ function WidgetDday() {
         headers: { Authorization: AccsesToken },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         dispatch(SET_DDAY_DATA(res.data));
         if (isRegist) {
           dispatch(SET_ISREGIST(false));
@@ -47,7 +44,7 @@ function WidgetDday() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [dispatch, isRegist, iseditf]);
 
@@ -55,8 +52,8 @@ function WidgetDday() {
     //수정
     dispatch(SET_ISEDIT(true));
     dispatch(SET_DDAYID(target));
-    console.log(isedit);
-    console.log(target);
+    // console.log(isedit);
+    // console.log(target);
   };
   const handleDeleteState = (target) => {
     //삭제
@@ -65,15 +62,15 @@ function WidgetDday() {
         headers: { Authorization: AccsesToken },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     //프런트에서 삭제
-    console.log(target);
+    // console.log(target);
     // console.log(`${item.ddayId}를 삭제합니다`);
-    // alert("삭제하겠습니까?");
+
     const newDdayList = ddaydata.filter((item) => item.ddayId !== target);
     dispatch(SET_DDAY_DATA(newDdayList));
     dispatch(SET_ISDELETE(true));
