@@ -124,6 +124,3 @@
 .WidgetDday_vedit {
   display: flex;
 }
-.WidgetDday_highlight:invalid {
-  border: 2px solid red;
-}
