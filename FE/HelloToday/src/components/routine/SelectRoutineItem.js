@@ -4,8 +4,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { addRoutine, deleteRoutine } from "../../store/SelectRoutineSlice";
 import classNames from "classnames";
-
-//
+import Swal from "sweetalert2";
 
 function SelectRoutineItem({
   routineId,
@@ -34,7 +33,12 @@ function SelectRoutineItem({
         updateSelectedCount(selectedCount + 1);
         setSelected(!selected);
       } else {
-        alert("루틴 선택은 5개까지 가능합니다!");
+        Swal.fire({
+          icon: "warning",
+          title: "루틴 선택",
+          text: "루틴 선택은 5개까지 가능합니다.",
+          confirmButtonText: "확인"
+        })
       }
     } else {
       dispatch(deleteRoutine({ routineId }));
