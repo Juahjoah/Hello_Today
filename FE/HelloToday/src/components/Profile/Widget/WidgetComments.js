@@ -135,8 +135,7 @@ function WidgetComments() {
     <div className={classes.WidgetComments}>
       <div>
         <p className={classes.WidgetCommentsTitle}>
-          {" "}
-          응원의 메세지를 남겨주세요!{" "}
+          응원의 메세지를 남겨주세요!
         </p>
         <div className={classes.CommentSection}>
           {comments.length > itemsIncludePage && (
