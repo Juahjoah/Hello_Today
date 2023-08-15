@@ -51,6 +51,9 @@ function WidgetDiary() {
   // }, [diary, props.memberId]);
 
   const createDiary = () => {
+    if (newDiary.trim() === "") {
+      return;
+    }
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/onediary`,
@@ -72,6 +75,9 @@ function WidgetDiary() {
   };
 
   const editDiary = (wishDiaryId) => {
+    if (editedDiary.trim() === "") {
+      return;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/onediary/${wishDiaryId}`,

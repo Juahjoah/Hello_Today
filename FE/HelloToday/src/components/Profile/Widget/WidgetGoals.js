@@ -50,6 +50,9 @@ function WidgetGoals() {
   }, [memberId, AccsesToken]);
 
   const createGoal = () => {
+    if (newGoal.trim() === "") {
+      return;
+    }
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/goal`,
@@ -73,6 +76,9 @@ function WidgetGoals() {
   };
 
   const editGoal = (goalId) => {
+    if (editedGoal.trim() === "") {
+      return;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/goal/${goalId}`,
