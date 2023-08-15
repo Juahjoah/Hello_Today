@@ -30,8 +30,6 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
-  console.log(isMe);
-
   const getComments = async (memberId) => {
     await axios
       .get(
@@ -243,7 +241,7 @@ function WidgetComments() {
           {comments.length > itemsIncludePage && (
             <div>
               <button
-                className={classes.editButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => paginate(nowPage + 1)}
                 disabled={
                   nowComments.length < itemsIncludePage ||
