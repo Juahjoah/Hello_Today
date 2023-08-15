@@ -40,24 +40,35 @@
 
 .bucketSection {
   display: flex;
+  width: 2rem;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   height: 17vh;
 }
+
 .bucketListSection {
   display: flex;
   flex-direction: row;
+  padding: 0;
 }
 
 .bucketList {
   display: flex;
   flex-direction: column;
-  margin: 0 90% 0 2%;
 }
 
 .bucketItem {
+  display: flex;
+  width: 45rem;
   font-size: 1rem;
+  text-align: left;
+  margin: 0.3rem;
+}
+
+.moveButtonStyle {
+  border: 0;
+  background-color: transparent;
 }
 
 .editButtonStyle {

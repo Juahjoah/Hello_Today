@@ -19,7 +19,7 @@ function WidgetBucket() {
   const [editedBucketId, setEditedBucketId] = useState(null);
 
   const [nowPage, setNowPage] = useState(1);
-  const itemsIncludePage = 3;
+  const itemsIncludePage = 4;
 
   const getBucket = () => {
     axios
@@ -163,7 +163,7 @@ function WidgetBucket() {
           <div className={classes.bucketSection}>
             <div className={classes.pagination}>
               <button
-                className={classes.editButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => setPage(nowPage - 1)}
               >
                 <img src="../../images/Widget/before.png" alt="before" />
@@ -243,7 +243,7 @@ function WidgetBucket() {
 
             <div className={classes.pagination}>
               <button
-                className={classes.editButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => setPage(nowPage + 1)}
               >
                 <img src="../../images/Widget/next.png" alt="next" />
@@ -257,7 +257,7 @@ function WidgetBucket() {
                   className={classes.inputstyle}
                   type="text"
                   value={newBucket}
-                  placeholder="응원의 댓글을 남겨주세요!"
+                  placeholder="여러분의 버킷 리스트를 남겨보세요!"
                   onChange={(event) => setNewBucket(event.target.value)}
                 />
                 <button className={classes.inputBtn} onClick={createBucket}>
