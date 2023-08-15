@@ -209,10 +209,11 @@ function WidgetDiary() {
                       </div>
                     ) : (
                       <div className={classes.wishDiaryContentTxt}>
-                        <p className={classes.wishDiaryTxt}>
-                          {diaryItem.content}
-                        </p>
-
+                        <div className={classes.wishDiaryTxtt}>
+                          <p className={classes.wishDiaryTxt}>
+                            {diaryItem.content}
+                          </p>
+                        </div>
                         {isMe && (
                           <div>
                             <button
