@@ -143,7 +143,8 @@
 .authModalMainLeft {
   flex: 5;
   font-size: 20px;
-  display: flex;
+  /* display: flex; */
+  margin-left: 0%;
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 20px; */
@@ -285,6 +286,7 @@ input[type="file"] {
 }
 
 .authModalMainLeftTitle {
+  margin-left: 0px;
   margin-bottom: 20px;
 }
 
@@ -327,11 +329,8 @@ input[type="file"] {
   font-family: "TheJamsil5Bold";
 }
 
-.testSide {
-  font-size: 15px;
-  width: 80%;
-  margin: auto;
-  margin-top: 20px;
-  font-family: 'TheJamsil4Bold';
-  color: #989898;
+.caution {
+  margin-top: 8px;
+  font-family: 'TheJamsil3Bold';
+  font-size: 12px;
 }
