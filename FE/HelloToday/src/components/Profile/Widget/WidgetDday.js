@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import WidgetDdayEdit from "./WidgetDdayEdit";
 import WidgetDdayregist from "./WidgetDdayregist";
+import Swal from "sweetalert2";
 
 function WidgetDday() {
   //submit 조건에 충족 안 할 때 DOM 선택해서 커서 가게 할려고
@@ -56,24 +57,38 @@ function WidgetDday() {
     // console.log(target);
   };
   const handleDeleteState = (target) => {
-    //삭제
-    axios
-      .delete(`${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${target}`, {
-        headers: { Authorization: AccsesToken },
-      })
-      .then((res) => {
-        // console.log(res);
-      })
-      .catch((err) => {
-        // console.log(err);
-      });
-    //프런트에서 삭제
-    // console.log(target);
-    // console.log(`${item.ddayId}를 삭제합니다`);
+    Swal.fire({
+      icon: "question",
+      title: "댓글을 삭제합니다.",
+      text: "댓글을 정말 삭제하시겠습니까?",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+      showCancelButton: true,
+    }).then((response) => {
+      if (response.isConfirmed) {
+        //삭제
+        axios
+          .delete(
+            `${process.env.REACT_APP_BASE_URL}/api/mypage/dday/${target}`,
+            {
+              headers: { Authorization: AccsesToken },
+            }
+          )
+          .then((res) => {
+            // console.log(res);
+          })
+          .catch((err) => {
+            // console.log(err);
+          });
+        //프런트에서 삭제
+        // console.log(target);
+        // console.log(`${item.ddayId}를 삭제합니다`);
 
-    const newDdayList = ddaydata.filter((item) => item.ddayId !== target);
-    dispatch(SET_DDAY_DATA(newDdayList));
-    dispatch(SET_ISDELETE(true));
+        const newDdayList = ddaydata.filter((item) => item.ddayId !== target);
+        dispatch(SET_DDAY_DATA(newDdayList));
+        dispatch(SET_ISDELETE(true));
+      }
+    });
   };
 
   return (
