@@ -160,97 +160,113 @@ function WidgetDiary() {
 
   return (
     <div className={classes.WidgetDiary}>
-      <p className={classes.diaryTitle}> 소중한 한 줄 일기 </p>
-      <div>
-        <div className={classes.pagination}>
-          <button onClick={() => setPage(nowPage - 1)}>
-            <img src="../../images/Widget/before.png" alt="before" />
-          </button>
-        </div>
-        {nowdiary.length === 0 && <div>일기가 없습니다.</div>}
-        {nowdiary.length > 0 &&
-          nowdiary.map((diaryItem) => {
-            return (
-              <div key={diaryItem.wishDiaryId}>
-                {isEdit && editedDiaryId === diaryItem.wishDiaryId ? (
-                  <div>
-                    <input
-                      type="text"
-                      className={classes.inputstyle}
-                      value={editedDiary}
-                      onChange={(event) => {
-                        setEditedDiary(event.target.value);
-                        setEditedDiaryId(diaryItem.wishDiaryId);
-                      }}
-                    />
-                    <button
-                      className={classes.inputBtnMini}
-                      onClick={() => saveEditedDiary()}
-                    >
-                      저장
-                    </button>
-                    <button
-                      className={classes.inputBtnMini}
-                      onClick={() => setIsEdit(false)}
-                    >
-                      취소
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    {diaryItem.content}
-                    {isMe && (
-                      <div>
-                        <button
-                          onClick={() => {
-                            setIsEdit(true);
+      <span className={classes.diaryTitle}> 소중한 한 줄 일기 </span>
+      <div className={classes.wishDiaryBody}>
+        <div className={classes.wishDiaryContent}>
+          <div className={classes.pagination_before}>
+            <button
+              className={classes.wishDiaryPaginationBtn}
+              onClick={() => setPage(nowPage - 1)}
+            >
+              <img src="../../images/Widget/before.png" alt="before" />
+            </button>
+          </div>
+          <div className={classes.wishDiaryCenter}>
+            {nowdiary.length === 0 && (
+              <div className={classes.wishDiaryNothing}>일기가 없습니다.</div>
+            )}
+            {nowdiary.length > 0 &&
+              nowdiary.map((diaryItem) => {
+                return (
+                  <div key={diaryItem.wishDiaryId}>
+                    {isEdit && editedDiaryId === diaryItem.wishDiaryId ? (
+                      <div className={classes.wishDiaryEditInputStyle}>
+                        <input
+                          type="text"
+                          className={classes.inputstyle}
+                          value={editedDiary}
+                          onChange={(event) => {
+                            setEditedDiary(event.target.value);
                             setEditedDiaryId(diaryItem.wishDiaryId);
-                            setEditedDiary(diaryItem.content);
                           }}
-                        >
-                          <img
-                            className={classes.editButtonStyle}
-                            src="../../images/Widget/edit.png"
-                            alt="edit"
-                          />
-                        </button>
-                        <button
-                          onClick={() => deleteAlert(diaryItem.wishDiaryId)}
-                        >
-                          <img
-                            className={classes.editButtonStyle}
-                            src="../../images/Widget/clear.png"
-                            alt="clear"
-                          />
-                        </button>
+                        />
+                        <div className={classes.wishDiaryinputBtnMiniStyle}>
+                          <button
+                            className={classes.wishDiaryinputBtnMini}
+                            onClick={() => saveEditedDiary()}
+                          >
+                            저장
+                          </button>
+                          <button
+                            className={classes.wishDiaryinputBtnMini}
+                            onClick={() => setIsEdit(false)}
+                          >
+                            취소
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={classes.wishDiaryContentTxt}>
+                        <p className={classes.wishDiaryTxt}>
+                          {diaryItem.content}
+                        </p>
+
+                        {isMe && (
+                          <div>
+                            <button
+                              className={classes.wishDiaryEditButtonStyle}
+                              onClick={() => {
+                                setIsEdit(true);
+                                setEditedDiaryId(diaryItem.wishDiaryId);
+                                setEditedDiary(diaryItem.content);
+                              }}
+                            >
+                              <img
+                                src="../../images/Widget/edit.png"
+                                alt="edit"
+                              />
+                            </button>
+                            <button
+                              className={classes.wishDiaryEditButtonStyle}
+                              onClick={() => deleteAlert(diaryItem.wishDiaryId)}
+                            >
+                              <img
+                                src="../../images/Widget/clear.png"
+                                alt="clear"
+                              />
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
-                )}
-              </div>
-            );
-          })}
-
-        <div className={classes.pagination}>
-          <button onClick={() => setPage(nowPage + 1)}>
-            <img src="../../images/Widget/next.png" alt="next" />
-          </button>
+                );
+              })}
+          </div>
+          <div className={classes.pagination_next}>
+            <button
+              className={classes.wishDiaryPaginationBtn}
+              onClick={() => setPage(nowPage + 1)}
+            >
+              <img src="../../images/Widget/next.png" alt="next" />
+            </button>
+          </div>
         </div>
-
         <div>
           {isMe && (
-            <div className={classes.widgetInputStyle}>
+            <div className={classes.widgetBigInputStyle}>
               <input
+                placeholder="한 줄 일기를 입력해주세요"
                 type="text"
                 className={classes.inputstyle}
                 value={newDiary}
                 onChange={(event) => setNewDiary(event.target.value)}
               />
               <button
-                className={classes.inputBtn}
+                className={classes.wishDiaryinputBtn}
                 onClick={() => createDiary()}
               >
-                댓글 입력
+                완료
               </button>
             </div>
           )}
