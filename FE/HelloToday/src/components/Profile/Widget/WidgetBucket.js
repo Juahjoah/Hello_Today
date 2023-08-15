@@ -257,7 +257,7 @@ function WidgetBucket() {
                   className={classes.inputstyle}
                   type="text"
                   value={newBucket}
-                  placeholder="응원의 댓글을 남겨주세요!"
+                  placeholder="여러분의 버킷 리스트를 남겨보세요!"
                   onChange={(event) => setNewBucket(event.target.value)}
                 />
                 <button className={classes.inputBtn} onClick={createBucket}>
