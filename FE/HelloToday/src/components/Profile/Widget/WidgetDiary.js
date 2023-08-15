@@ -108,8 +108,8 @@ function WidgetDiary() {
 
     Swal.fire({
       icon: "question",
-      title: "댓글을 삭제합니다.",
-      text: "댓글을 정말 삭제하시겠습니까?",
+      title: "해당 일기를 삭제합니다.",
+      text: "정말 삭제하시겠습니까?",
       confirmButtonText: "확인",
       cancelButtonText: "취소",
       showCancelButton: true,
@@ -134,7 +134,7 @@ function WidgetDiary() {
         if (response.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "댓글이 삭제되었습니다.",
+            title: "소중한 일기가 삭제되었습니다.",
             text: "",
             confirmButtonText: "확인",
           });
