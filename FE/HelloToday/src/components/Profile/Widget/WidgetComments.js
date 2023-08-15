@@ -241,7 +241,7 @@ function WidgetComments() {
           {comments.length > itemsIncludePage && (
             <div>
               <button
-                className={classes.editButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => paginate(nowPage + 1)}
                 disabled={
                   nowComments.length < itemsIncludePage ||
