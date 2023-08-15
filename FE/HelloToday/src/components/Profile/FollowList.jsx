@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
-import { set } from "lodash";
 
 function FollowList() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
@@ -77,7 +76,7 @@ function FollowList() {
   };
 
   return (
-    <div>
+    <div className={classes.followList}>
       <h1>함께하는 모듈러 보기</h1>
       <h3>내가 팔로잉하는 사람</h3>
       {Followings.length > itemsIncludePage && (
@@ -90,22 +89,28 @@ function FollowList() {
           </button>
         </div>
       )}
-      {nowFollowings.length === 0 && <div>팔로잉 없음</div>}
-      {nowFollowings.length > 0 &&
-        nowFollowings.map((following) => (
-          <div
-            className={classes.followCard}
-            key={following.memberId}
-            onClick={() => FollowCardClick(following.memberId)}
-          >
-            <img
-              className={classes.followImg}
-              src={following.profilePath}
-              alt="followerImg"
-            />
-            {following.nickname}
+      <div className={classes.followMemberList}>
+        {nowFollowings.length === 0 && (
+          <div className={classes.followMent}>
+            아직 팔로잉하고 있는 오늘러가 없어요.
           </div>
-        ))}
+        )}
+        {nowFollowings.length > 0 &&
+          nowFollowings.map((following) => (
+            <div
+              className={classes.followCard}
+              key={following.memberId}
+              onClick={() => FollowCardClick(following.memberId)}
+            >
+              <img
+                className={classes.followImg}
+                src={following.profilePath}
+                alt="followerImg"
+              />
+              {following.nickname}
+            </div>
+          ))}
+      </div>
       {Followings.length > itemsIncludePage && (
         <div>
           <button
@@ -132,23 +137,29 @@ function FollowList() {
           </button>
         </div>
       )}
-
-      {nowFollowers.length === 0 && <div>팔로워 없음</div>}
-      {nowFollowers.length > 0 &&
-        nowFollowers.map((follower) => (
-          <div
-            className={classes.followCard}
-            key={follower.memberId}
-            onClick={() => FollowCardClick(follower.memberId)}
-          >
-            <img
-              className={classes.followImg}
-              src={follower.profilePath}
-              alt="followerImg"
-            />
-            {follower.nickname}
+      <div className={classes.followMemberList}>
+        {nowFollowers.length === 0 && (
+          <div className={classes.followMent}>
+            아직 팔로우하는 오늘러가 없어요.
           </div>
-        ))}
+        )}
+        {nowFollowers.length > 0 &&
+          nowFollowers.map((follower) => (
+            <div
+              className={classes.followCard}
+              key={follower.memberId}
+              onClick={() => FollowCardClick(follower.memberId)}
+            >
+              <img
+                className={classes.followImg}
+                src={follower.profilePath}
+                alt="followerImg"
+              />
+              {follower.nickname}
+            </div>
+          ))}
+      </div>
+
       {Followers.length > itemsIncludePage && (
         <div>
           <button
