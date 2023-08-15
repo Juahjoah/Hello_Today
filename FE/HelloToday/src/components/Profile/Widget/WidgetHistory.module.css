@@ -42,7 +42,13 @@
   display: flex;
 }
 .WidgetHistory_nothing {
-  font-size: 1.5rem;
+  margin-top: 20px;
+  height: 17vh;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+.WidgetHistory_nothingTxt {
 }
 .WidgetHistory_date {
   font-size: 0.4rem;
