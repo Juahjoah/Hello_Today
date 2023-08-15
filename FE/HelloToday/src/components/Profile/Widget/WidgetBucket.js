@@ -250,6 +250,7 @@ function WidgetBucket() {
               </button>
             </div>
           </div>
+
           <div>
             {isMe && (
               <div className={classes.widgetInputStyle}>
