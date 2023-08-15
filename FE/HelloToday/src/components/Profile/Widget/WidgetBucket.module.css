@@ -40,7 +40,6 @@
 
 .bucketSection {
   display: flex;
-  width: 2rem;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -50,12 +49,6 @@
 .bucketListSection {
   display: flex;
   flex-direction: row;
-  padding: 0;
-}
-
-.bucketList {
-  display: flex;
-  flex-direction: column;
 }
 
 .bucketItem {
