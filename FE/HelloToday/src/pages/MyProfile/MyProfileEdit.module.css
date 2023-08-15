@@ -165,6 +165,7 @@
   /* flex-direction: column; */
   width: 100%;
   justify-content: flex-start;
+  margin-top: 20px;
 }
 .editFormTitle {
   font-size: 3vh;
