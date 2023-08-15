@@ -24,7 +24,6 @@
 }
 .WidgetHistory_content {
   display: flex; /* 요소들을 가로로 배치 */
-  cursor: pointer;
 }
 .WidgetHistory_img {
   height: 100px;
@@ -37,6 +36,7 @@
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   text-align: center;
+  cursor: pointer;
 }
 .btn {
   display: flex;
