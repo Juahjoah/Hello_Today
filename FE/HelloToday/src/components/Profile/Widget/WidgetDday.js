@@ -94,7 +94,7 @@ function WidgetDday() {
                   <div className={classes.WidgetDday_oneitem}>
                     <div>
                       <p className={classes.WidgetDday_dday}>
-                        {item.calDate > 1
+                        {item.calDate > 0
                           ? `D +${item.calDate}`
                           : item.calDate === 0
                           ? "D-day"
