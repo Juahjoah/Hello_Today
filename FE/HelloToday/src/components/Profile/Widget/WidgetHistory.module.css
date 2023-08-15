@@ -24,6 +24,7 @@
 }
 .WidgetHistory_content {
   display: flex; /* 요소들을 가로로 배치 */
+  cursor: pointer;
 }
 .WidgetHistory_img {
   height: 100px;

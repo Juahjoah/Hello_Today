@@ -19,6 +19,9 @@ import { DELETE_TOKEN } from "../../store/TokenSlice";
 import { Logoutstate } from "../../store/LoginSlice";
 import Swal from "sweetalert2";
 
+import { IoIosClose } from "react-icons/io";
+import { BiSolidRightArrow } from "react-icons/bi";
+
 function MyProfileEdit() {
   //------------------------------로그인 시작
   const dispatch = useDispatch();
@@ -256,129 +259,131 @@ function MyProfileEdit() {
       <div className={classes.MyProfile}>
         {/* 화면 왼쪽 개인 정보 */}
         <div className={classes.UserProfile}>
-          <div className={classes.UserInfo}>
-            <img
-              className={classes.ProfileImg}
-              src={user.profilePath}
-              alt={user.Userprofilepic}
-            />
-            <p className={classes.ProfilenNickName}>{user.nickname}</p>
-            <p className={classes.ProfileMsg}>{user.stMsg}</p>
-            {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
-          </div>
-          <hr />
-          <ProfileMenu
-            setMenu={setMenu}
-            setFollowButtonClick={setFollowButtonClick}
-            memberId={localStorage.getItem("memberId")}
-            Token={AccsesToken}
-          />
-        </div>
-        <div className={classes.editForm}>
-          <div>
-            <div className={classes.editFormHeader}>
-              <p className={classes.editFormTitle}>
-                마이페이지에서 보일 위젯을 설정해주세요
-              </p>
-            </div>
-            <div className={classes.widgetBody}>
-              <div className={classes.widgetLeft}>
-                <div className={classes.widgetLeftTitle}>
-                  <p className={classes.widgetLeftTitleItem}>
-                    옵션 위젯 목록({selectedFlags.length})
-                  </p>
-                </div>
-                <div className={classes.widgetLeftForm}>
-                  <div className={classes.widgetLeftFormItem}>
-                    {selectedFlags.map((flag, index) => (
-                      <button
-                        key={flag}
-                        className={`${classes.widgetLeftFormButton} ${
-                          selectedButtonIndexes.includes(index) &&
-                          selectedFlags.includes(flag)
-                            ? classes.selectedButton
-                            : ""
-                        }`}
-                        onClick={() => toggleButton(index)}
-                      >
-                        {flag}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+          <div className={classes.UserProfileSection}>
+            <div className={classes.UserInfo}>
+              <div className={classes.UserInformation}>
+                <img
+                  className={classes.ProfileImg}
+                  src={user.profilePath}
+                  alt={user.Userprofilepic}
+                />
+                <p className={classes.ProfilenNickName}>{user.nickname}</p>
+                <p className={classes.ProfileMsg}>{user.stMsg}</p>
               </div>
-
-              <div className={classes.widgetMid}>
-                <div className={classes.widgetMidButton}>
-                  <button
-                    className={classes.widgetMidButtonForm}
-                    onClick={handleSelectButton}
-                  >
-                    선택
-                  </button>
-                </div>
-              </div>
-
-              <div className={classes.widgetRight}>
-                <div className={classes.widgetRightTitle}>
-                  <p className={classes.widgetRightTitleItem}>
-                    마이페이지 위젯 목록({unselectedFlags.length + 2})
-                  </p>
-                </div>
-                <div className={classes.widgetRightForm}>
-                  <div className={classes.widgetRightTopForm}>
-                    <div className={classes.widgetRightTop}>
-                      <div>캘린더</div>
-                      <div>응원 메시지</div>
-                    </div>
-                  </div>
-                  <div className={classes.widgetRightBody}>
-                    <p>선택 옵션</p>
-                  </div>
-                  {/* <div className={classes.widgetRightTopForm}> */}
-
-                  <div className={classes.widgetRightContent}>
-                    {unselectedFlags.map((flag) => (
-                      <div className={classes.widgetRightItem}>
-                        <div className={classes.widgetRightItemFlag} key={flag}>
-                          {flag}
-                        </div>
-                        <button
-                          className={classes.widgetRightButoon}
-                          onClick={() => handleCancelFlag(flag)}
-                        >
-                          x
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* </div> */}
-              </div>
+              {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
             </div>
-
-            <div className={classes.widgetFooter}>
-              <button
-                className={classes.widgetFooterButton}
-                onClick={editWidgetAxios}
-              >
-                수정 완료
-              </button>
+            <div className={classes.userInfoMenu}>
+              <ProfileMenu
+                setMenu={setMenu}
+                setFollowButtonClick={setFollowButtonClick}
+                memberId={localStorage.getItem("memberId")}
+                Token={AccsesToken}
+              />
             </div>
-          </div>
-          {memberId === smemberId ? (
-            <div className={classes.profile_unregist}>
+            {memberId === smemberId ? (
               <button
                 className={classes.profile_unregist_btn}
                 onClick={() => handleunregister()}
               >
                 회원 탈퇴
               </button>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+
+        {/* edit form */}
+        <div className={classes.Profilecontent}>
+          <div className={classes.editForm}>
+            <div className={classes.editFormMain}>
+              <div className={classes.editFormHeader}>
+                <p className={classes.editFormTitle}>
+                  마이페이지에서 보일 위젯을 설정해주세요
+                </p>
+              </div>
+              <div className={classes.widgetBody}>
+                <div className={classes.widgetLeft}>
+                  <div className={classes.widgetLeftTitle}>
+                    <p className={classes.widgetLeftTitleItem}>
+                      옵션 위젯 목록({selectedFlags.length})
+                    </p>
+                  </div>
+                  <div className={classes.widgetLeftForm}>
+                    <div className={classes.widgetLeftFormItem}>
+                      {selectedFlags.map((flag, index) => (
+                        <button
+                          key={flag}
+                          className={`${classes.widgetLeftFormButton} ${
+                            selectedButtonIndexes.includes(index) &&
+                            selectedFlags.includes(flag)
+                              ? classes.selectedButton
+                              : ""
+                          }`}
+                          onClick={() => toggleButton(index)}
+                        >
+                          {flag}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={classes.widgetMid}>
+                  <BiSolidRightArrow
+                    className={classes.widgetMidButtonForm}
+                    onClick={handleSelectButton}
+                  />
+                </div>
+
+                <div className={classes.widgetRight}>
+                  <div className={classes.widgetRightTitle}>
+                    <p className={classes.widgetRightTitleItem}>
+                      마이페이지 위젯 목록({unselectedFlags.length + 2})
+                    </p>
+                  </div>
+                  <div className={classes.widgetRightForm}>
+                    <div className={classes.widgetRightTopForm}>
+                      <div className={classes.widgetRightFormitem}>
+                        <div className={classes.widgetRightFormButton}>
+                          캘린더
+                        </div>
+                        <div className={classes.widgetRightFormButton}>
+                          응원 메시지
+                        </div>
+                        {unselectedFlags.map((flag) => (
+                          <div className={classes.widgetRightItem}>
+                            <div
+                              className={classes.widgetRightItemFlag}
+                              key={flag}
+                            >
+                              {flag}
+                            </div>
+
+                            <IoIosClose
+                              className={classes.widgetRightButton}
+                              onClick={() => handleCancelFlag(flag)}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* </div> */}
+                </div>
+              </div>
+
+              <div className={classes.widgetFooter}>
+                <button
+                  className={classes.widgetFooterButton}
+                  onClick={editWidgetAxios}
+                >
+                  수정 완료
+                </button>
+              </div>
             </div>
-          ) : (
-            <></>
-          )}
+          </div>
         </div>
       </div>
     </>

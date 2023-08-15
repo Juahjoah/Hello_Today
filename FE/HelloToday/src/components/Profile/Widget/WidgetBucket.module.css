@@ -28,6 +28,11 @@
   margin: 2rem 1rem; */
 }
 
+.editButtonSection {
+  display: flex;
+  flex-direction: row;
+}
+
 .editButtonStyle {
   border: 0;
   background-color: transparent;
@@ -40,20 +45,23 @@
   align-items: center;
   height: 17vh;
 }
+
 .bucketListSection {
   display: flex;
-  flex-direction: column;
-  /* justify-content: space-between;
-  align-items: center; */
-}
-
-.bucketList {
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .bucketItem {
   display: flex;
+  width: 45rem;
+  font-size: 1rem;
+  text-align: left;
+  margin: 0.3rem;
+}
+
+.moveButtonStyle {
+  border: 0;
+  background-color: transparent;
 }
 
 .editButtonStyle {
@@ -71,20 +79,6 @@
   font-size: 0.7rem;
   color: #222222;
   width: 80%;
-  border: none;
-  border-bottom: solid #aaaaaa 1px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  margin-left: 20px;
-  background: none;
-  display: flex;
-  align-self: center;
-}
-.inputstyle_ {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  color: #222222;
-  width: 50%;
   border: none;
   border-bottom: solid #aaaaaa 1px;
   padding-bottom: 10px;

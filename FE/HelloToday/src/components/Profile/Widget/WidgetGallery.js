@@ -48,7 +48,7 @@ function WidgetGallery() {
       <div className={classes.WidgetContent}>
         {nowPicItem.length === 0 && (
           <div className={classes.WidgetContentTxt}>
-            <p>등록된 사진이 없습니다.</p>
+            <p>루틴 인증 사진을 남기면 갤러리가 풍부해져요🥰</p>
           </div>
         )}
         {nowPicItem.length > 0 &&
