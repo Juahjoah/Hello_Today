@@ -27,6 +27,7 @@
   /*수정 삭제 버튼*/
   border: 0;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .widgetInputStyle {
@@ -96,6 +97,7 @@
   background-color: white; /* 파란색 */
   color: #a581cf;
   border: #a581cf solid;
+  cursor: pointer;
   /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
 }
 
@@ -107,6 +109,7 @@
   /*페이지네이션 화살표*/
   background-color: rgb(0, 0, 0, 0);
   border: none;
+  cursor: pointer;
 }
 .wishDiaryNothing {
   /* border: solid black; */
