@@ -334,3 +334,9 @@ input[type="file"] {
   font-family: 'TheJamsil3Bold';
   font-size: 12px;
 }
+
+.testSide{
+  font-family: 'TheJamsil4Bold';
+  font-size: 15px;
+  color: #949494;
+}
