@@ -41,9 +41,10 @@
 .bucketSection {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   height: 17vh;
+  margin-left: 10px;
 }
 
 .bucketListSection {
@@ -88,6 +89,19 @@
   display: flex;
   align-self: center;
 }
+.inputstyle_ {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  color: #222222;
+  width: 80%;
+  border: none;
+  border-bottom: solid #aaaaaa 1px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background: none;
+  display: flex;
+  align-self: center;
+}
 
 .inputBtn::after {
   content: attr(data-text);
@@ -119,15 +133,22 @@ inputstyle::placeholder {
 inputstyle:focus {
   outline: none;
 }
+.bucketListBtnStyle {
+  display: flex;
+}
 .bucketListBtn {
   font-family: "TheJamsil5Bold";
+  width: 3rem;
+  height: 1rem;
+  position: relative;
+  display: inline-block;
+  font-size: 0.7rem;
+  margin-left: 0.7rem;
+  border-radius: 6px;
   background-color: white; /* 파란색 */
   color: #a581cf;
   border: #a581cf solid;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  padding: 3px 10px 3px 10px;
 }
 
 .bucketListBtn:hover {
@@ -136,4 +157,6 @@ inputstyle:focus {
 }
 .bucketListInputBtn {
   display: flex;
+  margin-bottom: 10px;
+  width: 110vh;
 }
