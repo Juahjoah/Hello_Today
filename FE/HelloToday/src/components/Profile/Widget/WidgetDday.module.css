@@ -123,4 +123,34 @@
 .WidgetDday_ddaycontent {
   font-size: 0.5rem;
 }
-
+.DdayInputDate {
+  border: #a581cf solid;
+  position: relative;
+  width: 80%;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  text-align: center;
+  font-family: "TheJamsil5Bold";
+}
+.DdayInputDate::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+.DdayInputDate::before {
+  content: attr(placeholder);
+  width: 100%;
+  height: 100%;
+}
+/* .DdayInputDate:valid::before {
+  display: none;
+} */
+.DdayInputDate::placeholder {
+  color: transparent; /* 플레이스홀더 텍스트 숨기기 */
+}
