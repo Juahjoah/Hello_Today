@@ -75,6 +75,12 @@ function WidgetDday() {
             }
           )
           .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "D-day가 삭제되었습니다.",
+              text: "",
+              confirmButtonText: "확인",
+            });
             // console.log(res);
           })
           .catch((err) => {
