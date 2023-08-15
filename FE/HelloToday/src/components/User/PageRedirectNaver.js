@@ -46,7 +46,7 @@ function PageRedirectNaver() {
         const refreshToken = res.headers["authorization-refresh"];
         sessionStorage.setItem("memberId", res.data.memberId);
         localStorage.setItem("isFirstLogin", isFirstLogin);
-        if (!isFirstLogin) localStorage.setItem("nickname", nickName);
+        if (!isFirstLogin) localStorage.setItem("nickName", nickName);
         localStorage.setItem("memberId", memberId);
         // console.log(res.data);
         // console.log("Access Token:", accessToken);
