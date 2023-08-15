@@ -160,6 +160,8 @@ function MyProfile() {
         // console.log("제출결과 : ", res);
         //edit모드 false로 바꾸기
         setIsUserEdit(false);
+        // TODO: localstrage에 setItem
+        localStorage.setItem("nickName", user.nickname);
       })
       .catch((err) => {
         // console.log(err);
