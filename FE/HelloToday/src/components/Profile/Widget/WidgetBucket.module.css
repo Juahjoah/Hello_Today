@@ -28,6 +28,11 @@
   margin: 2rem 1rem; */
 }
 
+.editButtonSection {
+  display: flex;
+  flex-direction: row;
+}
+
 .editButtonStyle {
   border: 0;
   background-color: transparent;
@@ -42,18 +47,17 @@
 }
 .bucketListSection {
   display: flex;
-  flex-direction: column;
-  /* justify-content: space-between;
-  align-items: center; */
+  flex-direction: row;
 }
 
 .bucketList {
   display: flex;
   flex-direction: column;
+  margin: 0 90% 0 2%;
 }
 
 .bucketItem {
-  display: flex;
+  font-size: 1rem;
 }
 
 .editButtonStyle {

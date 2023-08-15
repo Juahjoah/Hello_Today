@@ -167,7 +167,7 @@ function WidgetComments() {
           {comments.length > itemsIncludePage && (
             <div>
               <button
-                className={classes.beforButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => paginate(nowPage - 1)}
                 disabled={nowPage === 1}
               >
@@ -217,7 +217,7 @@ function WidgetComments() {
                       </button>
                     )}
                     <p className={classes.postContent}>{comment.content}</p>
-                    <p className={classes.postNickName}>
+                    <p className={classes.postnickName}>
                       {comment.writerNickName}
                     </p>
                     <p className={classes.postDate}>
@@ -226,7 +226,7 @@ function WidgetComments() {
 
                     {(isMe || +comment.writerId === +loggedInUserId) && (
                       <button
-                        className={classes.nextButtonStyle}
+                        className={classes.editButtonStyle}
                         onClick={() => {
                           setIsEdit(true);
                           setEditedComment(comment.content);

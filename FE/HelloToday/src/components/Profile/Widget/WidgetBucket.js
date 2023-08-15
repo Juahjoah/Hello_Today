@@ -19,7 +19,7 @@ function WidgetBucket() {
   const [editedBucketId, setEditedBucketId] = useState(null);
 
   const [nowPage, setNowPage] = useState(1);
-  const itemsIncludePage = 5;
+  const itemsIncludePage = 3;
 
   const getBucket = () => {
     axios
@@ -159,7 +159,7 @@ function WidgetBucket() {
     <div className={classes.WidgetBucket_}>
       <span className={classes.bucketTitle}> 버킷리스트 </span>
       <div className={classes.WidgetBucket}>
-        <div className={classes.bucketList}>
+        <div>
           <div className={classes.bucketSection}>
             <div className={classes.pagination}>
               <button
@@ -169,75 +169,77 @@ function WidgetBucket() {
                 <img src="../../images/Widget/before.png" alt="before" />
               </button>
             </div>
-            {nowBucket.length === 0 && <div>버킷리스트가 없습니다.</div>}
+            <div className={classes.bucketList}>
+              {nowBucket.length === 0 && <div>버킷리스트가 없습니다.</div>}
 
-            {nowBucket.length > 0 &&
-              nowBucket.map((bucketItem) => (
-                <div
-                  className={classes.bucketListSection}
-                  key={bucketItem.wishDiaryId}
-                >
-                  {isEdit && editedBucketId === bucketItem.wishDiaryId ? (
-                    <div className={classes.bucketListInputBtn}>
-                      <input
-                        className={classes.inputstyle_}
-                        type="text"
-                        value={editedBucket}
-                        onChange={(event) => {
-                          setEditedBucket(event.target.value);
-                          setEditedBucketId(bucketItem.wishDiaryId);
-                        }}
-                      />
+              {nowBucket.length > 0 &&
+                nowBucket.map((bucketItem) => (
+                  <div key={bucketItem.wishDiaryId}>
+                    {isEdit && editedBucketId === bucketItem.wishDiaryId ? (
+                      <div className={classes.bucketListInputBtn}>
+                        <input
+                          className={classes.inputstyle_}
+                          type="text"
+                          value={editedBucket}
+                          onChange={(event) => {
+                            setEditedBucket(event.target.value);
+                            setEditedBucketId(bucketItem.wishDiaryId);
+                          }}
+                        />
+                        <button
+                          className={classes.bucketListBtn}
+                          onClick={() => saveEditedBucket()}
+                        >
+                          저장
+                        </button>
 
-                      <button
-                        className={classes.bucketListBtn}
-                        onClick={() => saveEditedBucket()}
-                      >
-                        저장
-                      </button>
-
-                      <button
-                        className={classes.bucketListBtn}
-                        onClick={() => setIsEdit(false)}
-                      >
-                        취소
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className={classes.bucketItem}>{bucketItem.content}</p>
-                      {isMe && (
-                        <div>
-                          <button
-                            className={classes.editButtonStyle}
-                            onClick={() => {
-                              setIsEdit(true);
-                              setEditedBucket(bucketItem.content);
-                              setEditedBucketId(bucketItem.wishDiaryId);
-                            }}
-                          >
-                            <img
-                              // className={classes.edit}
-                              src="../../images/Widget/edit.png"
-                              alt="edit"
-                            />
-                          </button>
-                          <button
-                            className={classes.editButtonStyle}
-                            onClick={() => deleteAlert(bucketItem.wishDiaryId)}
-                          >
-                            <img
-                              // className={classes.clear}
-                              src="../../images/Widget/clear.png"
-                              alt="clear"
-                            />
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
+                        <button
+                          className={classes.bucketListBtn}
+                          onClick={() => setIsEdit(false)}
+                        >
+                          취소
+                        </button>
+                      </div>
+                    ) : (
+                      <div className={classes.bucketListSection}>
+                        <p className={classes.bucketItem}>
+                          {bucketItem.content}
+                        </p>
+                        {isMe && (
+                          <div className={classes.editButtonSection}>
+                            <button
+                              className={classes.editButtonStyle}
+                              onClick={() => {
+                                setIsEdit(true);
+                                setEditedBucket(bucketItem.content);
+                                setEditedBucketId(bucketItem.wishDiaryId);
+                              }}
+                            >
+                              <img
+                                // className={classes.edit}
+                                src="../../images/Widget/edit.png"
+                                alt="edit"
+                              />
+                            </button>
+                            <button
+                              className={classes.editButtonStyle}
+                              onClick={() =>
+                                deleteAlert(bucketItem.wishDiaryId)
+                              }
+                            >
+                              <img
+                                // className={classes.clear}
+                                src="../../images/Widget/clear.png"
+                                alt="clear"
+                              />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+            </div>
 
             <div className={classes.pagination}>
               <button
