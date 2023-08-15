@@ -143,7 +143,7 @@ public class FollowService {
     public BaseResponseDto checkFollowStatus(int followerId, int followeeId) {
         memberValidator.checkDifferentMembers(followerId, followeeId);
 
-        Member follower = getMember(followeeId);
+        Member follower = getMember(followerId);
         Member followee = getMember(followeeId);
         Optional<Follow> follow = followRepository.findByFollowerAndFollowing(follower, followee);
 

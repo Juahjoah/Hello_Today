@@ -12,12 +12,14 @@ function FollowButton(props) {
   const [isFollow, setIsFollow] = useState(false);
   const [isMe, setIsMe] = useState(false);
 
-  // 시작할때, 팔로우 정보 가져와서 담아두기!
   useEffect(() => {
-    setIsMe(+memberId === +sessionStorage.getItem("memberId") ? true : false);
-    if (!isMe && memberId !== undefined) {
+    const loggedInUserId = +memberId === +sessionStorage.getItem("memberId");
+    setIsMe(loggedInUserId);
+
+    if (!loggedInUserId && memberId !== undefined) {
       getFollowInfo(memberId);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken, isFollow]);
 
@@ -30,16 +32,12 @@ function FollowButton(props) {
       .then((response) => {
         if (response.data.data === true) {
           setIsFollow(true);
-        } else {
-          setIsFollow(false);
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
-
-  console.log(isFollow);
 
   const UserFollowClick = () => {
     if (!isFollow) {
@@ -47,7 +45,7 @@ function FollowButton(props) {
       axios
         .post(
           `${process.env.REACT_APP_BASE_URL}/api/follow`,
-          { followingId: props.memberId },
+          { followingId: memberId },
           {
             headers: { Authorization: AccsesToken },
           }
@@ -58,7 +56,7 @@ function FollowButton(props) {
           setIsFollow(true);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     } else {
       // event.target.innerText = "unFollow";
@@ -72,21 +70,40 @@ function FollowButton(props) {
           setIsFollow(false);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   };
 
   return (
     <div className={classes.FollowButton}>
+      <button
+        className={classes.FollowButtonShow}
+        onClick={() => props.setFollowButtonClick(true)}
+      >
+        팔로우하는 사람보기
+      </button>
+      <span style={{ fontSize: "12px", color: "rgb(110, 122, 150)" }}>|</span>
       {!isMe ? (
+        <button
+          className={classes.FollowButtonUnFollowBtn}
+          onClick={UserFollowClick}
+        >
+          {isFollow ? "unFollow" : "Follow"}
+        </button>
+      ) : (
+        <button
+          className={classes.FollowButtonFollowBtn}
+          onClick={UserFollowClick}
+        >
+          {isFollow ? "unFollow" : "Follow"}
+        </button>
+      )}
+      {/* {!isMe ? (
         <button onClick={UserFollowClick}>
           {isFollow ? "unFollow" : "Follow"}
         </button>
-      ) : null}
-      <button onClick={() => props.setFollowButtonClick(true)}>
-        팔로우하는 사람보기
-      </button>
+      ) : null} */}
     </div>
   );
 }

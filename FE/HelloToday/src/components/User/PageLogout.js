@@ -19,6 +19,9 @@ function LogoutPage() {
     // Cookie에 저장된 Refresh Token 정보를 삭제
     removeCookieToken();
     dispatch(Logoutstate());
+    // local, session 저장소 사용자 정보 삭제
+    localStorage.clear();
+    sessionStorage.clear();
     return navigate("/");
   }
 

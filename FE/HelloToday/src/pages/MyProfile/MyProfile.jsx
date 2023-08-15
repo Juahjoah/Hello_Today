@@ -11,26 +11,16 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-
 //로그인
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
 import allAuth from "../../components/User/allAuth";
-
-//회원탈퇴
-import { useNavigate } from "react-router";
-
-import { removeCookieToken } from "../../components/User/CookieStorage";
-import { DELETE_TOKEN } from "../../store/TokenSlice";
-
-import { Logoutstate } from "../../store/LoginSlice";
 
 function MyProfile() {
   //------------------------------로그인 시작
   const dispatch = useDispatch();
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const [isUserEdit, setIsUserEdit] = useState(false);
-  const iscaldetail = useSelector((state) => state.calendarDetail.iscaldetail);
   const memberId = useParams().memberId; //url에서 param가져오기
   const smemberId = sessionStorage.getItem("memberId");
 
@@ -54,8 +44,8 @@ function MyProfile() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        console.log("user정보 가지고 와랐!!!!");
-        console.log(response.data);
+        // console.log("user정보 가지고 와랐!!!!");
+        // console.log(response.data);
         setUser({
           memberId: response.data.memberId,
           nickname: response.data.nickname,
@@ -66,7 +56,7 @@ function MyProfile() {
         setURLThumbnail(response.data.profilePath);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, [AccsesToken, isUserEdit, memberId]);
 
@@ -74,9 +64,6 @@ function MyProfile() {
 
   const [FollowButtonClick, setFollowButtonClick] = useState(false);
 
-  const navigate = useNavigate();
-
- 
   //회원정보 수정
   const nicknameinput = useRef();
   const stMsginput = useRef();
@@ -170,13 +157,12 @@ function MyProfile() {
         }
       )
       .then((res) => {
-        console.log("제출결과 : ", res);
+        // console.log("제출결과 : ", res);
         //edit모드 false로 바꾸기
         setIsUserEdit(false);
-        localStorage.setItem("nickName", user.nickname);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
   return (
@@ -185,115 +171,120 @@ function MyProfile() {
       <div className={classes.MyProfile}>
         {/* 화면 왼쪽 개인 정보 */}
         <div className={classes.UserProfile}>
-          <div className={classes.UserInfo}>
-            {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
-            {isUserEdit ? (
-              <div className={classes.editable}>
-                <form id="form">
-                  <img
-                    className={classes.ProfileImg}
-                    src={URLThumbnail}
-                    alt="thumbnail"
-                  />
-                  <button
-                    className={`${classes.Profile_edit_btn} ${classes.Profile_file_btn}`}
-                    onClick={handleClick}
-                    type="button"
-                  >
-                    파일
-                    <input
-                      type="file"
-                      accept="image/*"
-                      ref={thumbnailInput}
-                      onChange={handleFileChange}
-                    />
-                  </button>
-                  <div className={classes.ProfilenNickName}>
-                    <input
-                      className={classes.Profile_edit_input}
-                      type="text"
-                      value={user.nickname}
-                      placeholder="닉네임을 입력하세요"
-                      ref={nicknameinput}
-                      onChange={handleChangeState}
-                      name="nickname"
-                    ></input>
+          <div className={classes.UserProfileSection}>
+            <div className={classes.UserInfo}>
+              <div className={classes.UserInfoTop}>
+                {/* 닉네임/프로필 바꿀 수 있는 옵션 화면 추가 */}
+                {isUserEdit ? (
+                  <div>
+                    <form id="form" className={classes.editable}>
+                      <img
+                        className={classes.ProfileImg}
+                        src={URLThumbnail}
+                        alt="thumbnail"
+                      />
+                      <button
+                        className={`${classes.Profile_edit_btn} ${classes.Profile_file_btn} ${classes.Profile_Img_edit_btn}`}
+                        onClick={handleClick}
+                        type="button"
+                      >
+                        +
+                        <input
+                          type="file"
+                          accept="image/*"
+                          ref={thumbnailInput}
+                          onChange={handleFileChange}
+                        />
+                      </button>
+                      <div className={classes.ProfilenNickName}>
+                        <input
+                          className={classes.Profile_edit_input}
+                          type="text"
+                          value={user.nickname}
+                          placeholder="닉네임을 입력하세요"
+                          ref={nicknameinput}
+                          onChange={handleChangeState}
+                          name="nickname"
+                          spellCheck="false"
+                        ></input>
+                      </div>
+                      <div className={classes.ProfileMsg}>
+                        <input
+                          className={classes.Profile_edit_input}
+                          type="text"
+                          value={user.stMsg}
+                          placeholder="상태메세지를 입력하세요"
+                          ref={stMsginput}
+                          onChange={handleChangeState}
+                          name="stMsg"
+                          spellCheck="false"
+                        ></input>
+                      </div>
+                      <div className={classes.Profile_btns}>
+                        <button
+                          className={classes.Profile_edit_btn}
+                          onClick={handleSubmit}
+                          type="button"
+                        >
+                          완료
+                        </button>
+                        <button
+                          className={`${classes.Profile_edit_btn} ${classes.Profile_cancle_btn}`}
+                          onClick={handleCancle}
+                          type="button"
+                        >
+                          취소
+                        </button>
+                      </div>
+                      {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
+                    </form>
                   </div>
-                  <div className={classes.ProfileMsg}>
-                    <input
-                      className={classes.Profile_edit_input}
-                      type="text"
-                      value={user.stMsg}
-                      placeholder="상태메세지를 입력하세요"
-                      ref={stMsginput}
-                      onChange={handleChangeState}
-                      name="stMsg"
-                    ></input>
-                  </div>
-                  <div className={classes.Profile_btns}>
-                    <button
-                      className={classes.Profile_edit_btn}
-                      onClick={handleSubmit}
-                      type="button"
-                    >
-                      완료
-                    </button>
-                    <button
-                      className={`${classes.Profile_edit_btn} ${classes.Profile_cancle_btn}`}
-                      onClick={handleCancle}
-                      type="button"
-                    >
-                      취소
-                    </button>
-                  </div>
-                  {/* type = button 지정 안 하면 url에 ?key=value 형태 생김  */}
-                </form>
-              </div>
-            ) : (
-              <div className={classes.UserInfoList}>
-                <img
-                  className={classes.ProfileImg}
-                  src={user.profilePath}
-                  alt={user.Userprofilepic}
-                />
-                <p className={classes.ProfilenNickName}>{user.nickname}</p>
-                <p className={classes.ProfileMsg}>{user.stMsg}</p>
-                {memberId === smemberId ? (
-                  <button className={classes.editbtn}>
-                    <img
-                      src="../../images/Widget/gear.png"
-                      alt="useredit"
-                      onClick={handleUserEdit}
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                      }}
-                    />
-                  </button>
                 ) : (
-                  <></>
+                  <div className={classes.UserInformation}>
+                    <img
+                      className={classes.ProfileImg}
+                      src={user.profilePath}
+                      alt={user.Userprofilepic}
+                    />
+                    <p className={classes.ProfilenNickName}>{user.nickname}</p>
+                    <p className={classes.ProfileMsg}>{user.stMsg}</p>
+                    {memberId === smemberId ? (
+                      <button className={classes.editbtn}>
+                        <img
+                          src="../../images/Widget/gear.png"
+                          alt="useredit"
+                          onClick={handleUserEdit}
+                          style={{
+                            width: "20px",
+                            height: "20px",
+                          }}
+                        />
+                      </button>
+                    ) : (
+                      // followBtn
+                      <></>
+                    )}
+                  </div>
                 )}
               </div>
-            )}
-            {/* <Link to="/MyProfile/edit">
-              <button>편집모드 이도오옹</button>
-            </Link> */}
-            {/* 팔로잉/팔로워 */}
-            <div className={classes.UserFollow}>
-              <FollowButton
-                memberId={params.memberId}
+
+              {/* 팔로잉/팔로워 */}
+              <div className={classes.UserFollow}>
+                <FollowButton
+                  memberId={params.memberId}
+                  setFollowButtonClick={setFollowButtonClick}
+                />
+              </div>
+            </div>
+
+            <div className={classes.userInfoMenu}>
+              <ProfileMenu
+                setMenu={setMenu}
                 setFollowButtonClick={setFollowButtonClick}
+                memberId={params.memberId}
+                Token={AccsesToken}
               />
             </div>
-          </div>
-
-          <div className={classes.userInfoMenu}>
-            <ProfileMenu
-              setMenu={setMenu}
-              setFollowButtonClick={setFollowButtonClick}
-              memberId={params.memberId}
-              Token={AccsesToken}
-            />
           </div>
         </div>
 

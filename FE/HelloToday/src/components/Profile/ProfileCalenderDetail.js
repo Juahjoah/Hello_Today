@@ -38,11 +38,11 @@ function ProfileCalenderDetail() {
         });
 
         setCalDetail(formattedData);
-        console.log(res.data);
-        console.log("ok");
+        // console.log(res.data);
+        // console.log("ok");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
   return (
@@ -60,7 +60,7 @@ function ProfileCalenderDetail() {
               return (
                 <div className={classes.routinediary} key={index}>
                   <p className={classes.routineContent}>
-                    {item.routineContent}
+                    💜 {item.routineContent}
                   </p>
                   <div className={classes.img_txt}>
                     <div className={classes.img_box}>
@@ -81,7 +81,7 @@ function ProfileCalenderDetail() {
                       )}
                     </div>
                     <div className={classes.v_line}></div>
-                    <div className={classes.content}>
+                    <div className={classes.routine_content}>
                       <p>{item.content}</p>
                     </div>
                   </div>
@@ -91,7 +91,7 @@ function ProfileCalenderDetail() {
           </div>
         </div>
         <hr />
-        <div  className={classes.calendardetail_btn}>
+        <div className={classes.calendardetail_btn}>
           <button
             type="button"
             className={classes.btn_back}

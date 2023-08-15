@@ -4,14 +4,16 @@ import ProfileCalender from "../../components/Profile/ProfileCalender";
 
 function ProfileMain(props) {
   return (
-    <div className="ProfileMain">
-      <div className={classes.ProfileCalender}>
-        <ProfileCalender />
+    <div className={classes.ProfileMain}>
+      <div className={classes.ProfileCalenderSection}>
+        <div className={classes.ProfileCalender}>
+          <ProfileCalender />
+        </div>
       </div>
       <br />
       <div className={classes.ProfileCustom}>
         {/* menu에서 받아온 정보 출력 */}
-        {props.Menu}
+        <div className={classes.ProfileCustomSection}>{props.Menu}</div>
       </div>
     </div>
   );

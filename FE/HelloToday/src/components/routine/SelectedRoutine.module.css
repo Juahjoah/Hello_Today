@@ -1,7 +1,6 @@
 @font-face {
   font-family: "TheJamsil5Bold";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -12,9 +11,9 @@
   font-style: normal;
   src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot');
   src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix') format('embedded-opentype'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2') format('woff2'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff') format('woff'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf') format("truetype");
+    url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff') format('woff'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf') format("truetype");
   font-display: swap;
 }
 
@@ -24,15 +23,15 @@
   font-style: normal;
   src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot');
   src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix') format('embedded-opentype'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2') format('woff2'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff') format('woff'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf') format("truetype");
+    url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff') format('woff'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf') format("truetype");
   font-display: swap;
 }
+
 @font-face {
   font-family: "TheJamsil5Bold";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
-    format("woff2");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -103,6 +102,7 @@
   width: 280px;
   animation: jumpAnimation 3s infinite;
 }
+
 /* Modal */
 
 .authModal {
@@ -163,8 +163,8 @@
 .authtextArea {
   width: 90%;
   height: 70%;
-  position:relative;
-  display:inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .authModalMainRightTextArea {
@@ -183,10 +183,10 @@
 }
 
 .authModalMainRightTextAreaLimit {
-  position:absolute;
-  right:10px;
-  bottom:3px;
-  color:#949494;
+  position: absolute;
+  right: 10px;
+  bottom: 3px;
+  color: #949494;
   font-size: 13px;
   font-family: "TheJamsil3Bold";
 }
@@ -311,4 +311,27 @@ input[type="file"] {
 
 .authModalMainRightTextArea::placeholder {
   color: rgba(100, 100, 100, 0.3) !important;
+}
+
+.routineSelectMain {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+.test {
+  font-size: 25px;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+  font-family: "TheJamsil5Bold";
+}
+
+.testSide {
+  font-size: 15px;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+  font-family: 'TheJamsil4Bold';
+  color: #989898;
 }

@@ -7,6 +7,7 @@ import loginReducer from "./LoginSlice";
 import calendarReducer from "./calendarDetailSlice";
 import ddayReducer from "./ddaySlice";
 import routineCheckReducer from "./routineCheckModalSlice";
+import allRoutineCheckReducer from "./allRoutineCheckSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     calendarDetail: calendarReducer,
     dday: ddayReducer,
     routineCheck: routineCheckReducer,
+    allRoutineCheck: allRoutineCheckReducer,
   },
 });
 

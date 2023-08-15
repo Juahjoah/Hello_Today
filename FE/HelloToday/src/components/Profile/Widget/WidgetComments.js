@@ -3,6 +3,7 @@ import classes from "./WidgetComments.module.css";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 function WidgetComments() {
@@ -18,17 +19,18 @@ function WidgetComments() {
 
   const [nowPage, setNowPage] = useState(1);
   const itemsIncludePage = 3;
+  const loggedInUserId = sessionStorage.getItem("memberId");
 
   useEffect(() => {
-    const loggedInUserId = sessionStorage.getItem("memberId");
     setIsMe(
-      loggedInUserId === memberId ||
-        comments.some((comment) => comment.writerNickName === loggedInUserId)
+      loggedInUserId === memberId ? true : false
       // memberId === +sessionStorage.getItem("memberId") ? true : false
     );
     getComments(memberId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
+
+  console.log(isMe);
 
   const getComments = async (memberId) => {
     await axios
@@ -100,15 +102,42 @@ function WidgetComments() {
       });
   };
 
-  const DeleteComment = (messageId) => {
+  const deleteAlert = (messageId) => {
+    let confirmed = false;
+
+    Swal.fire({
+      icon: "question",
+      title: "댓글을 삭제합니다.",
+      text: "댓글을 정말 삭제하시겠습니까?",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+      showCancelButton: true,
+    }).then((response) => {
+      if (response.isConfirmed) {
+        confirmed = true;
+        deleteComment(messageId);
+      }
+    });
+  };
+
+  const deleteComment = (messageId) => {
     axios
       .delete(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg/${messageId}`,
         { headers: { Authorization: AccsesToken } }
       )
       .then((response) => {
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "댓글이 삭제되었습니다.",
+            text: "",
+            confirmButtonText: "확인",
+          });
+        }
         // console.log(response);
         getComments(memberId);
+        setNowPage(1);
       })
       .catch((error) => {
         console.log(error);
@@ -121,11 +150,8 @@ function WidgetComments() {
   const startIndex = Math.max(indexOfFirstItem, 0);
   const endIndex = Math.min(indexOfLastItem, comments.length);
 
-  // const nowComments =
-  //   comments.length === 0 ? [] : comments.slice(startIndex, endIndex);
-  const nowComments = comments
-    ? comments
-    : comments.slice(startIndex, endIndex);
+  const nowComments =
+    comments[0] === undefined ? comments : comments.slice(startIndex, endIndex);
 
   const paginate = (pageNumber) => {
     setNowPage(pageNumber);
@@ -154,8 +180,8 @@ function WidgetComments() {
             nowComments.map((comment) => (
               <div key={comment.messageId}>
                 {isEdit && editedCommentId === comment.messageId ? (
-                  <div>
-                    <input
+                  <div className={classes.commentPostIt}>
+                    <textarea
                       className={classes.editinputstyle}
                       type="text"
                       value={editedComment}
@@ -164,31 +190,54 @@ function WidgetComments() {
                         setEditedCommentId(comment.messageId);
                       }}
                     />
-                    <button onClick={() => SaveEditedComment()}>저장</button>
-                    <button onClick={() => setIsEdit(false)}>취소</button>
+                    <div className={classes.inputBtnArea}>
+                      <button
+                        className={classes.inputBtnMini}
+                        onClick={() => SaveEditedComment()}
+                      >
+                        저장
+                      </button>
+                      <button
+                        className={classes.inputBtnMini}
+                        onClick={() => setIsEdit(false)}
+                      >
+                        취소
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div className={classes.commentPostIt}>
-                    <p>{comment.content}</p>
-                    {comment.writerNickName}
-                    {isMe && (
+                    {(isMe || comment.writerId === loggedInUserId) && (
+                      <button
+                        className={classes.deleteButtonStyle}
+                        // onClick={() => DeleteComment(comment.messageId)}
+                        onClick={() => deleteAlert(comment.messageId)}
+                      >
+                        <img src="../../images/Widget/clear.png" alt="clear" />
+                      </button>
+                    )}
+                    <p className={classes.postContent}>{comment.content}</p>
+                    <p className={classes.postNickName}>
+                      {comment.writerNickName}
+                    </p>
+                    <p className={classes.postDate}>
+                      {new Date(comment.createdDate).toLocaleDateString()}
+                    </p>
+
+                    {(isMe || comment.writerId === loggedInUserId) && ( // 여기 이부분 말이야
                       <button
                         className={classes.editButtonStyle}
                         onClick={() => {
-                          setIsEdit(comment.messageId);
+                          console.log(
+                            "Edit button clicked for comment:",
+                            comment
+                          );
+                          setIsEdit(true);
                           setEditedComment(comment.content);
                           setEditedCommentId(comment.messageId);
                         }}
                       >
                         <img src="../../images/Widget/edit.png" alt="edit" />
-                      </button>
-                    )}
-                    {isMe && (
-                      <button
-                        className={classes.editButtonStyle}
-                        onClick={() => DeleteComment(comment.messageId)}
-                      >
-                        <img src="../../images/Widget/clear.png" alt="clear" />
                       </button>
                     )}
                   </div>
