@@ -24,11 +24,11 @@
 .WidgetContent {
   /* border: 1px solid black; */
   display: flex;
-  margin-top: 50px;
-  justify-content: center;
 }
 .WidgetContentTxt {
   display: flex;
+  margin-top: 50px;
+  justify-content: center;
 }
 
 .galleryIgmItem {
