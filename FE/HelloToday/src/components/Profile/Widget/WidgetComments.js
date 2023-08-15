@@ -30,8 +30,6 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
-  console.log(isMe);
-
   const getComments = async (memberId) => {
     await axios
       .get(
@@ -160,14 +158,14 @@ function WidgetComments() {
   return (
     <div className={classes.WidgetComments}>
       <div>
-        <p className={classes.WidgetCommentsTitle}>
+        {/* <p className={classes.WidgetCommentsTitle}>
           응원의 메세지를 남겨주세요!
-        </p>
+        </p> */}
         <div className={classes.CommentSection}>
           {comments.length > itemsIncludePage && (
             <div>
               <button
-                className={classes.beforButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => paginate(nowPage - 1)}
                 disabled={nowPage === 1}
               >
@@ -217,7 +215,7 @@ function WidgetComments() {
                       </button>
                     )}
                     <p className={classes.postContent}>{comment.content}</p>
-                    <p className={classes.postNickName}>
+                    <p className={classes.postnickName}>
                       {comment.writerNickName}
                     </p>
                     <p className={classes.postDate}>
@@ -226,7 +224,7 @@ function WidgetComments() {
 
                     {(isMe || +comment.writerId === +loggedInUserId) && (
                       <button
-                        className={classes.nextButtonStyle}
+                        className={classes.editButtonStyle}
                         onClick={() => {
                           setIsEdit(true);
                           setEditedComment(comment.content);
@@ -243,7 +241,7 @@ function WidgetComments() {
           {comments.length > itemsIncludePage && (
             <div>
               <button
-                className={classes.editButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => paginate(nowPage + 1)}
                 disabled={
                   nowComments.length < itemsIncludePage ||

@@ -29,180 +29,215 @@
   }
 }
 
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
 .MyProfile {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
-  width: 95%;
-  height: 108vh;
-  margin: 70px auto 20px auto;
   display: flex;
-  /* justify-content: center; */
-  justify-items: center;
-  align-items: center;
+  height: 90vh;
+  margin-top: 70px;
 }
 
 .UserProfile {
-  font-family: "TheJamsil5Bold";
-  /* width: 40%; */
+  flex: 3;
+}
 
-  width: 40vh;
-  margin: 2rem;
+.UserProfileSection {
+  width: 80%;
+  height: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  justify-items: center;
-  height: 88vh;
-  /* margin-top: 170px; */
+  align-items: center;
+  margin: 0px 0px 0px 80px;
+  margin-top: 10px;
+  border: 1px solid black;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  background: rgb(207, 193, 228);
+  background: linear-gradient(
+    180deg,
+    rgba(207, 193, 228, 1) 0%,
+    rgba(255, 255, 255, 1) 35%
+  );
+  position: relative;
 }
 
 .UserInfo {
-  background: linear-gradient(rgba(165, 129, 207, 0.5), white);
-  border-radius: 1rem;
+  flex: 3.5;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* .UserInfoTop {
+  flex: 8;
+} */
+
+.UserInformation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 }
 
 .ProfileImg {
-  width: 10rem;
-  height: 10rem;
-  display: flex;
-  margin: 0 auto;
   border-radius: 50%;
+  width: 64px;
+  height: 64px;
 }
 
 .ProfilenNickName {
-  font-family: "TheJamsil5Bold";
-  font-size: 1.2rem;
-  text-align: center;
+  font-family: "TheJamsil4Bold";
+  color: rgb(110, 122, 150);
 }
 
 .ProfileMsg {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  text-align: center;
-  margin: 0.5rem;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-family: "TheJamsil3Bold";
+  color: rgb(110, 122, 150);
 }
 
-.UserFollow {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  margin: 1rem;
-  height: 100%;
-  /* text-align: center; */
+.userInfoMenu {
+  flex: 6.5;
 }
 
 .Profilecontent {
-  font-family: "TheJamsil5Bold";
-  width: 70%;
-  margin: 2rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.editbtn {
-  position: relative;
-  left: 200px;
-  bottom: 50px;
-  border: none;
-  background: white;
-  border-radius: 100px;
-  cursor: pointer;
+  flex: 7;
 }
 
+/* edit side */
 .editForm {
-  width: 67%;
-  height: 85vh;
+  margin-top: 10px;
+  width: 89%;
+  height: 95%;
   border-radius: 15px;
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   margin-left: 5vh;
   font-family: "TheJamsil5Bold";
+  background: rgba(250, 249, 252, 1);
 }
-.editFormHeader {
+
+.editFormMain {
   display: flex;
   flex-direction: column;
+  width: 90%;
+  margin: auto;
+}
+
+.editFormHeader {
+  flex: 1;
+  display: flex;
+  /* flex-direction: column; */
   width: 100%;
-  /* justify-content: center; */
-  align-items: start;
-  margin-top: 1vh;
-  margin-left: 10vh;
+  justify-content: flex-start;
 }
 .editFormTitle {
   font-size: 3vh;
 }
+
 .widgetBody {
+  flex: 8;
   display: flex;
   flex-direction: row;
 }
 .widgetLeft {
   display: flex;
   flex: 4.5;
-  margin-left: 10vh;
-  margin-top: 4vh;
+
   flex-direction: column;
 }
 
 .widgetLeftTitle {
+  font-family: "TheJamsil4Bold";
   font-size: 2vh;
 }
 .widgetRightTitle {
+  font-family: "TheJamsil4Bold";
   font-size: 2vh;
 }
 .widgetLeftTitleItem {
 }
 
 .widgetLeftForm {
-  border-radius: 15px;
-  height: 45vh;
+  border-radius: 12px;
+  height: 49vh;
   border: 1px solid rgba(200, 200, 200, 5);
   margin-top: 1vh;
-  padding: 4vh;
+  padding: 2vh 4vh 2vh 4vh;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
 .widgetMid {
   display: flex;
   flex: 1;
-  margin-top: 28vh;
-  margin-left: 4vh;
+  justify-content: center;
+  align-items: center;
 }
 
-.widgetMidButton {
-}
 .widgetMidButtonForm {
   width: 8vh;
-  height: 5vh;
-  border: 3px #a581cf solid;
-  border-radius: 8px;
-  color: #a581cf;
-  background: rgb(255, 255, 255);
-  font-family: "TheJamsil5Bold";
+  height: 6vh;
+  transition: all 250ms ease-in-out;
 }
 
 .widgetMidButtonForm:hover {
-  color: white;
-  background: #a581cf;
+  cursor: pointer;
+  transform: scale(1.2);
 }
 .widgetRight {
   display: flex;
   flex: 4.5;
   /* margin-left: 10vh; */
-  margin-top: 4vh;
   flex-direction: column;
 }
 .widgetRightTopForm {
-  border-bottom: 1px solid rgba(200, 200, 200, 5);
-  margin-right: 6vh;
-
-  /* opacity: 0.5; */
+  border-radius: 12px;
+  height: 49vh;
+  border: 1px solid rgba(200, 200, 200, 5);
+  margin-top: 1vh;
+  padding: 2vh 4vh 2vh 4vh;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  font-family: "TheJamsil3Bold";
 }
-.widgetRightTop {
-  margin-top: 8vh;
 
-  margin-left: 4vh;
-
-  margin-bottom: 4vh;
-
-  font-size: 15px;
-}
 .widgetRightBody {
   font-size: 18px;
   margin-top: 2vh;
@@ -212,35 +247,60 @@
   font-size: 15px;
   margin-left: 4vh;
 }
+
+.widgetRightFormitem {
+  display: flex;
+  flex-direction: column;
+}
+
+.widgetRightFormButton {
+  text-align: start;
+  border: none;
+  background: none;
+  margin-top: 0.9vh;
+  margin-bottom: 0.9vh;
+  background-color: transparent;
+  font-family: "TheJamsil3Bold";
+  padding: 8px 12px;
+  transition: all 250ms ease-in-out;
+  font-size: 13.3px !important;
+}
+
 .widgetRightItem {
+  text-align: start;
+  border: none;
+  background: none;
+  margin-top: 0.9vh;
+  margin-bottom: 0.9vh;
+  background-color: transparent;
+  font-family: "TheJamsil3Bold";
+  padding: 8px 12px;
+  transition: all 250ms ease-in-out;
   display: flex;
   justify-content: space-between;
-  margin-right: 3vh;
-  margin-top: 2px;
-  text-align: center;
+  font-size: 13.3px !important;
+  align-items: center;
 }
 
 .widgetRightItemFlag {
   /* animation */
+  font-size: 13.3px !important;
   animation: XAnimation 0.15s infinite;
 }
 
-.widgetRightButoon {
-  width: auto;
-  /* height: 27px; */
-  border: 3px #a581cf solid;
-  border-radius: 8px;
-  color: #a581cf;
-  background: rgb(255, 255, 255);
+.widgetRightButton {
+  width: 15px;
+  height: 15px;
+  transition: all 250ms ease-in-out;
 }
-.widgetRightButoon:hover {
-  color: white;
-  background: red;
-  border: 3px red solid;
+.widgetRightButton:hover {
+  cursor: pointer;
+  transform: scale(1.3);
+  color: #d9534f;
 }
 
 .widgetLeftFormItem {
-  font-size: 2vh;
+  /* font-size: 2vh; */
   display: flex;
   flex-direction: column;
 }
@@ -249,51 +309,75 @@
   text-align: start;
   border: none;
   background: none;
-  margin-top: 1vh;
-  margin-bottom: 2vh;
+  margin-top: 0.9vh;
+  margin-bottom: 0.9vh;
   background-color: transparent;
-  font-family: "TheJamsil5Bold" !important;
+  font-family: "TheJamsil3Bold";
   padding: 8px 12px;
-  /* color: white; */
+  transition: all 250ms ease-in-out;
+  font-size: 13.3px !important;
 }
+
+.widgetLeftFormButton:hover {
+  background-color: #a581cfc3;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .selectedButton {
   /* Styling for selected buttons */
-  background-color: #a581cf;
+  background-color: #a581cfc3;
   color: #fff;
   border-radius: 5px;
 }
 
 .widgetFooter {
+  flex: 1;
   display: flex;
   justify-content: flex-end;
-  margin-top: 2vh;
-  margin-right: 15vh;
+  align-items: center;
+  margin-top: 30px;
 }
 .widgetFooterButton {
   width: 11vh;
   height: 5vh;
   margin-left: 1vh;
-  border: 3px #a581cf solid;
+  /* border: 3px #a581cf solid; */
   border-radius: 8px;
-  color: #a581cf;
-  background: rgb(255, 255, 255);
-  font-family: "TheJamsil5Bold";
+  /* color: #a581cf; */
+  /* background: rgb(255, 255, 255); */
+  font-family: "TheJamsil4Bold";
+  transition: all 250ms ease-in-out;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.851);
 }
 
 .widgetFooterButton:hover {
   color: white;
   background: #a581cf;
+  cursor: pointer;
 }
 /*회원탈퇴버튼*/
-.profile_unregist {
+/* .profile_unregist {
   position: relative;
   top: 2rem;
   margin: 0px;
   text-align: right;
-}
+} */
 .profile_unregist_btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
   border: none;
   background-color: rgb(192, 192, 192, 0);
   font-family: "TheJamsil5Bold";
-  color: rgb(192, 192, 192);
+  color: rgb(170, 170, 170);
+  transition: all 250ms ease-in-out;
+}
+
+.profile_unregist_btn:hover {
+  color: #d9534f;
+  cursor: pointer;
 }
