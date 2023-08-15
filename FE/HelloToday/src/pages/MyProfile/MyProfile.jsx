@@ -119,12 +119,12 @@ function MyProfile() {
   //제출
   const handleSubmit = () => {
     if (user.nickname.length < 1) {
-      alert("닉네임 입력");
+      // alert("닉네임 입력");
       nicknameinput.current.focus();
       return;
     }
     if (user.stMsg === null || user.stMsg.length < 1) {
-      alert("상태 입력");
+      // alert("상태 입력");
       stMsginput.current.focus();
       return;
     }
