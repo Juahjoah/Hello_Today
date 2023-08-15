@@ -58,12 +58,24 @@
   text-align: right;
 }
 
+.beforButtonStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.nextButtonStyle {
+  border: 0;
+  background-color: transparent;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .editButtonStyle {
   border: 0;
   background-color: transparent;
   position: absolute;
-
-  right: 0;
+  left: 100;
 }
 
 .editinputstyle {
