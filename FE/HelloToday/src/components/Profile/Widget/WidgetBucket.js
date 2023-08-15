@@ -50,6 +50,9 @@ function WidgetBucket() {
   }, [memberId, AccsesToken]);
 
   const createBucket = () => {
+    if (newBucket.trim() === "") {
+      return;
+    }
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/bucketlist`,
@@ -78,6 +81,9 @@ function WidgetBucket() {
   };
 
   const editBucket = (wishDiaryId) => {
+    if (editedBucket.trim() === "") {
+      return;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/bucketlist/${wishDiaryId}`,

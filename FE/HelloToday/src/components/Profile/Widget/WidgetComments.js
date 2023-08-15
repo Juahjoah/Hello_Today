@@ -51,6 +51,9 @@ function WidgetComments() {
   };
 
   const CreateComment = async () => {
+    if (newComment.trim() === "") {
+      return;
+    }
     await axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg`,
@@ -79,6 +82,9 @@ function WidgetComments() {
   };
 
   const EditComment = () => {
+    if (editedComment.trim() === "") {
+      return;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/cheermsg`,
