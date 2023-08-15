@@ -192,19 +192,21 @@ function WidgetBucket() {
                             setEditedBucketId(bucketItem.wishDiaryId);
                           }}
                         />
-                        <button
-                          className={classes.bucketListBtn}
-                          onClick={() => saveEditedBucket()}
-                        >
-                          저장
-                        </button>
+                        <div className={classes.bucketListBtnStyle}>
+                          <button
+                            className={classes.bucketListBtn}
+                            onClick={() => saveEditedBucket()}
+                          >
+                            저장
+                          </button>
 
-                        <button
-                          className={classes.bucketListBtn}
-                          onClick={() => setIsEdit(false)}
-                        >
-                          취소
-                        </button>
+                          <button
+                            className={classes.bucketListBtn}
+                            onClick={() => setIsEdit(false)}
+                          >
+                            취소
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <div className={classes.bucketListSection}>
