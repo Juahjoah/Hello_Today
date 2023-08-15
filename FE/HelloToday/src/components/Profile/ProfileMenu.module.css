@@ -91,7 +91,7 @@
 }
 .ProfileItem:hover {
   color: white;
-  background: #a581cf;
+  background: #a581cfc3;
   cursor: pointer;
 }
 
