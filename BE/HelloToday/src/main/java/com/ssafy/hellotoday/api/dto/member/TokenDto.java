@@ -11,10 +11,12 @@ public class TokenDto {
 
     private String accessToken;
     private String refreshToken;
+    private Integer memberId;
 
     @Builder
-    public TokenDto(String accessToken, String refreshToken) {
+    public TokenDto(String accessToken, String refreshToken, Integer memberId) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.memberId = memberId;
     }
 }

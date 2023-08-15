@@ -53,8 +53,8 @@ export function ProfileCalender() {
         ])
         .then(
           axios.spread((res1, res2) => {
-            console.log("캘린더", res1);
-            console.log("디데이", res2);
+            // console.log("캘린더", res1);
+            // console.log("디데이", res2);
 
             const dbdata1 = res1.data.map((item) => ({
               id: item.routineId,
@@ -72,7 +72,12 @@ export function ProfileCalender() {
               //디데이 데이터
               calDate: item.calDate,
               title: item.content,
-              description: `${item.content} D${item.calDate}`,
+              description:
+                item.calDate > 1
+                  ? `D +${item.calDate}`
+                  : item.calDate === 0
+                  ? "D-day"
+                  : `D ${item.calDate}`,
               start: item.finalDate,
               createDate: item.createdDate,
               memberid: item.memberId,
@@ -87,8 +92,8 @@ export function ProfileCalender() {
           })
         )
         .catch((err) => {
-          console.log("-------ProfileCalendar error----------");
-          console.log(err);
+          // console.log("-------ProfileCalendar error----------");
+          // console.log(err);
         });
     }
   }, [AccsesToken, isRegist, isEditF, isDelete]);
@@ -105,7 +110,7 @@ export function ProfileCalender() {
           right: "today", // 오늘
         }}
         //Sizing
-        height={"430px"}
+        height={"350px"}
         //Month
         fixedWeekCount={false} //true면 기본이 6줄
         initialView="dayGridMonth" //처음 보이는 부분은 달

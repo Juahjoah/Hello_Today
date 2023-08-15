@@ -34,8 +34,6 @@ function UnSelectedRoutine() {
   const [FirstLogin, setFirstLogin] = useState(isFirstLogin);
   const [nickName, setNickName] = useState("");
 
-  // console.log(typeof FirstLogin)
-  // console.log(typeof false)
   const dispatch = useDispatch();
   const routineSelectBannerImg = "main_banner_routineselect1";
   const routineSelectMainBannerMents = [

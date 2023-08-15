@@ -37,16 +37,18 @@
 }
 .routineContent {
   /*루틴 이름*/
+  font-size: 1.2rem;
 }
 .img_txt {
   /*이미지 글 한 박스*/
-  box-shadow: 0 0 5px #333;
+  font-family: "TheJamsil5Bold";
+  border-radius: 12px;
+  border: 1px solid gray;
+  box-sizing: border-box;
   display: flex;
-  padding-top: 40px;
+  padding-top: 20px;
   line-height: 20px;
   margin-bottom: 30px;
-  margin-top: 30px;
-  box-sizing: border-box;
   margin-left: 15px;
   margin-right: 15px;
   text-align: center;
@@ -58,11 +60,11 @@
   margin: 0px 10px 10px 10px;
 }
 .v_line {
-  border-left: 4px solid rgba(0, 0, 0, 0.5);
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
   height: 200px;
   margin-right: 10px;
 }
-.content {
+.routine_content {
   /*루틴 인증 글*/
 }
 .calendardetail_btn {

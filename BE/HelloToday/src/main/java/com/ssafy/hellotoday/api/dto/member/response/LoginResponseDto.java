@@ -19,4 +19,6 @@ public class LoginResponseDto {
         this.nickname = nickname;
         this.firstLogin = firstLogin;
     }
+
+
 }

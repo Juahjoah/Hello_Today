@@ -3,6 +3,7 @@ import classes from "./WidgetDiary.module.css";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import axios from "axios";
 
@@ -22,10 +23,13 @@ function WidgetDiary() {
 
   const getDiary = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/mypage/onediary`, {
-        params: { memberId },
-        headers: { Authorization: AccsesToken },
-      })
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/onediary/${memberId}`,
+        {
+          params: { memberId },
+          headers: { Authorization: AccsesToken },
+        }
+      )
       .then((response) => {
         setDiary(response.data);
         // console.log(response.data);
@@ -93,6 +97,24 @@ function WidgetDiary() {
     setEditedDiaryId("");
   };
 
+  const deleteAlert = (messageId) => {
+    let confirmed = false;
+
+    Swal.fire({
+      icon: "question",
+      title: "댓글을 삭제합니다.",
+      text: "댓글을 정말 삭제하시겠습니까?",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+      showCancelButton: true,
+    }).then((response) => {
+      if (response.isConfirmed) {
+        confirmed = true;
+        deleteDiary(messageId);
+      }
+    });
+  };
+
   const deleteDiary = (wishDiaryId) => {
     axios
       .delete(
@@ -103,6 +125,14 @@ function WidgetDiary() {
         }
       )
       .then((response) => {
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "댓글이 삭제되었습니다.",
+            text: "",
+            confirmButtonText: "확인",
+          });
+        }
         // console.log(response);
         getDiary();
       })
@@ -185,7 +215,7 @@ function WidgetDiary() {
                           />
                         </button>
                         <button
-                          onClick={() => deleteDiary(diaryItem.wishDiaryId)}
+                          onClick={() => deleteAlert(diaryItem.wishDiaryId)}
                         >
                           <img
                             className={classes.editButtonStyle}
