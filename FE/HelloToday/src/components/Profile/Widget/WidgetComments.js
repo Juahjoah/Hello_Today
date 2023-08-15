@@ -30,8 +30,6 @@ function WidgetComments() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memberId, AccsesToken]);
 
-  console.log(isMe);
-
   const getComments = async (memberId) => {
     await axios
       .get(
