@@ -167,7 +167,7 @@ function WidgetComments() {
           {comments.length > itemsIncludePage && (
             <div>
               <button
-                className={classes.editButtonStyle}
+                className={classes.beforButtonStyle}
                 onClick={() => paginate(nowPage - 1)}
                 disabled={nowPage === 1}
               >
@@ -207,7 +207,7 @@ function WidgetComments() {
                   </div>
                 ) : (
                   <div className={classes.commentPostIt}>
-                    {(isMe || comment.writerId === loggedInUserId) && (
+                    {(isMe || +comment.writerId === +loggedInUserId) && (
                       <button
                         className={classes.deleteButtonStyle}
                         // onClick={() => DeleteComment(comment.messageId)}
@@ -224,14 +224,10 @@ function WidgetComments() {
                       {new Date(comment.createdDate).toLocaleDateString()}
                     </p>
 
-                    {(isMe || comment.writerId === loggedInUserId) && ( // 여기 이부분 말이야
+                    {(isMe || +comment.writerId === +loggedInUserId) && (
                       <button
-                        className={classes.editButtonStyle}
+                        className={classes.nextButtonStyle}
                         onClick={() => {
-                          console.log(
-                            "Edit button clicked for comment:",
-                            comment
-                          );
                           setIsEdit(true);
                           setEditedComment(comment.content);
                           setEditedCommentId(comment.messageId);
