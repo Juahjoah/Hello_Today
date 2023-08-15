@@ -357,7 +357,7 @@
 
 .widgetFooterButton:hover {
   color: white;
-  background: #a581cf;
+  background: #a581cfc3;
   cursor: pointer;
 }
 /*회원탈퇴버튼*/
