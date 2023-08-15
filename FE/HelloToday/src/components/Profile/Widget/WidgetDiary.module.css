@@ -124,7 +124,7 @@
 
 .wishDiaryContentTxt {
   /*다이어리 + 수정 + 삭제 버튼*/
-  margin-bottom: 10px;
+  margin-top: 5px;
   width: 110vh;
   /*실제 글 내용*/
   display: flex;
