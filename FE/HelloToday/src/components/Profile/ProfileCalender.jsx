@@ -73,7 +73,7 @@ export function ProfileCalender() {
               calDate: item.calDate,
               title: item.content,
               description:
-                item.calDate > 1
+                item.calDate > 0
                   ? `D +${item.calDate}`
                   : item.calDate === 0
                   ? "D-day"
