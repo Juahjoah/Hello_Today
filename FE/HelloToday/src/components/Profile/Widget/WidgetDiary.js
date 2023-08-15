@@ -180,7 +180,7 @@ function WidgetDiary() {
           <div className={classes.wishDiaryCenter}>
             {nowdiary.length === 0 && (
               <div className={classes.wishDiaryNothing}>
-                나의 하루를 기록해볼까요?😊
+                오늘러의 하루를 기록해볼까요?😊
               </div>
             )}
             {nowdiary.length > 0 &&
