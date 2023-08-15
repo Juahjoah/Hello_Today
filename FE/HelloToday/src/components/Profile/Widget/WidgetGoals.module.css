@@ -8,14 +8,135 @@
 
 .WidgetGoals {
   font-family: "TheJamsil5Bold";
-  box-shadow: 0 0 5px #333;
-  border-radius: 10px;
-  padding: 1rem;
-  margin: 2rem 1rem;
+  /* padding: 1rem;
+  margin: 2rem 1rem; */
+  width: auto;
+  height: auto;
 }
 
 .goalTitle {
+  /*font*/
+  font-family: "TheJamsil5Bold";
+  font-weight: bold;
+  color: #ffffff;
   font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  /*상자*/
+  background-color: #a581cf;
+  padding: 2px 30px 2px 30px;
+  border-radius: 12px;
+}
+
+.widgetInputStyle {
+  font-family: "TheJamsil5Bold";
+  display: flex;
+  justify-content: end;
+  margin: 0 1rem;
+}
+
+.inputstyle {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  color: #222222;
+  width: 90%;
+  border: none;
+  border-bottom: solid #aaaaaa 1px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background: none;
+  display: flex;
+  align-self: center;
+}
+
+.inputBtn::after {
+  content: attr(data-text);
+}
+.inputBtn {
+  font-family: "TheJamsil5Bold";
+  width: 7rem;
+  height: 2rem;
+  position: relative;
+  display: inline-block;
+  font-size: 0.7rem;
+  margin: 0.7rem;
+  border-radius: 6px;
+  background-color: white;
+  color: #a581cf;
+  border: #a581cf solid;
+  /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
+}
+
+.inputBtn:active {
+  top: 9px;
+}
+
+.moveButtonStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.editButtonStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.selectBoxStyle {
+  font-family: "TheJamsil5Bold";
+  height: 1.5rem;
+  border-radius: 4px;
+  outline: 0 none;
+  margin: auto 0.3rem auto 0.3rem;
+  border: 2px solid #a581cf;
+  /* color: #a581cf; */
+}
+
+.goalListSection {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10rem;
+}
+
+.goalList {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.goalItemText {
+  display: flex;
+  font-size: 1rem;
+  text-align: left;
+  /* width: 45rem; */
+}
+
+.editSectionStyle {
+  display: flex;
+  width: 90%;
+}
+
+.inputBtnMini {
+  font-family: "TheJamsil5Bold";
+  background-color: white;
+  width: 4rem;
+  color: #a581cf;
+  border: #a581cf solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
+  margin: 0 0.3rem 0 0.3rem;
+}
+
+.editInputStyle {
+  font-family: "TheJamsil5Bold";
+  font-size: 0.7rem;
+  color: #222222;
+  width: 80%;
+  border: none;
+  border-bottom: solid #aaaaaa 1px;
+  padding-bottom: 0.2rem;
+  padding-left: 0.2rem;
+  background: none;
+  display: flex;
+  align-self: center;
 }

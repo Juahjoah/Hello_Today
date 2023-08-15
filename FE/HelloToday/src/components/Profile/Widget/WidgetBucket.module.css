@@ -95,20 +95,6 @@
   display: flex;
   align-self: center;
 }
-.inputstyle_ {
-  font-family: "TheJamsil5Bold";
-  font-size: 0.7rem;
-  color: #222222;
-  width: 50%;
-  border: none;
-  border-bottom: solid #aaaaaa 1px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  margin-left: 20px;
-  background: none;
-  display: flex;
-  align-self: center;
-}
 
 .inputBtn::after {
   content: attr(data-text);
