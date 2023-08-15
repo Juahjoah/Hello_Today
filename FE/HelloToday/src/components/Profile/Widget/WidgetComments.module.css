@@ -8,8 +8,6 @@
 
 .WidgetComments {
   font-family: "TheJamsil5Bold";
-  box-shadow: 0 0 5px #333;
-  border-radius: 10px;
   padding: 1rem;
   margin: 2rem 1rem;
 }
@@ -44,11 +42,12 @@
 }
 
 .postContent {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   height: 55%;
+  margin-top: 0.1rem;
 }
 
-.postNickName {
+.postnickName {
   font-size: 0.3rem;
   text-align: right;
 }
@@ -58,24 +57,16 @@
   text-align: right;
 }
 
-.beforButtonStyle {
+.moveButtonStyle {
   border: 0;
   background-color: transparent;
-}
-
-.nextButtonStyle {
-  border: 0;
-  background-color: transparent;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 .editButtonStyle {
   border: 0;
   background-color: transparent;
   position: absolute;
-  left: 100;
+  right: -3px;
 }
 
 .editinputstyle {
@@ -151,13 +142,16 @@ inputstyle:focus {
 }
 .inputBtnMini {
   font-family: "TheJamsil5Bold";
+  background-color: white; /* 파란색 */
+  color: #a581cf;
+  border: #a581cf solid;
   width: 3rem;
-  height: 1rem;
-  position: relative;
-  font-size: 0.7rem;
-  margin: 0.7rem;
-  border-radius: 6px;
-  display: inline-block;
+  height: 1.5rem;
+  font-size: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
   /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
 }
 
@@ -166,5 +160,6 @@ inputstyle:focus {
 }
 
 .inputBtnArea {
-  text-align: center;
+  display: flex;
+  justify-content: flex-end;
 }

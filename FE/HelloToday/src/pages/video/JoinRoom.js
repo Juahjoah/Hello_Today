@@ -76,8 +76,8 @@ function JoinRoom() {
       return;
     }
 
-    console.log(location.state.memberId);
-    console.log(location.state.accessToken);
+    // console.log(location.state.memberId);
+    // console.log(location.state.accessToken);
 
     // 이전 페이지에서 받아온 데이터 -> redux로 변경 필요 !
     // setMySessionId(location.state.roomId);
@@ -274,7 +274,7 @@ function JoinRoom() {
   // 질문받기(test)
 
   const callQuestion = () => {
-    console.log(myRoomId);
+    // console.log(myRoomId);
     axios({
       url: `${process.env.REACT_APP_BASE_URL}/api/rooms/${myRoomId}/question`,
       method: "get",
@@ -282,7 +282,7 @@ function JoinRoom() {
         Authorization: myAccessToken,
       },
     }).then((res) => {
-      console.log(res.data.data.content);
+      // console.log(res.data.data.content);
       const question = res.data.data.content;
       setQuestion(question);
       setIsQuestionClick(true);
