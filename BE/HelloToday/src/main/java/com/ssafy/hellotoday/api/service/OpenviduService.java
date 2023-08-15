@@ -176,11 +176,14 @@ public class OpenviduService {
 
         try {
             openvidu.fetch();
+            log.info(room.getSessionId());
             Session session = openvidu.getActiveSession(room.getSessionId());
-            // 인원 수가 1이라면 세션까지 닫기
-            if (session.getActiveConnections().size() <= 0) {
-                session.close();
+
+            if (session == null || session.getActiveConnections().size() <= 0) {
+                if (session != null) session.close();
+
                 room.updateActiveFlag(false);
+
                 return BaseResponseDto.builder()
                         .success(true)
                         .message(MeetingRoomResponseEnum.CLOSE_MEETINGROOM.getName())
@@ -197,7 +200,6 @@ public class OpenviduService {
                                 .build())
                         .build();
             }
-
 
             // 아니라면 커넥션만 끊기
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
