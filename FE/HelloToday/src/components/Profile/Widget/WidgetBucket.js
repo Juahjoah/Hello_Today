@@ -19,7 +19,7 @@ function WidgetBucket() {
   const [editedBucketId, setEditedBucketId] = useState(null);
 
   const [nowPage, setNowPage] = useState(1);
-  const itemsIncludePage = 3;
+  const itemsIncludePage = 4;
 
   const getBucket = () => {
     axios
