@@ -109,7 +109,9 @@
   border: none;
 }
 .wishDiaryNothing {
-  border: solid black;
+  /* border: solid black; */
+  width: 110vh;
+  text-align: center;
 }
 .wishDiaryBody {
 }

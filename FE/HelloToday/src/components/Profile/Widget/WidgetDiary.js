@@ -173,7 +173,9 @@ function WidgetDiary() {
           </div>
           <div className={classes.wishDiaryCenter}>
             {nowdiary.length === 0 && (
-              <div className={classes.wishDiaryNothing}>일기가 없습니다.</div>
+              <div className={classes.wishDiaryNothing}>
+                나의 하루를 기록해볼까요?😊
+              </div>
             )}
             {nowdiary.length > 0 &&
               nowdiary.map((diaryItem) => {
