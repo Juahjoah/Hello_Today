@@ -56,7 +56,6 @@
 .bucketList {
   display: flex;
   flex-direction: column;
-  margin: 0 90% 0 2%;
 }
 
 .bucketItem {
@@ -65,6 +64,11 @@
   font-size: 1rem;
   text-align: left;
   margin: 0.3rem;
+}
+
+.moveButtonStyle {
+  border: 0;
+  background-color: transparent;
 }
 
 .editButtonStyle {

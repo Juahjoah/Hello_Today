@@ -163,7 +163,7 @@ function WidgetBucket() {
           <div className={classes.bucketSection}>
             <div className={classes.pagination}>
               <button
-                className={classes.editButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => setPage(nowPage - 1)}
               >
                 <img src="../../images/Widget/before.png" alt="before" />
@@ -243,7 +243,7 @@ function WidgetBucket() {
 
             <div className={classes.pagination}>
               <button
-                className={classes.editButtonStyle}
+                className={classes.moveButtonStyle}
                 onClick={() => setPage(nowPage + 1)}
               >
                 <img src="../../images/Widget/next.png" alt="next" />
