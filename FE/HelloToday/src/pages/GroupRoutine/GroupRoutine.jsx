@@ -227,7 +227,7 @@ function GroupRoutine() {
             src="images/BannerImage/GroupRoutineFooterBanner.png"
             alt="toGroupBanner"
           />
-        </div>``
+        </div>
       </div>
       <Modal
         style={modalStyle}

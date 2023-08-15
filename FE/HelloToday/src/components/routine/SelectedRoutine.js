@@ -178,37 +178,47 @@ function SelectedRoutine({ routinePrivate }) {
     );
     formData.append("file", selectedFile);
 
-    axios
-      .put(
-        `${process.env.REACT_APP_BASE_URL}/api/routine/private/check`,
-        formData,
-        {
-          headers: {
-            Authorization: AccsesToken,
-          },
-        }
-      )
-      .then((res) => {
-        navigate('/');
-      })
-      .then(() => {
-        setModalIsOpen(false);
-        setRoutineAuthText("");
-        setSelectedFile(null);
-        setFileName("");
-        dispatch(routineCheck(true));
-      })
-
-      .catch((error) => {
-        if (error.response.data.code === 4001) {
-          Swal.fire({
-            icon: "warning",
-            title: "루틴 인증",
-            text: "해당 날짜에 이미 인증한 내역이 존재합니다.",
-            confirmButtonText: "확인"
+    Swal.fire({
+      icon: "info",
+      title: "루틴 인증",
+      text: "루틴 인증을 정말 등록하시겠습니까?",
+      confirmButtonText: "확인",
+      cancelButtonAriaLabel: "취소",
+      showCancelButton: true,
+    }).then((response) => {
+      if (response.isConfirmed) {
+        axios
+          .put(
+            `${process.env.REACT_APP_BASE_URL}/api/routine/private/check`,
+            formData,
+            {
+              headers: {
+                Authorization: AccsesToken,
+              },
+            }
+          )
+          .then((res) => {
+            navigate('/');
           })
-        }
-      });
+          .then(() => {
+            setModalIsOpen(false);
+            setRoutineAuthText("");
+            setSelectedFile(null);
+            setFileName("");
+            dispatch(routineCheck(true));
+          }).catch((error) => {
+            if (error.response.data.code === 4001) {
+              Swal.fire({
+                icon: "warning",
+                title: "루틴 인증",
+                text: "해당 날짜에 이미 인증한 내역이 존재합니다.",
+                confirmButtonText: "확인"
+              })
+            }
+          });
+      }
+    })
+
   };
 
   function checkRoutineCheckAll(routinePrivate) {
@@ -238,10 +248,10 @@ function SelectedRoutine({ routinePrivate }) {
       />
       <div className={classes.routineSelectMain}>
         <div className={classes.test}>
-        오늘도 루틴을 잘 진행하셨나요?!
+          오늘도 루틴을 잘 진행하셨나요?!
 
-          <span className={classes.testSide} style={{marginLeft: "20px"}}>
-          루틴을 모두 7일 동안 성공하면 '오늘도, 안녕'의 깜짝 선물이!
+          <span className={classes.testSide} style={{ marginLeft: "20px" }}>
+            루틴을 모두 7일 동안 성공하면 '오늘도, 안녕'의 깜짝 선물이!
           </span>
         </div>
       </div>
@@ -312,7 +322,7 @@ function SelectedRoutine({ routinePrivate }) {
               루틴
             </div>
           </div>
-          <div className={classes.authModalMain}>
+          <div className={classes.authModalMain} style={{marginLeft: "3%"}}>
             <div className={classes.authModalMainLeft}>
               <div className={classes.authModalMainLeftTitle}>
                 루틴 인증 날짜를 선택해주세요
@@ -326,7 +336,10 @@ function SelectedRoutine({ routinePrivate }) {
                 // 오늘 날짜 
                 maxDate={(new Date())}
               />
+              <div style={{margin: "4px"}}></div>
+              <span className={classes.caution}>※ 미래 날짜에 대한 루틴 인증은 안돼요!  인증은 루틴 시작일자부터 오늘날짜만 가능합니다.</span>
             </div>
+
             <div className={classes.authModalMainRight}>
               <div className={classes.authModalMainRightText}>
                 <div className={classes.authModalMainRightDescOne}>
