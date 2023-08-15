@@ -19,7 +19,7 @@ function WidgetDiary() {
   const [editedDiaryId, setEditedDiaryId] = useState(null);
 
   const [nowPage, setNowPage] = useState(1);
-  const itemsIncludePage = 5;
+  const itemsIncludePage = 4;
 
   const getDiary = () => {
     axios
