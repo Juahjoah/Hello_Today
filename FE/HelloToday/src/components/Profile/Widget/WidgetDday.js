@@ -59,8 +59,8 @@ function WidgetDday() {
   const handleDeleteState = (target) => {
     Swal.fire({
       icon: "question",
-      title: "댓글을 삭제합니다.",
-      text: "댓글을 정말 삭제하시겠습니까?",
+      title: "D-day를 삭제합니다.",
+      text: "D-day을 정말 삭제하시겠습니까?",
       confirmButtonText: "확인",
       cancelButtonText: "취소",
       showCancelButton: true,
