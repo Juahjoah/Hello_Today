@@ -62,8 +62,7 @@
 .WidgetDday_input_btn button {
   font-family: "TheJamsil5Bold";
   background-color: white; /* 파란색 */
-  color: #a581cf;
-  border: #a581cf solid;
+  border: 1px solid rgba(131, 129, 129, 0.851);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -96,7 +95,7 @@
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 3px solid black;
+  border-bottom: solid #aaaaaa 1px;
   background: transparent;
   outline: none;
 }
@@ -126,7 +125,7 @@
   font-size: 0.5rem;
 }
 .DdayInputDate {
-  border: #a581cf solid;
+  border: 1px solid rgba(131, 129, 129, 0.851);
   position: relative;
   width: 70%;
   padding: 10px;
