@@ -9,7 +9,7 @@ import FollowList from "../../components/Profile/FollowList";
 
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Swal from "sweetalert2";
 
@@ -17,10 +17,12 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
 import allAuth from "../../components/User/allAuth";
+import NotFound from "../NotFound/NotFound";
 
 function MyProfile() {
   //------------------------------로그인 시작
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
   const [isUserEdit, setIsUserEdit] = useState(false);
   const memberId = useParams().memberId; //url에서 param가져오기
@@ -58,7 +60,9 @@ function MyProfile() {
         setURLThumbnail(response.data.profilePath);
       })
       .catch((error) => {
-        // console.log(error);
+        if (error.response.data.status === 400) {
+          navigate("/404NotFound");
+        }
       });
   }, [AccsesToken, isUserEdit, memberId]);
 

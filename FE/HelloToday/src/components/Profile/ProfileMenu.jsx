@@ -45,36 +45,40 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
         headers: {
           Authorization: Token,
         },
-      }).then((res) => {
-        const newData = [];
-        const data = res.data;
+      })
+        .then((res) => {
+          const newData = [];
+          const data = res.data;
 
-        newData.push("응원 메세지");
+          newData.push("응원 메세지");
 
-        if (data.ddayFlag === 1) {
-          newData.push("D-Day");
-        }
+          if (data.ddayFlag === 1) {
+            newData.push("D-Day");
+          }
 
-        if (data.galleryFlag === 1) {
-          newData.push("갤러리");
-        }
-        if (data.goalFlag === 1) {
-          newData.push("소중한 목표");
-        }
-        if (data.oneDiaryFlag === 1) {
-          newData.push("한 줄 일기");
-        }
-        if (data.routineHistoryFlag === 1) {
-          newData.push("나의 루틴들");
-        }
-        if (data.wishListFlag === 1) {
-          newData.push("버킷리스트");
-        }
-        if (memberId === localMemberId) {
-          newData.push("편집 모드");
-        }
-        setSelectedFlags(newData);
-      });
+          if (data.galleryFlag === 1) {
+            newData.push("갤러리");
+          }
+          if (data.goalFlag === 1) {
+            newData.push("소중한 목표");
+          }
+          if (data.oneDiaryFlag === 1) {
+            newData.push("한 줄 일기");
+          }
+          if (data.routineHistoryFlag === 1) {
+            newData.push("나의 루틴들");
+          }
+          if (data.wishListFlag === 1) {
+            newData.push("버킷리스트");
+          }
+          if (memberId === localMemberId) {
+            newData.push("편집 모드");
+          }
+          setSelectedFlags(newData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
     widgetAxios();
   }, [memberId, Token]);
