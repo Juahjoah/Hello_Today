@@ -32,8 +32,8 @@ function FollowList() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        console.log(response.data);
-        setFollowers(response.data);
+        console.log(response.data.followers);
+        setFollowers(response.data.followers);
       })
       .catch((error) => {
         console.log(error);
@@ -47,8 +47,8 @@ function FollowList() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        console.log(response.data);
-        setFollowings(response.data);
+        console.log(response.data.followings);
+        setFollowings(response.data.followings);
       })
       .catch((error) => {
         console.log(error);
