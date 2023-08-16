@@ -178,7 +178,7 @@ function WidgetDiary() {
 
   return (
     <div className={classes.WidgetDiary}>
-      <span className={classes.diaryTitle}> 소중한 한 줄 일기 </span>
+      <span className={classes.diaryTitle}> 한 줄 일기 </span>
       <div className={classes.wishDiaryBody}>
         <div className={classes.wishDiaryContent}>
           <div className={classes.pagination_before}>

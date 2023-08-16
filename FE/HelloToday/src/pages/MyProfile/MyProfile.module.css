@@ -165,6 +165,11 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding: 3px 10px 3px 10px;
+  margin-right: 5px;
+}
+.Profile_edit_btn:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
 }
 
 .Profile_Img_edit_btn {

@@ -197,7 +197,7 @@ function WidgetGoals() {
 
   return (
     <div className={classes.WidgetGoals}>
-      <span className={classes.goalTitle}> 나의 목표 </span>
+      <span className={classes.goalTitle}> 소중한 목표 </span>
       {/* <p className={classes.goalTitle}> 작고 소중한 목표를 세웠어요! </p> */}
       <div className={classes.goalAllSection}>
         <div className={classes.goalListSection}>
@@ -336,11 +336,13 @@ function WidgetGoals() {
                   <div>
                     <div className={classes.goalNothingTextLocation}>
                       <h2 className={classes.goalNothingText}>
-                        {type === "0"
-                          ? "매일 "
-                          : type === "1"
-                          ? "매주 "
-                          : "매년 "}
+                        <span className={classes.goalPurpleNothingText}>
+                          {type === "0"
+                            ? "매일 "
+                            : type === "1"
+                            ? "매주 "
+                            : "매년 "}
+                        </span>
                         목표를 입력해주세요
                       </h2>
                     </div>
