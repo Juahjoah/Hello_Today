@@ -26,21 +26,12 @@ import static com.ssafy.hellotoday.db.entity.routine.QRoutineTag.routineTag;
 public class SearchQueryDslRepository {
     private final JPAQueryFactory queryFactory;
 
-    private long countMembersWithRoutineTagByMemberIds(List<Integer> memberIds) {
-        return queryFactory.selectDistinct(member.count())
-                .from(member)
-                .where(member.memberId.in(memberIds))
-                .fetchFirst();
-    }
-
-    public Page<SearchResponseDto> findMembersWithRoutineTagByMemberIds(List<Integer> memberIds, Pageable pageable) {
-        long count = countMembersWithRoutineTagByMemberIds(memberIds);
-
-        List<SearchResponseDto> results = queryFactory.selectFrom(member)
+    public List<SearchResponseDto> findMembersWithRoutineTagByMemberIds(List<Integer> memberIds) {
+        return queryFactory.selectFrom(member)
                 .leftJoin(routine)
                 .on(member.memberId
                         .eq(routine.member.memberId)
-                        .and(routine.activeFlag.eq((byte)1)))
+                        .and(routine.activeFlag.eq((byte) 1)))
                 .leftJoin(routineDetailCat)
                 .on(routine.routineId.eq(routineDetailCat.routine.routineId))
                 .leftJoin(routineDetail)
@@ -48,9 +39,7 @@ public class SearchQueryDslRepository {
                 .leftJoin(routineTag)
                 .on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
                 .where(member.memberId.in(memberIds))
-                .offset(pageable.getOffset())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .orderBy(member.nickname.asc())
                 .transform(groupBy(member.memberId)
                         .list(Projections.constructor(
                                 SearchResponseDto.class,
@@ -60,12 +49,12 @@ public class SearchQueryDslRepository {
                                         SearchTagResponseDto.class,
                                         routineTag.routineTagId,
                                         routineTag.content)))));
-
-        return new PageImpl<>(results, pageable, count);
     }
 
-    public List<Member> findMembersByTag(int tagId) {
-        return queryFactory.select(member)
+    public Page<Member> findMembersByTag(int tagId, Pageable pageable) {
+        long count = countMembersByTag(tagId);
+
+        List<Member> members = queryFactory.selectDistinct(member)
                 .from(routineDetail)
                 .join(routineTag)
                 .on(routineTag.routineTagId.eq(routineDetail.routineTag.routineTagId))
@@ -76,6 +65,26 @@ public class SearchQueryDslRepository {
                 .join(member)
                 .on(member.memberId.eq(routine.member.memberId))
                 .where(routineTag.routineTagId.eq(tagId))
+                .orderBy(member.nickname.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        return new PageImpl<>(members, pageable, count);
+    }
+
+    private long countMembersByTag(int tagId) {
+        return queryFactory.selectDistinct(member.count())
+                .from(routineDetail)
+                .join(routineTag)
+                .on(routineTag.routineTagId.eq(routineDetail.routineTag.routineTagId))
+                .join(routineDetailCat)
+                .on(routineDetailCat.routineDetail.routineDetailId.eq(routineDetail.routineDetailId))
+                .join(routine)
+                .on(routine.routineId.eq(routineDetailCat.routine.routineId))
+                .join(member)
+                .on(member.memberId.eq(routine.member.memberId))
+                .where(routineTag.routineTagId.eq(tagId))
+                .fetchFirst();
     }
 }

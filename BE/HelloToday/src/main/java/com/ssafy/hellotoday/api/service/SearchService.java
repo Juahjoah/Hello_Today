@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.querydsl.SearchQueryDslRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SearchService {
@@ -24,27 +26,31 @@ public class SearchService {
     private final SearchValidator searchValidator;
 
     public SearchResponsePageDto search(String key, String word, int page, int size) {
-        List<Member> members;
+        Page<Member> memberPage;
         searchValidator.validKey(key);
-        Page<SearchResponseDto> res;
+
+        List<SearchResponseDto> searchedMembers;
+        Pageable pageable = PageRequest.of(page, size);
+
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
             searchValidator.validateWordString(word);
-            members = memberRepository.findByNicknameStartingWith(word);
+            memberPage = memberRepository.findByNicknameStartingWithOrderByNickname(word, pageable);
         } else {
             searchValidator.validateWordNum(word);
-            members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
+            memberPage = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word), pageable);
         }
 
-        Pageable pageable = PageRequest.of(page, size);
-        res = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(
-                members.stream().map(Member::getMemberId).collect(Collectors.toList()),
-                pageable);
-        transferProfilePath(res.getContent());
-
+        searchedMembers = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(
+                memberPage.getContent().stream().map(Member::getMemberId).collect(Collectors.toList()));
+        transferProfilePath(searchedMembers);
+        log.info("검색 결과 수: " + searchedMembers.size());
+        for (SearchResponseDto member: searchedMembers) {
+            log.info(member.toString());
+        }
         return SearchResponsePageDto.builder()
-                .totalPages(res.getTotalPages())
-                .totalMembers(res.getTotalElements())
-                .members(res.getContent())
+                .totalPages(memberPage.getTotalPages())
+                .totalMembers(memberPage.getTotalElements())
+                .members(searchedMembers)
                 .build();
     }
 
