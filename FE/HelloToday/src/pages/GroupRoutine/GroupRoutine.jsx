@@ -260,6 +260,7 @@ function GroupRoutine() {
                 onChange={handleRoomNameChange}
                 placeholder="방 제목을 입력해주세요."
                 spellCheck="false"
+                autocomplete="off"
               />
             </div>
             <div className={classes.makeRoomModalMainRoomDesc}>

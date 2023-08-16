@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import classes from "./Chat.module.css";
 import { Scrollbars } from "react-custom-scrollbars-2";
+import { FaRegPaperPlane } from "react-icons/fa";
 
 function Chat({
   myUserName,
@@ -119,6 +120,8 @@ function Chat({
     scrollToBottom();
   }, [messageList]);
 
+  const Iconstyle = { fontSize: "1.4em" };
+
   return (
     <div className={classes.chatRoom}>
       <Scrollbars ref={chatScroll} autoHide={false} autoHideTimeout={1000}>
@@ -156,7 +159,7 @@ function Chat({
           className={classes.chatRoomInputSectionInput}
         />
         <button onClick={onClick} className={classes.chatRoomInputSectionBtn}>
-          GO
+          <FaRegPaperPlane style={Iconstyle} />
         </button>
       </div>
     </div>
