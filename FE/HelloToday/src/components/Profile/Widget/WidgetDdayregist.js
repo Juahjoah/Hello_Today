@@ -78,6 +78,7 @@ function WidgetDdayregist() {
           value={newDday.finalDate}
           onChange={handleChangeState}
           className={classes.DdayInputDate}
+          required
         />
       </div>
       <div>
