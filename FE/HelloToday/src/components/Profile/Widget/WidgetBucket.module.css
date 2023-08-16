@@ -73,6 +73,7 @@
 .widgetInputStyle {
   font-family: "TheJamsil5Bold";
   display: flex;
+  outline: none;
 }
 
 .inputstyle {
@@ -88,6 +89,7 @@
   background: none;
   display: flex;
   align-self: center;
+  outline: none;
 }
 .inputstyle_ {
   font-family: "TheJamsil5Bold";
@@ -101,6 +103,7 @@
   background: none;
   display: flex;
   align-self: center;
+  outline: none;
 }
 
 .inputBtn::after {
