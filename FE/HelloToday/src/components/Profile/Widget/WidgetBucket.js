@@ -188,7 +188,11 @@ function WidgetBucket() {
               </button>
             </div>
             <div className={classes.bucketList}>
-              {nowBucket.length === 0 && <div className={classes.bucketListNoting}>버킷리스트가 없습니다.</div>}
+              {nowBucket.length === 0 && (
+                <div className={classes.bucketListNoting}>
+                  버킷리스트를 채워볼까요?😊
+                </div>
+              )}
 
               {nowBucket.length > 0 &&
                 nowBucket.map((bucketItem) => (
