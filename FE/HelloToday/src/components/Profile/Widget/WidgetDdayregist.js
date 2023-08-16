@@ -66,6 +66,12 @@ function WidgetDdayregist() {
       });
   };
 
+  const keyPressHandler = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
   return (
     <div>
       <div className={classes.WidgetDday_date}>
@@ -92,6 +98,7 @@ function WidgetDdayregist() {
               name="content"
               value={newDday.content}
               onChange={handleChangeState}
+              onKeyDown={keyPressHandler}
               placeholder="D-Day 제목을 입력해주세요"
             ></input>
           </div>
