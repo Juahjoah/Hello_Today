@@ -6,11 +6,13 @@
   align-items: center;
   justify-content: space-evenly;
   border-bottom: solid 1px rgb(188, 185, 185);
+  user-select: none;
 }
 
 .searchPopupTitle {
   font-size: 25px;
   font-family: "TheJamsil5Bold";
+  user-select: none;
 }
 
 .searchPopupBody {
@@ -21,11 +23,13 @@
   align-items: center;
   justify-content: space-evenly;
   margin-top: 50px;
+  user-select: none;
 }
 
 .searchPopupDesc {
   display: flex;
   align-items: center;
+  user-select: none;
 }
 
 .searchPopupDescInput {
@@ -39,6 +43,7 @@
   outline: none;
   width: 85vh;
   flex: 9;
+  user-select: none;
 }
 
 .nickNamePopupDescInput:focus {
@@ -49,6 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .searchPopupForm {
@@ -101,6 +107,7 @@
 }
 
 .searchButton:hover {
+  cursor: pointer;
   color: white;
   background: #a581cf;
 }
@@ -194,6 +201,7 @@
 
 .searchHashTagContent:hover,
 .HashTagRe:hover {
+  cursor: pointer;
   color: white;
   background: #a581cf;
 }

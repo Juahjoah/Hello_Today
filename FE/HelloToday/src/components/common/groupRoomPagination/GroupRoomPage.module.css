@@ -3,6 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
+  user-select: none;
 }
 
 .roomTable {
@@ -19,7 +21,7 @@
 .dummyRoom {
   width: 484px;
   height: 156px;
-  background: rgba(190, 190, 190, 1);
+  background: rgba(190, 190, 190, 0.504);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
   margin: 0px;
@@ -48,4 +50,5 @@
   justify-content: center;
   align-items: center;
   font-size: 30px;
+  user-select: none;
 }
