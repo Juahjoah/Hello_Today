@@ -123,7 +123,7 @@ function WidgetDdayEdit() {
           ></input>
           <div className={classes.WidgetDday_submit_btn}>
             <button className={classes.WidgetDday_btn} onClick={handleSubmit}>
-              완료
+              저장
             </button>
           </div>
           <div>
