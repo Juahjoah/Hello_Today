@@ -37,7 +37,7 @@ function NickNamePopup({
     setUserName(currentUserName);
 
     // 닉네임 관련 유효성 검사
-    const usernameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{3,10}$/;
+    const usernameRegExp = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,10}$/;
     if (!usernameRegExp.test(currentUserName)) {
       setUserNameMessage(
         "닉네임은 특수문자 없이 3~10글자 사이로 입력해주세요!"

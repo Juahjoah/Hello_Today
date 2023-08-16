@@ -3,6 +3,7 @@ import Paging from "./GroupRoomPaging";
 import GroupRoom from "../../group/GroupRoom";
 import classes from "./GroupRoomPage.module.css";
 import axios from "axios";
+import { FcLinux } from "react-icons/fc";
 
 function GroupRoomPage({ myUserName, accessToken, memberId }) {
   //   const [posts, setPosts] = useState([]); // axios로 받아온 리스트 저장
@@ -93,6 +94,7 @@ function GroupRoomPage({ myUserName, accessToken, memberId }) {
       ) : (
         <div className={classes.noGroupRoutineBanner}>
           <div>현재 진행 중인 단체 루틴 방이 없습니다!</div>
+          <FcLinux />
         </div>
       )}
     </>

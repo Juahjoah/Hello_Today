@@ -139,6 +139,7 @@ function SearchPopup({ isOpen, setIsPopupOpen }) {
               className={classes.searchPopupDescInput}
               placeholder="  닉네임을 입력해주세요"
               value={userName}
+              spellCheck="false"
               onKeyDown={keyPressHandler}
               onChange={(e) => setUserName(e.target.value)} // 입력 값이 변경될 때마다 상태 업데이트
             />
