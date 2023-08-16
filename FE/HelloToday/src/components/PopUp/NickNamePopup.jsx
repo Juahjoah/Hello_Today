@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import Swal from "sweetalert2";
+import { FcCheckmark } from "react-icons/fc";
 
 function NickNamePopup({
   FirstLogin,
@@ -28,8 +29,10 @@ function NickNamePopup({
 
   const validChange = classNames({
     [classes.cantChange]: true,
-    [classes.canChange]: validUserName,
+    [classes.canChange]: validUserName && checkUserNameMessage !== "❌",
   });
+
+  const Iconstyle = { fontSize: "1.4em" };
 
   const onChangeUserName = (e) => {
     const currentUserName = e.target.value;
@@ -37,7 +40,7 @@ function NickNamePopup({
     setUserName(currentUserName);
 
     // 닉네임 관련 유효성 검사
-    const usernameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{3,10}$/;
+    const usernameRegExp = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,10}$/;
     if (!usernameRegExp.test(currentUserName)) {
       setUserNameMessage(
         "닉네임은 특수문자 없이 3~10글자 사이로 입력해주세요!"
@@ -66,20 +69,20 @@ function NickNamePopup({
 
         if (isValidNick) {
           Swal.fire({
-              icon: "success",
-              title: "닉네임 설정",
-              text: "사용가능한 닉네임입니다.",
-              confirmButtonText: "확인"
+            icon: "success",
+            title: "닉네임 설정",
+            text: "사용가능한 닉네임입니다.",
+            confirmButtonText: "확인",
           });
           setValidUserName(isValidNick);
-          setCheckUserNameMessage("✔");
+          setCheckUserNameMessage(<FcCheckmark style={Iconstyle} />);
         } else {
           Swal.fire({
             icon: "warning",
             title: "닉네임 설정",
             text: "이미 존재하는 닉네임입니다.",
             confirmButtonText: "확인",
-          })
+          });
           setUserName("");
         }
       })
@@ -145,6 +148,7 @@ function NickNamePopup({
             value={userName}
             className={classes.nickNamePopupDescInput}
             onChange={onChangeUserName}
+            spellCheck="false"
           />
           {isUserName ? (
             <button className={validCheck} onClick={nickNameCheckAxios}>

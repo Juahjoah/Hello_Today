@@ -2,6 +2,7 @@ import classes from "./GroupRoom.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import Swal from "sweetalert2";
 
 function GroupRoom({
   createdDate,
@@ -48,7 +49,12 @@ function GroupRoom({
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          alert("제한 인원이 초과되었습니다!");
+          Swal.fire({
+            icon: "warning",
+            title: "제한 인원 초과",
+            text: "제한 인원이 초과되었습니다.",
+            confirmButtonText: "확인",
+          });
         }
       });
   };

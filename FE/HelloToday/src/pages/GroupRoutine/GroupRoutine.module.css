@@ -54,6 +54,7 @@
   justify-content: center;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);
+  user-select: none;
 }
 
 .makeRoomLeft {
@@ -117,6 +118,7 @@
   width: 70%;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .modalClose {
@@ -168,6 +170,7 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);
   border-radius: 8px;
+  outline: none;
 }
 
 .makeRoomModalMainRoomDesc {
@@ -190,6 +193,7 @@
   font-size: 15px;
   font-family: "TheJamsil5Bold";
   padding: 8px 12px;
+  outline: none;
 }
 
 .makeRoomModalMainRoomCount {
@@ -219,6 +223,8 @@
   border: 1px solid rgba(131, 129, 129, 0.2);
   text-align: center;
   flex: 4;
+  user-select: none;
+  outline: none;
 }
 
 .makeRoomModalMainRoomCountMinusBtn,

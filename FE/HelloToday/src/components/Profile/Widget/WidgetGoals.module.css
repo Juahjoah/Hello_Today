@@ -45,6 +45,7 @@
   background: none;
   display: flex;
   align-self: center;
+  outline: none;
 }
 
 .inputBtn::after {
@@ -205,4 +206,5 @@
   background: none;
   display: flex;
   align-self: center;
+  outline: none;
 }

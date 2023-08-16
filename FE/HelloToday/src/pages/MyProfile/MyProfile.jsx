@@ -11,6 +11,8 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
 //로그인
 import { useDispatch, useSelector } from "react-redux";
 // 로그인 시 필요한 함수
@@ -118,8 +120,13 @@ function MyProfile() {
 
   //제출
   const handleSubmit = () => {
-    if (user.nickname.length < 1) {
-      // alert("닉네임 입력");
+    if (user.nickname.length < 3 || user.nickname.length > 10) {
+      Swal.fire({
+        icon: "warning",
+        title: "닉네임 길이 제한",
+        text: "닉네임은 3 - 10자로 입력해주세요.",
+        confirmButtonText: "확인",
+      });
       nicknameinput.current.focus();
       return;
     }
@@ -164,7 +171,14 @@ function MyProfile() {
         localStorage.setItem("nickName", user.nickname);
       })
       .catch((err) => {
-        // console.log(err);
+        if (err.response.data.code === -102) {
+          Swal.fire({
+            icon: "warning",
+            title: "닉네임 형식 제한",
+            text: "닉네임은 공백과 특수문자 없이 입력해주세요.",
+            confirmButtonText: "확인",
+          });
+        }
       });
   };
   return (
