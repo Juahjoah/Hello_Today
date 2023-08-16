@@ -60,6 +60,7 @@
   margin-right: 10px;
 }
 .WidgetDday_input_btn button {
+  width: 100%;
   font-family: "TheJamsil5Bold";
   background-color: white; /* 파란색 */
   border: 1px solid rgba(131, 129, 129, 0.851);
@@ -91,7 +92,7 @@
 }
 .WidgetDday_input {
   margin-right: 10px;
-  width: 180px;
+  width: 280px;
   border-top: none;
   border-left: none;
   border-right: none;
@@ -154,4 +155,21 @@
 .DdayInputDate:valid::before,
 .DdayInputDate:focus::before {
   display: none;
+}
+.WidgetDday_btnMini {
+  font-family: "TheJamsil5Bold";
+  width: 3rem;
+  height: 1rem;
+  position: relative;
+  display: inline-block;
+  font-size: 0.7rem;
+  margin-left: 0.7rem;
+  border-radius: 6px;
+  background-color: white; /* 파란색 */
+  border: 1px solid rgba(131, 129, 129, 0.851);
+  cursor: pointer;
+}
+.WidgetDday_btnMini:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
 }
