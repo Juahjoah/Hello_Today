@@ -77,9 +77,7 @@
   margin: 0.7rem;
   border-radius: 6px;
   background-color: white;
-  color: #a581cf;
-  border: #a581cf solid;
-  /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
+  border: 1px solid rgba(131, 129, 129, 0.851);
 }
 
 .inputBtn:active {
@@ -102,7 +100,7 @@
   border-radius: 4px;
   outline: 0 none;
   margin: auto 0.3rem auto 0.3rem;
-  border: 2px solid #a581cf;
+  border: 1px solid rgba(131, 129, 129, 0.851);
   /* color: #a581cf; */
 }
 
@@ -156,8 +154,7 @@
   font-size: 0.7rem;
   border-radius: 6px;
   background-color: white;
-  color: #a581cf;
-  border: #a581cf solid;
+  border: 1px solid rgba(131, 129, 129, 0.851);
 }
 .goalPageBtnNot {
   font-family: "TheJamsil5Bold";
@@ -166,8 +163,7 @@
   font-size: 0.7rem;
   border-radius: 6px;
   background-color: white;
-  color: #a581cf;
-  border: #a581cf solid;
+  border: 1px solid rgba(131, 129, 129, 0.851);
 }
 .goalPageBtnActive {
   background-color: #a581cf;
@@ -213,8 +209,7 @@
   margin-left: 0.3rem;
   border-radius: 6px;
   background-color: white; /* 파란색 */
-  color: #a581cf;
-  border: #a581cf solid;
+  border: 1px solid rgba(131, 129, 129, 0.851);
   cursor: pointer;
 }
 .inputBtnMini:hover {
