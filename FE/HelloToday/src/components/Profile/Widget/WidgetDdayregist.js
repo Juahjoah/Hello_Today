@@ -77,7 +77,8 @@ function WidgetDdayregist() {
           name="finalDate" //이거 써야 변수와 연결
           value={newDday.finalDate}
           onChange={handleChangeState}
-          className={newDday.finalDate ? "" : "WidgetDday_highlight"}
+          className={classes.DdayInputDate}
+          required
         />
       </div>
       <div>

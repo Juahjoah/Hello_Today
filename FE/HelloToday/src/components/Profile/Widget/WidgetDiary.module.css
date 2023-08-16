@@ -117,7 +117,7 @@
 }
 .wishDiaryNothing {
   /* border: solid black; */
-  width: 110vh;
+  width: 100%;
   text-align: center;
 }
 .wishDiaryBody {
@@ -132,7 +132,7 @@
 .wishDiaryContentTxt {
   /*다이어리 + 수정 + 삭제 버튼*/
   margin-top: 10px;
-  width: 110vh;
+  width: 100%;
   /*실제 글 내용*/
   display: flex;
 }
@@ -164,9 +164,9 @@
 }
 .wishDiaryCenter {
   margin-left: 10px;
-  width: 110vh;
+  width: 100%;
 }
 .wishDiaryTxtt {
   text-align: left;
-  width: 100vh;
+  width: 90%;
 }

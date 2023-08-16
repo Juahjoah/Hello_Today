@@ -97,6 +97,8 @@ function WidgetDdayEdit() {
           value={newDday.finalDate}
           onChange={handleChangeState}
           ref={ddaycontentinput}
+          className={classes.DdayInputDate}
+          required
         />
       </div>
       <div>
