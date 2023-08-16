@@ -85,11 +85,13 @@
 .moveButtonStyle {
   border: 0;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .editButtonStyle {
   border: 0;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .selectBoxStyle {
