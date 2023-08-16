@@ -1,0 +1,108 @@
+.NotFound {
+  width: 100%;
+  height: 100vh;
+  background: #a581cf46;
+  display: flex;
+}
+
+.leftSide {
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftSideBox {
+  width: 80%;
+  height: 80vh;
+  margin: auto;
+  background: rgb(244, 241, 250);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.leftSideBoxTop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  flex: 7;
+}
+
+.leftSideBoxTopDesc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftSideBoxBottom {
+  flex: 3;
+}
+
+.leftSideBoxBottomBtn {
+  font-family: "TheJamsil5Bold";
+  font-size: 15px;
+  width: 240px;
+  height: 60px;
+  padding: 16px 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: #ffd24c;
+  box-shadow: -4px 4px 0px 0px #ffd24c;
+  color: #fff;
+  transition: all 250ms ease-in;
+}
+
+.leftSideBoxBottomBtn:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.rightSide {
+  flex: 5;
+  width: 80%;
+  height: 60vh;
+  margin: auto;
+}
+
+.rightSideBox {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+@keyframes bikeAnimation1 {
+  0% {
+    transform: translateX(0) scaleX(1);
+  }
+  25% {
+    transform: translateX(500px) scaleX(1);
+  }
+  50% {
+    transform: translateX(500px) scaleX(-1);
+  }
+  75% {
+    transform: translateX(0) scaleX(-1);
+  }
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+.rightSideBike {
+  animation: bikeAnimation1 8s infinite;
+  transform-origin: center;
+}
+
+.rightSideMountain {
+  position: absolute;
+  left: 500px;
+  z-index: -1;
+  width: 60%;
+  height: 60%;
+}
