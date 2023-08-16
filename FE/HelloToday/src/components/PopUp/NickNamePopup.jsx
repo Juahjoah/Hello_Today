@@ -29,7 +29,7 @@ function NickNamePopup({
 
   const validChange = classNames({
     [classes.cantChange]: true,
-    [classes.canChange]: validUserName,
+    [classes.canChange]: validUserName && checkUserNameMessage !== "❌",
   });
 
   const Iconstyle = { fontSize: "1.4em" };
