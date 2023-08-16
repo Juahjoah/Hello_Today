@@ -285,7 +285,7 @@ function WidgetComments() {
           onKeyDown={keyPressHandler}
         />
         <button className={classes.inputBtn} onClick={CreateComment}>
-          댓글 작성하기
+          저장
         </button>
       </div>
     </div>
