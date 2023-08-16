@@ -24,7 +24,7 @@
 }
 .WidgetDday_text {
   /* border: 4px solid; */
-  width: 80vh;
+  width: 70vh;
   display: flex;
   flex-wrap: wrap;
 }
@@ -92,7 +92,7 @@
 }
 .WidgetDday_input {
   margin-right: 10px;
-  width: 200px;
+  width: 180px;
   border-top: none;
   border-left: none;
   border-right: none;
@@ -123,4 +123,34 @@
 .WidgetDday_ddaycontent {
   font-size: 0.5rem;
 }
-
+.DdayInputDate {
+  border: #a581cf solid;
+  position: relative;
+  width: 70%;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  text-align: center;
+  font-family: "TheJamsil5Bold";
+  background: url(../../../../public/images/Widget/calendar-plus.svg) no-repeat
+    right 10px center / 20px auto;
+}
+.DdayInputDate::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+.DdayInputDate::before {
+  content: attr(placeholder);
+  width: 100%;
+  height: 100%;
+}
+.DdayInputDate:valid::before,
+.DdayInputDate:focus::before {
+  display: none;
+}

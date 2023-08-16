@@ -10,13 +10,25 @@ const User = () => {
   };
   return (
     <div className={classes.login}>
-
       <div style={{ position: "relative" }}>
-        <img style={{ width: "55%", marginLeft: "50%", marginTop: "10%" }}
+        <img
+          style={{
+            width: "55%",
+            marginLeft: "50%",
+            marginTop: "10%",
+            userSelect: "none",
+          }}
           src="/images/Home/Homemountain.png"
           alt="mountain"
         />
-        <img style={{ width: "30%", position: "absolute", top: "5%", marginLeft: "90%" }}
+        <img
+          style={{
+            width: "30%",
+            position: "absolute",
+            top: "5%",
+            marginLeft: "90%",
+            userSelect: "none",
+          }}
           src="/images/Home/Homemountainman.png"
           alt="mountainman"
         />
@@ -47,8 +59,12 @@ const User = () => {
 
           <div className={classes.LoginText}>
             <p className={classes.MainText}>간편하게 로그인하고</p>
-            <p className={classes.MainText} style={{color: "#3F3F3F"}}>나만의 루틴을 생성하여</p>
-            <p className={classes.MainText} style={{color: "#3F3F3F"}}>규칙적인 생활습관을 만들어보아요</p>
+            <p className={classes.MainText} style={{ color: "#3F3F3F" }}>
+              나만의 루틴을 생성하여
+            </p>
+            <p className={classes.MainText} style={{ color: "#3F3F3F" }}>
+              규칙적인 생활습관을 만들어보아요
+            </p>
           </div>
           <div className={classes.btn}>
             <div className={classes.kakaoSection}>
@@ -59,7 +75,7 @@ const User = () => {
                 onClick={() => handleLogin("kakao")}
               />
 
-              <span style={{margin: "20px"}}></span>
+              <span style={{ margin: "20px" }}></span>
               <img
                 className={classes.kakao}
                 src="../../images/Login/btnG_완성형.png"
@@ -67,17 +83,13 @@ const User = () => {
                 onClick={() => handleLogin("naver")}
               />
             </div>
-
           </div>
           <div className={classes.naverSection} style={{ marginTop: "20px" }}>
             회원가입 시 이메일 동의를 반드시 해주세요!
           </div>
         </div>
         <div className={classes.none}></div>
-        <div className={classes.rightContent}>
-        </div>
-
-
+        <div className={classes.rightContent}></div>
       </div>
     </div>
   );

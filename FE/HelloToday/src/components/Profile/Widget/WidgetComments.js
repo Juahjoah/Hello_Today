@@ -161,6 +161,12 @@ function WidgetComments() {
     setNowPage(pageNumber);
   };
 
+  const keyPressHandler = (e) => {
+    if (e.key === "Enter") {
+      CreateComment();
+    }
+  };
+
   return (
     <div className={classes.WidgetComments}>
       <div>
@@ -268,6 +274,7 @@ function WidgetComments() {
           value={newComment}
           placeholder="응원의 댓글을 남겨주세요!"
           onChange={(event) => setNewComment(event.target.value)}
+          onKeyDown={keyPressHandler}
         />
         <button className={classes.inputBtn} onClick={CreateComment}>
           댓글 작성하기

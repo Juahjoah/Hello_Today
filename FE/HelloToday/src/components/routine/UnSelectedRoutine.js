@@ -20,9 +20,8 @@ function UnSelectedRoutine() {
   const location = useLocation();
 
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
-  const isFirstLogin = JSON.parse(localStorage.getItem("isFirstLogin"))
-  const memberId = localStorage.getItem('memberId')
-
+  const isFirstLogin = JSON.parse(localStorage.getItem("isFirstLogin"));
+  const memberId = localStorage.getItem("memberId");
 
   const [AllRoutineList, setAllRoutineList] = useState([]);
   const [routineMent, setRoutineMent] = useState([]);
@@ -41,7 +40,6 @@ function UnSelectedRoutine() {
     "계획을 떠나 아예 뭘 해야할지 모르겠다구요?",
     "결심했다는 마음이 중요한거예요 :)",
   ];
-
 
   // 최초 렌더 시 루틴 데이터 받아오기
   useEffect(() => {
@@ -155,11 +153,25 @@ function UnSelectedRoutine() {
             const bigRoutineMent = routineMent[index].content;
             return (
               <div key={index} style={{ marginTop: "30px" }}>
-                <div style={{marginBottom: "10px"}}>
-                  {index === 0 && <span className={classes.bigRoutineMent}>기본 진행 루틴</span>}
-                  {index === 1 && <span className={classes.bigRoutineMent}>생각하기, 기록하기</span>}
-                  {index === 2 && <span className={classes.bigRoutineMent}>몸을 움직이는 활동</span>}
-                  <span className={classes.mediumRoutineMent}>{bigRoutineMent}</span>
+                <div style={{ marginBottom: "10px" }}>
+                  {index === 0 && (
+                    <span className={classes.bigRoutineMent}>
+                      기본 진행 루틴
+                    </span>
+                  )}
+                  {index === 1 && (
+                    <span className={classes.bigRoutineMent}>
+                      생각하기, 기록하기
+                    </span>
+                  )}
+                  {index === 2 && (
+                    <span className={classes.bigRoutineMent}>
+                      몸을 움직이는 활동
+                    </span>
+                  )}
+                  <span className={classes.mediumRoutineMent}>
+                    {bigRoutineMent}
+                  </span>
                 </div>
 
                 <SelectRoutineList
@@ -172,9 +184,11 @@ function UnSelectedRoutine() {
             );
           })}
         </div>
-        <button onClick={openModal} className={classes.routineSubmit}>
-          루틴을 선택하셨나요?
-        </button>
+        <div className={classes.routineSubmitSection}>
+          <button onClick={openModal} className={classes.routineSubmit}>
+            루틴을 선택하셨나요?
+          </button>
+        </div>
       </div>
 
       {/* Modal */}
@@ -190,7 +204,7 @@ function UnSelectedRoutine() {
             className={classes.modalClose}
           />
           <div className={classes.modalDescriptionTitle}>
-            "{localStorage.getItem('nickName')}"님이 선택하신 루틴 입니다.
+            "{localStorage.getItem("nickName")}"님이 선택하신 루틴 입니다.
           </div>
           <Splide options={option}>
             {selectRoutineState.map((item, index) => {

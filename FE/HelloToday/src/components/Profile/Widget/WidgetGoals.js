@@ -152,6 +152,12 @@ function WidgetGoals() {
       });
   };
 
+  const keyPressHandler = (e) => {
+    if (e.key === "Enter") {
+      createGoal();
+    }
+  };
+
   const indexOfLastItem = nowPage * itemsIncludePage;
   const indexOfFirstItem = indexOfLastItem - itemsIncludePage;
 
@@ -304,6 +310,7 @@ function WidgetGoals() {
                 className={classes.inputstyle}
                 placeholder="해내고 싶은 목표를 남겨봐요!"
                 onChange={(event) => setNewGoal(event.target.value)}
+                onKeyDown={keyPressHandler}
               />
               <button className={classes.inputBtn} onClick={() => createGoal()}>
                 저장
