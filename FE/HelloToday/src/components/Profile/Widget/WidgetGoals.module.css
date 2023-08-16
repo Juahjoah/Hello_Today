@@ -64,9 +64,6 @@
   outline: none;
 }
 
-.inputBtn::after {
-  content: attr(data-text);
-}
 .inputBtn {
   font-family: "TheJamsil5Bold";
   width: 7rem;
@@ -78,20 +75,23 @@
   border-radius: 6px;
   background-color: white;
   border: 1px solid rgba(131, 129, 129, 0.851);
+  cursor: pointer;
 }
-
-.inputBtn:active {
-  top: 9px;
+.inputBtn:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
 }
 
 .moveButtonStyle {
   border: 0;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .editButtonStyle {
   border: 0;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .selectBoxStyle {
