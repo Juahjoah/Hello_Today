@@ -343,7 +343,7 @@ function WidgetGoals() {
                             ? "매주 "
                             : "매년 "}
                         </span>
-                        목표를 입력해주세요
+                        목표를 입력해주세요 ⭐
                       </h2>
                     </div>
                     <div className="pagination">
