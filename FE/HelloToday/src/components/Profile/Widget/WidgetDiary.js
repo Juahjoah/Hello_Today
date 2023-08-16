@@ -291,7 +291,7 @@ function WidgetDiary() {
                 className={classes.wishDiaryinputBtn}
                 onClick={() => createDiary()}
               >
-                완료
+                저장
               </button>
             </div>
           )}

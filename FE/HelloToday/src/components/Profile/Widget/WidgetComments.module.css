@@ -112,10 +112,7 @@
   outline: none;
 }
 
-.inputBtn::after {
-  content: attr(data-text);
-}
-.inputBtn {
+.commentInputBtn {
   font-family: "TheJamsil5Bold";
   width: 7rem;
   height: 2rem;
@@ -123,12 +120,16 @@
   display: inline-block;
   font-size: 0.7rem;
   margin: 0.7rem;
-  border-radius: 6px;
-  /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
+  background-color: white; /* 파란색 */
+  border: 1px solid rgba(131, 129, 129, 0.851);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 3px 10px 3px 10px;
 }
-
-.inputBtn:active {
-  top: 9px;
+.commentInputBtn:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
 }
 
 inputstyle::placeholder {
@@ -138,26 +139,22 @@ inputstyle:focus {
   outline: none;
 }
 
-.inputBtnMini::after {
-  content: attr(data-text);
-}
-.inputBtnMini {
+.commentInputBtnMini {
   font-family: "TheJamsil5Bold";
-  background-color: white; /* 파란색 */
-  color: #a581cf;
-  border: #a581cf solid;
   width: 3rem;
-  height: 1.5rem;
-  font-size: 0.5rem;
-  border-radius: 5px;
+  height: 1rem;
+  position: relative;
+  display: inline-block;
+  font-size: 0.7rem;
+  margin-left: 0.7rem;
+  border-radius: 6px;
+  background-color: white; /* 파란색 */
+  border: 1px solid rgba(131, 129, 129, 0.851);
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  padding: 3px 10px 3px 10px;
-  /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
 }
-
-.inputBtnMini:active {
-  top: 9px;
+.commentInputBtnMini:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
 }
 
 .inputBtnArea {
