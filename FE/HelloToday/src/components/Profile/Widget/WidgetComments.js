@@ -208,15 +208,15 @@ function WidgetComments() {
                         setEditedCommentId(comment.messageId);
                       }}
                     />
-                    <div className={classes.inputBtnArea}>
+                    <div className={classes.commentInputBtnArea}>
                       <button
-                        className={classes.inputBtnMini}
+                        className={classes.commentInputBtnMini}
                         onClick={() => SaveEditedComment()}
                       >
                         저장
                       </button>
                       <button
-                        className={classes.inputBtnMini}
+                        className={classes.commentInputBtnMini}
                         onClick={() => setIsEdit(false)}
                       >
                         취소
@@ -284,7 +284,7 @@ function WidgetComments() {
           onChange={(event) => setNewComment(event.target.value)}
           onKeyDown={keyPressHandler}
         />
-        <button className={classes.inputBtn} onClick={CreateComment}>
+        <button className={classes.commentInputBtn} onClick={CreateComment}>
           저장
         </button>
       </div>
