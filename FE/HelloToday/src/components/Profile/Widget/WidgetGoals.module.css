@@ -184,7 +184,7 @@
 }
 .goalNothingText {
   /*아무것도 없을 때 안내 메세지*/
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: center;
 }
 .goalItemText {

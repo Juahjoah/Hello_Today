@@ -335,7 +335,7 @@ function WidgetGoals() {
                   // 데이터가 아무것도 없을 때
                   <div>
                     <div className={classes.goalNothingTextLocation}>
-                      <h2 className={classes.goalNothingText}>
+                      <span className={classes.goalNothingText}>
                         <span className={classes.goalPurpleNothingText}>
                           {type === "0"
                             ? "매일 "
@@ -344,7 +344,7 @@ function WidgetGoals() {
                             : "매년 "}
                         </span>
                         목표를 입력해주세요 ⭐
-                      </h2>
+                      </span>
                     </div>
                     <div className="pagination">
                       <button disabled className={classes.goalPageBtnNot}>
