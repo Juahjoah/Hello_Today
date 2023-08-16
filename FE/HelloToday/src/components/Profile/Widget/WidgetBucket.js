@@ -50,6 +50,9 @@ function WidgetBucket() {
   }, [memberId, AccsesToken]);
 
   const createBucket = () => {
+    if (newBucket.trim() === "") {
+      return;
+    }
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/bucketlist`,
@@ -78,6 +81,9 @@ function WidgetBucket() {
   };
 
   const editBucket = (wishDiaryId) => {
+    if (editedBucket.trim() === "") {
+      return;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/bucketlist/${wishDiaryId}`,
@@ -99,8 +105,8 @@ function WidgetBucket() {
 
     Swal.fire({
       icon: "question",
-      title: "댓글을 삭제합니다.",
-      text: "댓글을 정말 삭제하시겠습니까?",
+      title: "해당 버킷 리스트를 삭제합니다.",
+      text: "정말 삭제하시겠습니까?",
       confirmButtonText: "확인",
       cancelButtonText: "취소",
       showCancelButton: true,
@@ -124,7 +130,7 @@ function WidgetBucket() {
         if (response.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "댓글이 삭제되었습니다.",
+            title: "해당 버킷 리스트가 삭제되었습니다.",
             text: "",
             confirmButtonText: "확인",
           });
@@ -186,19 +192,21 @@ function WidgetBucket() {
                             setEditedBucketId(bucketItem.wishDiaryId);
                           }}
                         />
-                        <button
-                          className={classes.bucketListBtn}
-                          onClick={() => saveEditedBucket()}
-                        >
-                          저장
-                        </button>
+                        <div className={classes.bucketListBtnStyle}>
+                          <button
+                            className={classes.bucketListBtn}
+                            onClick={() => saveEditedBucket()}
+                          >
+                            저장
+                          </button>
 
-                        <button
-                          className={classes.bucketListBtn}
-                          onClick={() => setIsEdit(false)}
-                        >
-                          취소
-                        </button>
+                          <button
+                            className={classes.bucketListBtn}
+                            onClick={() => setIsEdit(false)}
+                          >
+                            취소
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <div className={classes.bucketListSection}>

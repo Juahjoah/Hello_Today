@@ -81,9 +81,9 @@
 .wishDiaryinputBtnMiniStyle {
   display: flex;
 }
-.wishDiaryinputBtnMini::after {
+/* .wishDiaryinputBtnMini::after {
   content: attr(data-text);
-}
+} */
 
 .wishDiaryinputBtnMini {
   font-family: "TheJamsil5Bold";
@@ -99,6 +99,10 @@
   border: #a581cf solid;
   cursor: pointer;
   /* text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); */
+}
+.wishDiaryinputBtnMini:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
 }
 
 .inputBtnMini:active {
