@@ -160,4 +160,6 @@ inputstyle:focus {
 }
 .bucketListNoting {
   width: 50rem;
+  display: flex;
+  justify-content: center;
 }
