@@ -50,6 +50,9 @@ function WidgetGoals() {
   }, [memberId, AccsesToken]);
 
   const createGoal = () => {
+    if (newGoal.trim() === "") {
+      return;
+    }
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/goal`,
@@ -73,6 +76,9 @@ function WidgetGoals() {
   };
 
   const editGoal = (goalId) => {
+    if (editedGoal.trim() === "") {
+      return;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/goal/${goalId}`,
@@ -106,8 +112,8 @@ function WidgetGoals() {
 
     Swal.fire({
       icon: "question",
-      title: "댓글을 삭제합니다.",
-      text: "댓글을 정말 삭제하시겠습니까?",
+      title: "해당 목표를 삭제합니다.",
+      text: "소중한 목표를 정말 삭제하시겠습니까?",
       confirmButtonText: "확인",
       cancelButtonText: "취소",
       showCancelButton: true,
@@ -132,7 +138,7 @@ function WidgetGoals() {
         if (response.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "댓글이 삭제되었습니다.",
+            title: "해당 목표가 삭제되었습니다.",
             text: "",
             confirmButtonText: "확인",
           });

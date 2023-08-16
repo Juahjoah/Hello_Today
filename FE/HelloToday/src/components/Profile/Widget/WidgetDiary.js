@@ -51,6 +51,9 @@ function WidgetDiary() {
   // }, [diary, props.memberId]);
 
   const createDiary = () => {
+    if (newDiary.trim() === "") {
+      return;
+    }
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/onediary`,
@@ -72,6 +75,9 @@ function WidgetDiary() {
   };
 
   const editDiary = (wishDiaryId) => {
+    if (editedDiary.trim() === "") {
+      return;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/onediary/${wishDiaryId}`,
@@ -102,8 +108,8 @@ function WidgetDiary() {
 
     Swal.fire({
       icon: "question",
-      title: "댓글을 삭제합니다.",
-      text: "댓글을 정말 삭제하시겠습니까?",
+      title: "해당 일기를 삭제합니다.",
+      text: "정말 삭제하시겠습니까?",
       confirmButtonText: "확인",
       cancelButtonText: "취소",
       showCancelButton: true,
@@ -128,7 +134,7 @@ function WidgetDiary() {
         if (response.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "댓글이 삭제되었습니다.",
+            title: "소중한 일기가 삭제되었습니다.",
             text: "",
             confirmButtonText: "확인",
           });
@@ -174,7 +180,7 @@ function WidgetDiary() {
           <div className={classes.wishDiaryCenter}>
             {nowdiary.length === 0 && (
               <div className={classes.wishDiaryNothing}>
-                나의 하루를 기록해볼까요?😊
+                오늘러의 하루를 기록해볼까요?😊
               </div>
             )}
             {nowdiary.length > 0 &&

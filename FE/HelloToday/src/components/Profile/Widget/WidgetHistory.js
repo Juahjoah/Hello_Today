@@ -98,9 +98,11 @@ function WidgetHistory() {
                 </div>
               ))
             ) : (
-              <p className={classes.WidgetHistory_nothing}>
-                루틴 히스토리가 없습니다😢
-              </p>
+              <div className={classes.WidgetHistory_nothing}>
+                <p className={classes.WidgetHistory_nothingTxt}>
+                  루틴 히스토리가 없습니다😢
+                </p>
+              </div>
             )}
           </div>
           <div className={classes.btn}>
