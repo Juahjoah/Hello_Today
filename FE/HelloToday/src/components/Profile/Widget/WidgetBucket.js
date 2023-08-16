@@ -161,6 +161,18 @@ function WidgetBucket() {
     setNowPage(pageNumber);
   };
 
+  const keyPressHandler = (e) => {
+    if (e.key === "Enter") {
+      createBucket();
+    }
+  };
+
+  const keyPressHandlerEdit = (e) => {
+    if (e.key === "Enter") {
+      saveEditedBucket();
+    }
+  };
+
   return (
     <div className={classes.WidgetBucket_}>
       <span className={classes.bucketTitle}> 버킷리스트 </span>
@@ -187,6 +199,8 @@ function WidgetBucket() {
                           className={classes.inputstyle_}
                           type="text"
                           value={editedBucket}
+                          spellCheck="false"
+                          onKeyDown={keyPressHandlerEdit}
                           onChange={(event) => {
                             setEditedBucket(event.target.value);
                             setEditedBucketId(bucketItem.wishDiaryId);
@@ -267,6 +281,8 @@ function WidgetBucket() {
                   type="text"
                   value={newBucket}
                   placeholder="여러분의 버킷 리스트를 남겨보세요!"
+                  spellCheck="false"
+                  onKeyDown={keyPressHandler}
                   onChange={(event) => setNewBucket(event.target.value)}
                 />
                 <button className={classes.inputBtn} onClick={createBucket}>

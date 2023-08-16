@@ -8,6 +8,7 @@ import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.repository.MemberRepository;
 import com.ssafy.hellotoday.db.repository.querydsl.SearchQueryDslRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SearchService {
@@ -26,7 +28,7 @@ public class SearchService {
     public SearchResponsePageDto search(String key, String word, int page, int size) {
         List<Member> members;
         searchValidator.validKey(key);
-        Page<SearchResponseDto> res;
+        Page<SearchResponseDto> searchedMembers;
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
             searchValidator.validateWordString(word);
             members = memberRepository.findByNicknameStartingWith(word);
@@ -36,15 +38,18 @@ public class SearchService {
         }
 
         Pageable pageable = PageRequest.of(page, size);
-        res = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(
+        searchedMembers = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(
                 members.stream().map(Member::getMemberId).collect(Collectors.toList()),
                 pageable);
-        transferProfilePath(res.getContent());
-
+        transferProfilePath(searchedMembers.getContent());
+        log.info("검색 결과 수: " + searchedMembers.getTotalElements());
+        for (SearchResponseDto member: searchedMembers) {
+            log.info(member.toString());
+        }
         return SearchResponsePageDto.builder()
-                .totalPages(res.getTotalPages())
-                .totalMembers(res.getTotalElements())
-                .members(res.getContent())
+                .totalPages(searchedMembers.getTotalPages())
+                .totalMembers(searchedMembers.getTotalElements())
+                .members(searchedMembers.getContent())
                 .build();
     }
 

@@ -164,6 +164,18 @@ function WidgetDiary() {
     setNowPage(pageNumber);
   };
 
+  const keyPressHandler = (e) => {
+    if (e.key === "Enter") {
+      createDiary();
+    }
+  };
+
+  const keyPressHandlerEdit = (e) => {
+    if (e.key === "Enter") {
+      saveEditedDiary();
+    }
+  };
+
   return (
     <div className={classes.WidgetDiary}>
       <span className={classes.diaryTitle}> 소중한 한 줄 일기 </span>
@@ -193,6 +205,8 @@ function WidgetDiary() {
                           type="text"
                           className={classes.inputstyle}
                           value={editedDiary}
+                          spellCheck="false"
+                          onKeyDown={keyPressHandlerEdit}
                           onChange={(event) => {
                             setEditedDiary(event.target.value);
                             setEditedDiaryId(diaryItem.wishDiaryId);
@@ -269,6 +283,8 @@ function WidgetDiary() {
                 type="text"
                 className={classes.inputstyle}
                 value={newDiary}
+                spellCheck="false"
+                onKeyDown={keyPressHandler}
                 onChange={(event) => setNewDiary(event.target.value)}
               />
               <button
