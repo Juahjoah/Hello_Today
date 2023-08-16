@@ -31,6 +31,7 @@ public class SearchService {
 
         List<SearchResponseDto> searchedMembers;
         Pageable pageable = PageRequest.of(page, size);
+
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
             searchValidator.validateWordString(word);
             memberPage = memberRepository.findByNicknameStartingWithOrderByNickname(word, pageable);
