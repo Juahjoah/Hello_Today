@@ -48,7 +48,7 @@ public class SearchQueryDslRepository {
                 .leftJoin(routineTag)
                 .on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
                 .where(member.memberId.in(memberIds))
-                .offset(pageable.getOffset())
+                .orderBy(member.nickname.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .transform(groupBy(member.memberId)
