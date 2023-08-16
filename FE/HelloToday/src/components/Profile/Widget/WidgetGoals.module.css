@@ -25,7 +25,23 @@
   padding: 2px 30px 2px 30px;
   border-radius: 12px;
 }
+.goalAllSection {
+  /*조회&수정 + 등록하는 input창*/
+  height: auto;
+}
+.goalListSection {
+  /*조회, 수정되는 전체 부분 */
+  display: flex;
+  height: 147px;
 
+  /* justify-content: space-around;
+  align-items: center;
+  height: 10rem; */
+}
+.goalRegistInputStyle {
+  /*하단의 등록하는 input창 부분 전체 */
+  height: 54px;
+}
 .widgetInputStyle {
   font-family: "TheJamsil5Bold";
   display: flex;
@@ -90,15 +106,6 @@
   /* color: #a581cf; */
 }
 
-.goalListSection {
-  display: flex;
-  height: 19vh;
-
-  /* justify-content: space-around;
-  align-items: center;
-  height: 10rem; */
-}
-
 .goalList {
   /*매일, 매주, 매년을 묶은 큰 리스트*/
   display: flex;
@@ -109,21 +116,28 @@
 .goalContainer {
   /*매일, 매주, 매년 각각의 컨테이너*/
   width: 100%;
+  /* border-left: 1px solid black; */
+  /* border-radius: 5px; */
+}
 
-  border: 1px solid black;
-  border-radius: 5px;
+.goalSemitTitleLocation {
+  text-align: center;
 }
 .goalSemitTitle {
   /*매일, 매주, 매년 텍스트*/
   margin: 0;
   font-size: 1.2rem;
-  text-align: center;
+  border-bottom: 3px solid #a581cf;
 }
 .goalContentPage {
-  height: 100%;
+  /* height: 100%; */
 }
 .goalOneItemContainer {
   /*조회 + 수정 크게 묶어놓음*/
+}
+.goalOnlyItemBox {
+  /* 페이지네이션 없이 데이터만 나오는 부분 */
+  height: 70px;
 }
 .goalOneItemGet {
   /* 조회 목표 content + 수정, 삭제 버튼*/
@@ -132,6 +146,7 @@
 }
 .goalOneItemGetContent {
   width: 75%;
+  font-family: "TheJamsil4Bold";
 }
 .goalPageBtn {
   /*페이지네이션 버튼*/
@@ -183,22 +198,27 @@
 
 .inputBtnMini {
   font-family: "TheJamsil5Bold";
-  background-color: white;
-  width: 4rem;
+  width: 5rem;
+  height: 1rem;
+  position: relative;
+  display: inline-block;
+  font-size: 0.7rem;
+  margin-left: 0.3rem;
+  border-radius: 6px;
+  background-color: white; /* 파란색 */
   color: #a581cf;
   border: #a581cf solid;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  padding: 3px 10px 3px 10px;
-  margin: 0 0.3rem 0 0.3rem;
 }
-
+.inputBtnMini:hover {
+  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
+  color: white;
+}
 .editInputStyle {
   font-family: "TheJamsil5Bold";
   font-size: 0.7rem;
   color: #222222;
-  width: 80%;
+  width: 100%;
   border: none;
   border-bottom: solid #aaaaaa 1px;
   padding-bottom: 0.2rem;
