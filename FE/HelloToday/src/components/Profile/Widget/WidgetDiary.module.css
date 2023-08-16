@@ -48,11 +48,13 @@
   background: none;
   display: flex;
   align-self: center;
+  outline: none;
 }
 .widgetBigInputStyle {
   /*처음 한 줄 일기 작성*/
   margin-left: 25px;
   display: flex;
+  outline: none;
 }
 
 .inputBtn::after {
