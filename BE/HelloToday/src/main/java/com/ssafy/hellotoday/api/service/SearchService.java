@@ -26,30 +26,30 @@ public class SearchService {
     private final SearchValidator searchValidator;
 
     public SearchResponsePageDto search(String key, String word, int page, int size) {
-        List<Member> members;
+        Page<Member> memberPage;
         searchValidator.validKey(key);
-        Page<SearchResponseDto> searchedMembers;
+
+        List<SearchResponseDto> searchedMembers;
+        Pageable pageable = PageRequest.of(page, size);
         if (key.equals(SearchKeyEnum.NICKNAME.getName())) {
             searchValidator.validateWordString(word);
-            members = memberRepository.findByNicknameStartingWith(word);
+            memberPage = memberRepository.findByNicknameStartingWithOrderByNickname(word, pageable);
         } else {
             searchValidator.validateWordNum(word);
-            members = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word));
+            memberPage = searchQueryDslRepository.findMembersByTag(Integer.parseInt(word), pageable);
         }
 
-        Pageable pageable = PageRequest.of(page, size);
         searchedMembers = searchQueryDslRepository.findMembersWithRoutineTagByMemberIds(
-                members.stream().map(Member::getMemberId).collect(Collectors.toList()),
-                pageable);
-        transferProfilePath(searchedMembers.getContent());
-        log.info("검색 결과 수: " + searchedMembers.getTotalElements());
+                memberPage.getContent().stream().map(Member::getMemberId).collect(Collectors.toList()));
+        transferProfilePath(searchedMembers);
+        log.info("검색 결과 수: " + searchedMembers.size());
         for (SearchResponseDto member: searchedMembers) {
             log.info(member.toString());
         }
         return SearchResponsePageDto.builder()
-                .totalPages(searchedMembers.getTotalPages())
-                .totalMembers(searchedMembers.getTotalElements())
-                .members(searchedMembers.getContent())
+                .totalPages(memberPage.getTotalPages())
+                .totalMembers(memberPage.getTotalElements())
+                .members(searchedMembers)
                 .build();
     }
 
