@@ -101,10 +101,6 @@
   width: 100%;
 }
 
-/* .UserInfoTop {
-  flex: 8;
-} */
-
 .UserInformation {
   display: flex;
   flex-direction: column;
@@ -344,10 +340,7 @@
   width: 11vh;
   height: 5vh;
   margin-left: 1vh;
-  /* border: 3px #a581cf solid; */
   border-radius: 8px;
-  /* color: #a581cf; */
-  /* background: rgb(255, 255, 255); */
   font-family: "TheJamsil4Bold";
   transition: all 250ms ease-in-out;
   background: rgba(250, 249, 252, 1);
@@ -360,13 +353,7 @@
   background: #a581cfc3;
   cursor: pointer;
 }
-/*회원탈퇴버튼*/
-/* .profile_unregist {
-  position: relative;
-  top: 2rem;
-  margin: 0px;
-  text-align: right;
-} */
+
 .profile_unregist_btn {
   position: absolute;
   top: 10px;
