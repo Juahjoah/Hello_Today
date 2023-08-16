@@ -8,9 +8,9 @@ import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomPageDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomOutResponse;
 import com.ssafy.hellotoday.common.exception.CustomException;
-import com.ssafy.hellotoday.common.exception.message.BaseErrorEnum;
 import com.ssafy.hellotoday.common.exception.message.MeetingRoomErrorEnum;
 import com.ssafy.hellotoday.common.exception.message.OpenviduErrorEnum;
+import com.ssafy.hellotoday.common.exception.validator.BaseValidator;
 import com.ssafy.hellotoday.common.exception.validator.OpenviduValidator;
 import com.ssafy.hellotoday.common.util.constant.MeetingRoomResponseEnum;
 import com.ssafy.hellotoday.common.util.constant.OpenviduResponseEnum;
@@ -45,6 +45,8 @@ import java.util.stream.Collectors;
 public class OpenviduService {
     private final OpenviduValidator openviduValidator;
     private final MeetingRoomRepository meetingRoomRepository;
+
+    private final BaseValidator baseValidator;
 
     @Value("${openvidu.url}")
     private String OPENVIDU_URL;
@@ -117,11 +119,7 @@ public class OpenviduService {
     }
 
     public MeetingRoomPageDto roomList(int page, int size) {
-        if (page < 0) throw CustomException.builder()
-                .status(HttpStatus.BAD_REQUEST)
-                .code(BaseErrorEnum.INVALID_PAGE_NUM.getCode())
-                .message(BaseErrorEnum.INVALID_PAGE_NUM.getMessage())
-                .build();
+        baseValidator.checkPageAndSize(page, size);
 
         try {
             openvidu.fetch();
