@@ -27,6 +27,7 @@
   width: 75%;
   margin: auto;
   font-family: "TheJamsil5Bold";
+  user-select: none;
 }
 
 .selectedRoutineModal {
@@ -37,6 +38,7 @@
   font-family: "TheJamsil5Bold";
   font-size: 25px;
   margin: auto;
+  user-select: none;
 }
 
 .bigRoutineMent {
@@ -63,6 +65,7 @@
   color: #fff;
   margin: 100px;
   transition: all 250ms ease-in;
+  user-select: none;
 }
 
 .routineSubmit {

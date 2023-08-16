@@ -21,7 +21,7 @@ import allAuth from "../../components/User/allAuth";
 function GroupRoutine() {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [memberCount, setMemberCount] = useState(1);
+  const [memberCount, setMemberCount] = useState(2);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
 
@@ -259,6 +259,7 @@ function GroupRoutine() {
                 value={roomName}
                 onChange={handleRoomNameChange}
                 placeholder="방 제목을 입력해주세요."
+                spellCheck="false"
               />
             </div>
             <div className={classes.makeRoomModalMainRoomDesc}>
@@ -276,6 +277,7 @@ function GroupRoutine() {
                 value={roomDesc}
                 onChange={handleRoomDescChange}
                 placeholder="방에 대한 설명을 작성해주세요."
+                spellCheck="false"
               ></textarea>
             </div>
             <div className={classes.makeRoomModalMainRoomCount}>
@@ -296,7 +298,7 @@ function GroupRoutine() {
                   type="number"
                   required
                   value={memberCount}
-                  min={1}
+                  min={2}
                   max={6}
                   className={classes.makeRoomModalMainRoomCountInput}
                 />
