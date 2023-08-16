@@ -97,6 +97,8 @@
   border-left: none;
   border-right: none;
   border-bottom: 3px solid black;
+  background: transparent;
+  outline: none;
 }
 
 .WidgetDday_btn {

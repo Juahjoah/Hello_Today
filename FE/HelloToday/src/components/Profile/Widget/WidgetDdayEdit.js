@@ -85,6 +85,13 @@ function WidgetDdayEdit() {
   const handleCancle = () => {
     dispatch(SET_ISEDIT(false));
   };
+
+  const keyPressHandler = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className={classes.WidgetDday_edit}>
       {/* 수정 */}
@@ -98,6 +105,7 @@ function WidgetDdayEdit() {
           onChange={handleChangeState}
           ref={ddaycontentinput}
           className={classes.DdayInputDate}
+          spellCheck="false"
           required
         />
       </div>
@@ -110,6 +118,7 @@ function WidgetDdayEdit() {
             ref={ddayfinalinput}
             name="content"
             value={newDday.content}
+            onKeyDown={keyPressHandler}
             onChange={handleChangeState}
           ></input>
           <div className={classes.WidgetDday_submit_btn}>

@@ -167,6 +167,12 @@ function WidgetComments() {
     }
   };
 
+  const keyPressHandlerEdit = (e) => {
+    if (e.key === "Enter") {
+      SaveEditedComment();
+    }
+  };
+
   return (
     <div className={classes.WidgetComments}>
       <div>
@@ -195,6 +201,8 @@ function WidgetComments() {
                       className={classes.editinputstyle}
                       type="text"
                       value={editedComment}
+                      spellCheck="false"
+                      onKeyDown={keyPressHandlerEdit}
                       onChange={(event) => {
                         setEditedComment(event.target.value);
                         setEditedCommentId(comment.messageId);
