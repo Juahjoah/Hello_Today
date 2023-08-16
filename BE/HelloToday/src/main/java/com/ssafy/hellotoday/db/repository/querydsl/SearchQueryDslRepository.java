@@ -39,6 +39,7 @@ public class SearchQueryDslRepository {
                 .leftJoin(routineTag)
                 .on(routineDetail.routineTag.routineTagId.eq(routineTag.routineTagId))
                 .where(member.memberId.in(memberIds))
+                .orderBy(member.nickname.asc())
                 .transform(groupBy(member.memberId)
                         .list(Projections.constructor(
                                 SearchResponseDto.class,
@@ -64,6 +65,7 @@ public class SearchQueryDslRepository {
                 .join(member)
                 .on(member.memberId.eq(routine.member.memberId))
                 .where(routineTag.routineTagId.eq(tagId))
+                .orderBy(member.nickname.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
