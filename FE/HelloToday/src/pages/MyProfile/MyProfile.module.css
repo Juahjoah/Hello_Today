@@ -69,6 +69,7 @@
 
 .UserProfile {
   flex: 3;
+  user-select: none;
 }
 
 .UserProfileSection {

@@ -66,10 +66,10 @@ function NickNamePopup({
 
         if (isValidNick) {
           Swal.fire({
-              icon: "success",
-              title: "닉네임 설정",
-              text: "사용가능한 닉네임입니다.",
-              confirmButtonText: "확인"
+            icon: "success",
+            title: "닉네임 설정",
+            text: "사용가능한 닉네임입니다.",
+            confirmButtonText: "확인",
           });
           setValidUserName(isValidNick);
           setCheckUserNameMessage("✔");
@@ -79,7 +79,7 @@ function NickNamePopup({
             title: "닉네임 설정",
             text: "이미 존재하는 닉네임입니다.",
             confirmButtonText: "확인",
-          })
+          });
           setUserName("");
         }
       })
@@ -145,6 +145,7 @@ function NickNamePopup({
             value={userName}
             className={classes.nickNamePopupDescInput}
             onChange={onChangeUserName}
+            spellCheck="false"
           />
           {isUserName ? (
             <button className={validCheck} onClick={nickNameCheckAxios}>

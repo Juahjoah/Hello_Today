@@ -73,7 +73,9 @@ function GroupRoomPage({ myUserName, accessToken, memberId }) {
                         />
                       </td>
                     ) : (
-                      <td className={classes.dummyRoom}>empty</td>
+                      <td className={classes.dummyRoom}>
+                        <img src="images/logo_mini.png" alt="logo" />
+                      </td>
                     )}
                   </tr>
                 );
