@@ -61,7 +61,7 @@ public class FollowService {
                                         .email(follow.getFollower().getEmail())
                                         .nickname(follow.getFollower().getNickname())
                                         .stMsg(follow.getFollower().getStMsg())
-                                        .profilePath(follow.getFollower().getProfilePath())
+                                        .profilePath(follow.getFollower().getProfileImagePath())
                                         .build())
                         .collect(Collectors.toList()))
                 .build();
@@ -92,7 +92,7 @@ public class FollowService {
                                         .email(follow.getFollowing().getEmail())
                                         .nickname(follow.getFollowing().getNickname())
                                         .stMsg(follow.getFollowing().getStMsg())
-                                        .profilePath(follow.getFollowing().getProfilePath())
+                                        .profilePath(follow.getFollowing().getProfileImagePath())
                                         .build())
                         .collect(Collectors.toList()))
                 .build();
