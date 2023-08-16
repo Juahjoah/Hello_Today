@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import Swal from "sweetalert2";
+import { FcCheckmark } from "react-icons/fc";
 
 function NickNamePopup({
   FirstLogin,
@@ -30,6 +31,8 @@ function NickNamePopup({
     [classes.cantChange]: true,
     [classes.canChange]: validUserName,
   });
+
+  const Iconstyle = { fontSize: "1.4em" };
 
   const onChangeUserName = (e) => {
     const currentUserName = e.target.value;
@@ -72,7 +75,7 @@ function NickNamePopup({
             confirmButtonText: "확인",
           });
           setValidUserName(isValidNick);
-          setCheckUserNameMessage("✔");
+          setCheckUserNameMessage(<FcCheckmark style={Iconstyle} />);
         } else {
           Swal.fire({
             icon: "warning",
