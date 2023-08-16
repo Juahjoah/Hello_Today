@@ -4,9 +4,11 @@ import com.ssafy.hellotoday.api.dto.follow.response.SearchTagResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
+@ToString
 @AllArgsConstructor
 @Builder
 @Getter
