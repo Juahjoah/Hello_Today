@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -234,6 +235,9 @@ public class MemberService {
                 throw new CustomException(HttpStatus.BAD_REQUEST, -101, "닉네임은 null이 될 수 없습니다");
             }
 
+            if(!isValidNickname(mypageUpdateRequestDto.getNickname())||(mypageUpdateRequestDto.getNickname().length() < 3 || mypageUpdateRequestDto.getNickname().length() >= 11)){
+                throw new CustomException(HttpStatus.BAD_REQUEST, -102, "닉네임 정규식 혹은 길이가 맞지 않습니다");
+            }
 
             Optional<Member> findNickname = memberRepository.findByNickname(mypageUpdateRequestDto.getNickname());
 
@@ -346,5 +350,10 @@ public class MemberService {
         return MemberInfoResponseDto.builder()
                 .member(targetMember.get())
                 .build();
+    }
+
+    private boolean isValidNickname(String nickname) {
+
+        return Pattern.matches("[a-zA-Z0-9[가-힣]]*$", nickname);
     }
 }
