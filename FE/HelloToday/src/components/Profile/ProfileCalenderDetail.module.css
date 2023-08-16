@@ -73,8 +73,7 @@
 .btn_back {
   font-family: "TheJamsil5Bold";
   background-color: white; /* 파란색 */
-  color: #a581cf;
-  border: #a581cf solid;
+  border: 1px solid rgba(131, 129, 129, 0.851);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
