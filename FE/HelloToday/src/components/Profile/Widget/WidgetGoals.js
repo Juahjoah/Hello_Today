@@ -66,7 +66,7 @@ function WidgetGoals() {
     );
     getGoal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId, AccsesToken, goal]);
+  }, [memberId, AccsesToken, goal, isEdit]);
 
   const createGoal = () => {
     if (newGoal.trim() === "") {
@@ -228,9 +228,10 @@ function WidgetGoals() {
                                 <select
                                   value={editedGoalType}
                                   className={classes.selectBoxStyle}
-                                  onChange={(event) =>
-                                    setEditedGoalType(event.target.value)
-                                  }
+                                  onChange={(event) => {
+                                    setEditedGoalType(event.target.value);
+                                    console.log(event.target.value);
+                                  }}
                                 >
                                   <option value="0">매일</option>
                                   <option value="1">매주</option>
@@ -333,7 +334,7 @@ function WidgetGoals() {
                 ) : (
                   // 데이터가 아무것도 없을 때
                   <div>
-                    <div>
+                    <div className={classes.goalNothingTextLocation}>
                       <h2 className={classes.goalNothingText}>
                         {type === "0"
                           ? "매일 "

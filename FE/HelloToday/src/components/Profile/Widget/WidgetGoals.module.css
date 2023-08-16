@@ -179,6 +179,13 @@
   background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
   color: white;
 }
+.goalNothingTextLocation {
+  /*아무것도 없을 때 안내 메세지 높이*/
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .goalNothingText {
   /*아무것도 없을 때 안내 메세지*/
   font-size: 1rem;
