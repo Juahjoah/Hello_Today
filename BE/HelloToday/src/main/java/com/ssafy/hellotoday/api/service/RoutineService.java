@@ -14,6 +14,7 @@ import com.ssafy.hellotoday.common.util.constant.RoutineEnum;
 import com.ssafy.hellotoday.common.util.file.FileUploadUtil;
 import com.ssafy.hellotoday.db.entity.Member;
 import com.ssafy.hellotoday.db.entity.routine.*;
+import com.ssafy.hellotoday.db.repository.jdbc.RoutineJDBCRepository;
 import com.ssafy.hellotoday.db.repository.routine.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,7 @@ public class RoutineService {
     private final RoutineDetailRepository routineDetailRepository;
     private final RoutineRecMentRepository routineRecMentRepository;
     private final RoutineRepository routineRepository;
+    private final RoutineJDBCRepository routineJDBCRepository;
     private final JPAQueryFactory queryFactory;
     private final FileUploadUtil fileUploadUtil;
     private final RoutineTagRepository routineTagRepository;
@@ -87,34 +89,25 @@ public class RoutineService {
         // 현재 사용자가 진행하는 루틴이 있는지 확인하고 error;
         routineValidator.checkPrivateRoutineExist(routineRepository, member);
 
-        Routine routine = Routine.createRoutine(
-                member.getMemberId()
-                , LocalDateTime.now()
-                , (byte) 1
-        );
+        LocalDateTime startDate = LocalDateTime.now();
+        LocalDateTime endDate = startDate.plusDays(6);
+        byte activeFlag = (byte) 1;
+        int routineId = routineJDBCRepository.insertRoutine(member.getMemberId(), startDate, activeFlag);
 
         List<RoutineDetailDto> routineDetailDtoList = routineRequestDto.getRoutineDetailDtoList();
+        List<Integer> routineDetailCatIds = routineJDBCRepository
+                    .insertRoutineDetailCats(routineId, routineDetailDtoList);
 
-        for (RoutineDetailDto routineDetailDto : routineDetailDtoList) {
-            RoutineDetailCat routineDetailCat = RoutineDetailCat.createRoutineDetailCat(routineDetailDto, routine);
-            for (int i = 1; i < 8; i++) {
-                routineDetailCat.addRoutineCheck(
-                        RoutineCheck.createRoutineCheck(i, null, null, null, routineDetailCat, null));
-            }
-
-            routine.addRoutineDetailCat(routineDetailCat);
-        }
-
-        routineRepository.save(routine);
+        routineJDBCRepository.insertRoutineChecks(routineDetailCatIds, LocalDateTime.now());
 
         return BaseResponseDto.builder()
                 .success(true)
                 .message(RoutineEnum.SUCCESS_MAKE_ROTUINE.getName())
                 .data(RoutineResponseDto.builder()
-                        .routineId(routine.getRoutineId())
-                        .startDate(routine.getStartDate())
-                        .endDate(routine.getEndDate())
-                        .activeFlag(routine.getActiveFlag())
+                        .routineId(routineId)
+                        .startDate(startDate)
+                        .endDate(endDate)
+                        .activeFlag(activeFlag)
                         .build())
                 .build();
     }
