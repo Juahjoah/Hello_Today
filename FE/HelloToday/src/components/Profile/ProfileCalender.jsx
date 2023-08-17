@@ -187,6 +187,9 @@ export function ProfileCalender() {
             };
           }
         }}
+        eventContent={(arg) => {
+          console.log(arg);
+        }}
       />
     </div>
   );
