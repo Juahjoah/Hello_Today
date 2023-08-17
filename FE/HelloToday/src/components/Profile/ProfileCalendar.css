@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "TheJamsil4Bold";
+  font-family: "TheJamsil3Bold";
   font-weight: 400;
   font-style: normal;
   src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
@@ -12,6 +12,9 @@
     url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
       format("truetype");
   font-display: swap;
+}
+.fc {
+  font-family: "TheJamsil3Bold", "TheJamsil5Bold";
 }
 
 /*일요일 날짜 빨간색*/
@@ -47,6 +50,9 @@
 .fc-h-event {
   background-color: #f9dd7c !important;
   border: #f9dd7c !important;
+}
+:root {
+  --fc-event-text-color: black;
 }
 .fc-toolbar-title {
   /*제목*/
