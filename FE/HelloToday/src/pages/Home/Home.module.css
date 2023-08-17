@@ -241,6 +241,7 @@
   justify-content: space-around;
   z-index: 5;
   margin-left: 100px;
+  margin-top: 70px;
 }
 .HomeBtnlog {
   display: flex;
@@ -263,6 +264,7 @@
   font-weight: 700;
   line-height: 2rem; /* 100% */
   transition: all 250ms ease-in-out;
+  cursor: pointer;
 }
 
 .firstHomeBtnLog {
@@ -287,6 +289,7 @@
   line-height: 2rem; /* 100% */
   transition: all 250ms ease-in-out;
   animation: fontColorAnimation 1.5s infinite;
+  cursor: pointer;
 }
 
 .HomeBtnMove {
@@ -308,6 +311,7 @@
   font-weight: 700;
   line-height: 2rem; /* 100% */
   transition: all 250ms ease-in-out;
+  cursor: pointer;
 }
 
 .firstHomeBtnMove {
@@ -330,6 +334,7 @@
   line-height: 2rem; /* 100% */
   /* transition: all 250ms ease-in-out; */
   animation: fontColorAnimation 1.5s infinite;
+  cursor: pointer;
 }
 
 .firstHomeBtnMove {

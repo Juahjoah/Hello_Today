@@ -7,7 +7,7 @@ function NotFound() {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   const Iconstyle = { fontSize: "1.4em" };

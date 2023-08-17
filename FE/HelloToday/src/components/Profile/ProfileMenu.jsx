@@ -2,6 +2,7 @@ import classes from "./ProfileMenu.module.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import classNames from "classnames";
 
 import WidgetComments from "./Widget/WidgetComments";
 import WidgetGroupRoutine from "./Widget/WidgetGroupRoutine";
@@ -20,7 +21,13 @@ import { PiPencilLine } from "react-icons/pi"; // 한줄 일기
 import { RxCounterClockwiseClock } from "react-icons/rx"; //루틴
 import { TbList } from "react-icons/tb"; //버킷
 
-function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
+function ProfileMenu({
+  setMenu,
+  setFollowButtonClick,
+  memberId,
+  Token,
+  isEditPage,
+}) {
   const MenuList = {
     "응원 메세지": <WidgetComments memberId={memberId} />,
     "단체 루틴을 함께한 사람": <WidgetGroupRoutine memberId={memberId} />,
@@ -35,6 +42,10 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
 
   const location = useLocation();
   const [selectedFlags, setSelectedFlags] = useState([]);
+
+  // 선택한 메뉴
+  // const [selectMenu, setSelectMenu] = useState("응원 메세지");
+  const [selectMenu, setSelectMenu] = useState();
 
   const localMemberId = localStorage.getItem("memberId");
   useEffect(() => {
@@ -83,9 +94,16 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
     widgetAxios();
   }, [memberId, Token]);
 
-  const UserSelectMenu = (event) => {
-    setMenu(MenuList[event.target.innerText]);
-    setFollowButtonClick(false);
+  const UserSelectMenu = (event, flag) => {
+    console.log(event);
+    console.log(MenuList);
+    console.log(MenuList[event.target.innerText]);
+    const selectedComponent = MenuList[flag];
+    if (selectedComponent) {
+      setMenu(selectedComponent);
+      setSelectMenu(flag);
+      setFollowButtonClick(false);
+    }
   };
 
   useEffect(() => {
@@ -98,7 +116,11 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
         <div className={classes.ProfileMenu} key={flag}>
           {flag === "편집 모드" ? (
             <Link to={`/MyProfile/edit/${memberId}`}>
-              <button className={classes.ProfileItem}>
+              <button
+                className={classNames(classes.ProfileItem, {
+                  [classes.selectedProfileItem]: isEditPage,
+                })}
+              >
                 <RiListSettingsLine
                   className={classes.WidgetFlagImg}
                 ></RiListSettingsLine>
@@ -107,9 +129,15 @@ function ProfileMenu({ setMenu, setFollowButtonClick, memberId, Token }) {
             </Link>
           ) : (
             <button
-              className={classes.ProfileItem}
+              // className={classes.ProfileItem}
+              className={classNames(classes.ProfileItem, {
+                [classes.selectedProfileItem]:
+                  flag === selectMenu && !isEditPage,
+              })}
               onClick={(event) => {
-                UserSelectMenu(event);
+                UserSelectMenu(event, flag);
+                console.log(flag);
+                console.log(selectMenu);
               }}
             >
               <div className={classes.WidgetForm}>

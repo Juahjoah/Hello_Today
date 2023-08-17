@@ -92,6 +92,9 @@ function VideoComponent(props) {
     }
   };
 
+  // ICON STYLE
+  const Iconstyle = { fontSize: "1.6em" };
+
   return (
     <>
       {props.streamManager !== undefined ? (
@@ -101,11 +104,11 @@ function VideoComponent(props) {
             <div>{nickName}</div>
             {props.isMe ? null : isFollow ? (
               <button onClick={unFollow} className={followStyle}>
-                <FaUserCheck />
+                <FaUserCheck style={Iconstyle} />
               </button>
             ) : (
               <button onClick={follow} className={followStyle}>
-                <FaUserPlus />
+                <FaUserPlus style={Iconstyle} />
               </button>
             )}
           </div>

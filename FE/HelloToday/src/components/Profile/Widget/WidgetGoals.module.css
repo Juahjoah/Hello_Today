@@ -144,7 +144,8 @@
 }
 .goalOneItemGetContent {
   width: 75%;
-  font-family: "TheJamsil4Bold";
+  font-family: "TheJamsil5Bold";
+  font-size: 0.9rem;
 }
 .goalPageBtn {
   /*페이지네이션 버튼*/
@@ -195,6 +196,7 @@
 }
 
 .editSectionStyle {
+  margin: 10px;
   display: flex;
   width: 90%;
 }

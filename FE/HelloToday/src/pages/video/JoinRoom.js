@@ -294,7 +294,7 @@ function JoinRoom() {
   };
 
   // ICON STYLE
-  const Iconstyle = { marginTop: "3px", fontSize: "1.2em" };
+  const Iconstyle = { marginTop: "3px", fontSize: "1.4em" };
 
   return (
     <div>

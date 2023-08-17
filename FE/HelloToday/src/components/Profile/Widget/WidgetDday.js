@@ -99,7 +99,9 @@ function WidgetDday() {
 
   return (
     <div className={classes.WidgetDday}>
-      <span className={classes.WidgetDday_name}>D-Day</span>
+      <div className={classes.WidgetDday_name_Section}>
+        <div className={classes.WidgetDday_name}>D-Day</div>
+      </div>
       <div className={classes.WidgetDday_content}>
         <div className={classes.WidgetDday_text}>
           {/* 내 생일 d-30  */}
@@ -115,11 +117,15 @@ function WidgetDday() {
                   <div className={classes.WidgetDday_oneitem}>
                     <div>
                       <p className={classes.WidgetDday_dday}>
-                        {item.calDate > 0
-                          ? `D +${item.calDate}`
-                          : item.calDate === 0
-                          ? "D-day"
-                          : `D ${item.calDate}`}
+                        {item.calDate > 0 ? (
+                          <span
+                            style={{ color: "#d9534f" }}
+                          >{`D +${item.calDate}`}</span>
+                        ) : item.calDate === 0 ? (
+                          <span style={{ color: "#0275d8" }}>D-day</span>
+                        ) : (
+                          <span>{`D ${item.calDate}`}</span>
+                        )}
                       </p>
                     </div>
                     <div>

@@ -20,6 +20,7 @@ function WidgetBucket() {
 
   const [nowPage, setNowPage] = useState(1);
   const itemsIncludePage = 4;
+  const [checkedItems, setCheckedItems] = useState({});
 
   const getBucket = () => {
     axios
@@ -228,9 +229,28 @@ function WidgetBucket() {
                       </div>
                     ) : (
                       <div className={classes.bucketListSection}>
-                        <p className={classes.bucketItem}>
+                      <div className={classes.bucketItemContainer}>
+                        <input
+                          type="checkbox"
+                          checked={checkedItems[bucketItem.wishDiaryId] || false}
+                          onChange={(event) => {
+                            const isChecked = event.target.checked;
+                            setCheckedItems((prev) => ({
+                              ...prev,
+                              [bucketItem.wishDiaryId]: isChecked,
+                            }));
+                          }}
+                        />
+                        <p
+                          className={`${classes.bucketItem} ${
+                            checkedItems[bucketItem.wishDiaryId]
+                              ? classes.checkedItem
+                              : ""
+                          }`}
+                        >
                           {bucketItem.content}
                         </p>
+                      </div>
                         {isMe && (
                           <div className={classes.editButtonSection}>
                             <button
