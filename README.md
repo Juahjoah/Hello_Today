@@ -142,6 +142,15 @@
 
 <br>
 
+<div align="center">
+  <br />
+  <img src="/uploads/62bcaaf9de9bb948fbbebb149362f28f/마지막_루틴_인증.gif" width="80%"/>
+  <br />
+</div>
+
+* 7일 동안 모든 루틴의 인증을 진행하면, '오늘도, 안녕'에서 깜짝 선물을 드립니다🎉
+<br>
+
 
 ### 3. 단체 루틴 진행
 
