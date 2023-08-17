@@ -101,8 +101,8 @@
 .videoOff {
   font-family: "TheJamsil5Bold";
   font-size: 12px;
-  width: 150px;
-  height: 50px;
+  width: 190px;
+  height: 70px;
   border-radius: 12px;
   background-color: #5cb85c;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -112,8 +112,8 @@
 .videoOn {
   font-family: "TheJamsil5Bold";
   font-size: 12px;
-  width: 150px;
-  height: 50px;
+  width: 190px;
+  height: 70px;
   border-radius: 12px;
   background-color: #d9534f;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -128,8 +128,8 @@
 .micOff {
   font-family: "TheJamsil5Bold";
   font-size: 12px;
-  width: 150px;
-  height: 50px;
+  width: 190px;
+  height: 70px;
   border-radius: 12px;
   background-color: #5cb85c;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -139,8 +139,8 @@
 .micOn {
   font-family: "TheJamsil5Bold";
   font-size: 12px;
-  width: 150px;
-  height: 50px;
+  width: 190px;
+  height: 70px;
   border-radius: 12px;
   background-color: #d9534f;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -157,8 +157,8 @@
 .leaveBtn {
   font-family: "TheJamsil5Bold";
   font-size: 12px;
-  width: 150px;
-  height: 50px;
+  width: 190px;
+  height: 70px;
   border-radius: 12px;
   background-color: #d9534f;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -168,8 +168,8 @@
 .questionBtn {
   font-family: "TheJamsil5Bold";
   font-size: 12px;
-  width: 150px;
-  height: 50px;
+  width: 190px;
+  height: 70px;
   border-radius: 12px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);

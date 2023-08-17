@@ -1,11 +1,16 @@
 import classes from "./MainBanner.module.css";
 import TypeIt from "typeit-react";
+import classNames from "classnames";
 
-function MainBanner({ bannerImg, bannerMent }) {
+function MainBanner({ bannerImg, bannerMent, allRoutineCheckFlag }) {
   const bannerImage = `/images/BannerImage/${bannerImg}.png`;
 
+  const bannerColor = classNames({
+    [classes.banner]: !allRoutineCheckFlag,
+    [classes.allDoneBanner]: allRoutineCheckFlag,
+  });
   return (
-    <div className={classes.banner}>
+    <div className={bannerColor}>
       <div className={classes.bannerLeft}>
         <TypeIt className={classes.bannerLeftTitle}>{bannerMent[0]}</TypeIt>
         <div className={classes.bannerLeftDescription}>

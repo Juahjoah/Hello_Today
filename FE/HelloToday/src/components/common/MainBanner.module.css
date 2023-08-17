@@ -35,6 +35,23 @@
   user-select: none;
 }
 
+.allDoneBanner {
+  width: 80%;
+  height: 50vh;
+  margin: auto;
+  margin-top: 80px;
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 12px;
+  display: flex;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 40%,
+    rgba(207, 193, 228, 1) 100%
+  );
+  user-select: none;
+}
+
 .bannerLeft {
   font-family: "TheJamsil5Bold";
   flex: 6;

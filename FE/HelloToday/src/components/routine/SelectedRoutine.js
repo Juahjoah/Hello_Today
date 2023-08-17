@@ -260,6 +260,7 @@ function SelectedRoutine({ routinePrivate }) {
       <MainBanner
         bannerImg={routineAuthBannerImg}
         bannerMent={routineAuthBannerMents}
+        allRoutineCheckFlag={allRoutineCheckFlag}
       />
       <div className={classes.routineSelectMain}>
         <div className={classes.test}>
