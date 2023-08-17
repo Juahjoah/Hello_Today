@@ -1,5 +1,4 @@
 import classes from "./WidgetGallery.module.css";
-import { BiSolidLeftArrow, BiSolidRightArrow } from "react-icons/bi";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -69,7 +68,6 @@ function WidgetGallery() {
         {gallery.length > itemsIncludePage && (
           <div>
             <button
-              className={classes.leftBtn}
               onClick={() => paginate(nowPage - 1)}
               disabled={nowPage === 1}
             >
@@ -78,7 +76,6 @@ function WidgetGallery() {
               />
             </button>
             <button
-              className={classes.rightBtn}
               onClick={() => paginate(nowPage + 1)}
               disabled={
                 nowPicItem.length < itemsIncludePage || nowPicItem.length === 0
