@@ -195,6 +195,7 @@
 }
 
 .editSectionStyle {
+  margin: 10px;
   display: flex;
   width: 90%;
 }

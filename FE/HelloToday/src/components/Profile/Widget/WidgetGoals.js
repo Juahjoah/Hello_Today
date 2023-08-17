@@ -35,23 +35,25 @@ function WidgetGoals() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        // console.log(response.data);
+        console.log("res", response.data);
         setGoal(response.data);
         const grouped = {};
-        goal.forEach((item) => {
+        response.data.map((item) => {
           if (!grouped[item.type]) {
             grouped[item.type] = [];
             setNowPage((prev) => ({ ...prev, [item.type]: 1 })); // 초기 페이지 설정
           }
           grouped[item.type].push(item);
+          console.log("grouped", grouped);
         });
         setGroupedData(grouped);
-
+        console.log("groupData", groupedData);
         const total = {};
-        Object.keys(grouped).forEach((type) => {
+        Object.keys(grouped).map((type) => {
           total[type] = Math.ceil(grouped[type].length / itemsIncludePage);
         });
         setTotalPages(total);
+        // 아래와 같이 초기 페이지 설정을 처리할 수 있습니다.
       })
       .catch((error) => {
         console.log(error);
@@ -95,9 +97,11 @@ function WidgetGoals() {
   };
 
   const editGoal = (goalId) => {
+    /*수정 날리는 얘 */
     if (editedGoal.trim() === "") {
       return;
     }
+    console.log(editedGoalType);
     axios
       .put(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/goal/${goalId}`,
@@ -111,9 +115,9 @@ function WidgetGoals() {
       )
       .then((response) => {
         // console.log(response);
+        getGoal();
         setEditedGoal("");
         setEditedGoalType("0");
-        getGoal();
       })
       .catch((error) => {
         console.log(error);
@@ -121,6 +125,7 @@ function WidgetGoals() {
   };
 
   const saveEditedGoal = () => {
+    /*중간에 한 번 저장해놓는 것*/
     editGoal(editedGoalId, editedGoal);
     setIsEdit(false);
     setEditedGoalId("");
@@ -226,18 +231,21 @@ function WidgetGoals() {
                             {/* 데이터 있는데 수정모드일때  */}
                             {isEdit && editedGoalId === item.goalId ? (
                               <div className={classes.editSectionStyle}>
-                                <select
+                                {/* <select
                                   value={editedGoalType}
                                   className={classes.selectBoxStyle}
                                   onChange={(event) => {
                                     setEditedGoalType(event.target.value);
-                                    console.log(event.target.value);
+                                    console.log(
+                                      "editedGoalType",
+                                      editedGoalType
+                                    );
                                   }}
                                 >
                                   <option value="0">매일</option>
                                   <option value="1">매주</option>
                                   <option value="2">매년</option>
-                                </select>
+                                </select> */}
                                 <input
                                   type="text"
                                   value={editedGoal}
@@ -346,15 +354,6 @@ function WidgetGoals() {
                         </span>
                         목표를 입력해주세요 ⭐
                       </span>
-                    </div>
-                    <div className="pagination">
-                      <button disabled className={classes.goalPageBtnNot}>
-                        {"<"}
-                      </button>
-                      <button className={classes.goalPageBtnActive}>1</button>
-                      <button disabled className={classes.goalPageBtnNot}>
-                        {">"}
-                      </button>
                     </div>
                   </div>
                 )}
