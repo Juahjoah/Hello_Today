@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "TheJamsil4Bold";
+  font-family: "TheJamsil3Bold";
   font-weight: 400;
   font-style: normal;
   src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
@@ -12,6 +12,9 @@
     url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
       format("truetype");
   font-display: swap;
+}
+.fc {
+  font-family: "TheJamsil3Bold", "TheJamsil5Bold";
 }
 
 @font-face {
@@ -64,6 +67,9 @@
   background-color: #f9dd7c !important;
   border: #f9dd7c !important;
 }
+:root {
+  --fc-event-text-color: black;
+}
 .fc-toolbar-title {
   /*제목*/
   background-color: rgba(250, 249, 252, 1) !important;
@@ -71,7 +77,9 @@
   padding: 5px 20px 5px 20px;
   border-radius: 15px;
   color: black;
-  font-family: "TheJamsil4Bold";
+  /* font-family: "TheJamsil4Bold"; */
+  font-family: "TheJamsil3Bold";
+  font-size: 24px !important;
 }
 /*스크롤바*/
 *::-webkit-scrollbar {
@@ -93,4 +101,23 @@
 }
 .tippy-box[data-placement^="top"] > .tippy-arrow:before {
   border-top-color: #a581cf !important;
+}
+.fc-event-title {
+  color: black !important;
+}
+
+.fc-daygrid-day-number {
+  color: rgba(0, 0, 0, 0.582);
+}
+
+.fc-day-mon,
+.fc-day-tue,
+.fc-day-wed,
+.fc-day-thu,
+.fc-day-fri {
+  color: rgba(0, 0, 0, 0.582);
+}
+
+.fc-daygrid-day-number {
+  font-family: "TheJamsil4Bold";
 }

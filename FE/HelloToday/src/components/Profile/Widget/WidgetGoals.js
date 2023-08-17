@@ -38,7 +38,7 @@ function WidgetGoals() {
         // console.log(response.data);
         setGoal(response.data);
         const grouped = {};
-        goal.forEach((item) => {
+        goal.map((item) => {
           if (!grouped[item.type]) {
             grouped[item.type] = [];
             setNowPage((prev) => ({ ...prev, [item.type]: 1 })); // 초기 페이지 설정
@@ -48,7 +48,7 @@ function WidgetGoals() {
         setGroupedData(grouped);
 
         const total = {};
-        Object.keys(grouped).forEach((type) => {
+        Object.keys(grouped).map((type) => {
           total[type] = Math.ceil(grouped[type].length / itemsIncludePage);
         });
         setTotalPages(total);
@@ -66,7 +66,7 @@ function WidgetGoals() {
     );
     getGoal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId, AccsesToken, goal, isEdit]);
+  }, [memberId, AccsesToken]);
 
   const createGoal = () => {
     if (newGoal.trim() === "") {
@@ -172,9 +172,10 @@ function WidgetGoals() {
   };
   const handlePageChange = (type, pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages[type]) {
-      if (nowPage[type] !== pageNumber) {
-        setNowPage((prev) => ({ ...prev, [type]: pageNumber }));
-      }
+      setNowPage((prev) => ({
+        ...prev,
+        [type]: pageNumber,
+      }));
     }
   };
 
@@ -209,154 +210,172 @@ function WidgetGoals() {
                     {type === "0" ? "매일" : type === "1" ? "매주" : "매년"}
                   </span>
                 </div>
-                {groupedData[type] && groupedData[type].length > 0 ? (
-                  <div className={classes.goalContentPage}>
-                    <div className={classes.goalOnlyItemBox}>
-                      {groupedData[type]
-                        .slice(
-                          (nowPage[type] - 1) * itemsIncludePage,
-                          nowPage[type] * itemsIncludePage
-                        )
-                        .map((item) => (
-                          <div
-                            key={item.goalId}
-                            className={classes.goalOneItemContainer}
-                          >
-                            {/* 데이터 있는데 수정모드일때  */}
-                            {isEdit && editedGoalId === item.goalId ? (
-                              <div className={classes.editSectionStyle}>
-                                <select
-                                  value={editedGoalType}
-                                  className={classes.selectBoxStyle}
-                                  onChange={(event) => {
-                                    setEditedGoalType(event.target.value);
-                                    console.log(event.target.value);
-                                  }}
-                                >
-                                  <option value="0">매일</option>
-                                  <option value="1">매주</option>
-                                  <option value="2">매년</option>
-                                </select>
-                                <input
-                                  type="text"
-                                  value={editedGoal}
-                                  className={classes.editInputStyle}
-                                  onChange={(event) => {
-                                    setEditedGoal(event.target.value);
-                                    setEditedGoalId(item.goalId);
-                                  }}
-                                />
-                                <button
-                                  className={classes.inputBtnMini}
-                                  onClick={() => saveEditedGoal()}
-                                >
-                                  저장
-                                </button>
-                                <button
-                                  className={classes.inputBtnMini}
-                                  onClick={() => setIsEdit(false)}
-                                >
-                                  취소
-                                </button>
-                              </div>
-                            ) : (
-                              // 데이터가 있는데 수정 모드가 아닐때
-                              <div className={classes.goalOneItemGet}>
-                                <div className={classes.goalOneItemGetContent}>
-                                  {item.content}
+
+                <div className={classes.goalContentPage}>
+                  <div className={classes.goalOnlyItemBox}>
+                    {groupedData[type]
+                      .slice(
+                        (nowPage[type] - 1) * itemsIncludePage,
+                        nowPage[type] * itemsIncludePage
+                      )
+                      .map((item) => (
+                        <div
+                          key={item.goalId}
+                          className={classes.goalOneItemContainer}
+                        >
+                          {/* 수정모드일때  */}
+                          {isEdit && editedGoalId === item.goalId ? (
+                            <div className={classes.editSectionStyle}>
+                              <select
+                                value={editedGoalType}
+                                className={classes.selectBoxStyle}
+                                onChange={(event) => {
+                                  setEditedGoalType(event.target.value);
+                                  console.log(event.target.value);
+                                }}
+                              >
+                                <option value="0">매일</option>
+                                <option value="1">매주</option>
+                                <option value="2">매년</option>
+                              </select>
+                              <input
+                                type="text"
+                                value={editedGoal}
+                                className={classes.editInputStyle}
+                                onChange={(event) => {
+                                  setEditedGoal(event.target.value);
+                                  setEditedGoalId(item.goalId);
+                                }}
+                              />
+                              <button
+                                className={classes.inputBtnMini}
+                                onClick={() => saveEditedGoal()}
+                              >
+                                저장
+                              </button>
+                              <button
+                                className={classes.inputBtnMini}
+                                onClick={() => setIsEdit(false)}
+                              >
+                                취소
+                              </button>
+                            </div>
+                          ) : (
+                            // 수정 모드가 아닐때
+                            <div className={classes.goalOneItemGet}>
+                              {groupedData[type] &&
+                              groupedData[type].length > 0 ? (
+                                <div>
+                                  {" "}
+                                  <div
+                                    className={classes.goalOneItemGetContent}
+                                  >
+                                    {item.content}
+                                  </div>
+                                  {isMe && (
+                                    <div>
+                                      <button
+                                        className={classes.editButtonStyle}
+                                        onClick={() => {
+                                          setIsEdit(true);
+                                          setEditedGoalId(item.goalId);
+                                          setEditedGoal(item.content);
+                                          setEditedGoalType(item.type);
+                                        }}
+                                      >
+                                        <img
+                                          src="../../images/Widget/edit.png"
+                                          alt="edit"
+                                        />
+                                      </button>
+                                      <button
+                                        className={classes.editButtonStyle}
+                                        onClick={() => deleteAlert(item.goalId)}
+                                      >
+                                        <img
+                                          src="../../images/Widget/clear.png"
+                                          alt="clear"
+                                        />
+                                      </button>
+                                    </div>
+                                  )}
                                 </div>
-                                {isMe && (
-                                  <div>
+                              ) : (
+                                <div>
+                                  <div
+                                    className={classes.goalNothingTextLocation}
+                                  >
+                                    <span className={classes.goalNothingText}>
+                                      <span
+                                        className={
+                                          classes.goalPurpleNothingText
+                                        }
+                                      >
+                                        {type === "0"
+                                          ? "매일 "
+                                          : type === "1"
+                                          ? "매주 "
+                                          : "매년 "}
+                                      </span>
+                                      목표를 입력해주세요 ⭐
+                                    </span>
+                                  </div>
+                                  <div className="pagination">
                                     <button
-                                      className={classes.editButtonStyle}
-                                      onClick={() => {
-                                        setIsEdit(true);
-                                        setEditedGoalId(item.goalId);
-                                        setEditedGoal(item.content);
-                                        setEditedGoalType(item.type);
-                                      }}
+                                      disabled
+                                      className={classes.goalPageBtnNot}
                                     >
-                                      <img
-                                        src="../../images/Widget/edit.png"
-                                        alt="edit"
-                                      />
+                                      {"<"}
                                     </button>
                                     <button
-                                      className={classes.editButtonStyle}
-                                      onClick={() => deleteAlert(item.goalId)}
+                                      className={classes.goalPageBtnActive}
                                     >
-                                      <img
-                                        src="../../images/Widget/clear.png"
-                                        alt="clear"
-                                      />
+                                      1
+                                    </button>
+                                    <button
+                                      disabled
+                                      className={classes.goalPageBtnNot}
+                                    >
+                                      {">"}
                                     </button>
                                   </div>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                    </div>
-                    <div className="pagination">
-                      <button
-                        className={classes.goalPageBtn}
-                        onClick={() =>
-                          handlePageChange(type, nowPage[type] - 1)
-                        }
-                        disabled={nowPage[type] === 1}
-                      >
-                        {"<"}
-                      </button>
-                      {Array.from({ length: totalPages[type] }, (_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handlePageChange(type, index + 1)}
-                          className={
-                            nowPage[type] === index + 1
-                              ? `${classes.goalPageBtnActive}`
-                              : `${classes.goalPageBtn}`
-                          }
-                        >
-                          {index + 1}
-                        </button>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       ))}
+                  </div>
+                  <div className="pagination">
+                    <button
+                      className={classes.goalPageBtn}
+                      onClick={() => handlePageChange(type, nowPage[type] - 1)}
+                      disabled={nowPage[type] === 1}
+                    >
+                      {"<"}
+                    </button>
+                    {Array.from({ length: totalPages[type] }, (_, index) => (
                       <button
-                        className={classes.goalPageBtn}
-                        onClick={() =>
-                          handlePageChange(type, nowPage[type] + 1)
+                        key={index}
+                        onClick={() => handlePageChange(type, index + 1)}
+                        className={
+                          nowPage[type] === index + 1
+                            ? `${classes.goalPageBtnActive}`
+                            : `${classes.goalPageBtn}`
                         }
-                        disabled={nowPage[type] === totalPages[type]}
                       >
-                        {">"}
+                        {index + 1}
                       </button>
-                    </div>
+                    ))}
+                    <button
+                      className={classes.goalPageBtn}
+                      onClick={() => handlePageChange(type, nowPage[type] + 1)}
+                      disabled={nowPage[type] === totalPages[type]}
+                    >
+                      {">"}
+                    </button>
                   </div>
-                ) : (
-                  // 데이터가 아무것도 없을 때
-                  <div>
-                    <div className={classes.goalNothingTextLocation}>
-                      <span className={classes.goalNothingText}>
-                        <span className={classes.goalPurpleNothingText}>
-                          {type === "0"
-                            ? "매일 "
-                            : type === "1"
-                            ? "매주 "
-                            : "매년 "}
-                        </span>
-                        목표를 입력해주세요 ⭐
-                      </span>
-                    </div>
-                    <div className="pagination">
-                      <button disabled className={classes.goalPageBtnNot}>
-                        {"<"}
-                      </button>
-                      <button className={classes.goalPageBtnActive}>1</button>
-                      <button disabled className={classes.goalPageBtnNot}>
-                        {">"}
-                      </button>
-                    </div>
-                  </div>
-                )}
+                </div>
               </div>
             ))}
           </div>
@@ -387,7 +406,7 @@ function WidgetGoals() {
                 className={classes.inputstyle}
                 placeholder="해내고 싶은 목표를 남겨봐요!"
                 onChange={(event) => setNewGoal(event.target.value)}
-                onKeyDown={keyPressHandler}
+                // onKeyDown={keyPressHandler}
               />
               <button className={classes.inputBtn} onClick={() => createGoal()}>
                 저장
