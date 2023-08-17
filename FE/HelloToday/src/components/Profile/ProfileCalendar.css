@@ -61,7 +61,9 @@
   padding: 5px 20px 5px 20px;
   border-radius: 15px;
   color: black;
-  font-family: "TheJamsil4Bold";
+  /* font-family: "TheJamsil4Bold"; */
+  font-family: "TheJamsil3Bold";
+  font-size: 24px !important;
 }
 /*스크롤바*/
 *::-webkit-scrollbar {
@@ -83,4 +85,23 @@
 }
 .tippy-box[data-placement^="top"] > .tippy-arrow:before {
   border-top-color: #a581cf !important;
+}
+.fc-event-title {
+  color: black !important;
+}
+
+.fc-daygrid-day-number {
+  color: rgba(0, 0, 0, 0.582);
+}
+
+.fc-day-mon,
+.fc-day-tue,
+.fc-day-wed,
+.fc-day-thu,
+.fc-day-fri {
+  color: rgba(0, 0, 0, 0.582);
+}
+
+.fc-daygrid-day-number {
+  font-family: "TheJamsil4Bold";
 }
