@@ -13,8 +13,9 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
-  background: rgba(254, 250, 237, 1);
+  height: 65px;
+  /* background: rgba(254, 250, 237, 1); */
+  background: rgba(260, 240, 164, 1);
   padding-top: 10px;
   z-index: 10;
   box-shadow: rgba(33, 35, 38, 0.2) 0px 10px 10px -10px;
@@ -29,8 +30,8 @@
 }
 
 .navLeftLogo {
-  width: 70px;
-  height: 45px;
+  width: 91px;
+  height: 58.5px;
   margin-left: 20px;
   cursor: pointer;
 }
@@ -52,10 +53,10 @@
 }
 
 .navRightSearchbarInput {
-  width: 150px;
-  height: 25px;
+  width: 250px;
+  height: 30px;
   border-radius: 8px;
-  border: 2px solid rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(0, 0, 0, 0.6);
   background: rgba(255, 255, 255, 0);
   font-size: 12px;
   font-family: "TheJamsil5Bold";
@@ -66,15 +67,16 @@
 .navLeftPersonal,
 .navLeftGroup,
 .navLeftProfile {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.6);
   font-family: "TheJamsil5Bold";
   background-color: transparent;
   cursor: pointer;
   border: none;
   outline: none;
-  font-size: 15px;
+  font-size: 20px;
   transition: all 300ms ease-in-out;
-  padding: 20px 20px 15px 20px;
+  /* padding: 20px 20px 15px 20px; */
+  padding: 35px 35px 30px 35px;
   border-radius: 12px 12px 5px 5px;
 }
 
@@ -83,17 +85,17 @@
 .navLeftProfile:hover {
   color: black;
   background-color: #ffec8d;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .navRightLogout {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.6);
   font-family: "TheJamsil5Bold";
   background-color: transparent;
   cursor: pointer;
   border: none;
   outline: none;
-  font-size: 15px;
+  font-size: 20px;
   transition: all 300ms ease-in-out;
   padding: 10px 20px 10px 20px;
   border-radius: 25px 25px 0px 0px;
@@ -101,5 +103,5 @@
 
 .navRightLogout:hover {
   color: black;
-  font-size: 18px;
+  font-size: 24px;
 }
