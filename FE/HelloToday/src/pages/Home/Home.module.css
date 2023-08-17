@@ -241,6 +241,7 @@
   justify-content: space-around;
   z-index: 5;
   margin-left: 100px;
+  margin-top: 70px;
 }
 .HomeBtnlog {
   display: flex;
