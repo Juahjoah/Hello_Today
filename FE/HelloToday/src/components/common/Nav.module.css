@@ -15,7 +15,8 @@
   align-items: center;
   height: 65px;
   /* background: rgba(254, 250, 237, 1); */
-  background: rgba(260, 240, 164, 1);
+  /* background: rgba(260, 240, 164, 1); */
+  background: #ffecb3;
   padding-top: 10px;
   z-index: 10;
   box-shadow: rgba(33, 35, 38, 0.2) 0px 10px 10px -10px;
