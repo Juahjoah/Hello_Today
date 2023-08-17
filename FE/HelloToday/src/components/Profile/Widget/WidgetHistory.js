@@ -66,7 +66,9 @@ function WidgetHistory() {
   return (
     <div className="widget-history">
       <div className={classes.WidgetHistory}>
-        <span className={classes.WidgetHistory_title}>나의 루틴들</span>
+        <div className={classes.WidgetHistory_title_Section}>
+          <div className={classes.WidgetHistory_title}>나의 루틴들</div>
+        </div>
         <div className={classes.WidgetHistory_body}>
           {/* 여기 시작 */}
           <div className={classes.WidgetHistory_content}>
