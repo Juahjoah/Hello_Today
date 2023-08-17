@@ -18,6 +18,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import "tippy.js/themes/light.css";
 import "tippy.js/dist/border.css";
+import $ from "jquery";
 
 export function ProfileCalender() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export function ProfileCalender() {
                 ),
                 "yyyy-MM-dd"
               ),
-              title: "오늘의 routine",
+              title: "🚩 나의 루틴",
               color: "#ffcb6b",
             }));
             const dbdata2 = res2.data.map((item) => ({
@@ -97,6 +98,11 @@ export function ProfileCalender() {
         });
     }
   }, [AccsesToken, isRegist, isEditF, isDelete]);
+
+  const handleDayCellContent = (arg) => {
+    const dayNumber = arg.dayNumberText.replace("일", "");
+    return dayNumber;
+  };
 
   return (
     <div>
@@ -187,6 +193,7 @@ export function ProfileCalender() {
             };
           }
         }}
+        dayCellContent={handleDayCellContent}
       />
     </div>
   );
