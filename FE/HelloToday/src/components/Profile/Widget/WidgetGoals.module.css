@@ -6,27 +6,66 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
 .WidgetGoals {
   font-family: "TheJamsil5Bold";
-  /* padding: 1rem;
-  margin: 2rem 1rem; */
   width: auto;
-  height: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.goalTitleSection {
+  flex: 1.5;
+  width: 20%;
 }
 
 .goalTitle {
-  /*font*/
-  font-family: "TheJamsil5Bold";
-  font-weight: bold;
-  color: #ffffff;
-  font-size: 1.5rem;
-  /*상자*/
-  background-color: #a581cf;
-  padding: 2px 30px 2px 30px;
-  border-radius: 12px;
+  font-family: "TheJamsil3Bold";
+  color: white;
+  font-size: 1.1rem;
+  background-color: #a581cfc3;
+  margin: 8px 0px 0px 8px;
+  padding: 6px 4px 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  width: 90px;
 }
 .goalAllSection {
   /*조회&수정 + 등록하는 input창*/
+  flex: 8.5;
   height: auto;
 }
 .goalListSection {
@@ -41,12 +80,16 @@
 .goalRegistInputStyle {
   /*하단의 등록하는 input창 부분 전체 */
   height: 54px;
+  margin-top: 20px;
 }
+
 .widgetInputStyle {
   font-family: "TheJamsil5Bold";
   display: flex;
   justify-content: end;
   margin: 0 1rem;
+  width: 85%;
+  margin: auto;
 }
 
 .inputstyle {
@@ -54,14 +97,16 @@
   font-size: 0.7rem;
   color: #222222;
   width: 90%;
-  border: none;
-  border-bottom: solid #aaaaaa 1px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+
+  padding: 10px;
   background: none;
   display: flex;
   align-self: center;
   outline: none;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 5px;
 }
 
 .inputBtn {
@@ -72,10 +117,14 @@
   display: inline-block;
   font-size: 0.7rem;
   margin: 0.7rem;
-  border-radius: 6px;
-  background-color: white;
-  border: 1px solid rgba(131, 129, 129, 0.851);
+  border-radius: 5px;
+  /* background-color: white;
+  border: 1px solid rgba(131, 129, 129, 0.851); */
   cursor: pointer;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.5);
+  transition: all 250ms ease-in-out;
 }
 .inputBtn:hover {
   background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
@@ -96,11 +145,14 @@
 
 .selectBoxStyle {
   font-family: "TheJamsil5Bold";
-  height: 1.5rem;
+  height: 2.1rem;
   border-radius: 4px;
   outline: 0 none;
   margin: auto 0.3rem auto 0.3rem;
   border: 1px solid rgba(131, 129, 129, 0.851);
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.5);
   /* color: #a581cf; */
 }
 
@@ -126,6 +178,7 @@
   margin: 0;
   font-size: 1.2rem;
   border-bottom: 3px solid #a581cf;
+  font-family: "TheJamsil4Bold";
 }
 .goalContentPage {
   /* height: 100%; */
@@ -141,11 +194,14 @@
   /* 조회 목표 content + 수정, 삭제 버튼*/
   display: flex;
   padding-top: 10px;
+  width: 65%;
+  margin: auto;
 }
 .goalOneItemGetContent {
   width: 75%;
   font-family: "TheJamsil5Bold";
   font-size: 0.9rem;
+  font-family: "TheJamsil3Bold";
 }
 .goalPageBtn {
   /*페이지네이션 버튼*/
@@ -187,6 +243,7 @@
   /*아무것도 없을 때 안내 메세지*/
   font-size: 0.8rem;
   text-align: center;
+  font-family: "TheJamsil3Bold";
 }
 .goalItemText {
   display: flex;
