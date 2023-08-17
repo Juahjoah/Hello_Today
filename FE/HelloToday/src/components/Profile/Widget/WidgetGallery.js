@@ -44,7 +44,9 @@ function WidgetGallery() {
 
   return (
     <div className={classes.WidgetGallery}>
-      <span className={classes.WidgetDday_name}>갤러리</span>
+      <div className={classes.WidgetGallery_name_Section}>
+        <div className={classes.WidgetGallery_name}>갤러리</div>
+      </div>
       <div className={classes.WidgetContent}>
         {nowPicItem.length === 0 && (
           <div className={classes.WidgetContentTxt}>
