@@ -3,7 +3,9 @@ import classes from "./FollowButton.module.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
+import NotFound from "../../pages/NotFound/NotFound";
 
 function FollowButton(props) {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
@@ -11,6 +13,8 @@ function FollowButton(props) {
 
   const [isFollow, setIsFollow] = useState(false);
   const [isMe, setIsMe] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedInUserId = +memberId === +sessionStorage.getItem("memberId");
@@ -35,7 +39,9 @@ function FollowButton(props) {
         }
       })
       .catch((error) => {
-        // console.log(error);
+        if (error.response.data.code === 2000) {
+          navigate("/404NotFound");
+        }
       });
   };
 

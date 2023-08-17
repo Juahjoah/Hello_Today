@@ -6,6 +6,7 @@ import User from "./pages/User/User";
 import GroupRoutine from "./pages/GroupRoutine/GroupRoutine";
 import MyProfile from "./pages/MyProfile/MyProfile";
 import JoinRoom from "./pages/video/JoinRoom";
+import NotFound from "./pages/NotFound/NotFound";
 import Modal from "react-modal";
 
 // openvidu demo ver
@@ -53,10 +54,10 @@ function App() {
       <Route path="/login" element={<User />} />
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/GroupRoutine" element={<GroupRoutine />} />
+      <Route path="/GroupRoutine/:roomId" element={<JoinRoom />} />
       {/* 남의 memberid 가져오기 */}
       <Route path="/MyProfile/:memberId" element={<MyProfile />} />
       <Route path="/MyProfile/edit/:memberId" element={<MyProfileEdit />} />
-      <Route path="/:roomId" element={<JoinRoom />} />
 
       <Route
         path="/login/oauth2/code/kakao"
@@ -72,6 +73,10 @@ function App() {
       ></Route>
       {/* <Route path="/roomId" element={<JoinRoom />} /> */}
       {/* <Routes path="/roomId" element={<VideoRoomComponent />} /> */}
+
+      {/* 404 Not Found */}
+      <Route path="/404NotFound" element={<NotFound />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

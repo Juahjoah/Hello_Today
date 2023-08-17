@@ -5,10 +5,10 @@
 }
 .WidgetHistory_title {
   /*font*/
-  font-family: "The Jamsil OTF";
+  font-family: "TheJamsil5Bold";
   font-weight: bold;
   color: #ffffff;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   /*상자*/
   background-color: #a581cf;
   padding: 2px 30px 2px 30px;
@@ -46,7 +46,7 @@
   height: 17vh;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
 }
 .WidgetHistory_nothingTxt {
 }

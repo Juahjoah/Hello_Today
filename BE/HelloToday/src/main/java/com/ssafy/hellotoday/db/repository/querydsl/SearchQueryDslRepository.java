@@ -31,7 +31,7 @@ public class SearchQueryDslRepository {
                 .leftJoin(routine)
                 .on(member.memberId
                         .eq(routine.member.memberId)
-                        .and(routine.activeFlag.eq((byte)1)))
+                        .and(routine.activeFlag.eq((byte) 1)))
                 .leftJoin(routineDetailCat)
                 .on(routine.routineId.eq(routineDetailCat.routine.routineId))
                 .leftJoin(routineDetail)
