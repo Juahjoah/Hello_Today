@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 @Getter
 @NoArgsConstructor
 public class DdayResponseDto {
@@ -45,6 +47,7 @@ public class DdayResponseDto {
         LocalDate finalDate = LocalDate.from(dday.getFinalDate());
         LocalDate now = LocalDate.now();
 
-        return Period.between(finalDate, now).getDays();
+
+        return (int) DAYS.between(finalDate, now);
     }
 }

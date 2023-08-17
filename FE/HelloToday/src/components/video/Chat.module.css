@@ -32,17 +32,18 @@
 
 .writer {
   font-family: "TheJamsil5Bold" !important;
-  font-size: 12px !important;
+  font-size: 15px !important;
 }
 
 .content {
   font-family: "TheJamsil5Bold" !important;
-  font-size: 12px !important;
+  font-size: 15px !important;
+  margin: 10px 0px 25px 0px;
 }
 
 .chatRoomInputSectionInput {
   flex: 8;
-  font-size: 12px;
+  font-size: 15px;
   border-radius: 0px 0px 0px 12px;
   background: rgba(250, 249, 252, 1);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

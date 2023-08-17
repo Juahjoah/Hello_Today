@@ -303,6 +303,7 @@ function MyProfile() {
                 setFollowButtonClick={setFollowButtonClick}
                 memberId={params.memberId}
                 Token={AccsesToken}
+                isEditPage={false}
               />
             </div>
           </div>

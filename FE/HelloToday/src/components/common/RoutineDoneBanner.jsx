@@ -1,29 +1,26 @@
-import classes from "./MainBanner.module.css";
+import classes from "./RoutineDoneBanner.module.css";
 import TypeIt from "typeit-react";
-import classNames from "classnames";
 
-function MainBanner({ bannerImg, bannerMent, allRoutineCheckFlag }) {
-  const bannerImage = `/images/BannerImage/${bannerImg}.png`;
+function RoutineDoneBanner() {
+  const bannerImage = `/images/BannerImage/routine_medal.png`;
 
-  const bannerColor = classNames({
-    [classes.banner]: !allRoutineCheckFlag,
-    [classes.allDoneBanner]: allRoutineCheckFlag,
-  });
   return (
-    <div className={bannerColor}>
+    <div className={classes.banner}>
       <div className={classes.bannerLeft}>
-        <TypeIt className={classes.bannerLeftTitle}>{bannerMent[0]}</TypeIt>
+        <TypeIt className={classes.bannerLeftTitle}>
+          {"루틴진행도 100% 달성"}
+        </TypeIt>
         <div className={classes.bannerLeftDescription}>
           <TypeIt
             options={{ waitUntilVisible: false }}
             getBeforeInit={(instance) => {
               instance
                 .pause(3000)
-                .type(bannerMent[1])
+                .type("루틴 완성을 정말 축하드려요!!")
                 .pause(750)
                 .delete(24)
                 .pause(750)
-                .type(bannerMent[2]);
+                .type("다음 루틴도 100% 달성 기대할게요!");
 
               return instance;
             }}
@@ -37,4 +34,4 @@ function MainBanner({ bannerImg, bannerMent, allRoutineCheckFlag }) {
   );
 }
 
-export default MainBanner;
+export default RoutineDoneBanner;

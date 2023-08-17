@@ -157,6 +157,7 @@ function Chat({
           onChange={messageChangeHandler}
           onKeyDown={keyPressHandler}
           className={classes.chatRoomInputSectionInput}
+          spellCheck="false"
         />
         <button onClick={onClick} className={classes.chatRoomInputSectionBtn}>
           <FaRegPaperPlane style={Iconstyle} />

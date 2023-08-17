@@ -18,24 +18,24 @@
   }
 }
 
+/* .banner {
+    width: 80%;
+    height: 50vh;
+    margin: auto;
+    margin-top: 110px;
+    border: 1px solid rgba(131, 129, 129, 0.2);
+    border-radius: 12px;
+    display: flex;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 40%,
+      rgba(255, 230, 154, 1) 100%
+    );
+    user-select: none;
+  }
+   */
 .banner {
-  width: 80%;
-  height: 50vh;
-  margin: auto;
-  margin-top: 110px;
-  border: 1px solid rgba(131, 129, 129, 0.2);
-  border-radius: 12px;
-  display: flex;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1) 40%,
-    rgba(255, 230, 154, 1) 100%
-  );
-  user-select: none;
-}
-
-.allDoneBanner {
   width: 80%;
   height: 50vh;
   margin: auto;

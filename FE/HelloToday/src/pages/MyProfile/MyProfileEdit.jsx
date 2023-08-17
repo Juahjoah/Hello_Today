@@ -137,14 +137,6 @@ function MyProfileEdit() {
     });
   };
   const editWidgetAxios = () => {
-    // const flagMappings = {
-    //   goalFlag: "소중한 목표",
-    //   oneDiaryFlag: "한 줄 일기",
-    //   wishListFlag: "버킷리스트",
-    //   routineHistoryFlag: "나의 루틴들",
-    //   ddayFlag: "D-Day",
-    //   galleryFlag: "갤러리",
-    // };
     const flagMappings = [
       {
         flagName: "goalFlag",
@@ -278,6 +270,7 @@ function MyProfileEdit() {
                 setFollowButtonClick={setFollowButtonClick}
                 memberId={localStorage.getItem("memberId")}
                 Token={AccsesToken}
+                isEditPage={true}
               />
             </div>
             {memberId === smemberId ? (

@@ -55,7 +55,7 @@
 
 .bucketItem {
   display: flex;
-  width: 45rem;
+  width: 43rem;
   font-size: 1rem;
   text-align: left;
   margin: 0.3rem;
@@ -165,4 +165,11 @@ inputstyle:focus {
   width: 50rem;
   display: flex;
   justify-content: center;
+}
+.checkedItem {
+  text-decoration: line-through;
+  color: #aaa;
+}
+.bucketItemContainer {
+  display: flex;
 }

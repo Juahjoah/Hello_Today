@@ -42,10 +42,16 @@
   font-family: "TheJamsil5Bold";
   padding: 1rem;
 }
+
+.CommentSectionMain {
+  display: flex;
+  justify-content: center;
+}
+
 .CommentSection {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
 
