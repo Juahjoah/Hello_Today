@@ -166,3 +166,10 @@ inputstyle:focus {
   display: flex;
   justify-content: center;
 }
+.checkedItem {
+  text-decoration: line-through;
+  color: #aaa;
+}
+.bucketItemContainer {
+  display: flex;
+}
