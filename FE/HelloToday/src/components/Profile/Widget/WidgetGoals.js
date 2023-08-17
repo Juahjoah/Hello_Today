@@ -66,7 +66,7 @@ function WidgetGoals() {
     );
     getGoal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId, AccsesToken, goal, isEdit]);
+  }, [memberId, AccsesToken]);
 
   const createGoal = () => {
     if (newGoal.trim() === "") {
@@ -172,9 +172,10 @@ function WidgetGoals() {
   };
   const handlePageChange = (type, pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages[type]) {
-      if (nowPage[type] !== pageNumber) {
-        setNowPage((prev) => ({ ...prev, [type]: pageNumber }));
-      }
+      setNowPage((prev) => ({
+        ...prev,
+        [type]: pageNumber,
+      }));
     }
   };
 

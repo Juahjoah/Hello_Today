@@ -65,7 +65,7 @@ export function ProfileCalender() {
                 ),
                 "yyyy-MM-dd"
               ),
-              title: "오늘의 routine",
+              title: "🚩 나의 루틴",
               color: "#ffcb6b",
             }));
             const dbdata2 = res2.data.map((item) => ({

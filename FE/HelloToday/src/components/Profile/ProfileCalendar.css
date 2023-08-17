@@ -48,6 +48,9 @@
   background-color: #f9dd7c !important;
   border: #f9dd7c !important;
 }
+:root {
+  --fc-event-text-color: black;
+}
 .fc-toolbar-title {
   /*제목*/
   background-color: rgba(250, 249, 252, 1) !important;
