@@ -90,13 +90,13 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
                             key={detailIndex}
                           >
                             <p className={classes.routineHisotry_tt}>
-                              루틴 종류 : {detail.routineContent}
+                              💜 루틴 종류 : {detail.routineContent}
                             </p>
                             <p className={classes.routineHisotry_tt}>
-                              인증일 :
+                              💜 인증일 :
                               {new Date(detail.writeDate).toLocaleDateString()}
                             </p>
-                            <hr />
+
                             <div className={classes.routinehistory_bottom}>
                               {!detail.imgPath ||
                               detail.imgPath === "" ||

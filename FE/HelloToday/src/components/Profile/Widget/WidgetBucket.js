@@ -176,7 +176,9 @@ function WidgetBucket() {
 
   return (
     <div className={classes.WidgetBucket_}>
-      <span className={classes.bucketTitle}> 버킷리스트 </span>
+      <div>
+        <div className={classes.bucketTitle}> 버킷리스트 </div>
+      </div>
       <div className={classes.WidgetBucket}>
         <div>
           <div className={classes.bucketSection}>
@@ -229,28 +231,30 @@ function WidgetBucket() {
                       </div>
                     ) : (
                       <div className={classes.bucketListSection}>
-                      <div className={classes.bucketItemContainer}>
-                        <input
-                          type="checkbox"
-                          checked={checkedItems[bucketItem.wishDiaryId] || false}
-                          onChange={(event) => {
-                            const isChecked = event.target.checked;
-                            setCheckedItems((prev) => ({
-                              ...prev,
-                              [bucketItem.wishDiaryId]: isChecked,
-                            }));
-                          }}
-                        />
-                        <p
-                          className={`${classes.bucketItem} ${
-                            checkedItems[bucketItem.wishDiaryId]
-                              ? classes.checkedItem
-                              : ""
-                          }`}
-                        >
-                          {bucketItem.content}
-                        </p>
-                      </div>
+                        <div className={classes.bucketItemContainer}>
+                          <input
+                            type="checkbox"
+                            checked={
+                              checkedItems[bucketItem.wishDiaryId] || false
+                            }
+                            onChange={(event) => {
+                              const isChecked = event.target.checked;
+                              setCheckedItems((prev) => ({
+                                ...prev,
+                                [bucketItem.wishDiaryId]: isChecked,
+                              }));
+                            }}
+                          />
+                          <p
+                            className={`${classes.bucketItem} ${
+                              checkedItems[bucketItem.wishDiaryId]
+                                ? classes.checkedItem
+                                : ""
+                            }`}
+                          >
+                            {bucketItem.content}
+                          </p>
+                        </div>
                         {isMe && (
                           <div className={classes.editButtonSection}>
                             <button

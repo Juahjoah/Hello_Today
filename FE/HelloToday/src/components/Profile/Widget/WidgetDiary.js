@@ -178,7 +178,9 @@ function WidgetDiary() {
 
   return (
     <div className={classes.WidgetDiary}>
-      <span className={classes.diaryTitle}> 한 줄 일기 </span>
+      <div className={classes.diaryTitleSection}>
+        <div className={classes.diaryTitle}> 한 줄 일기 </div>
+      </div>
       <div className={classes.wishDiaryBody}>
         <div className={classes.wishDiaryContent}>
           <div className={classes.pagination_before}>
@@ -186,7 +188,11 @@ function WidgetDiary() {
               className={classes.wishDiaryPaginationBtn}
               onClick={() => setPage(nowPage - 1)}
             >
-              <img src="../../images/Widget/before.png" alt="before" />
+              <img
+                style={{ width: "20px" }}
+                src="../../images/Widget/before.png"
+                alt="before"
+              />
             </button>
           </div>
           <div className={classes.wishDiaryCenter}>
@@ -271,7 +277,11 @@ function WidgetDiary() {
               className={classes.wishDiaryPaginationBtn}
               onClick={() => setPage(nowPage + 1)}
             >
-              <img src="../../images/Widget/next.png" alt="next" />
+              <img
+                style={{ width: "20px" }}
+                src="../../images/Widget/next.png"
+                alt="next"
+              />
             </button>
           </div>
         </div>
