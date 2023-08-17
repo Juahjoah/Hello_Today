@@ -1,25 +1,71 @@
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
 .routinehistory {
   /*전체 detail*/
   /* box-shadow: 0 0 5px #333; */
   font-family: "TheJamsil5Bold";
   font-size: 0.7rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
-  width: 95%;
+  /* border: 1px solid gray; */
+  border-radius: 12px;
+  /* width: 70%; */
   height: auto;
-  margin: 70px auto 20px auto;
+  /* margin: 70px 30px 20px auto; */
   /* justify-content: center; */
-  justify-items: center;
-  align-items: center;
+  /* justify-items: center; */
+  /* align-items: center; */
   padding: 30px;
+  margin: auto;
+  margin-bottom: 5vh;
+  /* margin-top: 100px; */
+  background: rgb(244, 241, 250);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
 .routinehistory_day {
   margin-top: 0px;
-  font-size: 2rem;
+  /* font-size: 2rem; */
   background-color: #a581cf;
   padding: 3px 10px 3px 10px;
-  border-radius: 15px;
+  border-radius: 8px;
   color: white;
+  font-size: 2em;
+  /* color: rgba(0, 0, 0, 0.775); */
+  font-size: 1.9rem;
+  font-weight: bold;
+  /* background-color: #a581cf; */
+  /* padding: 4px 0px 4px 0px; */
+  /* border-radius: 15px; */
+  font-family: "TheJamsil4Bold";
 }
 /* .routinehistory {
   /*루틴 인증*/
@@ -29,29 +75,50 @@
   /*루틴 이름
 }*/
 .routineHisotry_tt {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-family: "TheJamsil4Bold";
 }
 .routinehistory_bottom {
+  font-family: "TheJamsil3Bold";
+  border-radius: 12px;
+  /* border: 1px solid gray; */
+  box-sizing: border-box;
   display: flex;
+  padding: 15px;
+  line-height: 20px;
+  margin-bottom: 30px;
+  /* margin-left: 15px; */
+  /* margin: 15px 15px 10px 5px; */
+  text-align: center;
+  background: rgb(255, 255, 255);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
 .routineHisotryp_img {
   /*이미지 크기*/
-  width: 300px;
-  height: auto;
-  margin: 0px 10px 10px 10px;
+  width: 200px;
+  height: 200px;
+  margin: 0px 15px 10px 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .routinehistory_vline {
-  border-left: 1px solid rgba(0, 0, 0, 0.5);
-  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.178);
+  height: 200px;
   margin-right: 10px;
 }
 .routinehistory_text {
-  width: 100vh;
-  background-color: rgba(254, 250, 237, 1);
-  border-radius: 50px;
+  font-size: 1.3rem;
+  font-family: "TheJamsil3Bold";
 }
 .routinehistory_text_p {
-  margin: 30px;
+  text-align: start;
+  margin-left: 1vh;
+  margin-top: 1vh;
 }
 .routinehistory_p_content {
   /*내용 글자*/
