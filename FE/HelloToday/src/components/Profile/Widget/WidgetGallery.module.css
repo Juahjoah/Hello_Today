@@ -6,25 +6,69 @@
   font-style: normal;
 }
 
-.WidgetGallery {
-  width: auto;
-  height: auto;
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
 }
-.WidgetDday_name {
-  /*font*/
-  font-family: "TheJamsil5Bold";
-  font-weight: bold;
-  color: #ffffff;
-  font-size: 1.5rem;
-  /*상자*/
-  background-color: #a581cf;
-  padding: 2px 30px 2px 30px;
-  border-radius: 12px;
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+.WidgetGallery {
+  /* border: 4px solid; */
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.WidgetGallery_name_Section {
+  flex: 1.5;
+  width: 10%;
+}
+
+.WidgetGallery_name {
+  font-family: "TheJamsil3Bold";
+  color: white;
+  font-size: 1.1rem;
+  background-color: #a581cfc3;
+  margin: 8px 0px 0px 8px;
+  padding: 6px 4px 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  width: 55px;
 }
 .WidgetContent {
-  /* border: 1px solid black; */
+  /*디데이 전체 박스*/
   display: flex;
+  border-radius: 10px;
+  flex: 8.5;
 }
+
 .WidgetContentTxt {
   display: block;
   margin-top: 50px;
@@ -32,11 +76,13 @@
 }
 
 .galleryIgmItem {
-  margin: 0.4rem 0rem 0rem 0.4rem;
+  margin: 0.5rem;
 }
 .galleryIgm {
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 6rem;
+  height: 6rem;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
