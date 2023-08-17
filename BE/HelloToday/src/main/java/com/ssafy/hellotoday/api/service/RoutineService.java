@@ -85,7 +85,7 @@ public class RoutineService {
     public BaseResponseDto makeRoutine(RoutineRequestDto routineRequestDto, Member member) {
 
         // 현재 사용자가 진행하는 루틴이 있는지 확인하고 error;
-        routineValidator.checkPrivateRoutineExist(routineRepository, member);
+//        routineValidator.checkPrivateRoutineExist(routineRepository, member);
 
         Routine routine = Routine.createRoutine(
                 member.getMemberId()
