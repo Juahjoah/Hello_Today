@@ -18,7 +18,7 @@ function WidgetComments() {
   const [isMe, setIsMe] = useState(false);
 
   const [nowPage, setNowPage] = useState(1);
-  const itemsIncludePage = 3;
+  const itemsIncludePage = 4;
   const loggedInUserId = sessionStorage.getItem("memberId");
 
   useEffect(() => {
@@ -175,7 +175,7 @@ function WidgetComments() {
 
   return (
     <div className={classes.WidgetComments}>
-      <div>
+      <div className={classes.CommentSectionMain}>
         {/* <p className={classes.WidgetCommentsTitle}>
           응원의 메세지를 남겨주세요!
         </p> */}
@@ -187,7 +187,11 @@ function WidgetComments() {
                 onClick={() => paginate(nowPage - 1)}
                 disabled={nowPage === 1}
               >
-                <img src="../../images/Widget/before.png" alt="before" />
+                <img
+                  style={{ width: "20px" }}
+                  src="../../images/Widget/before.png"
+                  alt="before"
+                />
               </button>
             </div>
           )}
@@ -268,7 +272,11 @@ function WidgetComments() {
                   nowComments.length === 0
                 }
               >
-                <img src="../../images/Widget/next.png" alt="next" />
+                <img
+                  style={{ width: "20px" }}
+                  src="../../images/Widget/next.png"
+                  alt="next"
+                />
               </button>
             </div>
           )}
