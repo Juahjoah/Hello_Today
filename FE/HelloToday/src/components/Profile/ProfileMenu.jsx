@@ -94,13 +94,16 @@ function ProfileMenu({
     widgetAxios();
   }, [memberId, Token]);
 
-  const UserSelectMenu = (event) => {
-    console.log(event.target.innerText);
+  const UserSelectMenu = (event, flag) => {
+    console.log(event);
     console.log(MenuList);
     console.log(MenuList[event.target.innerText]);
-    setMenu(MenuList[event.target.innerText]);
-    setSelectMenu(event.target.innerText);
-    setFollowButtonClick(false);
+    const selectedComponent = MenuList[flag];
+    if (selectedComponent) {
+      setMenu(selectedComponent);
+      setSelectMenu(flag);
+      setFollowButtonClick(false);
+    }
   };
 
   useEffect(() => {
@@ -132,7 +135,7 @@ function ProfileMenu({
                   flag === selectMenu && !isEditPage,
               })}
               onClick={(event) => {
-                UserSelectMenu(event);
+                UserSelectMenu(event, flag);
                 console.log(flag);
                 console.log(selectMenu);
               }}
