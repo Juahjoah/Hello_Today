@@ -1,4 +1,5 @@
 import classes from "./WidgetGallery.module.css";
+import { BiSolidLeftArrow, BiSolidRightArrow } from "react-icons/bi";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,7 +14,7 @@ function WidgetGallery() {
   const [gallery, setGallery] = useState([]);
 
   const [nowPage, setNowPage] = useState(1);
-  const itemsIncludePage = 3;
+  const itemsIncludePage = 5;
 
   const getGallery = (memberId) => {
     axios
@@ -48,37 +49,44 @@ function WidgetGallery() {
         <div className={classes.WidgetGallery_name}>갤러리</div>
       </div>
       <div className={classes.WidgetContent}>
-        {nowPicItem.length === 0 && (
-          <div className={classes.WidgetContentTxt}>
-            <p>루틴 인증 사진을 남기면 갤러리가 풍부해져요🥰</p>
-          </div>
-        )}
-        {nowPicItem.length > 0 &&
-          nowPicItem.map((galleryItem) => (
-            <div className={classes.galleryIgmItem} key={galleryItem.imgPath}>
-              <img
-                className={classes.galleryIgm}
-                src={galleryItem.imgPath}
-                alt="userGallery.Item"
-              />
+        <div className={classes.WidgetContentMain}>
+          {nowPicItem.length === 0 && (
+            <div className={classes.WidgetContentTxt}>
+              <p>루틴 인증 사진을 남기면 갤러리가 풍부해져요🥰</p>
             </div>
-          ))}
-
+          )}
+          {nowPicItem.length > 0 &&
+            nowPicItem.map((galleryItem) => (
+              <div className={classes.galleryIgmItem} key={galleryItem.imgPath}>
+                <img
+                  className={classes.galleryIgm}
+                  src={galleryItem.imgPath}
+                  alt="userGallery.Item"
+                />
+              </div>
+            ))}
+        </div>
         {gallery.length > itemsIncludePage && (
           <div>
             <button
+              className={classes.leftBtn}
               onClick={() => paginate(nowPage - 1)}
               disabled={nowPage === 1}
             >
-              이전
+              <BiSolidLeftArrow
+                style={{ fontSize: "30px", color: "#ba9fda" }}
+              />
             </button>
             <button
+              className={classes.rightBtn}
               onClick={() => paginate(nowPage + 1)}
               disabled={
                 nowPicItem.length < itemsIncludePage || nowPicItem.length === 0
               }
             >
-              다음
+              <BiSolidRightArrow
+                style={{ fontSize: "30px", color: "#ba9fda" }}
+              />
             </button>
           </div>
         )}
