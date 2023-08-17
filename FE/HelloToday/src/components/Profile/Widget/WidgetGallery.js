@@ -14,7 +14,7 @@ function WidgetGallery() {
   const [gallery, setGallery] = useState([]);
 
   const [nowPage, setNowPage] = useState(1);
-  const itemsIncludePage = 4;
+  const itemsIncludePage = 5;
 
   const getGallery = (memberId) => {
     axios
