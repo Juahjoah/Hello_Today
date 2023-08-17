@@ -45,8 +45,12 @@ function JoinRoom() {
   // const OV = new OpenVidu();
 
   // roomTitle??
-  const roomTitle = location.state.roomTitle;
-  const token = location.state.Token;
+  const roomTitle = location?.state?.roomTitle;
+  const token = location?.state?.Token;
+
+  if (roomTitle === "BadRequest") {
+    navigate("/404NotFound");
+  }
 
   // 질문
   const [isQuestionClick, setIsQuestionClick] = useState(0); // 질문 버튼 클릭 여부

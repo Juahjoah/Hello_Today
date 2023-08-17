@@ -97,6 +97,7 @@ function WidgetDdayregist() {
               ref={ddaycontentinput}
               name="content"
               value={newDday.content}
+              spellCheck="false"
               onChange={handleChangeState}
               onKeyDown={keyPressHandler}
               placeholder="D-Day 제목을 입력해주세요"
@@ -104,7 +105,7 @@ function WidgetDdayregist() {
           </div>
           <div>
             <button className={classes.WidgetDday_btn} onClick={handleSubmit}>
-              완료
+              저장
             </button>
           </div>
         </div>

@@ -103,7 +103,7 @@ function GroupRoutine() {
   };
 
   const enterRoom = (sessionId, Token, roomId) => {
-    navigate(`/${roomId}`, {
+    navigate(`/GroupRoutine/${roomId}`, {
       state: {
         roomId: roomId,
         sessionId: sessionId,
