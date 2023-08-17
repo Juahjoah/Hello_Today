@@ -203,8 +203,10 @@ function WidgetGoals() {
 
   return (
     <div className={classes.WidgetGoals}>
-      <span className={classes.goalTitle}> 소중한 목표 </span>
-      {/* <p className={classes.goalTitle}> 작고 소중한 목표를 세웠어요! </p> */}
+      <div className={classes.goalTitleSection}>
+        <div className={classes.goalTitle}> 소중한 목표 </div>
+      </div>
+
       <div className={classes.goalAllSection}>
         <div className={classes.goalListSection}>
           <div className={classes.goalList}>
@@ -275,7 +277,7 @@ function WidgetGoals() {
                                   {item.content}
                                 </div>
                                 {isMe && (
-                                  <div>
+                                  <div style={{ display: "flex" }}>
                                     <button
                                       className={classes.editButtonStyle}
                                       onClick={() => {
@@ -306,7 +308,7 @@ function WidgetGoals() {
                           </div>
                         ))}
                     </div>
-                    <div className="pagination">
+                    <div className="pagination" style={{ marginTop: "10px" }}>
                       <button
                         className={classes.goalPageBtn}
                         onClick={() =>
