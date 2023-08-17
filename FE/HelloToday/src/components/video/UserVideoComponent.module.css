@@ -21,6 +21,12 @@
   outline: none;
   border: none;
   background: rgba(250, 249, 252, 1);
+  transition: all 250ms ease-in-out;
+}
+
+.followBtn:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .unfollowBtn {
@@ -28,4 +34,10 @@
   border: none;
   background: rgba(250, 249, 252, 1);
   color: #a581cf;
+  transition: all 250ms ease-in-out;
+}
+
+.unfollowBtn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }

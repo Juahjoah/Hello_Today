@@ -53,6 +53,11 @@
   margin-right: 20px;
 }
 
+.selectedProfileItem {
+  background-color: #a581cfc3;
+  color: white;
+}
+
 .UserProfileMenu {
   font-family: "TheJamsil5Bold";
   display: flex;
@@ -63,6 +68,7 @@
   margin: auto;
   justify-content: flex-start;
   margin-left: 67px;
+  margin-top: 12px;
 }
 .ProfileItem:hover {
   color: white;
