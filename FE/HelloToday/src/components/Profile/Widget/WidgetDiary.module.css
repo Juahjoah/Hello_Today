@@ -8,19 +8,26 @@
 
 .WidgetDiary {
   width: auto;
-  height: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.diaryTitleSection {
+  flex: 1.5;
+  width: 12%;
 }
 
 .diaryTitle {
-  /*font*/
-  font-family: "TheJamsil5Bold";
-  font-weight: bold;
-  color: #ffffff;
-  font-size: 1.5rem;
-  /*상자*/
-  background-color: #a581cf;
-  padding: 2px 30px 2px 30px;
-  border-radius: 12px;
+  font-family: "TheJamsil3Bold";
+  color: white;
+  font-size: 1.1rem;
+  background-color: #a581cfc3;
+  margin: 8px 0px 0px 8px;
+  padding: 6px 4px 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
 
 .wishDiaryEditButtonStyle {
@@ -41,20 +48,25 @@
   font-size: 0.7rem;
   color: #222222;
   width: 80%;
-  border: none;
+
   border-bottom: solid #aaaaaa 1px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  border-radius: 5px;
+  padding: 8px 12px;
   background: none;
   display: flex;
   align-self: center;
   outline: none;
+  flex: 8;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
 .widgetBigInputStyle {
   /*처음 한 줄 일기 작성*/
-  margin-left: 25px;
+  width: 76%;
   display: flex;
   outline: none;
+  margin: auto;
 }
 
 .inputBtn::after {
@@ -132,10 +144,12 @@
 
 .wishDiaryContentTxt {
   /*다이어리 + 수정 + 삭제 버튼*/
+  margin: auto;
   margin-top: 10px;
-  width: 100%;
+  width: 85%;
   /*실제 글 내용*/
   display: flex;
+  font-family: "TheJamsil3Bold";
 }
 
 .wishDiaryinputBtn {
@@ -152,6 +166,9 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding: 3px 10px 3px 10px;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.615);
 }
 .wishDiaryinputBtn:hover {
   background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
