@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@keyframes jumpAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* .banner {
+      width: 80%;
+      height: 50vh;
+      margin: auto;
+      margin-top: 110px;
+      border: 1px solid rgba(131, 129, 129, 0.2);
+      border-radius: 12px;
+      display: flex;
+      background: rgb(255, 255, 255);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 1) 40%,
+        rgba(255, 230, 154, 1) 100%
+      );
+      user-select: none;
+    }
+     */
+.banner {
+  width: 80%;
+  height: 50vh;
+  margin: auto;
+  margin-top: 80px;
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 12px;
+  display: flex;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 40%,
+    rgba(207, 193, 228, 1) 100%
+  );
+  user-select: none;
+}
+
+.bannerLeft {
+  font-family: "TheJamsil5Bold";
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bannerLeftTitle {
+  font-size: 40px;
+  margin: 20px 0px;
+}
+
+.bannerLeftDescription {
+  font-size: 25px;
+}
+
+.bannerRight {
+  flex: 4;
+  display: flex;
+  animation: jumpAnimation 3s infinite;
+}
