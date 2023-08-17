@@ -121,16 +121,14 @@ function WidgetDdayEdit() {
             onKeyDown={keyPressHandler}
             onChange={handleChangeState}
           ></input>
-          <div className={classes.WidgetDday_submit_btn}>
-            <button className={classes.WidgetDday_btnMini} onClick={handleSubmit}>
-              저장
-            </button>
-          </div>
-          <div>
-            <button className={classes.WidgetDday_btnMini} onClick={handleCancle}>
-              취소
-            </button>
-          </div>
+
+          <button className={classes.WidgetDday_btnMini} onClick={handleSubmit}>
+            저장
+          </button>
+
+          <button className={classes.WidgetDday_btnMini} onClick={handleCancle}>
+            취소
+          </button>
         </div>
       </div>
     </div>

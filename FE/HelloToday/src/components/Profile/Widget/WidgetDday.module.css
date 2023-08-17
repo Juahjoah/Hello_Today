@@ -140,6 +140,7 @@
 .WidgetDday_input_btn {
   display: flex;
   width: 75%;
+  align-items: center;
 }
 .WidgetDday_input {
   flex: 8;
@@ -162,6 +163,7 @@
   background: rgba(250, 249, 252, 1);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(131, 129, 129, 0.2);
+  height: 35px;
 }
 .WidgetDday_nothing {
   /*아무것도 없을 때 */
@@ -228,14 +230,14 @@
 .WidgetDday_btnMini {
   font-family: "TheJamsil5Bold";
   width: 3rem;
-  height: 1rem;
+  height: 2rem;
   position: relative;
   display: inline-block;
   font-size: 0.7rem;
   margin-left: 0.7rem;
-  border-radius: 6px;
-  background-color: white; /* 파란색 */
-  border: 1px solid rgba(131, 129, 129, 0.851);
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
   cursor: pointer;
 }
 .WidgetDday_btnMini:hover {
