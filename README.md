@@ -131,7 +131,7 @@
 <br>
 <div align="center">
   <br />
-  <img src="/uploads/5d72da1b1c8b6efa3dbe818e9cc9ce4d/메인화면_-_루틴_인증.gif" width="80%"/>
+  <img src="/uploads/5692db82f012329db6c8f688d9cc0fe0/루틴_인증_조회.gif" width="80%"/>
   <br />
 </div>
 
