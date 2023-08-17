@@ -212,7 +212,7 @@ function WidgetGoals() {
               <div key={type} className={classes.goalContainer}>
                 <div className={classes.goalSemitTitleLocation}>
                   <span className={classes.goalSemitTitle}>
-                    {type === "0" ? "매일" : type === "1" ? "매주" : "매년"}
+                    {type === "0" ? "매일" : type === "1" ? "매주" : "매월"}
                   </span>
                 </div>
                 {groupedData[type] && groupedData[type].length > 0 ? (
@@ -350,7 +350,7 @@ function WidgetGoals() {
                             ? "매일 "
                             : type === "1"
                             ? "매주 "
-                            : "매년 "}
+                            : "매월 "}
                         </span>
                         목표를 입력해주세요 ⭐
                       </span>
@@ -378,7 +378,7 @@ function WidgetGoals() {
                   매주
                 </option>
                 <option className={classes.selectBoxOption} value="2">
-                  매년
+                  매월
                 </option>
               </select>
               <input

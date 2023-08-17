@@ -1,28 +1,86 @@
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@keyframes YAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-500px); /* 이미지가 위로 20px 이동 */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.calDetailMain {
+  display: flex;
+  /* height: 100vh; */
+  justify-content: center;
+  align-items: center;
+}
+
 .calDetailContain {
   /*전체 detail*/
-  /* box-shadow: 0 0 5px #333; */
+
   font-family: "TheJamsil5Bold";
   font-size: 0.7rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
-  width: 95%;
+  /* border: 1px solid gray; */
+  border-radius: 12px;
+  width: 70%;
   height: auto;
   margin: 70px auto 20px auto;
   /* justify-content: center; */
-  justify-items: center;
-  align-items: center;
+  /* justify-items: center; */
+  /* align-items: center; */
   padding: 30px;
+  margin: auto;
+  margin-top: 100px;
+  background: rgb(244, 241, 250);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  /* margin-right: 50px; */
 }
 .calDetailDay {
   font-size: 2em;
   /*font*/
-  color: #ffffff;
+  color: rgba(0, 0, 0, 0.775);
   font-size: 1.9rem;
   font-weight: bold;
   /*상자*/
-  background-color: #a581cf;
-  padding: 4px 30px 4px 30px;
-  border-radius: 15px;
+  /* background-color: #a581cf; */
+  padding: 4px 0px 4px 0px;
+  /* border-radius: 15px; */
+  font-family: "TheJamsil4Bold";
 }
 
 .calDetailContent {
@@ -37,55 +95,89 @@
 }
 .routineContent {
   /*루틴 이름*/
-  font-size: 1.7rem;
+  font-size: 1.5rem;
+  font-family: "TheJamsil4Bold";
 }
 .img_txt {
   /*이미지 글 한 박스*/
-  font-family: "TheJamsil5Bold";
+  font-family: "TheJamsil3Bold";
   border-radius: 12px;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   box-sizing: border-box;
   display: flex;
-  padding-top: 20px;
+  padding: 15px;
   line-height: 20px;
   margin-bottom: 30px;
   margin-left: 15px;
-  margin-right: 15px;
+  margin: 15px 15px 10px 5px;
   text-align: center;
+  background: rgb(255, 255, 255);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
+
+.undefinedImgBox {
+  width: 200px;
+  height: 200px;
+  margin: 0px 15px 10px 10px;
+  background-color: rgba(128, 128, 128, 0.378);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .img {
   /*이미지 크기*/
   width: 200px;
   height: 200px;
-  margin: 0px 10px 10px 10px;
+  margin: 0px 15px 10px 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .v_line {
-  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.178);
   height: 200px;
   margin-right: 10px;
 }
 .routine_content {
   /*루틴 인증 글*/
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-family: "TheJamsil3Bold";
 }
 .calendardetail_btn {
   float: right;
 }
 .btn_back {
-  font-family: "TheJamsil5Bold";
-  background-color: white; /* 파란색 */
-  border: 1px solid rgba(131, 129, 129, 0.851);
-  border-radius: 5px;
+  font-family: "TheJamsil4Bold";
+  /* background-color: white; 파란색 */
+  /* border: 1px solid rgba(131, 129, 129, 0.851); */
+  /* border-radius: 5px; */
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  padding: 3px 10px 3px 10px;
-  font-size: 1rem;
+  transition: all 0.25s ease;
+  /* padding: 3px 10px 3px 10px; */
+  font-size: 1.3rem;
+  background: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btn_back:hover {
-  background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
-  color: white;
+  color: black;
+  transform: scale(1.1);
 }
 
 .nothingmsg {
   font-size: 1rem;
+  font-family: "TheJamsil4Bold";
 }

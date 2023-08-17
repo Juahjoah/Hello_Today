@@ -8,6 +8,8 @@ import classes from "./ProfileCalenderDetail.module.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
+import { BiLeftArrow } from "react-icons/bi";
+
 function ProfileCalenderDetail() {
   const navigate = useNavigate();
   const memberId = useParams().memberId;
@@ -48,59 +50,69 @@ function ProfileCalenderDetail() {
   return (
     <div>
       <Nav />
-      <div className={classes.calDetailContain}>
-        <div className={classes.calDetailContent}>
-          <span className={classes.calDetailDay}>{checkDate}</span>
-          <hr />
-          <p className={classes.nothingmsg}>
-            {calDetails.length > 0 ? "" : "기록을 남겨주세요😊"}
-          </p>
-          <div>
-            {calDetails.map((item, index) => {
-              return (
-                <div className={classes.routinediary} key={index}>
-                  <p className={classes.routineContent}>
-                    💜 {item.routineContent}
-                  </p>
-                  <div className={classes.img_txt}>
-                    <div className={classes.img_box}>
-                      {!item.imgPath ||
-                      item.imgPath === "" ||
-                      item.imgPath === undefined ? (
-                        <img
-                          className={classes.img}
-                          src="/images/logo.png"
-                          alt="Default"
-                        />
-                      ) : (
-                        <img
-                          className={classes.img}
-                          src={item.imgPath}
-                          alt="img"
-                        />
-                      )}
-                    </div>
-                    <div className={classes.v_line}></div>
-                    <div className={classes.routine_content}>
-                      <p>{item.content}</p>
+      <div className={classes.calDetailMain}>
+        <div className={classes.calDetailContain}>
+          <div className={classes.calDetailContent}>
+            <span className={classes.calDetailDay}>{checkDate}</span>
+            <p className={classes.nothingmsg}>
+              {calDetails.length > 0 ? "" : "기록을 남겨주세요😊"}
+            </p>
+            <div>
+              {calDetails.map((item, index) => {
+                return (
+                  <div className={classes.routinediary} key={index}>
+                    <p className={classes.routineContent}>
+                      💜 {item.routineContent}
+                    </p>
+                    <div className={classes.img_txt}>
+                      <div className={classes.img_box}>
+                        {!item.imgPath ||
+                        item.imgPath === "" ||
+                        item.imgPath === undefined ? (
+                          <div className={classes.undefinedImgBox}>
+                            <img
+                              style={{
+                                width: "150px",
+                                height: "150px",
+                                marginTop: "20px",
+                              }}
+                              src="/images/logo.png"
+                              alt="Default"
+                            />
+                          </div>
+                        ) : (
+                          <img
+                            className={classes.img}
+                            src={item.imgPath}
+                            alt="img"
+                          />
+                        )}
+                      </div>
+                      <div className={classes.v_line}></div>
+                      <div className={classes.routine_content}>
+                        <p>{item.content}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <hr />
-        <div className={classes.calendardetail_btn}>
-          <button
-            type="button"
-            className={classes.btn_back}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            뒤로 가기
-          </button>
+
+          <div className={classes.calendardetail_btn}>
+            <button
+              type="button"
+              className={classes.btn_back}
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              <div>
+                <BiLeftArrow style={{ marginTop: "3px", fontSize: "1.5em" }} />
+              </div>
+              뒤로 가기
+            </button>
+          </div>
         </div>
       </div>
     </div>
