@@ -101,11 +101,18 @@ function WidgetHistoryPopup({ isOpen, setIsPopupOpen, routineId }) {
                               {!detail.imgPath ||
                               detail.imgPath === "" ||
                               detail.imgPath === undefined ? (
-                                <img
-                                  className={classes.routineHisotryp_img}
-                                  src="/images/logo.png"
-                                  alt="Default"
-                                />
+                                <div className={classes.undefinedImgBox}>
+                                  <img
+                                    style={{
+                                      width: "150px",
+                                      height: "150px",
+                                      marginTop: "20px",
+                                    }}
+                                    // className={classes.routineHisotryp_img}
+                                    src="/images/logo.png"
+                                    alt="Default"
+                                  />
+                                </div>
                               ) : (
                                 <img
                                   className={classes.routineHisotryp_img}
