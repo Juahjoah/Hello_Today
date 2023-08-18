@@ -185,6 +185,16 @@ function MyProfile() {
         }
       });
   };
+
+  //
+
+  // useEffect(() => {
+  //   if (user.nickname)
+  //   window.location.reload();
+  // }, [user.nickname]);
+
+  //
+
   return (
     <div>
       <Nav />
