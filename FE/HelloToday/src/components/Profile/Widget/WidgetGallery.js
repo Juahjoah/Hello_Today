@@ -50,7 +50,7 @@ function WidgetGallery() {
       </div>
       <div className={classes.WidgetContent}>
         <div className={classes.WidgetContentMain}>
-          {nowPicItem.length === 0 && (
+          {gallery.length === 0 && (
             <div className={classes.WidgetContentTxt}>
               <p>루틴 인증 사진을 남기면 갤러리가 풍부해져요🥰</p>
             </div>
