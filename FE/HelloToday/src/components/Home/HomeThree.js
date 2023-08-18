@@ -22,7 +22,7 @@ function HomeThree({ AllRoutineList, goHomeMountain, HomeThreeWantVisible }) {
     if (HomeThreeWantVisible) {
       setTimeout(() => {
         setIsVisible(true);
-      }, 3000);
+      }, 2000);
     }
   }, [HomeThreeWantVisible]);
 
@@ -34,11 +34,12 @@ function HomeThree({ AllRoutineList, goHomeMountain, HomeThreeWantVisible }) {
   return (
     <div className={classes.test}>
       <p className={classes.routineNumDescription}>
-        {HomeThreeWantVisible ? 
-        <motion.span className={classes.routineNum}>{num}</motion.span>
-         : <motion.span className={classes.routineNum}>26</motion.span>}
-         여종의{" "}
-        <span className={classes.routineNumSelect}>루틴 선택</span> 가능{" "}
+        {HomeThreeWantVisible ? (
+          <motion.span className={classes.routineNum}>{num}</motion.span>
+        ) : (
+          <motion.span className={classes.routineNum}>26</motion.span>
+        )}
+        여종의 <span className={classes.routineNumSelect}>루틴 선택</span> 가능{" "}
       </p>
       {AllRoutineList.map((bigRoutine, index) => {
         return (
