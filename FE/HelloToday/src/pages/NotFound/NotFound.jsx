@@ -60,7 +60,7 @@ function NotFound() {
         <div className={classes.rightSideBox}>
           <img
             className={classes.rightSideBike}
-            src="images/NotFound/NotFound.png"
+            src="/images/NotFound/NotFound.png"
             alt="bike"
           />
         </div>
