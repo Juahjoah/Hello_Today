@@ -76,7 +76,7 @@ public class Member extends BaseEntity {
 
 
     public String getProfileImagePath() {
-        if(profilePath == null) return null;
+        if(profilePath == null) return ApplicationProperties.HOST_IMAGE_URL + "profile/defaultProfile.jpg";
         else if(profilePath.contains("http://k.kakaocdn.net/")||profilePath.contains("pstatic.net/")) return profilePath;
         return ApplicationProperties.HOST_IMAGE_URL + "profile/" + profileOriginalName;
     }
