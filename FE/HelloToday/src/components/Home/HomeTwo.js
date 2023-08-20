@@ -27,7 +27,7 @@ function HomeTwo({ goHomeThree, HomeTwoWantVisible }) {
       style={{
         background: "url(/images/Home/Homeonebackground.png)",
         backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 90%",
+        backgroundSize: "100% 100%",
       }}
     >
       <div className={classes.HomeTwoText}>

@@ -9,7 +9,7 @@
   2023.07.04 ~ 2022.08.18
   <br><br>
 
-[Notion](https://intelligent-dracopelta-0c4.notion.site/8-976f884945bd4067b43a99830e8576bf?pvs=4) | [UCC](https://www.youtube.com/watch?v=NUvlaUJqsik)
+[Notion](https://intelligent-dracopelta-0c4.notion.site/8-976f884945bd4067b43a99830e8576bf?pvs=4) | [UCC](https://www.youtube.com/watch?v=nxf6m3u2FAc)
 
 </div>
 
@@ -58,11 +58,10 @@
 
 # 🔎 프로젝트 설계
 
-### 아키텍처 구성도
-
+### 시스템 구성도
 <div align="center">
   <br />
-  <img src="/uploads/661662b170a08ce0e822c59b1f7cc1b4/260913796-0c508627-7592-44e4-8e85-0d6fc01acb98.png" width="80%"/>
+  <img src="/uploads/13b4a7d1d4750d37345f3b130647d15d/시스템구성도.PNG" width="80%"/>
   <br />
 </div>
 
