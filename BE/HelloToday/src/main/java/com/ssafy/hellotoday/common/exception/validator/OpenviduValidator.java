@@ -38,4 +38,12 @@ public class OpenviduValidator {
                 .message(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getMessage())
                 .build();
     }
+
+    public void failedClosingSession() {
+        throw CustomException.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .code(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getCode())
+                .message(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getMessage())
+                .build();
+    }
 }

@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -50,20 +51,12 @@ public class FollowService {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Follow> followPage = followRepository.findAllByFollowing(member.getMemberId(), pageable);
+        List<MemberResponseDto> followers = getFollowerList(followPage);
 
         return FollowerPageResponseDto.builder()
                 .totalPages(followPage.getTotalPages())
                 .totalFollowers((int) followPage.getTotalElements())
-                .followers(followPage.getContent().stream()
-                        .map(follow ->
-                                MemberResponseDto.builder()
-                                        .memberId(follow.getFollower().getMemberId())
-                                        .email(follow.getFollower().getEmail())
-                                        .nickname(follow.getFollower().getNickname())
-                                        .stMsg(follow.getFollower().getStMsg())
-                                        .profilePath(follow.getFollower().getProfileImagePath())
-                                        .build())
-                        .collect(Collectors.toList()))
+                .followers(followers)
                 .build();
     }
 
@@ -81,20 +74,12 @@ public class FollowService {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Follow> followPage = followRepository.findAllByFollower(member.getMemberId(), pageable);
+        List<MemberResponseDto> followings = getFollowingList(followPage);
 
         return FollowingPageResponseDto.builder()
                 .totalPages(followPage.getTotalPages())
                 .totalFollowings((int) followPage.getTotalElements())
-                .followings(followPage.getContent().stream()
-                        .map(follow ->
-                                MemberResponseDto.builder()
-                                        .memberId(follow.getFollowing().getMemberId())
-                                        .email(follow.getFollowing().getEmail())
-                                        .nickname(follow.getFollowing().getNickname())
-                                        .stMsg(follow.getFollowing().getStMsg())
-                                        .profilePath(follow.getFollowing().getProfileImagePath())
-                                        .build())
-                        .collect(Collectors.toList()))
+                .followings(followings)
                 .build();
     }
 
@@ -192,6 +177,32 @@ public class FollowService {
         Optional<Member> member = memberRepository.findById(memberId);
         memberValidator.checkMember(member, memberId);
         return member.get();
+    }
+
+    private List<MemberResponseDto> getFollowerList(Page<Follow> followPage) {
+        return followPage.getContent().stream()
+                .map(follow ->
+                        MemberResponseDto.builder()
+                                .memberId(follow.getFollower().getMemberId())
+                                .email(follow.getFollower().getEmail())
+                                .nickname(follow.getFollower().getNickname())
+                                .stMsg(follow.getFollower().getStMsg())
+                                .profilePath(follow.getFollower().getProfileImagePath())
+                                .build())
+                .collect(Collectors.toList());
+    }
+
+    private List<MemberResponseDto> getFollowingList(Page<Follow> followPage) {
+        return followPage.getContent().stream()
+                .map(follow ->
+                        MemberResponseDto.builder()
+                                .memberId(follow.getFollowing().getMemberId())
+                                .email(follow.getFollowing().getEmail())
+                                .nickname(follow.getFollowing().getNickname())
+                                .stMsg(follow.getFollowing().getStMsg())
+                                .profilePath(follow.getFollowing().getProfileImagePath())
+                                .build())
+                .collect(Collectors.toList());
     }
 
     private BaseResponseDto getFollowStatusResponse(String message, boolean success) {
