@@ -86,7 +86,9 @@ function NickNamePopup({
           setUserName("");
         }
       })
-      .catch(console.log(Token, userName));
+      .catch
+      // console.log(Token, userName)
+      ();
   };
 
   const changeNickName = () => {
