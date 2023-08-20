@@ -20,7 +20,7 @@ function HomeOne({ goHomeTwo, HomeOneWantVisible }) {
     if (HomeOneWantVisible) {
       setTimeout(() => {
         setIsVisible(true);
-      }, 6000);
+      }, 2500);
     }
   }, [HomeOneWantVisible]);
 

@@ -16,6 +16,7 @@ import { routineCheck } from "../../store/routineCheckModalSlice";
 import Swal from "sweetalert2";
 import confetti from "canvas-confetti";
 import { allRoutineCheck } from "../../store/allRoutineCheckSlice";
+import RoutineDoneBanner from "../common/RoutineDoneBanner";
 
 function SelectedRoutine({ routinePrivate }) {
   const allRoutineCheckFlag = useSelector((state) => state.allRoutineCheck);
@@ -68,20 +69,12 @@ function SelectedRoutine({ routinePrivate }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const routineAuthBannerImg = allRoutineCheckFlag
-    ? "routine_medal"
-    : "main_banner_routineAuth1";
-  const routineAuthBannerMents = allRoutineCheckFlag
-    ? [
-        "루틴 진행도 100% 달성!",
-        "루틴 완성을 정말 축하드려요!!",
-        "다음 루틴도 100% 달성 기대할게요!",
-      ]
-    : [
-        "루틴은 일주일 단위로 진행됩니다.",
-        "일주일 간 열심히 노력하며 진행한 루틴!",
-        "잊지말고, 기록으로 남겨두세요",
-      ];
+  const routineAuthBannerImg = "main_banner_routineAuth1";
+  const routineAuthBannerMents = [
+    "루틴은 일주일 단위로 진행됩니다.",
+    "일주일 간 열심히 노력하며 진행한 루틴!",
+    "잊지말고, 기록으로 남겨두세요",
+  ];
 
   const [value, onChange] = useState(new Date()); // 루틴 인증 날짜
   const [routineAuthText, setRoutineAuthText] = useState(""); // 루틴 인증 내용
@@ -257,11 +250,15 @@ function SelectedRoutine({ routinePrivate }) {
 
   return (
     <div>
-      <MainBanner
-        bannerImg={routineAuthBannerImg}
-        bannerMent={routineAuthBannerMents}
-        allRoutineCheckFlag={allRoutineCheckFlag}
-      />
+      {!allRoutineCheckFlag ? (
+        <MainBanner
+          bannerImg={routineAuthBannerImg}
+          bannerMent={routineAuthBannerMents}
+          allRoutineCheckFlag={allRoutineCheckFlag}
+        />
+      ) : (
+        <RoutineDoneBanner />
+      )}
       <div className={classes.routineSelectMain}>
         <div className={classes.test}>
           오늘도 루틴을 잘 진행하셨나요?!

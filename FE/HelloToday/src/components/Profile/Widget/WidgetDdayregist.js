@@ -90,24 +90,21 @@ function WidgetDdayregist() {
       <div>
         <p className={classes.WidgetDday_txt}>D-Day 입력</p>
         <div className={classes.WidgetDday_input_btn}>
-          <div className={classes.input}>
-            <input
-              className={classes.WidgetDday_input}
-              type="text"
-              ref={ddaycontentinput}
-              name="content"
-              value={newDday.content}
-              spellCheck="false"
-              onChange={handleChangeState}
-              onKeyDown={keyPressHandler}
-              placeholder="D-Day 제목을 입력해주세요"
-            ></input>
-          </div>
-          <div>
-            <button className={classes.WidgetDday_btn} onClick={handleSubmit}>
-              저장
-            </button>
-          </div>
+          <input
+            className={classes.WidgetDday_input}
+            type="text"
+            ref={ddaycontentinput}
+            name="content"
+            value={newDday.content}
+            spellCheck="false"
+            onChange={handleChangeState}
+            onKeyDown={keyPressHandler}
+            placeholder="D-Day 제목을 입력해주세요"
+          ></input>
+          <div className={classes.place}></div>
+          <button className={classes.WidgetDday_btn} onClick={handleSubmit}>
+            저장
+          </button>
         </div>
       </div>
     </div>

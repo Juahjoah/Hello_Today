@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import axios from "axios";
+import { auto } from "@popperjs/core";
 
 function WidgetBucket() {
   const AccsesToken = useSelector((state) => state.authToken.accessToken);
@@ -176,7 +177,9 @@ function WidgetBucket() {
 
   return (
     <div className={classes.WidgetBucket_}>
-      <span className={classes.bucketTitle}> 버킷리스트 </span>
+      <div className={classes.bucketTitleSection}>
+        <div className={classes.bucketTitle}> 버킷리스트 </div>
+      </div>
       <div className={classes.WidgetBucket}>
         <div>
           <div className={classes.bucketSection}>
@@ -185,7 +188,11 @@ function WidgetBucket() {
                 className={classes.moveButtonStyle}
                 onClick={() => setPage(nowPage - 1)}
               >
-                <img src="../../images/Widget/before.png" alt="before" />
+                <img
+                  style={{ width: "20px" }}
+                  src="../../images/Widget/before.png"
+                  alt="before"
+                />
               </button>
             </div>
             <div className={classes.bucketList}>
@@ -229,28 +236,30 @@ function WidgetBucket() {
                       </div>
                     ) : (
                       <div className={classes.bucketListSection}>
-                      <div className={classes.bucketItemContainer}>
-                        <input
-                          type="checkbox"
-                          checked={checkedItems[bucketItem.wishDiaryId] || false}
-                          onChange={(event) => {
-                            const isChecked = event.target.checked;
-                            setCheckedItems((prev) => ({
-                              ...prev,
-                              [bucketItem.wishDiaryId]: isChecked,
-                            }));
-                          }}
-                        />
-                        <p
-                          className={`${classes.bucketItem} ${
-                            checkedItems[bucketItem.wishDiaryId]
-                              ? classes.checkedItem
-                              : ""
-                          }`}
-                        >
-                          {bucketItem.content}
-                        </p>
-                      </div>
+                        <div className={classes.bucketItemContainer}>
+                          <input
+                            type="checkbox"
+                            checked={
+                              checkedItems[bucketItem.wishDiaryId] || false
+                            }
+                            onChange={(event) => {
+                              const isChecked = event.target.checked;
+                              setCheckedItems((prev) => ({
+                                ...prev,
+                                [bucketItem.wishDiaryId]: isChecked,
+                              }));
+                            }}
+                          />
+                          <p
+                            className={`${classes.bucketItem} ${
+                              checkedItems[bucketItem.wishDiaryId]
+                                ? classes.checkedItem
+                                : ""
+                            }`}
+                          >
+                            {bucketItem.content}
+                          </p>
+                        </div>
                         {isMe && (
                           <div className={classes.editButtonSection}>
                             <button
@@ -292,7 +301,11 @@ function WidgetBucket() {
                 className={classes.moveButtonStyle}
                 onClick={() => setPage(nowPage + 1)}
               >
-                <img src="../../images/Widget/next.png" alt="next" />
+                <img
+                  style={{ width: "20px" }}
+                  src="../../images/Widget/next.png"
+                  alt="next"
+                />
               </button>
             </div>
           </div>

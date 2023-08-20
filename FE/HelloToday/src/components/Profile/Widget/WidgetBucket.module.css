@@ -5,27 +5,67 @@
   font-weight: 700;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "TheJamsil4Bold";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TheJamsil3Bold";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf")
+      format("truetype");
+  font-display: swap;
+}
 .WidgetBucket_ {
   width: auto;
-  height: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
+
+.bucketTitleSection {
+  flex: 1.5;
+  width: 12%;
+}
+
 .bucketTitle {
-  /*font*/
-  font-family: "TheJamsil5Bold";
-  font-weight: bold;
-  color: #ffffff;
-  font-size: 1.5rem;
-  /*상자*/
-  background-color: #a581cf;
-  padding: 2px 30px 2px 30px;
-  border-radius: 12px;
+  font-family: "TheJamsil3Bold";
+  color: white;
+  font-size: 1.1rem;
+  background-color: #a581cfc3;
+  margin: 8px 0px 0px 8px;
+  padding: 6px 4px 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
+
 .WidgetBucket {
-  /* font-family: "TheJamsil5Bold";
-  box-shadow: 0 0 5px #333;
+  display: flex;
   border-radius: 10px;
-  padding: 1rem;
-  margin: 2rem 1rem; */
+  flex: 8.5;
+  justify-content: center;
 }
 
 .editButtonSection {
@@ -51,6 +91,7 @@
 .bucketListSection {
   display: flex;
   flex-direction: row;
+  margin: 0px 20px;
 }
 
 .bucketItem {
@@ -59,6 +100,7 @@
   font-size: 1rem;
   text-align: left;
   margin: 0.3rem;
+  margin-bottom: 10px;
 }
 
 .moveButtonStyle {
@@ -77,6 +119,8 @@
   font-family: "TheJamsil5Bold";
   display: flex;
   outline: none;
+  width: 85%;
+  margin: auto;
 }
 
 .inputstyle {
@@ -86,13 +130,16 @@
   width: 80%;
   border: none;
   border-bottom: solid #aaaaaa 1px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  margin-left: 20px;
+  padding: 8px 12px;
   background: none;
   display: flex;
   align-self: center;
   outline: none;
+  border-radius: 5px;
+  flex: 8;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
 .inputstyle_ {
   font-family: "TheJamsil5Bold";
@@ -101,12 +148,16 @@
   width: 80%;
   border: none;
   border-bottom: solid #aaaaaa 1px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  padding: 8px;
   background: none;
   display: flex;
   align-self: center;
   outline: none;
+  border-radius: 5px;
+  flex: 8;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.2);
 }
 
 .inputBtn {
@@ -123,6 +174,9 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding: 3px 10px 3px 10px;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.615);
 }
 .inputBtn:hover {
   background-color: #a581cf; /* 마우스 호버시 조금 더 진한 파란색 */
@@ -150,6 +204,11 @@ inputstyle:focus {
   background-color: white; /* 파란색 */
   border: 1px solid rgba(131, 129, 129, 0.851);
   cursor: pointer;
+  background: rgba(250, 249, 252, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(131, 129, 129, 0.615);
+
+  height: 30px;
 }
 
 .bucketListBtn:hover {
@@ -159,7 +218,8 @@ inputstyle:focus {
 .bucketListInputBtn {
   display: flex;
   margin-bottom: 10px;
-  width: 110vh;
+  margin: auto;
+  width: 90vh;
 }
 .bucketListNoting {
   width: 50rem;
@@ -172,4 +232,6 @@ inputstyle:focus {
 }
 .bucketItemContainer {
   display: flex;
+
+  font-family: "TheJamsil3Bold";
 }
