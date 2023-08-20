@@ -85,7 +85,6 @@ export function ProfileCalender() {
               modifedDate: item.modifedDate,
             }));
             const dbdata = dbdata1.concat(dbdata2);
-
             setEvents(dbdata);
             if (isDelete) {
               dispatch(SET_ISDELETE(false));
@@ -97,7 +96,7 @@ export function ProfileCalender() {
           // console.log(err);
         });
     }
-  }, [AccsesToken, isRegist, isEditF, isDelete]);
+  }, [AccsesToken, isRegist, isEditF, isDelete, memberId]);
 
   const handleDayCellContent = (arg) => {
     const dayNumber = arg.dayNumberText.replace("일", "");
