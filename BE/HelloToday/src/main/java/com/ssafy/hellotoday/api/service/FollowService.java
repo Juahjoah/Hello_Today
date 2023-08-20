@@ -170,14 +170,8 @@ public class FollowService {
         Optional<Follow> follow = followRepository.findByFollowerAndFollowing(follower, followee);
 
         if (follow.isPresent()) {
-            log.info("================ 상태확인!!!!!!!!!! true");
-            log.info(follower.toString());
-            log.info(followee.toString());
             return getFollowStatusResponse(FollowResponseEnum.FOLLOW_STATUS_TRUE.getName(), true);
         } else {
-            log.info("================ 상태확인!!!!!!!!!! false");
-            log.info(follower.toString());
-            log.info(followee.toString());
             return getFollowStatusResponse(FollowResponseEnum.FOLLOW_STATUS_FALSE.getName(), false);
         }
     }
