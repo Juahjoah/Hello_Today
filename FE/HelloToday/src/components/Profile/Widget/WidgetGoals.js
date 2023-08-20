@@ -35,7 +35,7 @@ function WidgetGoals() {
         headers: { Authorization: AccsesToken },
       })
       .then((response) => {
-        console.log("res", response.data);
+        // console.log("res", response.data);
         setGoal(response.data);
         const grouped = {};
         response.data.map((item) => {
@@ -47,7 +47,7 @@ function WidgetGoals() {
           console.log("grouped", grouped);
         });
         setGroupedData(grouped);
-        console.log("groupData", groupedData);
+        // console.log("groupData", groupedData);
         const total = {};
         Object.keys(grouped).map((type) => {
           total[type] = Math.ceil(grouped[type].length / itemsIncludePage);
