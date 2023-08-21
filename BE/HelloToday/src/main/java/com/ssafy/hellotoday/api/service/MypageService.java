@@ -100,7 +100,7 @@ public class MypageService {
         CheerMessage cheerMessage = cheerMessageRepository.findByIdWithMember(cheerMessageId)
                 .orElseThrow(() -> new IllegalArgumentException("응원 메세지 조회 오류"));
 
-        if (cheerMessage.getMember().getMemberId() != memberId) throw CustomException.builder()
+        if (cheerMessage.getWriter().getMemberId() != memberId) throw CustomException.builder()
                 .status(HttpStatus.BAD_REQUEST)
                 .code(9000)
                 .message("삭제 요청자와 응원 메세지 작성자가 일치하지 않습니다.")
