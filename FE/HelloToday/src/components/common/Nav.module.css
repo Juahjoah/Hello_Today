@@ -54,15 +54,16 @@
 }
 
 .navRightSearchbarInput {
-  width: 250px;
+  width: 235px;
   height: 30px;
   border-radius: 8px;
   border: 2px solid rgba(0, 0, 0, 0.6);
-  background: rgba(255, 255, 255, 0);
+  background: rgba(254, 250, 237, 1);
   font-size: 12px;
   font-family: "TheJamsil5Bold";
   color: rgba(0, 0, 0, 0.8);
   outline: none;
+  padding-left: 15px;
 }
 
 .navLeftPersonal,

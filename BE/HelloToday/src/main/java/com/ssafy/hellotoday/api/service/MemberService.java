@@ -69,16 +69,15 @@ public class MemberService {
                     .firstLogin(false)
                     .build();
         }
-            // 가입된 유저가 아니라면 회원가입 진행
+        // 가입된 유저가 아니라면 회원가입 진행
         else {
-            String name = kakaoUserDto.getName();
             String profilePath = kakaoUserDto.getProfilePath();
 
             Member member = Member.builder()
                     .role(Role.USER)
                     .email(email)
                     .nickname(UUID.randomUUID()+"hello")
-                    .profilePath(profilePath)
+                    .profilePath(null)
                     .socialId(socialId)
                     .socialType(Social.KAKAO)
                     .build();

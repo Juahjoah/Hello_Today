@@ -5,6 +5,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { resetRoutine } from "../../store/SelectRoutineSlice";
 import SearchPopup from "../PopUp/SearchPopup";
+import { BiSearchAlt2 } from "react-icons/bi";
 
 function Nav() {
   // const [nowRouting, setNowRouting] = useState("");
@@ -90,6 +91,7 @@ function Nav() {
             size="5"
             className={classes.navRightSearchbarInput}
             onClick={openPopup} // <input> 클릭 시 모달 열기
+            placeholder="사용자 검색"
           />
         </div>
         {<SearchPopup isOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />}
