@@ -8,9 +8,9 @@ import com.ssafy.hellotoday.api.dto.meetingroom.response.MeetingRoomPageDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomCreateResponseDto;
 import com.ssafy.hellotoday.api.dto.meetingroom.response.RoomOutResponse;
 import com.ssafy.hellotoday.common.exception.CustomException;
-import com.ssafy.hellotoday.common.exception.message.MeetingRoomErrorEnum;
 import com.ssafy.hellotoday.common.exception.message.OpenviduErrorEnum;
 import com.ssafy.hellotoday.common.exception.validator.BaseValidator;
+import com.ssafy.hellotoday.common.exception.validator.MeetingRoomValidator;
 import com.ssafy.hellotoday.common.exception.validator.OpenviduValidator;
 import com.ssafy.hellotoday.common.util.constant.MeetingRoomResponseEnum;
 import com.ssafy.hellotoday.common.util.constant.OpenviduResponseEnum;
@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -47,6 +48,7 @@ public class OpenviduService {
     private final MeetingRoomRepository meetingRoomRepository;
 
     private final BaseValidator baseValidator;
+    private final MeetingRoomValidator meetingRoomValidator;
 
     @Value("${openvidu.url}")
     private String OPENVIDU_URL;
@@ -77,132 +79,74 @@ public class OpenviduService {
     }
 
     public BaseResponseDto joinRoom(int roomId) {
-        MeetingRoom room = meetingRoomRepository.findById(roomId)
-                .orElseThrow(() -> CustomException.builder()
-                        .status(HttpStatus.BAD_REQUEST)
-                        .code(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getCode())
-                        .message(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getMessage())
-                        .build());
-        try {
-            openvidu.fetch();
-            Session session = openvidu.getActiveSession(room.getSessionId());
-            if (session.getActiveConnections().size() >= room.getMemberLimit()) {
-                throw CustomException.builder()
-                        .status(HttpStatus.BAD_REQUEST)
-                        .code(MeetingRoomErrorEnum.CANNOT_ENTER_OVER_MEMBER_LIMIT.getCode())
-                        .message(MeetingRoomErrorEnum.CANNOT_ENTER_OVER_MEMBER_LIMIT.getMessage())
-                        .build();
-            }
-            openviduValidator.checkSession(session, room.getSessionId());
+        Optional<MeetingRoom> roomOptional = meetingRoomRepository.findById(roomId);
+        MeetingRoom room = meetingRoomValidator.validMeetingRoom(roomOptional);
 
-            Connection connection = createConnection(session);
+        openviduFetch();
 
-            RoomCreateResponseDto response = RoomCreateResponseDto.builder()
-                    .sessionId(room.getSessionId())
-                    .token(connection.getToken())
-                    .build();
-            response.setRoomId(roomId);
+        Session session = openvidu.getActiveSession(room.getSessionId());
+        openviduValidator.checkSession(session, room.getSessionId());
+        openviduValidator.checkUnderMemberLimit(session, room);
 
-            return BaseResponseDto.builder()
-                    .success(true)
-                    .message(OpenviduResponseEnum.SUCCESS_GET_TOKEN.getName())
-                    .data(response)
-                    .build();
-        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
-            throw CustomException.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .code(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getCode())
-                    .message(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getMessage())
-                    .build();
-        }
+        Connection connection = createConnection(session);
 
+        RoomCreateResponseDto response = createRoomResponseDto(roomId, room.getSessionId(), connection.getToken());
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(OpenviduResponseEnum.SUCCESS_GET_TOKEN.getName())
+                .data(response)
+                .build();
     }
 
     public MeetingRoomPageDto roomList(int page, int size) {
         baseValidator.checkPageAndSize(page, size);
 
-        try {
-            openvidu.fetch();
-            List<Session> activeSessions = openvidu.getActiveSessions();
+        openviduFetch();
 
-            List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
-            List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
+        List<Session> activeSessions = openvidu.getActiveSessions();
 
-            Pageable pageable = PageRequest.of(page, size);
-            Page<MeetingRoom> rooms = meetingRoomRepository
-                    .findBySessionIdInOrderByCreatedDateDesc(sessionIds, pageable);
+        List<SessionInfo> sessionInfos = getSessionInfos(activeSessions);
+        List<String> sessionIds = sessionInfos.stream().map(SessionInfo::getSessionId).collect(Collectors.toList());
 
-            List<MeetingRoomDto> response = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MeetingRoom> rooms = meetingRoomRepository
+                .findBySessionIdInOrderByCreatedDateDesc(sessionIds, pageable);
 
-            for (int i = 0; i < rooms.getContent().size(); i++) {
-                MeetingRoom meetingRoom = rooms.getContent().get(i);
-                int joinCnt = openvidu.getActiveSession(meetingRoom.getSessionId()).getActiveConnections().size();
-                response.add(MeetingRoomDto.builder()
-                        .roomId(meetingRoom.getMeetingRoomId())
-                        .memberId(meetingRoom.getMember().getMemberId())
-                        .sessionId(meetingRoom.getSessionId())
-                        .name(meetingRoom.getName())
-                        .description(meetingRoom.getDescription())
-                        .memberLimit(meetingRoom.getMemberLimit())
-                        .joinCnt(joinCnt)
-                        .createdDate(meetingRoom.getCreatedDate())
-                        .modifiedDate(meetingRoom.getModifiedDate())
-                        .build());
-            }
-            return MeetingRoomPageDto.builder()
-                    .totalPages(rooms.getTotalPages())
-                    .totalRooms(rooms.getTotalElements())
-                    .rooms(response)
-                    .build();
-        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
-            throw CustomException.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .code(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getCode())
-                    .message(OpenviduErrorEnum.FAILED_ROOM_INFO_FETCH.getMessage())
-                    .build();
-        }
+        List<MeetingRoomDto> response = makeMeetingRoomDtoList(rooms.getContent());
+
+        return MeetingRoomPageDto.builder()
+                .totalPages(rooms.getTotalPages())
+                .totalRooms(rooms.getTotalElements())
+                .rooms(response)
+                .build();
     }
 
     @Transactional
     public BaseResponseDto deleteConnection(int roomId) {
-        MeetingRoom room = meetingRoomRepository.findById(roomId)
-                .orElseThrow(() -> CustomException.builder()
-                        .status(HttpStatus.BAD_REQUEST)
-                        .code(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getCode())
-                        .message(MeetingRoomErrorEnum.ROOM_NOT_EXIST.getMessage())
-                        .build());
+        Optional<MeetingRoom> roomOptional = meetingRoomRepository.findById(roomId);
+        MeetingRoom room = meetingRoomValidator.validMeetingRoom(roomOptional);
 
-        try {
-            openvidu.fetch();
-            log.info(room.getSessionId());
-            Session session = openvidu.getActiveSession(room.getSessionId());
+        openviduFetch();
+        Session session = openvidu.getActiveSession(room.getSessionId());
 
-            if (session == null || session.getActiveConnections().size() <= 0) {
-                if (session != null) session.close();
+        MeetingRoomResponseEnum responseEnum;
+        if (session == null || session.getActiveConnections().size() == 0) {
+            closeSession(session);
+            room.updateActiveFlag(false);
+            responseEnum = MeetingRoomResponseEnum.CLOSE_MEETINGROOM;
 
-                room.updateActiveFlag(false);
-
-                return BaseResponseDto.builder()
-                        .success(true)
-                        .message(MeetingRoomResponseEnum.CLOSE_MEETINGROOM.getName())
-                        .data(RoomOutResponse.builder()
-                                .code(MeetingRoomResponseEnum.CLOSE_MEETINGROOM.getCode())
-                                .build())
-                        .build();
-            } else {
-                return BaseResponseDto.builder()
-                        .success(true)
-                        .message(MeetingRoomResponseEnum.EXIT_MEETINGROOM.getName())
-                        .data(RoomOutResponse.builder()
-                                .code(MeetingRoomResponseEnum.EXIT_MEETINGROOM.getCode())
-                                .build())
-                        .build();
-            }
-
-            // 아니라면 커넥션만 끊기
-        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
-            throw new RuntimeException(e);
+        } else {
+            responseEnum = MeetingRoomResponseEnum.EXIT_MEETINGROOM;
         }
+
+        return BaseResponseDto.builder()
+                .success(true)
+                .message(responseEnum.getName())
+                .data(RoomOutResponse.builder()
+                        .code(responseEnum.getCode())
+                        .build())
+                .build();
     }
 
     private RecordingProperties createRecordingProperties(RoomCreateRequestDto requestDto) {
@@ -239,6 +183,53 @@ public class OpenviduService {
                     .code(OpenviduErrorEnum.CREATE_CONNECTION_FAILED.getCode())
                     .message(OpenviduErrorEnum.CREATE_CONNECTION_FAILED.getMessage())
                     .build();
+        }
+    }
+
+    private void openviduFetch() {
+        try {
+            openvidu.fetch();
+        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
+            openviduValidator.failedRoomInfoFetch();
+        }
+    }
+
+    private RoomCreateResponseDto createRoomResponseDto(int roomId, String sessionId, String token) {
+        return RoomCreateResponseDto.builder()
+                .roomId(roomId)
+                .sessionId(sessionId)
+                .token(token)
+                .build();
+    }
+
+    private List<MeetingRoomDto> makeMeetingRoomDtoList(List<MeetingRoom> rooms) {
+        List<MeetingRoomDto> response = new ArrayList<>();
+
+        for (MeetingRoom meetingRoom : rooms) {
+            int joinCnt = openvidu.getActiveSession(meetingRoom.getSessionId()).getActiveConnections().size();
+            response.add(MeetingRoomDto.builder()
+                    .roomId(meetingRoom.getMeetingRoomId())
+                    .memberId(meetingRoom.getMember().getMemberId())
+                    .sessionId(meetingRoom.getSessionId())
+                    .name(meetingRoom.getName())
+                    .description(meetingRoom.getDescription())
+                    .memberLimit(meetingRoom.getMemberLimit())
+                    .joinCnt(joinCnt)
+                    .createdDate(meetingRoom.getCreatedDate())
+                    .modifiedDate(meetingRoom.getModifiedDate())
+                    .build());
+        }
+
+        return response;
+    }
+
+    private void closeSession(Session session) {
+        if (session == null) return;
+
+        try {
+            session.close();
+        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
+            openviduValidator.failedClosingSession();
         }
     }
 

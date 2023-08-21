@@ -78,7 +78,7 @@ function FollowList() {
   return (
     <div className={classes.followList}>
       <h1>함께하는 오늘러 보기</h1>
-      <h3>내가 팔로잉하는 사람</h3>
+      <h3>팔로잉</h3>
       {Followings.length > itemsIncludePage && (
         <div>
           <button
@@ -125,7 +125,7 @@ function FollowList() {
         </div>
       )}
 
-      <h3>나를 팔로우하는 사람</h3>
+      <h3>팔로워</h3>
 
       {Followers.length > itemsIncludePage && (
         <div>
