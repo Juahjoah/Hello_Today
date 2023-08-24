@@ -82,15 +82,15 @@
 
 # 🔨 개발 환경 및 기술 스택
 
-| FrontEnd                | BackEnd                         | CI/CD                     | 협업툴  |
-| ----------------------- | ------------------------------- | ------------------------- | ------- |
-| Node 18.16.1            | Java SE Development Kit 11.0.19 | AWS EC2(Ubuntu 20.04 LTS) | GitLab  |
-| React 18.2.0            | Spring Boot 2.7.14              | Nginx 1.18.0              | Jira    |
-| React-Router-Dom 6.14.2 | Gradle 8.1.1                    | Docker 24.0.5             | Notion  |
-| Redux 4.2.1             | Apache Tomcat 9.0.78            | Redis 7.0.12              | figma   |
-| Axios 1.4.0             | Json In Java 20160810           |                           | Swagger |
-| Openvidu-Browser 2.28.0 | JJWT 0.9.1                      |                           | Postman |
-|                         | Openvidu-Java-Client 2.28.0     |                           |         |
+| FrontEnd                | BackEnd                         | DB            | CI/CD                     | 협업툴  |
+| ----------------------- | ------------------------------- | ------------- |-------------------------- | ------- |
+| Node 18.16.1            | Java SE Development Kit 11.0.19 | MySQL 5.7.35  | AWS EC2(Ubuntu 20.04 LTS) | GitLab  |
+| React 18.2.0            | Spring Boot 2.7.14              | Redis 7.0.12  | Nginx 1.18.0              | Jira    |
+| React-Router-Dom 6.14.2 | Gradle 8.1.1                    |               | Docker 24.0.5             | Notion  |
+| Redux 4.2.1             | Apache Tomcat 9.0.78            |               |                           | figma   |
+| Axios 1.4.0             | Json In Java 20160810           |               |                           | Swagger |
+| Openvidu-Browser 2.28.0 | JJWT 0.9.1                      |               |                           | Postman |
+|                         | Openvidu-Java-Client 2.28.0     |               |                           |         |
 
 
 <br>
